@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAFC & FILHO, LDA. - Construção Civil & Obras Públicas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>MAFC & FILHO, LDA. - Sistema de Gestão</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -23,6 +23,9 @@
             --warning: #f39c12;
             --danger: #e74c3c;
             --construction: #e67e22;
+            --boss: #8e44ad;
+            --team: #3498db;
+            --purchase: #2ecc71;
         }
 
         body {
@@ -30,23 +33,29 @@
             line-height: 1.6;
             color: #333;
             background: var(--light);
+            overflow-x: hidden;
         }
 
-        /* Header & Navigation */
-        header {
+        /* ============ PÁGINA PÚBLICA ============ */
+        #publicWebsite {
+            min-height: 100vh;
+        }
+
+        /* Header Publico */
+        .public-header {
             background: linear-gradient(135deg, var(--dark), var(--primary));
             color: white;
-            padding: 1rem 0;
+            padding: 1.5rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
         .container {
             width: 90%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 20px;
         }
@@ -64,18 +73,17 @@
         }
 
         .logo i {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--accent);
         }
 
         .logo-text h1 {
             font-size: 1.8rem;
-            font-weight: 700;
+            font-weight: 800;
         }
 
         .logo-text span {
             color: var(--accent);
-            font-weight: 300;
             font-size: 1rem;
             display: block;
             margin-top: 5px;
@@ -88,7 +96,7 @@
         }
 
         .btn {
-            padding: 10px 25px;
+            padding: 12px 30px;
             border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
@@ -99,6 +107,7 @@
             border: none;
             cursor: pointer;
             font-size: 1rem;
+            white-space: nowrap;
         }
 
         .btn-whatsapp {
@@ -108,8 +117,8 @@
 
         .btn-whatsapp:hover {
             background: #1da851;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
         }
 
         .btn-email {
@@ -119,7 +128,8 @@
 
         .btn-email:hover {
             background: #ffb143;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 159, 28, 0.3);
         }
 
         .btn-login {
@@ -129,234 +139,245 @@
 
         .btn-login:hover {
             background: var(--dark);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 95, 122, 0.3);
         }
 
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0, 48, 73, 0.85), rgba(0, 48, 73, 0.9)), url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background: linear-gradient(rgba(0, 48, 73, 0.88), rgba(0, 48, 73, 0.92)), 
+                        url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1800&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             color: white;
-            padding: 200px 0 150px;
+            padding: 220px 0 150px;
             text-align: center;
             margin-top: 80px;
         }
 
         .hero h2 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            font-weight: 800;
+            font-size: 3.8rem;
+            margin-bottom: 25px;
+            font-weight: 900;
             text-transform: uppercase;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.4);
+            line-height: 1.2;
         }
 
         .hero p {
-            font-size: 1.3rem;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            opacity: 0.9;
+            font-size: 1.4rem;
+            max-width: 850px;
+            margin: 0 auto 50px;
+            opacity: 0.95;
+            line-height: 1.8;
         }
 
         .hero-buttons {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             justify-content: center;
             margin-top: 40px;
+            flex-wrap: wrap;
         }
 
-        /* Services */
+        /* Services Grid */
         .services {
-            padding: 100px 0;
+            padding: 120px 0;
             background: white;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             color: var(--dark);
-            margin-bottom: 60px;
+            margin-bottom: 70px;
             position: relative;
+            font-weight: 800;
         }
 
         .section-title:after {
             content: '';
             position: absolute;
-            bottom: -15px;
+            bottom: -20px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
+            width: 120px;
+            height: 5px;
             background: var(--accent);
+            border-radius: 10px;
         }
 
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
+            margin-top: 60px;
         }
 
         .service-card {
             background: var(--light);
-            padding: 40px 30px;
-            border-radius: 10px;
+            padding: 45px 35px;
+            border-radius: 15px;
             text-align: center;
-            transition: all 0.3s;
-            border: 2px solid transparent;
+            transition: all 0.4s;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--accent);
+            transform: translateY(-100%);
+            transition: transform 0.3s;
         }
 
         .service-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-15px);
             border-color: var(--accent);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+
+        .service-card:hover:before {
+            transform: translateY(0);
         }
 
         .service-icon {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: var(--primary);
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            font-size: 1.7rem;
+            margin-bottom: 20px;
             color: var(--dark);
+            font-weight: 700;
         }
 
-        /* Company Info */
+        /* Company Stats */
         .company-info {
-            padding: 100px 0;
+            padding: 120px 0;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
         }
 
-        .info-grid {
+        .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
-            margin-top: 50px;
+            margin-top: 60px;
         }
 
-        .info-card {
+        .stat-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 15px;
             text-align: center;
-            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border-top: 6px solid var(--accent);
+            transition: transform 0.3s;
         }
 
-        .info-card i {
-            font-size: 3rem;
+        .stat-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-card i {
+            font-size: 3.5rem;
             color: var(--primary);
             margin-bottom: 20px;
         }
 
-        .info-card h3 {
-            font-size: 2.5rem;
+        .stat-card h3 {
+            font-size: 3.2rem;
             color: var(--dark);
             margin-bottom: 10px;
+            font-weight: 800;
         }
 
         /* Gallery */
         .gallery {
-            padding: 100px 0;
+            padding: 120px 0;
             background: white;
         }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 50px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 60px;
         }
 
         .gallery-item {
-            border-radius: 10px;
+            border-radius: 15px;
             overflow: hidden;
             position: relative;
-            height: 250px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: 280px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.6s;
         }
 
         .gallery-item:hover img {
-            transform: scale(1.1);
+            transform: scale(1.15);
         }
 
-        .gallery-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0, 48, 73, 0.8);
-            color: white;
-            padding: 15px;
-            transform: translateY(100%);
-            transition: transform 0.3s;
-        }
-
-        .gallery-item:hover .gallery-overlay {
-            transform: translateY(0);
-        }
-
-        /* Quote Request */
+        /* Quote Section */
         .quote-request {
-            background: var(--dark);
+            background: linear-gradient(135deg, var(--dark), var(--primary));
             color: white;
-            padding: 80px 0;
+            padding: 100px 0;
             text-align: center;
         }
 
         .quote-request h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 2.8rem;
+            margin-bottom: 25px;
+            font-weight: 800;
         }
 
         .quote-buttons {
             display: flex;
-            gap: 20px;
+            gap: 25px;
             justify-content: center;
-            margin-top: 40px;
+            margin-top: 50px;
             flex-wrap: wrap;
         }
 
         /* Footer */
-        footer {
+        .public-footer {
             background: var(--dark);
             color: white;
-            padding: 60px 0 30px;
+            padding: 80px 0 40px;
         }
 
         .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-column h3 {
-            font-size: 1.3rem;
-            margin-bottom: 25px;
-            color: var(--accent);
-        }
-
-        .contact-info i {
-            margin-right: 10px;
-            color: var(--accent);
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
         }
 
         .copyright {
             text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: #aaa;
-            font-size: 0.9rem;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
         }
 
-        /* Login Modal */
+        /* ============ MODAL LOGIN ============ */
         .modal {
             display: none;
             position: fixed;
@@ -364,284 +385,407 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9);
             z-index: 2000;
             align-items: center;
             justify-content: center;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
             background: white;
             width: 90%;
             max-width: 500px;
-            border-radius: 15px;
+            border-radius: 20px;
             overflow: hidden;
-            animation: modalAppear 0.5s;
+            animation: modalSlideIn 0.4s;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
         }
 
-        @keyframes modalAppear {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px) scale(0.9); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
         }
 
         .modal-header {
-            background: var(--dark);
+            background: linear-gradient(135deg, var(--dark), var(--primary));
             color: white;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             position: relative;
         }
 
         .modal-header h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
+            font-weight: 700;
         }
 
         .close-modal {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.5rem;
+            top: 20px;
+            right: 25px;
+            font-size: 1.8rem;
             cursor: pointer;
             color: white;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--accent);
         }
 
         .modal-body {
-            padding: 40px;
+            padding: 50px;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             color: var(--dark);
             font-weight: 600;
+            font-size: 1.1rem;
         }
 
         .form-group input, .form-group select {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border 0.3s;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            background: #f8f9fa;
         }
 
         .form-group input:focus, .form-group select:focus {
             border-color: var(--primary);
             outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
         }
 
         .login-submit {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--dark));
             color: white;
             border: none;
-            padding: 15px 40px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s;
             width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
 
         .login-submit:hover {
-            background: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(26, 95, 122, 0.3);
+            background: linear-gradient(135deg, var(--dark), var(--primary));
         }
 
-        /* Admin Dashboard */
-        .admin-dashboard {
+        /* ============ DASHBOARDS HORIZONTAIS ============ */
+        .dashboard {
             display: none;
-            margin-top: 80px;
-            min-height: calc(100vh - 80px);
+            min-height: 100vh;
+            background: #f0f2f5;
         }
 
-        .dashboard-header {
-            background: var(--dark);
-            color: white;
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        /* Top Bar Horizontal */
+        .top-bar {
+            background: white;
+            padding: 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
+            border-bottom: 5px solid;
         }
 
-        .dashboard-title {
+        /* Cores diferentes para cada dashboard */
+        .boss-dashboard .top-bar {
+            border-bottom-color: var(--boss);
+            background: linear-gradient(135deg, #9b59b6, var(--boss));
+        }
+
+        .team-dashboard .top-bar {
+            border-bottom-color: var(--team);
+            background: linear-gradient(135deg, #3498db, #2980b9);
+        }
+
+        .purchase-dashboard .top-bar {
+            border-bottom-color: var(--purchase);
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+
+        .top-bar-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 15px 0;
         }
 
-        .dashboard-title h1 {
-            font-size: 1.5rem;
+        .dashboard-brand {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .dashboard-brand i {
+            font-size: 2.2rem;
+            color: white;
+        }
+
+        .dashboard-brand h1 {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .dashboard-info {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            color: white;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255,255,255,0.15);
+            padding: 10px 20px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+        }
+
+        .user-info i {
+            font-size: 1.4rem;
         }
 
         .logout-btn {
-            background: var(--danger);
+            background: rgba(255,255,255,0.2);
             color: white;
-            border: none;
-            padding: 8px 20px;
-            border-radius: 5px;
-            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.3);
+            padding: 10px 25px;
+            border-radius: 50px;
             font-weight: 600;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            min-height: calc(100vh - 110px);
-            margin-top: 50px;
-        }
-
-        .sidebar {
-            background: var(--light);
-            padding: 30px 0;
-            border-right: 1px solid #ddd;
-            position: fixed;
-            height: calc(100vh - 110px);
-            overflow-y: auto;
-            width: 250px;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-        }
-
-        .sidebar-menu li {
-            margin-bottom: 5px;
-        }
-
-        .sidebar-menu a {
+            cursor: pointer;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
-            padding: 15px 25px;
-            color: var(--dark);
-            text-decoration: none;
-            transition: all 0.3s;
-            border-left: 4px solid transparent;
+            gap: 10px;
+            backdrop-filter: blur(10px);
         }
 
-        .sidebar-menu a:hover, .sidebar-menu a.active {
-            background: rgba(26, 95, 122, 0.1);
-            border-left-color: var(--primary);
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+            border-color: white;
+        }
+
+        /* Menu Horizontal */
+        .horizontal-menu {
+            background: white;
+            margin-top: 70px;
+            padding: 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            position: fixed;
+            width: 100%;
+            z-index: 999;
+            overflow-x: auto;
+        }
+
+        .menu-container {
+            display: flex;
+            gap: 5px;
+            padding: 0;
+            width: 100%;
+        }
+
+        .menu-item {
+            padding: 20px 30px;
+            color: #555;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            white-space: nowrap;
+            border-bottom: 4px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .menu-item:hover {
+            color: var(--primary);
+            background: #f8f9fa;
+        }
+
+        .menu-item.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: #f0f7ff;
+        }
+
+        .menu-item i {
+            font-size: 1.2rem;
+        }
+
+        .menu-badge {
+            background: var(--accent);
+            color: white;
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 20px;
+            margin-left: 8px;
+            font-weight: 700;
+        }
+
+        /* Conteúdo do Dashboard */
+        .dashboard-content {
+            margin-top: 140px;
+            padding: 30px;
+            background: #f0f2f5;
+            min-height: calc(100vh - 140px);
+        }
+
+        /* Cards de Estatísticas */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card-horizontal {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border-left: 6px solid;
+            transition: transform 0.3s;
+        }
+
+        .stat-card-horizontal:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        .boss-dashboard .stat-card-horizontal { border-left-color: var(--boss); }
+        .team-dashboard .stat-card-horizontal { border-left-color: var(--team); }
+        .purchase-dashboard .stat-card-horizontal { border-left-color: var(--purchase); }
+
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            color: white;
+        }
+
+        .boss-dashboard .stat-icon { background: linear-gradient(135deg, var(--boss), #9b59b6); }
+        .team-dashboard .stat-icon { background: linear-gradient(135deg, var(--team), #3498db); }
+        .purchase-dashboard .stat-icon { background: linear-gradient(135deg, var(--purchase), #2ecc71); }
+
+        .stat-info h3 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+
+        .stat-info p {
+            color: #666;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Grids de Conteúdo */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Cards de Conteúdo */
+        .content-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-header h3 {
+            color: var(--dark);
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-header h3 i {
             color: var(--primary);
         }
 
-        .sidebar-menu i {
-            margin-right: 15px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .dashboard-content {
-            padding: 30px;
-            background: white;
-            margin-left: 250px;
-            width: calc(100% - 250px);
-        }
-
-        /* Team Leader Dashboard */
-        .team-dashboard {
-            background: #f5f7fa;
-        }
-
-        .team-header {
-            background: linear-gradient(135deg, var(--secondary), #3498db);
-            color: white;
-            padding: 20px;
+        /* Botões */
+        .btn-dashboard {
+            padding: 12px 25px;
             border-radius: 10px;
-            margin-bottom: 30px;
-        }
-
-        .team-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--secondary);
-        }
-
-        .stat-card h3 {
-            font-size: 2rem;
-            color: var(--dark);
-            margin-bottom: 10px;
-        }
-
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .action-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s;
+            font-weight: 600;
+            border: none;
             cursor: pointer;
-            border: 2px solid transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            font-size: 1rem;
         }
 
-        .action-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--secondary);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-
-        .action-card i {
-            font-size: 2.5rem;
-            color: var(--secondary);
-            margin-bottom: 15px;
-        }
-
-        /* Purchase Manager Dashboard */
-        .purchase-dashboard {
-            background: #f0f9ff;
-        }
-
-        .purchase-header {
-            background: linear-gradient(135deg, var(--success), #2ecc71);
+        .btn-primary {
+            background: var(--primary);
             color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
         }
 
-        /* Forms */
-        .form-section {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .form-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: flex-end;
-            margin-top: 30px;
+        .btn-primary:hover {
+            background: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(26, 95, 122, 0.3);
         }
 
         .btn-success {
@@ -649,9 +793,19 @@
             color: white;
         }
 
+        .btn-success:hover {
+            background: #219653;
+            transform: translateY(-3px);
+        }
+
         .btn-warning {
             background: var(--warning);
             color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e67e22;
+            transform: translateY(-3px);
         }
 
         .btn-danger {
@@ -659,121 +813,271 @@
             color: white;
         }
 
-        /* Tables */
+        .btn-danger:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+        }
+
+        /* Tabelas */
         .data-table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             border-radius: 10px;
             overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
 
         .data-table th {
             background: var(--primary);
             color: white;
-            padding: 15px;
+            padding: 20px;
             text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
         }
 
         .data-table td {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
+            padding: 18px 20px;
+            border-bottom: 1px solid #f0f0f0;
         }
 
         .data-table tr:hover {
-            background: #f9f9f9;
+            background: #f8f9fa;
         }
 
-        .status-badge {
-            padding: 5px 10px;
+        /* Badges */
+        .badge {
+            padding: 8px 15px;
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            font-size: 0.85rem;
+            font-weight: 700;
             display: inline-block;
         }
 
-        .status-working { background: #d5f4e6; color: var(--success); }
-        .status-pending { background: #fff3cd; color: var(--warning); }
-        .status-approved { background: #d1ecf1; color: var(--secondary); }
-        .status-overtime { background: #f8d7da; color: var(--danger); }
+        .badge-success { background: #d5f4e6; color: var(--success); }
+        .badge-warning { background: #fff3cd; color: var(--warning); }
+        .badge-danger { background: #f8d7da; color: var(--danger); }
+        .badge-primary { background: #d1ecf1; color: var(--secondary); }
+        .badge-info { background: #d1ecf1; color: #17a2b8; }
+
+        /* Formulários */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group-dashboard {
+            margin-bottom: 25px;
+        }
+
+        .form-group-dashboard label {
+            display: block;
+            margin-bottom: 12px;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .form-group-dashboard input,
+        .form-group-dashboard select,
+        .form-group-dashboard textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .form-group-dashboard input:focus,
+        .form-group-dashboard select:focus,
+        .form-group-dashboard textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        /* Time Tracker */
+        .time-tracker {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .time-display {
+            font-size: 4rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .time-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
 
         /* Material Categories */
-        .categories {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
-        .category-tag {
-            background: var(--light);
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+        .category-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
             cursor: pointer;
             transition: all 0.3s;
+            border: 3px solid transparent;
         }
 
-        .category-tag:hover, .category-tag.active {
-            background: var(--primary);
+        .category-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .category-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* GPS Tracker */
+        .gps-tracker {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
             color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 992px) {
-            .dashboard-grid {
+        .gps-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .gps-coordinates {
+            font-family: monospace;
+            font-size: 1.3rem;
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .content-grid {
                 grid-template-columns: 1fr;
             }
-            
-            .sidebar {
-                display: none;
-            }
-            
-            .dashboard-content {
-                margin-left: 0;
-                width: 100%;
-            }
-            
+        }
+
+        @media (max-width: 992px) {
             .hero h2 {
-                font-size: 2.5rem;
+                font-size: 2.8rem;
             }
             
-            .cta-buttons {
-                flex-direction: column;
-                gap: 10px;
+            .section-title {
+                font-size: 2.3rem;
             }
             
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
+            .menu-container {
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .menu-item {
+                padding: 15px 20px;
+                font-size: 0.95rem;
             }
         }
 
         @media (max-width: 768px) {
             .hero {
-                padding: 150px 0 100px;
+                padding: 180px 0 100px;
             }
             
             .hero h2 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
-            .section-title {
-                font-size: 2rem;
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .stats-row {
+                grid-template-columns: 1fr;
             }
             
             .form-row {
                 grid-template-columns: 1fr;
             }
+            
+            .top-bar-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .dashboard-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .menu-item {
+                padding: 12px 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .content-card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Public Website -->
+    <!-- ============ PÁGINA PÚBLICA ============ -->
     <div id="publicWebsite">
-        <!-- Header -->
-        <header>
+        <!-- Header Público -->
+        <header class="public-header">
             <div class="container nav-container">
                 <div class="logo">
                     <i class="fas fa-hard-hat"></i>
@@ -783,10 +1087,12 @@
                     </div>
                 </div>
                 <div class="cta-buttons">
-                    <a href="https://wa.me/351XXXXXXXXX?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20uma%20obra" class="btn btn-whatsapp" target="_blank">
+                    <a href="https://wa.me/351123456789?text=Olá MAFC,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20uma%20obra" 
+                       class="btn btn-whatsapp" target="_blank">
                         <i class="fab fa-whatsapp"></i> WhatsApp
                     </a>
-                    <a href="mailto:orçamentos@mafc-filho.pt?subject=Solicitação de Orçamento&body=Olá MAFC,%0D%0A%0D%0AGostaria de solicitar um orçamento para:" class="btn btn-email">
+                    <a href="mailto:orcamentos@mafc-filho.pt?subject=Solicitação de Orçamento&body=Olá MAFC,%0D%0A%0D%0AGostaria de solicitar um orçamento para:" 
+                       class="btn btn-email">
                         <i class="fas fa-envelope"></i> Pedir Orçamento
                     </a>
                     <a href="#" class="btn btn-login" id="openLogin">
@@ -800,7 +1106,7 @@
         <section class="hero">
             <div class="container">
                 <h2>Especialistas em Construção Civil e Obras Públicas</h2>
-                <p>Mais de 20 anos de experiência em saneamento, abastecimento de água, redes de fibra óptica, pavimentação e infraestruturas. Operação em Portugal e Alemanha.</p>
+                <p>Mais de 20 anos de experiência em saneamento, abastecimento de água, redes de fibra óptica, pavimentação e infraestruturas. Operação em Portugal e Alemanha com 15 equipas especializadas.</p>
                 <div class="hero-buttons">
                     <a href="#services" class="btn btn-email">
                         <i class="fas fa-hard-hat"></i> Nossos Serviços
@@ -845,20 +1151,6 @@
                         <h3>Redes EDP e Gás</h3>
                         <p>Instalação de infraestruturas elétricas e de gás natural.</p>
                     </div>
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-tools"></i>
-                        </div>
-                        <h3>Infraestruturas Públicas</h3>
-                        <p>Obras públicas completas para câmaras municipais e juntas de freguesia.</p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-globe-europe"></i>
-                        </div>
-                        <h3>Operação na Alemanha</h3>
-                        <p>Equipas especializadas a trabalhar em projetos internacionais.</p>
-                    </div>
                 </div>
             </div>
         </section>
@@ -867,63 +1159,26 @@
         <section class="company-info">
             <div class="container">
                 <h2 class="section-title">MAFC em Números</h2>
-                <div class="info-grid">
-                    <div class="info-card">
+                <div class="stats-grid">
+                    <div class="stat-card">
                         <i class="fas fa-calendar-alt"></i>
                         <h3>20+</h3>
                         <p>Anos de Experiência</p>
                     </div>
-                    <div class="info-card">
+                    <div class="stat-card">
                         <i class="fas fa-users"></i>
                         <h3>40+</h3>
                         <p>Colaboradores</p>
                     </div>
-                    <div class="info-card">
+                    <div class="stat-card">
                         <i class="fas fa-hard-hat"></i>
                         <h3>15</h3>
                         <p>Equipas Ativas</p>
                     </div>
-                    <div class="info-card">
-                        <i class="fas fa-flag"></i>
+                    <div class="stat-card">
+                        <i class="fas fa-globe-europe"></i>
                         <h3>2</h3>
                         <p>Países de Operação</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Gallery -->
-        <section class="gallery">
-            <div class="container">
-                <h2 class="section-title">Nossas Obras</h2>
-                <div class="gallery-grid">
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pavimentação">
-                        <div class="gallery-overlay">
-                            <h4>Pavimentação em Cubo</h4>
-                            <p>Área urbana reurbanizada</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Redes">
-                        <div class="gallery-overlay">
-                            <h4>Redes de Fibra Óptica</h4>
-                            <p>Infraestrutura de telecomunicações</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Saneamento">
-                        <div class="gallery-overlay">
-                            <h4>Saneamento Urbano</h4>
-                            <p>Redes de águas pluviais</p>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://images.unsplash.com/photo-1533158326339-7f3e096fada4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Água">
-                        <div class="gallery-overlay">
-                            <h4>Abastecimento de Água</h4>
-                            <p>Sistemas de adução</p>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -935,28 +1190,25 @@
                 <h2>Solicite um Orçamento Gratuito</h2>
                 <p>Tem um projeto de construção? Entre em contacto connosco para uma avaliação personalizada.</p>
                 <div class="quote-buttons">
-                    <a href="https://wa.me/351XXXXXXXXX?text=Olá,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20uma%20obra" class="btn btn-whatsapp" target="_blank">
-                        <i class="fab fa-whatsapp"></i> WhatsApp: +351 XXX XXX XXX
+                    <a href="https://wa.me/351123456789?text=Olá MAFC,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20uma%20obra" 
+                       class="btn btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
                     </a>
-                    <a href="mailto:orçamentos@mafc-filho.pt?subject=Solicitação de Orçamento&body=Olá MAFC,%0D%0A%0D%0AGostaria de solicitar um orçamento para:" class="btn btn-email">
-                        <i class="fas fa-envelope"></i> Email: orçamentos@mafc-filho.pt
+                    <a href="mailto:orcamentos@mafc-filho.pt?subject=Solicitação de Orçamento&body=Olá MAFC,%0D%0A%0D%0AGostaria de solicitar um orçamento para:" 
+                       class="btn btn-email">
+                        <i class="fas fa-envelope"></i> Email
                     </a>
                 </div>
             </div>
         </section>
 
         <!-- Footer -->
-        <footer>
+        <footer class="public-footer">
             <div class="container">
                 <div class="footer-content">
-                    <div class="footer-column">
+                    <div>
                         <h3>MAFC & FILHO, LDA.</h3>
                         <p>Constituída em 2001, somos especialistas em construção civil e obras públicas com operação em Portugal e Alemanha.</p>
-                        <div class="contact-info" style="margin-top: 20px;">
-                            <p><i class="fas fa-map-marker-alt"></i> Portugal | Alemanha</p>
-                            <p><i class="fas fa-phone"></i> +351 XXX XXX XXX</p>
-                            <p><i class="fas fa-envelope"></i> info@mafc-filho.pt</p>
-                        </div>
                     </div>
                 </div>
                 <div class="copyright">
@@ -966,27 +1218,28 @@
         </footer>
     </div>
 
-    <!-- Login Modal -->
+    <!-- ============ MODAL DE LOGIN ============ -->
     <div class="modal" id="loginModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>Acesso ao Sistema MAFC</h2>
+                <h2><i class="fas fa-lock"></i> Acesso ao Sistema MAFC</h2>
                 <span class="close-modal">&times;</span>
             </div>
             <div class="modal-body">
                 <form id="loginForm">
                     <div class="form-group">
-                        <label for="username">Código de Acesso</label>
-                        <input type="text" id="username" placeholder="mafc" required>
+                        <label for="username"><i class="fas fa-user"></i> Código de Acesso</label>
+                        <input type="text" id="username" placeholder="Digite seu código" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Senha</label>
-                        <input type="password" id="password" placeholder="1234" required>
+                        <label for="password"><i class="fas fa-key"></i> Senha</label>
+                        <input type="password" id="password" placeholder="Digite sua senha" required>
                     </div>
                     <div class="form-group">
-                        <label for="role">Tipo de Acesso</label>
+                        <label for="role"><i class="fas fa-user-tag"></i> Tipo de Acesso</label>
                         <select id="role" required>
-                            <option value="admin">Patrão/Administrador</option>
+                            <option value="">Selecione o tipo de acesso</option>
+                            <option value="boss">Patrão/Administrador</option>
                             <option value="team">Chefe de Equipa</option>
                             <option value="purchase">Responsável de Compras</option>
                         </select>
@@ -999,346 +1252,583 @@
         </div>
     </div>
 
-    <!-- Admin Dashboard -->
-    <div class="admin-dashboard" id="adminDashboard">
-        <div class="dashboard-header">
-            <div class="container dashboard-title">
-                <h1><i class="fas fa-crown"></i> Painel do Patrão - MAFC Team Control</h1>
-                <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+    <!-- ============ DASHBOARD DO PATRÃO ============ -->
+    <div class="dashboard boss-dashboard" id="bossDashboard">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="container top-bar-content">
+                <div class="dashboard-brand">
+                    <i class="fas fa-crown"></i>
+                    <h1>Painel do Patrão - MAFC Team Control</h1>
+                </div>
+                <div class="dashboard-info">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="bossUserName">Administrador MAFC</span>
+                    </div>
+                    <div id="bossCurrentTime" style="font-weight: 600;">10:45 AM</div>
+                    <button class="logout-btn" id="bossLogoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="dashboard-grid">
-            <div class="sidebar">
-                <ul class="sidebar-menu">
-                    <li><a href="#" class="active" data-section="overview"><i class="fas fa-tachometer-alt"></i> Visão Geral</a></li>
-                    <li><a href="#" data-section="teams"><i class="fas fa-users"></i> Equipas (15)</a></li>
-                    <li><a href="#" data-section="workers"><i class="fas fa-user-hard-hat"></i> Trabalhadores</a></li>
-                    <li><a href="#" data-section="works"><i class="fas fa-hard-hat"></i> Obras Alemanha</a></li>
-                    <li><a href="#" data-section="hours"><i class="fas fa-clock"></i> Controlo de Horas</a></li>
-                    <li><a href="#" data-section="overtime"><i class="fas fa-history"></i> Banco de Horas</a></li>
-                    <li><a href="#" data-section="materials"><i class="fas fa-boxes"></i> Pedidos de Material</a></li>
-                    <li><a href="#" data-section="purchases"><i class="fas fa-shopping-cart"></i> Compras Aprovadas</a></li>
-                    <li><a href="#" data-section="expenses"><i class="fas fa-euro-sign"></i> Despesas Totais</a></li>
-                    <li><a href="#" data-section="reports"><i class="fas fa-chart-bar"></i> Relatórios</a></li>
-                    <li><a href="#" data-section="accounting"><i class="fas fa-file-invoice-dollar"></i> Contabilidade</a></li>
-                </ul>
+
+        <!-- Menu Horizontal -->
+        <nav class="horizontal-menu">
+            <div class="container menu-container">
+                <a href="#" class="menu-item active" data-section="overview">
+                    <i class="fas fa-tachometer-alt"></i> Visão Geral
+                </a>
+                <a href="#" class="menu-item" data-section="teams">
+                    <i class="fas fa-users"></i> 15 Equipas
+                    <span class="menu-badge">15</span>
+                </a>
+                <a href="#" class="menu-item" data-section="works">
+                    <i class="fas fa-hard-hat"></i> Obras Alemanha
+                    <span class="menu-badge">8</span>
+                </a>
+                <a href="#" class="menu-item" data-section="hours">
+                    <i class="fas fa-clock"></i> Controlo de Horas
+                    <span class="menu-badge">42</span>
+                </a>
+                <a href="#" class="menu-item" data-section="materials">
+                    <i class="fas fa-boxes"></i> Pedidos Material
+                    <span class="menu-badge">12</span>
+                </a>
+                <a href="#" class="menu-item" data-section="purchases">
+                    <i class="fas fa-shopping-cart"></i> Compras
+                    <span class="menu-badge">24</span>
+                </a>
+                <a href="#" class="menu-item" data-section="expenses">
+                    <i class="fas fa-euro-sign"></i> Despesas
+                </a>
+                <a href="#" class="menu-item" data-section="reports">
+                    <i class="fas fa-chart-bar"></i> Relatórios
+                </a>
+                <a href="#" class="menu-item" data-section="accounting">
+                    <i class="fas fa-file-invoice-dollar"></i> Contabilidade
+                </a>
             </div>
-            <div class="dashboard-content">
-                <!-- All Admin Sections -->
-                <div class="dashboard-section active" id="overviewSection">
-                    <div class="section-header">
-                        <h2>Visão Geral do Sistema</h2>
-                        <span id="currentDate">10/12/2024, 08:15</span>
-                    </div>
-                    
-                    <div class="stats-cards">
-                        <div class="stat-card">
+        </nav>
+
+        <!-- Conteúdo -->
+        <div class="dashboard-content">
+            <!-- Seção Visão Geral -->
+            <div class="dashboard-section active" id="overviewSection">
+                <div class="stats-row">
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
                             <h3>15</h3>
                             <p>Equipas Ativas</p>
                         </div>
-                        <div class="stat-card">
+                    </div>
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-hard-hat"></i>
+                        </div>
+                        <div class="stat-info">
                             <h3>42</h3>
                             <p>Trabalhadores</p>
                         </div>
-                        <div class="stat-card">
+                    </div>
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-euro-sign"></i>
+                        </div>
+                        <div class="stat-info">
                             <h3>8</h3>
                             <p>Obras Alemanha</p>
                         </div>
-                        <div class="stat-card">
+                    </div>
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
                             <h3>12</h3>
                             <p>Pedidos Pendentes</p>
                         </div>
                     </div>
-                    
-                    <h3 style="margin: 30px 0 15px;">Equipas em Tempo Real - Alemanha</h3>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Equipa</th>
-                                <th>Localização</th>
-                                <th>Obra</th>
-                                <th>Estado</th>
-                                <th>Trabalhadores</th>
-                                <th>Horas Hoje</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Equipa 01 - Berlin</td>
-                                <td>Berlim, Kreuzberg</td>
-                                <td>Saneamento Urbano</td>
-                                <td><span class="status-badge status-working">A Trabalhar</span></td>
-                                <td>5/5</td>
-                                <td>4.5h</td>
-                            </tr>
-                            <tr>
-                                <td>Equipa 02 - Hamburg</td>
-                                <td>Hamburgo, Centro</td>
-                                <td>Pavimentação</td>
-                                <td><span class="status-badge status-working">A Trabalhar</span></td>
-                                <td>3/3</td>
-                                <td>4.2h</td>
-                            </tr>
-                            <tr>
-                                <td>Equipa 03 - Munich</td>
-                                <td>Munique, Subúrbios</td>
-                                <td>Redes Fibra Óptica</td>
-                                <td><span class="status-badge status-working">A Trabalhar</span></td>
-                                <td>4/4</td>
-                                <td>4.8h</td>
-                            </tr>
-                        </tbody>
-                    </table>
                 </div>
-                
-                <!-- Teams Section -->
-                <div class="dashboard-section" id="teamsSection">
-                    <div class="section-header">
-                        <h2>Gestão das 15 Equipas</h2>
-                        <button class="btn btn-primary">Nova Equipa</button>
-                    </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nome</th>
-                                <th>Chefe</th>
-                                <th>Localização</th>
-                                <th>Obra</th>
-                                <th>GPS</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="teamsTable">
-                            <!-- Teams will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Materials Section -->
-                <div class="dashboard-section" id="materialsSection">
-                    <div class="section-header">
-                        <h2>Pedidos de Material das Equipas</h2>
-                    </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Material</th>
-                                <th>Quantidade</th>
-                                <th>Equipa</th>
-                                <th>Data</th>
-                                <th>Estado</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="materialsTable">
-                            <!-- Materials will be loaded here -->
-                        </tbody>
-                    </table>
-                </div>
-                
-                <!-- Accounting Section -->
-                <div class="dashboard-section" id="accountingSection">
-                    <div class="section-header">
-                        <h2>Contabilidade - Exportação para Ficheiro</h2>
-                        <button class="btn btn-success" onclick="exportToAccounting()">
-                            <i class="fas fa-file-export"></i> Exportar para Contabilidade
-                        </button>
-                    </div>
-                    <div class="form-section">
-                        <h3>Horas Trabalhadas > 160h/Mês</h3>
-                        <p>Trabalhadores com horas extras para banco de horas:</p>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-map-marker-alt"></i> Equipas em Tempo Real - Alemanha</h3>
+                            <button class="btn-dashboard btn-primary" onclick="refreshLocations()">
+                                <i class="fas fa-sync-alt"></i> Atualizar
+                            </button>
+                        </div>
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>Trabalhador</th>
                                     <th>Equipa</th>
-                                    <th>Horas Normais</th>
-                                    <th>Horas Extra</th>
-                                    <th>Total</th>
-                                    <th>Banco Horas</th>
+                                    <th>Localização</th>
+                                    <th>Obra</th>
+                                    <th>Estado</th>
+                                    <th>GPS</th>
                                 </tr>
                             </thead>
-                            <tbody id="overtimeTable">
-                                <!-- Overtime data -->
+                            <tbody id="bossTeamsTable">
+                                <tr>
+                                    <td><strong>Equipa 01 - Berlin</strong></td>
+                                    <td>Berlim, Kreuzberg</td>
+                                    <td>Saneamento Urbano</td>
+                                    <td><span class="badge badge-success">A Trabalhar</span></td>
+                                    <td>52.5200° N</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Equipa 02 - Hamburg</strong></td>
+                                    <td>Hamburgo, Centro</td>
+                                    <td>Pavimentação</td>
+                                    <td><span class="badge badge-success">A Trabalhar</span></td>
+                                    <td>53.5511° N</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-exclamation-circle"></i> Pedidos Urgentes</h3>
+                            <button class="btn-dashboard btn-warning" onclick="viewAllRequests()">
+                                <i class="fas fa-eye"></i> Ver Todos
+                            </button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Equipa</th>
+                                    <th>Material</th>
+                                    <th>Quantidade</th>
+                                    <th>Urgência</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="urgentRequestsTable">
+                                <tr>
+                                    <td>Equipa 03</td>
+                                    <td>Cimento</td>
+                                    <td>50 sacos</td>
+                                    <td><span class="badge badge-danger">CRÍTICO</span></td>
+                                    <td>
+                                        <button class="btn-dashboard btn-success btn-sm" onclick="approveRequest(1)">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
+            <!-- Seção Equipas -->
+            <div class="dashboard-section" id="teamsSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-users"></i> Gestão das 15 Equipas</h3>
+                        <button class="btn-dashboard btn-primary" onclick="addNewTeam()">
+                            <i class="fas fa-plus"></i> Nova Equipa
+                        </button>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" placeholder="Pesquisar equipa..." id="teamSearch">
+                        <select id="teamFilter">
+                            <option value="all">Todas as equipas</option>
+                            <option value="germany">Alemanha</option>
+                            <option value="portugal">Portugal</option>
+                        </select>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Equipa</th>
+                                <th>Chefe</th>
+                                <th>Localização</th>
+                                <th>Obra</th>
+                                <th>Trabalhadores</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allTeamsTable">
+                            <!-- Equipas serão carregadas aqui -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Seção Controlo de Horas -->
+            <div class="dashboard-section" id="hoursSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock"></i> Controlo de Horas - Todas as Equipas</h3>
+                        <button class="btn-dashboard btn-success" onclick="exportHours()">
+                            <i class="fas fa-file-export"></i> Exportar
+                        </button>
+                    </div>
+                    
+                    <div class="time-tracker">
+                        <div class="time-display" id="bossCurrentTimeFull">10:45:23</div>
+                        <div class="time-buttons">
+                            <button class="btn-dashboard btn-warning" onclick="simulateClockIn()">
+                                <i class="fas fa-sign-in-alt"></i> Simular Entrada
+                            </button>
+                            <button class="btn-dashboard btn-danger" onclick="simulateClockOut()">
+                                <i class="fas fa-sign-out-alt"></i> Simular Saída
+                            </button>
+                        </div>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Trabalhador</th>
+                                <th>Equipa</th>
+                                <th>Entrada</th>
+                                <th>Saída</th>
+                                <th>Total</th>
+                                <th>Banco Horas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hoursTable">
+                            <tr>
+                                <td>João Silva</td>
+                                <td>Equipa 01</td>
+                                <td>08:00</td>
+                                <td>16:30</td>
+                                <td>8.5h</td>
+                                <td><span class="badge badge-warning">+0.5h</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Seção Contabilidade -->
+            <div class="dashboard-section" id="accountingSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-file-invoice-dollar"></i> Contabilidade - Banco de Horas (>160h)</h3>
+                        <button class="btn-dashboard btn-success" onclick="exportToAccounting()">
+                            <i class="fas fa-file-excel"></i> Exportar Excel
+                        </button>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group-dashboard">
+                            <label>Mês de Referência</label>
+                            <select id="accountingMonth">
+                                <option value="12">Dezembro 2024</option>
+                                <option value="11">Novembro 2024</option>
+                            </select>
+                        </div>
+                        <div class="form-group-dashboard">
+                            <label>Filtrar por Equipa</label>
+                            <select id="accountingTeam">
+                                <option value="all">Todas as Equipas</option>
+                                <option value="team01">Equipa 01 - Berlin</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Trabalhador</th>
+                                <th>Equipa</th>
+                                <th>Horas Normais</th>
+                                <th>Horas Extra</th>
+                                <th>Total</th>
+                                <th>Banco Horas</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountingTable">
+                            <tr>
+                                <td>João Silva</td>
+                                <td>Equipa 01</td>
+                                <td>160</td>
+                                <td>12</td>
+                                <td>172</td>
+                                <td><span class="badge badge-danger">+12h</span></td>
+                                <td>360€</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Team Leader Dashboard -->
-    <div class="admin-dashboard team-dashboard" id="teamDashboard">
-        <div class="dashboard-header">
-            <div class="container dashboard-title">
-                <h1><i class="fas fa-hard-hat"></i> Chefe de Equipa - MAFC Team Control</h1>
-                <button class="logout-btn" id="teamLogoutBtn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+    <!-- ============ DASHBOARD DO CHEFE DE EQUIPA ============ -->
+    <div class="dashboard team-dashboard" id="teamDashboard">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="container top-bar-content">
+                <div class="dashboard-brand">
+                    <i class="fas fa-hard-hat"></i>
+                    <h1>Chefe de Equipa - MAFC Team Control</h1>
+                </div>
+                <div class="dashboard-info">
+                    <div class="user-info">
+                        <i class="fas fa-user-hard-hat"></i>
+                        <span id="teamUserName">Equipa 01 - Berlin</span>
+                    </div>
+                    <div id="teamCurrentTime" style="font-weight: 600;">10:45 AM</div>
+                    <button class="logout-btn" id="teamLogoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
             </div>
         </div>
+
+        <!-- Menu Horizontal -->
+        <nav class="horizontal-menu">
+            <div class="container menu-container">
+                <a href="#" class="menu-item active" data-section="teamOverview">
+                    <i class="fas fa-home"></i> Visão da Equipa
+                </a>
+                <a href="#" class="menu-item" data-section="teamTime">
+                    <i class="fas fa-clock"></i> Controlo de Horas
+                </a>
+                <a href="#" class="menu-item" data-section="teamMaterials">
+                    <i class="fas fa-boxes"></i> Pedir Materiais
+                </a>
+                <a href="#" class="menu-item" data-section="teamWorkers">
+                    <i class="fas fa-user-plus"></i> Trabalhadores
+                </a>
+                <a href="#" class="menu-item" data-section="teamLocation">
+                    <i class="fas fa-map-marker-alt"></i> Localização
+                </a>
+                <a href="#" class="menu-item" data-section="teamExpenses">
+                    <i class="fas fa-euro-sign"></i> Despesas
+                </a>
+                <a href="#" class="menu-item" data-section="teamReports">
+                    <i class="fas fa-file-alt"></i> Relatórios
+                </a>
+            </div>
+        </nav>
+
+        <!-- Conteúdo -->
         <div class="dashboard-content">
-            <div class="team-header">
-                <h2>Equipa 01 - Berlin | Saneamento Urbano</h2>
-                <p>Chefe: João Silva | Localização: Berlim, Kreuzberg</p>
+            <!-- Visão da Equipa -->
+            <div class="dashboard-section active" id="teamOverviewSection">
+                <div class="stats-row">
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="teamWorkersCount">5</h3>
+                            <p>Trabalhadores Ativos</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="teamHoursToday">4.5</h3>
+                            <p>Horas Hoje</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="teamPendingMaterials">3</h3>
+                            <p>Pedidos Pendentes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="teamStatus">Online</h3>
+                            <p>Estado da Equipa</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-clock"></i> Registos de Hoje</h3>
+                            <button class="btn-dashboard btn-primary" onclick="registerAllEntry()">
+                                <i class="fas fa-users"></i> Entrada Todos
+                            </button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Trabalhador</th>
+                                    <th>Entrada</th>
+                                    <th>Saída</th>
+                                    <th>Total</th>
+                                    <th>Horas Extra</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teamTimeRecords">
+                                <tr>
+                                    <td>João Silva (Chefe)</td>
+                                    <td>08:00</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-box"></i> Pedidos Recentes</h3>
+                            <button class="btn-dashboard btn-success" onclick="requestMaterial()">
+                                <i class="fas fa-plus"></i> Novo Pedido
+                            </button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Material</th>
+                                    <th>Quantidade</th>
+                                    <th>Data</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teamMaterialRequests">
+                                <tr>
+                                    <td>Cimento</td>
+                                    <td>50 sacos</td>
+                                    <td>10/12/2024</td>
+                                    <td><span class="badge badge-warning">Pendente</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            
-            <div class="team-stats">
-                <div class="stat-card">
-                    <h3 id="teamWorkersCount">5</h3>
-                    <p>Trabalhadores</p>
-                </div>
-                <div class="stat-card">
-                    <h3 id="teamHoursToday">4.5</h3>
-                    <p>Horas Hoje</p>
-                </div>
-                <div class="stat-card">
-                    <h3 id="teamMaterials">3</h3>
-                    <p>Pedidos Pendentes</p>
-                </div>
-                <div class="stat-card">
-                    <h3 id="teamStatus">Online</h3>
-                    <p>Estado</p>
-                </div>
-            </div>
-            
-            <div class="quick-actions">
-                <div class="action-card" onclick="openSection('teamTime')">
-                    <i class="fas fa-clock"></i>
-                    <h3>Controlo de Horas</h3>
-                    <p>Registar entrada/saída da equipa</p>
-                </div>
-                
-                <div class="action-card" onclick="openSection('teamMaterials')">
-                    <i class="fas fa-boxes"></i>
-                    <h3>Pedir Materiais</h3>
-                    <p>Solicitar material para a obra</p>
-                </div>
-                
-                <div class="action-card" onclick="openSection('teamWorkers')">
-                    <i class="fas fa-user-plus"></i>
-                    <h3>Gestão de Trabalhadores</h3>
-                    <p>Adicionar/remover trabalhadores</p>
-                </div>
-                
-                <div class="action-card" onclick="openSection('teamLocation')">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h3>Atualizar Localização</h3>
-                    <p>Enviar GPS para o patrão</p>
-                </div>
-            </div>
-            
-            <!-- Team Time Section -->
-            <div class="dashboard-section active" id="teamTimeSection">
-                <div class="form-section">
-                    <h3><i class="fas fa-clock"></i> Controlo de Horas - Tempo Real</h3>
+
+            <!-- Controlo de Horas -->
+            <div class="dashboard-section" id="teamTimeSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock"></i> Controlo de Horas - Tempo Real</h3>
+                        <div class="time-display" style="font-size: 2.5rem; color: var(--team);">
+                            08:45:23
+                        </div>
+                    </div>
+
                     <div class="form-row">
-                        <div>
+                        <div class="form-group-dashboard">
                             <label>Trabalhador</label>
                             <select id="workerSelect">
                                 <option value="1">João Silva (Chefe)</option>
                                 <option value="2">Carlos Mendes</option>
                                 <option value="3">Miguel Santos</option>
-                                <option value="4">António Oliveira</option>
-                                <option value="5">Pedro Costa</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="form-group-dashboard">
                             <label>Ação</label>
                             <select id="timeAction">
                                 <option value="start">Entrada (Stempel)</option>
                                 <option value="end">Saída (Ausstempel)</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="form-group-dashboard">
                             <label>Hora Atual</label>
-                            <input type="text" id="currentTime" value="08:30" readonly>
+                            <input type="text" id="currentTimeInput" value="08:45" readonly>
                         </div>
                     </div>
+
                     <div class="form-actions">
-                        <button class="btn btn-success" onclick="registerTime()">
+                        <button class="btn-dashboard btn-success" onclick="registerTime()">
                             <i class="fas fa-check"></i> Registar Hora
                         </button>
-                        <button class="btn btn-primary" onclick="registerAll('start')">
+                        <button class="btn-dashboard btn-primary" onclick="registerAllTeam('start')">
                             <i class="fas fa-users"></i> Entrada Toda Equipa
                         </button>
-                        <button class="btn btn-warning" onclick="registerAll('end')">
+                        <button class="btn-dashboard btn-warning" onclick="registerAllTeam('end')">
                             <i class="fas fa-users"></i> Saída Toda Equipa
                         </button>
                     </div>
-                    
-                    <h4 style="margin-top: 30px;">Registos de Hoje</h4>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Trabalhador</th>
-                                <th>Entrada</th>
-                                <th>Saída</th>
-                                <th>Total Horas</th>
-                                <th>Banco Horas</th>
-                            </tr>
-                        </thead>
-                        <tbody id="timeRecordsTable">
-                            <!-- Time records will be loaded here -->
-                        </tbody>
-                    </table>
                 </div>
             </div>
-            
-            <!-- Team Materials Section -->
+
+            <!-- Pedir Materiais -->
             <div class="dashboard-section" id="teamMaterialsSection">
-                <div class="form-section">
-                    <h3><i class="fas fa-boxes"></i> Pedido de Material para Obra</h3>
-                    
-                    <div class="categories">
-                        <div class="category-tag active" data-category="all">Todos</div>
-                        <div class="category-tag" data-category="materials">Materiais Construção</div>
-                        <div class="category-tag" data-category="machines">Máquinas e Equipamentos</div>
-                        <div class="category-tag" data-category="tools">Ferramentas</div>
-                        <div class="category-tag" data-category="vehicles">Viaturas</div>
-                        <div class="category-tag" data-category="consumables">Consumíveis</div>
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-boxes"></i> Pedido de Material para Obra</h3>
+                        <span class="badge badge-info">Envia automaticamente para Compras</span>
                     </div>
-                    
+
+                    <div class="categories-grid">
+                        <div class="category-card" onclick="selectCategory('construction')">
+                            <i class="fas fa-brick"></i>
+                            <h4>Materiais Construção</h4>
+                            <p>Cimento, areia, brita...</p>
+                        </div>
+                        <div class="category-card" onclick="selectCategory('machines')">
+                            <i class="fas fa-tractor"></i>
+                            <h4>Máquinas</h4>
+                            <p>Retroescavadoras, camiões...</p>
+                        </div>
+                        <div class="category-card" onclick="selectCategory('tools')">
+                            <i class="fas fa-tools"></i>
+                            <h4>Ferramentas</h4>
+                            <p>Equipamentos especializados</p>
+                        </div>
+                        <div class="category-card" onclick="selectCategory('consumables')">
+                            <i class="fas fa-gas-pump"></i>
+                            <h4>Consumíveis</h4>
+                            <p>Gasóleo, óleo, EPIs...</p>
+                        </div>
+                    </div>
+
                     <div class="form-row">
-                        <div>
+                        <div class="form-group-dashboard">
                             <label>Categoria</label>
-                            <select id="materialCategory" onchange="filterMaterials()">
-                                <option value="materials">Materiais de Construção</option>
+                            <select id="materialCategory" onchange="loadMaterials()">
+                                <option value="construction">Materiais de Construção</option>
                                 <option value="machines">Máquinas e Equipamentos</option>
                                 <option value="tools">Ferramentas</option>
-                                <option value="vehicles">Viaturas</option>
                                 <option value="consumables">Consumíveis</option>
-                                <option value="other">Outros</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="form-group-dashboard">
                             <label>Material</label>
                             <select id="materialSelect">
-                                <!-- Materials will be populated by JavaScript -->
+                                <option value="cement">Cimento</option>
+                                <option value="sand">Areia</option>
+                                <option value="gravel">Brita</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="form-group-dashboard">
                             <label>Quantidade</label>
                             <input type="number" id="materialQuantity" min="1" value="1">
                         </div>
                     </div>
-                    
+
                     <div class="form-row">
-                        <div>
+                        <div class="form-group-dashboard">
                             <label>Unidade</label>
                             <select id="materialUnit">
-                                <option value="kg">kg</option>
                                 <option value="sacos">sacos</option>
                                 <option value="ton">toneladas</option>
                                 <option value="m3">m³</option>
                                 <option value="litros">litros</option>
-                                <option value="unidades">unidades</option>
-                                <option value="horas">horas</option>
-                                <option value="dias">dias</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="form-group-dashboard">
                             <label>Urgência</label>
                             <select id="materialUrgency">
                                 <option value="normal">Normal (1-2 semanas)</option>
@@ -1347,539 +1837,767 @@
                             </select>
                         </div>
                     </div>
-                    
-                    <div class="form-row">
-                        <div style="grid-column: 1 / -1;">
-                            <label>Observações</label>
-                            <textarea id="materialNotes" rows="3" placeholder="Detalhes adicionais sobre o material necessário..."></textarea>
-                        </div>
+
+                    <div class="form-group-dashboard">
+                        <label>Observações</label>
+                        <textarea id="materialNotes" rows="3" placeholder="Detalhes sobre o material necessário..."></textarea>
                     </div>
-                    
+
                     <div class="form-actions">
-                        <button class="btn btn-success" onclick="submitMaterialRequest()">
+                        <button class="btn-dashboard btn-success" onclick="submitMaterialRequest()">
                             <i class="fas fa-paper-plane"></i> Enviar para Compras
                         </button>
-                        <button class="btn btn-primary" onclick="addCustomMaterial()">
-                            <i class="fas fa-plus"></i> Adicionar Material Personalizado
+                        <button class="btn-dashboard btn-primary" onclick="addCustomMaterial()">
+                            <i class="fas fa-plus"></i> Material Personalizado
                         </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Localização -->
+            <div class="dashboard-section" id="teamLocationSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-map-marker-alt"></i> Localização GPS da Equipa</h3>
+                        <span class="badge badge-success">Patrão vê em tempo real</span>
+                    </div>
+
+                    <div class="gps-tracker">
+                        <div class="gps-info">
+                            <i class="fas fa-satellite" style="font-size: 3rem;"></i>
+                            <div class="gps-coordinates">
+                                <div>Latitude: <strong id="gpsLat">52.5200° N</strong></div>
+                                <div>Longitude: <strong id="gpsLng">13.4050° E</strong></div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <p>Localização atual: <strong>Berlim, Kreuzberg - Obra de Saneamento</strong></p>
+                            <div class="time-buttons">
+                                <button class="btn-dashboard btn-success" onclick="updateGPSLocation()">
+                                    <i class="fas fa-sync-alt"></i> Atualizar Localização
+                                </button>
+                                <button class="btn-dashboard btn-primary" onclick="sendLocationToBoss()">
+                                    <i class="fas fa-paper-plane"></i> Enviar ao Patrão
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Purchase Manager Dashboard -->
-    <div class="admin-dashboard purchase-dashboard" id="purchaseDashboard">
-        <div class="dashboard-header">
-            <div class="container dashboard-title">
-                <h1><i class="fas fa-shopping-cart"></i> Responsável de Compras - MAFC</h1>
-                <button class="logout-btn" id="purchaseLogoutBtn"><i class="fas fa-sign-out-alt"></i> Sair</button>
+    <!-- ============ DASHBOARD DE COMPRAS ============ -->
+    <div class="dashboard purchase-dashboard" id="purchaseDashboard">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <div class="container top-bar-content">
+                <div class="dashboard-brand">
+                    <i class="fas fa-shopping-cart"></i>
+                    <h1>Responsável de Compras - MAFC</h1>
+                </div>
+                <div class="dashboard-info">
+                    <div class="user-info">
+                        <i class="fas fa-user-tie"></i>
+                        <span id="purchaseUserName">Departamento Compras</span>
+                    </div>
+                    <div id="purchaseCurrentTime" style="font-weight: 600;">10:45 AM</div>
+                    <button class="logout-btn" id="purchaseLogoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Sair
+                    </button>
+                </div>
             </div>
         </div>
+
+        <!-- Menu Horizontal -->
+        <nav class="horizontal-menu">
+            <div class="container menu-container">
+                <a href="#" class="menu-item active" data-section="purchaseOverview">
+                    <i class="fas fa-tachometer-alt"></i> Visão Geral
+                </a>
+                <a href="#" class="menu-item" data-section="pendingRequests">
+                    <i class="fas fa-clipboard-list"></i> Pedidos Pendentes
+                    <span class="menu-badge">12</span>
+                </a>
+                <a href="#" class="menu-item" data-section="approvedPurchases">
+                    <i class="fas fa-check-circle"></i> Compras Aprovadas
+                    <span class="menu-badge">24</span>
+                </a>
+                <a href="#" class="menu-item" data-section="suppliers">
+                    <i class="fas fa-truck"></i> Fornecedores
+                </a>
+                <a href="#" class="menu-item" data-section="budget">
+                    <i class="fas fa-chart-pie"></i> Orçamento
+                </a>
+                <a href="#" class="menu-item" data-section="purchaseReports">
+                    <i class="fas fa-file-invoice"></i> Faturas
+                </a>
+            </div>
+        </nav>
+
+        <!-- Conteúdo -->
         <div class="dashboard-content">
-            <div class="purchase-header">
-                <h2>Gestão de Compras - Todas as Equipas Alemanha</h2>
-                <p>Aprovação de pedidos e gestão de fornecedores</p>
+            <!-- Visão Geral Compras -->
+            <div class="dashboard-section active" id="purchaseOverviewSection">
+                <div class="stats-row">
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="pendingCount">12</h3>
+                            <p>Pedidos Pendentes</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="approvedCount">24</h3>
+                            <p>Compras Aprovadas</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-euro-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="monthBudget">18.5K</h3>
+                            <p>Orçamento Mês (€)</p>
+                        </div>
+                    </div>
+                    <div class="stat-card-horizontal">
+                        <div class="stat-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="suppliersCount">8</h3>
+                            <p>Fornecedores Ativos</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-exclamation-triangle"></i> Pedidos Urgentes</h3>
+                            <button class="btn-dashboard btn-warning" onclick="processAllUrgent()">
+                                <i class="fas fa-bolt"></i> Processar Todos
+                            </button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Equipa</th>
+                                    <th>Material</th>
+                                    <th>Quantidade</th>
+                                    <th>Urgência</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="urgentPurchaseRequests">
+                                <tr>
+                                    <td>Equipa 03 - Munich</td>
+                                    <td>Cimento</td>
+                                    <td>50 sacos</td>
+                                    <td><span class="badge badge-danger">CRÍTICO</span></td>
+                                    <td>
+                                        <button class="btn-dashboard btn-success btn-sm" onclick="approvePurchase(1)">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <button class="btn-dashboard btn-danger btn-sm" onclick="rejectPurchase(1)">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="content-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-shopping-cart"></i> Últimas Compras</h3>
+                            <button class="btn-dashboard btn-primary" onclick="newPurchase()">
+                                <i class="fas fa-plus"></i> Nova Compra
+                            </button>
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nº Encomenda</th>
+                                    <th>Fornecedor</th>
+                                    <th>Material</th>
+                                    <th>Valor</th>
+                                    <th>Entrega</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentPurchases">
+                                <tr>
+                                    <td>#ENCM-001</td>
+                                    <td>Fornecedor A</td>
+                                    <td>Cimento</td>
+                                    <td>1.250€</td>
+                                    <td><span class="badge badge-success">15/12</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            
-            <div class="form-section">
-                <h3><i class="fas fa-clipboard-list"></i> Pedidos Pendentes de Aprovação</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Equipa</th>
-                            <th>Material</th>
-                            <th>Quantidade</th>
-                            <th>Urgência</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="pendingRequestsTable">
-                        <!-- Pending requests will be loaded here -->
-                    </tbody>
-                </table>
+
+            <!-- Pedidos Pendentes -->
+            <div class="dashboard-section" id="pendingRequestsSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clipboard-list"></i> Todos os Pedidos Pendentes</h3>
+                        <div>
+                            <button class="btn-dashboard btn-success" onclick="approveAll()">
+                                <i class="fas fa-check-double"></i> Aprovar Todos
+                            </button>
+                            <button class="btn-dashboard btn-danger" onclick="rejectAll()">
+                                <i class="fas fa-ban"></i> Recusar Todos
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group-dashboard">
+                            <label>Filtrar por Equipa</label>
+                            <select id="filterByTeam">
+                                <option value="all">Todas as Equipas</option>
+                                <option value="team01">Equipa 01 - Berlin</option>
+                            </select>
+                        </div>
+                        <div class="form-group-dashboard">
+                            <label>Filtrar por Urgência</label>
+                            <select id="filterByUrgency">
+                                <option value="all">Todas</option>
+                                <option value="critical">Crítico</option>
+                                <option value="urgent">Urgente</option>
+                            </select>
+                        </div>
+                        <div class="form-group-dashboard">
+                            <label>Pesquisar Material</label>
+                            <input type="text" id="searchMaterial" placeholder="Nome do material...">
+                        </div>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Equipa</th>
+                                <th>Material</th>
+                                <th>Quantidade</th>
+                                <th>Urgência</th>
+                                <th>Pedido por</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allPendingRequests">
+                            <tr>
+                                <td>10/12/2024</td>
+                                <td>Equipa 03 - Munich</td>
+                                <td>Cimento</td>
+                                <td>50 sacos</td>
+                                <td><span class="badge badge-danger">CRÍTICO</span></td>
+                                <td>Miguel Santos</td>
+                                <td>
+                                    <button class="btn-dashboard btn-success" onclick="approvePurchase(1)">
+                                        <i class="fas fa-check"></i> Aprovar
+                                    </button>
+                                    <button class="btn-dashboard btn-danger" onclick="rejectPurchase(1)">
+                                        <i class="fas fa-times"></i> Recusar
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            
-            <div class="form-section">
-                <h3><i class="fas fa-check-circle"></i> Compras Aprovadas</h3>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Nº Encomenda</th>
-                            <th>Fornecedor</th>
-                            <th>Material</th>
-                            <th>Valor</th>
-                            <th>Data Entrega</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody id="approvedPurchasesTable">
-                        <!-- Approved purchases will be loaded here -->
-                    </tbody>
-                </table>
+
+            <!-- Compras Aprovadas -->
+            <div class="dashboard-section" id="approvedPurchasesSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-check-circle"></i> Compras Aprovadas e Encomendadas</h3>
+                        <button class="btn-dashboard btn-primary" onclick="registerNewOrder()">
+                            <i class="fas fa-plus"></i> Nova Encomenda
+                        </button>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group-dashboard">
+                            <label>Fornecedor</label>
+                            <select id="supplierSelect">
+                                <option value="all">Todos Fornecedores</option>
+                                <option value="supplierA">Fornecedor A</option>
+                            </select>
+                        </div>
+                        <div class="form-group-dashboard">
+                            <label>Estado</label>
+                            <select id="orderStatus">
+                                <option value="all">Todos</option>
+                                <option value="ordered">Encomendado</option>
+                                <option value="delivered">Entregue</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nº Encomenda</th>
+                                <th>Fornecedor</th>
+                                <th>Material</th>
+                                <th>Quantidade</th>
+                                <th>Valor</th>
+                                <th>Data Entrega</th>
+                                <th>Estado</th>
+                                <th>Fatura</th>
+                            </tr>
+                        </thead>
+                        <tbody id="approvedPurchasesTable">
+                            <tr>
+                                <td><strong>#ENCM-001</strong></td>
+                                <td>Fornecedor A</td>
+                                <td>Cimento</td>
+                                <td>50 sacos</td>
+                                <td>1.250€</td>
+                                <td>15/12/2024</td>
+                                <td><span class="badge badge-warning">Encomendado</span></td>
+                                <td>
+                                    <button class="btn-dashboard btn-primary btn-sm">
+                                        <i class="fas fa-file-invoice"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ============== SISTEMA COMPLETO MAFC TEAM CONTROL ==============
+        // ============ SISTEMA COMPLETO MAFC ============
         
-        // Database simulation
-        const systemData = {
-            // Credentials for testing
-            users: [
-                { username: 'mafc', password: '1234', role: 'admin', name: 'Administrador' },
-                { username: 'equipa01', password: '1234', role: 'team', name: 'João Silva', team: 'Equipa 01 - Berlin' },
-                { username: 'compras', password: '1234', role: 'purchase', name: 'Responsável Compras' }
-            ],
+        // Dados do Sistema
+        const MAFCSystem = {
+            // Credenciais de acesso
+            credentials: {
+                // PATRÃO/ADMIN - Acesso total de qualquer país
+                boss: [
+                    { code: 'mafc', password: '1234', name: 'Administrador MAFC' },
+                    { code: 'patrao', password: 'admin123', name: 'Patrão Portugal' },
+                    { code: 'admin', password: 'mafc2024', name: 'Administrador Geral' }
+                ],
+                
+                // CHEFES DE EQUIPA (15 equipas)
+                team: [
+                    { code: 'equipa01', password: '1234', name: 'João Silva', team: 'Equipa 01 - Berlin' },
+                    { code: 'equipa02', password: '1234', name: 'Carlos Mendes', team: 'Equipa 02 - Hamburg' },
+                    { code: 'equipa03', password: '1234', name: 'Miguel Santos', team: 'Equipa 03 - Munich' },
+                    { code: 'equipa04', password: '1234', name: 'António Oliveira', team: 'Equipa 04 - Cologne' },
+                    { code: 'equipa05', password: '1234', name: 'Pedro Costa', team: 'Equipa 05 - Frankfurt' },
+                    { code: 'equipa06', password: '1234', name: 'Rui Pereira', team: 'Equipa 06 - Stuttgart' },
+                    { code: 'equipa07', password: '1234', name: 'José Martins', team: 'Equipa 07 - Düsseldorf' },
+                    { code: 'equipa08', password: '1234', name: 'Luís Fernandes', team: 'Equipa 08 - Dortmund' },
+                    { code: 'equipa09', password: '1234', name: 'Fernando Rodrigues', team: 'Equipa 09 - Essen' },
+                    { code: 'equipa10', password: '1234', name: 'Hugo Santos', team: 'Equipa 10 - Leipzig' },
+                    { code: 'equipa11', password: '1234', name: 'Paulo Gomes', team: 'Equipa 11 - Bremen' },
+                    { code: 'equipa12', password: '1234', name: 'André Lopes', team: 'Equipa 12 - Dresden' },
+                    { code: 'equipa13', password: '1234', name: 'Ricardo Alves', team: 'Equipa 13 - Hannover' },
+                    { code: 'equipa14', password: '1234', name: 'Mário Sousa', team: 'Equipa 14 - Nuremberga' },
+                    { code: 'equipa15', password: '1234', name: 'Bruno Costa', team: 'Equipa 15 - Duisburg' }
+                ],
+                
+                // RESPONSÁVEL DE COMPRAS
+                purchase: [
+                    { code: 'compras', password: '1234', name: 'Responsável Compras' },
+                    { code: 'compras1', password: 'mafc123', name: 'Departamento Compras' }
+                ]
+            },
             
-            // 15 Teams working in Germany
+            // Dados das 15 equipas
             teams: [
-                { id: 1, name: 'Equipa 01 - Berlin', leader: 'João Silva', location: 'Berlim, Kreuzberg', workers: 5, status: 'working' },
-                { id: 2, name: 'Equipa 02 - Hamburg', leader: 'Carlos Mendes', location: 'Hamburgo, Centro', workers: 3, status: 'working' },
-                { id: 3, name: 'Equipa 03 - Munich', leader: 'Miguel Santos', location: 'Munique, Subúrbios', workers: 4, status: 'working' },
-                { id: 4, name: 'Equipa 04 - Cologne', leader: 'António Oliveira', location: 'Colónia', workers: 4, status: 'working' },
-                { id: 5, name: 'Equipa 05 - Frankfurt', leader: 'Pedro Costa', location: 'Frankfurt', workers: 3, status: 'working' }
+                { id: 1, name: 'Equipa 01 - Berlin', leader: 'João Silva', location: 'Berlim, Kreuzberg', workers: 5, status: 'working', gps: '52.5200° N, 13.4050° E' },
+                { id: 2, name: 'Equipa 02 - Hamburg', leader: 'Carlos Mendes', location: 'Hamburgo, Centro', workers: 3, status: 'working', gps: '53.5511° N, 9.9937° E' },
+                { id: 3, name: 'Equipa 03 - Munich', leader: 'Miguel Santos', location: 'Munique, Subúrbios', workers: 4, status: 'working', gps: '48.1351° N, 11.5820° E' },
+                { id: 4, name: 'Equipa 04 - Cologne', leader: 'António Oliveira', location: 'Colónia', workers: 4, status: 'working', gps: '50.9375° N, 6.9603° E' },
+                { id: 5, name: 'Equipa 05 - Frankfurt', leader: 'Pedro Costa', location: 'Frankfurt', workers: 3, status: 'working', gps: '50.1109° N, 8.6821° E' },
+                { id: 6, name: 'Equipa 06 - Stuttgart', leader: 'Rui Pereira', location: 'Estugarda', workers: 4, status: 'working', gps: '48.7758° N, 9.1829° E' },
+                { id: 7, name: 'Equipa 07 - Düsseldorf', leader: 'José Martins', location: 'Düsseldorf', workers: 3, status: 'working', gps: '51.2277° N, 6.7735° E' },
+                { id: 8, name: 'Equipa 08 - Dortmund', leader: 'Luís Fernandes', location: 'Dortmund', workers: 5, status: 'working', gps: '51.5136° N, 7.4653° E' },
+                { id: 9, name: 'Equipa 09 - Essen', leader: 'Fernando Rodrigues', location: 'Essen', workers: 4, status: 'working', gps: '51.4556° N, 7.0116° E' },
+                { id: 10, name: 'Equipa 10 - Leipzig', leader: 'Hugo Santos', location: 'Leipzig', workers: 3, status: 'working', gps: '51.3397° N, 12.3731° E' },
+                { id: 11, name: 'Equipa 11 - Bremen', leader: 'Paulo Gomes', location: 'Bremen', workers: 4, status: 'working', gps: '53.0793° N, 8.8017° E' },
+                { id: 12, name: 'Equipa 12 - Dresden', leader: 'André Lopes', location: 'Dresden', workers: 3, status: 'working', gps: '51.0504° N, 13.7373° E' },
+                { id: 13, name: 'Equipa 13 - Hannover', leader: 'Ricardo Alves', location: 'Hanôver', workers: 5, status: 'working', gps: '52.3759° N, 9.7320° E' },
+                { id: 14, name: 'Equipa 14 - Nuremberga', leader: 'Mário Sousa', location: 'Nuremberga', workers: 4, status: 'working', gps: '49.4521° N, 11.0767° E' },
+                { id: 15, name: 'Equipa 15 - Duisburg', leader: 'Bruno Costa', location: 'Duisburgo', workers: 3, status: 'working', gps: '51.4344° N, 6.7623° E' }
             ],
             
-            // Construction materials database
-            materials: [
-                // Construction Materials
-                { id: 1, name: 'Cimento', category: 'materials', unit: 'sacos' },
-                { id: 2, name: 'Areia', category: 'materials', unit: 'm3' },
-                { id: 3, name: 'Brita', category: 'materials', unit: 'm3' },
-                { id: 4, name: 'Alcatrão', category: 'materials', unit: 'ton' },
-                { id: 5, name: 'Tijolos', category: 'materials', unit: 'unidades' },
-                { id: 6, name: 'Tubos PVC', category: 'materials', unit: 'unidades' },
-                { id: 7, name: 'Aço', category: 'materials', unit: 'kg' },
-                { id: 8, name: 'Madeira', category: 'materials', unit: 'm3' },
-                
-                // Machines and Equipment
-                { id: 9, name: 'Retroescavadora', category: 'machines', unit: 'horas' },
-                { id: 10, name: 'Camião Basculante', category: 'machines', unit: 'dias' },
-                { id: 11, name: 'Betoneira', category: 'machines', unit: 'dias' },
-                { id: 12, name: 'Compactador', category: 'machines', unit: 'horas' },
-                { id: 13, name: 'Grua', category: 'machines', unit: 'dias' },
-                { id: 14, name: 'Escavadora', category: 'machines', unit: 'horas' },
-                
-                // Tools
-                { id: 15, name: 'Martelo Pneumático', category: 'tools', unit: 'unidades' },
-                { id: 16, name: 'Cortadora de Pavimento', category: 'tools', unit: 'unidades' },
-                { id: 17, name: 'Betoneira Portátil', category: 'tools', unit: 'unidades' },
-                { id: 18, name: 'Furadeira de Concreto', category: 'tools', unit: 'unidades' },
-                
-                // Vehicles
-                { id: 19, name: 'Camião 10T', category: 'vehicles', unit: 'dias' },
-                { id: 20, name: 'Viatura Ligeira', category: 'vehicles', unit: 'dias' },
-                { id: 21, name: 'Carro de Mistura', category: 'vehicles', unit: 'horas' },
-                
-                // Consumables
-                { id: 22, name: 'Gasóleo', category: 'consumables', unit: 'litros' },
-                { id: 23, name: 'Óleo Motor', category: 'consumables', unit: 'litros' },
-                { id: 24, name: 'Luvas de Trabalho', category: 'consumables', unit: 'pares' },
-                { id: 25, name: 'Capacetes', category: 'consumables', unit: 'unidades' },
-                { id: 26, name: 'Óculos Proteção', category: 'consumables', unit: 'unidades' }
-            ],
+            // Materiais de construção
+            materials: {
+                construction: [
+                    { id: 1, name: 'Cimento', unit: 'sacos', averagePrice: 5 },
+                    { id: 2, name: 'Areia', unit: 'm³', averagePrice: 25 },
+                    { id: 3, name: 'Brita', unit: 'm³', averagePrice: 30 },
+                    { id: 4, name: 'Alcatrão', unit: 'ton', averagePrice: 150 },
+                    { id: 5, name: 'Tijolos', unit: 'unidades', averagePrice: 0.5 },
+                    { id: 6, name: 'Tubos PVC', unit: 'unidades', averagePrice: 8 },
+                    { id: 7, name: 'Aço para Construção', unit: 'kg', averagePrice: 1.2 },
+                    { id: 8, name: 'Madeira', unit: 'm³', averagePrice: 400 }
+                ],
+                machines: [
+                    { id: 9, name: 'Retroescavadora', unit: 'horas', averagePrice: 60 },
+                    { id: 10, name: 'Camião Basculante', unit: 'dias', averagePrice: 200 },
+                    { id: 11, name: 'Betoneira', unit: 'dias', averagePrice: 80 },
+                    { id: 12, name: 'Compactador', unit: 'horas', averagePrice: 45 },
+                    { id: 13, name: 'Grua', unit: 'dias', averagePrice: 300 },
+                    { id: 14, name: 'Escavadora', unit: 'horas', averagePrice: 70 }
+                ],
+                tools: [
+                    { id: 15, name: 'Martelo Pneumático', unit: 'unidades', averagePrice: 250 },
+                    { id: 16, name: 'Cortadora de Pavimento', unit: 'unidades', averagePrice: 400 },
+                    { id: 17, name: 'Betoneira Portátil', unit: 'unidades', averagePrice: 600 },
+                    { id: 18, name: 'Furadeira de Concreto', unit: 'unidades', averagePrice: 180 }
+                ],
+                consumables: [
+                    { id: 19, name: 'Gasóleo', unit: 'litros', averagePrice: 1.6 },
+                    { id: 20, name: 'Óleo Motor', unit: 'litros', averagePrice: 8 },
+                    { id: 21, name: 'Luvas de Trabalho', unit: 'pares', averagePrice: 3 },
+                    { id: 22, name: 'Capacetes de Segurança', unit: 'unidades', averagePrice: 12 },
+                    { id: 23, name: 'Óculos de Proteção', unit: 'unidades', averagePrice: 5 }
+                ]
+            },
             
-            // Material requests from teams
-            materialRequests: [
-                { id: 1, team: 'Equipa 01 - Berlin', material: 'Cimento', quantity: 50, unit: 'sacos', date: '09/12/2024', status: 'pending' },
-                { id: 2, team: 'Equipa 02 - Hamburg', material: 'Alcatrão', quantity: 2, unit: 'ton', date: '08/12/2024', status: 'pending' },
-                { id: 3, team: 'Equipa 03 - Munich', material: 'Retroescavadora', quantity: 1, unit: 'horas', date: '10/12/2024', status: 'pending' }
-            ],
+            // Pedidos de material
+            materialRequests: [],
             
-            // Time records
-            timeRecords: [
-                { worker: 'João Silva', date: '10/12/2024', start: '08:00', end: '12:30', total: 4.5 }
-            ]
+            // Registos de horas
+            timeRecords: [],
+            
+            // Compras aprovadas
+            purchases: []
         };
         
-        // Current user
+        // Usuário atual
         let currentUser = null;
         
-        // ============== LOGIN SYSTEM ==============
-        const loginModal = document.getElementById('loginModal');
-        const openLoginBtn = document.getElementById('openLogin');
-        const closeModalBtn = document.querySelector('.close-modal');
-        const loginForm = document.getElementById('loginForm');
-        
-        // Open modal
-        openLoginBtn.addEventListener('click', (e) => {
+        // ============ FUNÇÕES DE LOGIN ============
+        document.getElementById('openLogin').addEventListener('click', (e) => {
             e.preventDefault();
-            loginModal.style.display = 'flex';
+            document.getElementById('loginModal').style.display = 'flex';
         });
         
-        // Close modal
-        closeModalBtn.addEventListener('click', () => {
-            loginModal.style.display = 'none';
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            document.getElementById('loginModal').style.display = 'none';
         });
         
-        // Close modal when clicking outside
         window.addEventListener('click', (e) => {
-            if (e.target === loginModal) {
-                loginModal.style.display = 'none';
+            if (e.target === document.getElementById('loginModal')) {
+                document.getElementById('loginModal').style.display = 'none';
             }
         });
         
-        // Login form submission
-        loginForm.addEventListener('submit', (e) => {
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const role = document.getElementById('role').value;
             
-            // Find user
-            const user = systemData.users.find(u => 
-                u.username === username && 
-                u.password === password && 
-                u.role === role
-            );
+            let userFound = null;
             
-            if (user) {
-                currentUser = user;
-                loginModal.style.display = 'none';
-                
-                // Hide public website
-                document.getElementById('publicWebsite').style.display = 'none';
-                
-                // Show appropriate dashboard
-                if (role === 'admin') {
-                    showAdminDashboard();
-                } else if (role === 'team') {
-                    showTeamDashboard();
-                } else if (role === 'purchase') {
-                    showPurchaseDashboard();
-                }
-                
-                // Initialize dashboard data
-                initializeDashboardData();
-                
+            // Verificar credenciais baseado no tipo de acesso
+            if (role === 'boss') {
+                userFound = MAFCSystem.credentials.boss.find(u => 
+                    u.code === username && u.password === password
+                );
+            } else if (role === 'team') {
+                userFound = MAFCSystem.credentials.team.find(u => 
+                    u.code === username && u.password === password
+                );
+            } else if (role === 'purchase') {
+                userFound = MAFCSystem.credentials.purchase.find(u => 
+                    u.code === username && u.password === password
+                );
+            }
+            
+            if (userFound) {
+                currentUser = { ...userFound, role };
+                loginSuccess();
             } else {
-                alert('Credenciais incorretas! Utilize: mafc / 1234');
+                alert('❌ Credenciais incorretas! Utilize:\n\nPATRÃO: mafc / 1234\nCHEFE: equipa01 / 1234\nCOMPRAS: compras / 1234');
             }
         });
         
-        // ============== DASHBOARD FUNCTIONS ==============
-        function showAdminDashboard() {
-            document.getElementById('adminDashboard').style.display = 'block';
+        function loginSuccess() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('publicWebsite').style.display = 'none';
+            
+            // Mostrar dashboard apropriado
+            if (currentUser.role === 'boss') {
+                showBossDashboard();
+            } else if (currentUser.role === 'team') {
+                showTeamDashboard();
+            } else if (currentUser.role === 'purchase') {
+                showPurchaseDashboard();
+            }
+            
+            // Inicializar dados
+            initializeDashboard();
         }
         
-        function showTeamDashboard() {
-            document.getElementById('teamDashboard').style.display = 'block';
+        // ============ DASHBOARD DO PATRÃO ============
+        function showBossDashboard() {
+            document.getElementById('bossDashboard').style.display = 'block';
+            document.getElementById('bossUserName').textContent = currentUser.name;
+            
+            // Atualizar menu ativo
+            updateActiveMenu('boss');
+            
+            // Carregar dados
+            loadBossData();
         }
         
-        function showPurchaseDashboard() {
-            document.getElementById('purchaseDashboard').style.display = 'block';
-        }
-        
-        function initializeDashboardData() {
-            // Update current date
-            updateDateTime();
+        function loadBossData() {
+            // Carregar equipas
+            const teamsTable = document.getElementById('bossTeamsTable');
+            teamsTable.innerHTML = '';
             
-            // Load teams data for admin
-            loadTeamsTable();
+            MAFCSystem.teams.forEach(team => {
+                const statusBadge = team.status === 'working' ? 
+                    '<span class="badge badge-success">A Trabalhar</span>' :
+                    '<span class="badge badge-warning">Parado</span>';
+                
+                const row = `
+                    <tr>
+                        <td><strong>${team.name}</strong></td>
+                        <td>${team.location}</td>
+                        <td>Saneamento Urbano</td>
+                        <td>${statusBadge}</td>
+                        <td>${team.gps.split(',')[0]}</td>
+                    </tr>
+                `;
+                teamsTable.innerHTML += row;
+            });
             
-            // Load materials data for admin
-            loadMaterialsTable();
+            // Carregar todas as equipas
+            const allTeamsTable = document.getElementById('allTeamsTable');
+            allTeamsTable.innerHTML = '';
             
-            // Load overtime data
-            loadOvertimeData();
-            
-            // Load materials for team leader
-            loadMaterialsForTeam();
-            
-            // Load time records for team leader
-            loadTimeRecords();
-            
-            // Load pending requests for purchase manager
-            loadPendingRequests();
-            
-            // Load approved purchases for purchase manager
-            loadApprovedPurchases();
-        }
-        
-        function loadTeamsTable() {
-            const table = document.getElementById('teamsTable');
-            table.innerHTML = '';
-            
-            systemData.teams.forEach(team => {
+            MAFCSystem.teams.forEach(team => {
                 const row = `
                     <tr>
                         <td>#${team.id.toString().padStart(3, '0')}</td>
-                        <td>${team.name}</td>
+                        <td><strong>${team.name}</strong></td>
                         <td>${team.leader}</td>
                         <td>${team.location}</td>
                         <td>Saneamento Urbano</td>
-                        <td>52.5200° N, 13.4050° E</td>
+                        <td>${team.workers} trabalhadores</td>
                         <td>
-                            <button class="btn btn-primary" onclick="viewTeamDetails(${team.id})">Ver</button>
-                            <button class="btn btn-warning" onclick="editTeam(${team.id})">Editar</button>
+                            <button class="btn-dashboard btn-primary btn-sm" onclick="viewTeamDetails(${team.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-dashboard btn-warning btn-sm" onclick="editTeam(${team.id})">
+                                <i class="fas fa-edit"></i>
+                            </button>
                         </td>
                     </tr>
                 `;
-                table.innerHTML += row;
+                allTeamsTable.innerHTML += row;
             });
         }
         
-        function loadMaterialsTable() {
-            const table = document.getElementById('materialsTable');
-            table.innerHTML = '';
+        // ============ DASHBOARD DO CHEFE DE EQUIPA ============
+        function showTeamDashboard() {
+            document.getElementById('teamDashboard').style.display = 'block';
+            document.getElementById('teamUserName').textContent = currentUser.team || currentUser.name;
             
-            systemData.materialRequests.forEach(request => {
-                const statusBadge = request.status === 'pending' ? 
-                    '<span class="status-badge status-pending">Pendente</span>' : 
-                    '<span class="status-badge status-approved">Aprovado</span>';
+            // Atualizar menu ativo
+            updateActiveMenu('team');
+            
+            // Carregar dados da equipa
+            loadTeamData();
+        }
+        
+        function loadTeamData() {
+            // Encontrar dados da equipa
+            const teamData = MAFCSystem.teams.find(t => t.name === currentUser.team);
+            
+            if (teamData) {
+                // Atualizar contadores
+                document.getElementById('teamWorkersCount').textContent = teamData.workers;
+                document.getElementById('teamHoursToday').textContent = '4.5';
+                document.getElementById('teamPendingMaterials').textContent = '3';
+                document.getElementById('teamStatus').textContent = teamData.status === 'working' ? 'Online' : 'Offline';
                 
-                const row = `
-                    <tr>
-                        <td>#MAT-${request.id.toString().padStart(3, '0')}</td>
-                        <td>${request.material}</td>
-                        <td>${request.quantity} ${request.unit}</td>
-                        <td>${request.team}</td>
-                        <td>${request.date}</td>
-                        <td>${statusBadge}</td>
-                        <td>
-                            <button class="btn btn-success" onclick="approveMaterial(${request.id})">Aprovar</button>
-                            <button class="btn btn-danger" onclick="rejectMaterial(${request.id})">Recusar</button>
-                        </td>
-                    </tr>
+                // Atualizar GPS
+                document.getElementById('gpsLat').textContent = teamData.gps.split(',')[0];
+                document.getElementById('gpsLng').textContent = teamData.gps.split(',')[1];
+                
+                // Carregar trabalhadores
+                const workerSelect = document.getElementById('workerSelect');
+                workerSelect.innerHTML = `
+                    <option value="${currentUser.name}">${currentUser.name} (Chefe)</option>
+                    <option value="Carlos Mendes">Carlos Mendes</option>
+                    <option value="Miguel Santos">Miguel Santos</option>
+                    <option value="António Oliveira">António Oliveira</option>
+                    <option value="Pedro Costa">Pedro Costa</option>
                 `;
-                table.innerHTML += row;
-            });
+            }
         }
         
-        function loadOvertimeData() {
-            const table = document.getElementById('overtimeTable');
-            table.innerHTML = `
-                <tr>
-                    <td>João Silva</td>
-                    <td>Equipa 01 - Berlin</td>
-                    <td>160</td>
-                    <td>12</td>
-                    <td>172</td>
-                    <td>12h</td>
-                </tr>
-                <tr>
-                    <td>Carlos Mendes</td>
-                    <td>Equipa 02 - Hamburg</td>
-                    <td>160</td>
-                    <td>8</td>
-                    <td>168</td>
-                    <td>8h</td>
-                </tr>
-                <tr>
-                    <td>Miguel Santos</td>
-                    <td>Equipa 03 - Munich</td>
-                    <td>160</td>
-                    <td>15</td>
-                    <td>175</td>
-                    <td>15h</td>
-                </tr>
-            `;
-        }
-        
-        function loadMaterialsForTeam() {
-            const select = document.getElementById('materialSelect');
-            select.innerHTML = '';
+        // ============ DASHBOARD DE COMPRAS ============
+        function showPurchaseDashboard() {
+            document.getElementById('purchaseDashboard').style.display = 'block';
+            document.getElementById('purchaseUserName').textContent = currentUser.name;
             
-            systemData.materials.forEach(material => {
-                const option = document.createElement('option');
-                option.value = material.id;
-                option.textContent = `${material.name} (${material.unit})`;
-                select.appendChild(option);
-            });
-        }
-        
-        function loadTimeRecords() {
-            const table = document.getElementById('timeRecordsTable');
-            table.innerHTML = '';
+            // Atualizar menu ativo
+            updateActiveMenu('purchase');
             
-            systemData.timeRecords.forEach(record => {
-                const overtime = record.total > 8 ? record.total - 8 : 0;
-                const row = `
-                    <tr>
-                        <td>${record.worker}</td>
-                        <td>${record.start}</td>
-                        <td>${record.end || '--:--'}</td>
-                        <td>${record.total}h</td>
-                        <td>${overtime > 0 ? `<span class="status-badge status-overtime">+${overtime}h</span>` : '0h'}</td>
-                    </tr>
-                `;
-                table.innerHTML += row;
-            });
+            // Carregar dados
+            loadPurchaseData();
         }
         
-        function loadPendingRequests() {
-            const table = document.getElementById('pendingRequestsTable');
-            table.innerHTML = '';
-            
-            const pendingRequests = systemData.materialRequests.filter(r => r.status === 'pending');
-            
-            pendingRequests.forEach(request => {
-                const row = `
-                    <tr>
-                        <td>${request.date}</td>
-                        <td>${request.team}</td>
-                        <td>${request.material}</td>
-                        <td>${request.quantity} ${request.unit}</td>
-                        <td><span class="status-badge status-pending">${request.urgency || 'Normal'}</span></td>
-                        <td>
-                            <button class="btn btn-success" onclick="approveRequest(${request.id})">Aprovar</button>
-                            <button class="btn btn-danger" onclick="rejectRequest(${request.id})">Recusar</button>
-                        </td>
-                    </tr>
-                `;
-                table.innerHTML += row;
-            });
+        function loadPurchaseData() {
+            // Atualizar contadores
+            document.getElementById('pendingCount').textContent = '12';
+            document.getElementById('approvedCount').textContent = '24';
+            document.getElementById('monthBudget').textContent = '18.5K';
+            document.getElementById('suppliersCount').textContent = '8';
         }
         
-        function loadApprovedPurchases() {
-            const table = document.getElementById('approvedPurchasesTable');
-            table.innerHTML = `
-                <tr>
-                    <td>#ENCM-001</td>
-                    <td>Fornecedor A</td>
-                    <td>Cimento</td>
-                    <td>1.250€</td>
-                    <td>15/12/2024</td>
-                    <td><span class="status-badge status-approved">Encomendado</span></td>
-                </tr>
-                <tr>
-                    <td>#ENCM-002</td>
-                    <td>Fornecedor B</td>
-                    <td>Alcatrão</td>
-                    <td>3.500€</td>
-                    <td>12/12/2024</td>
-                    <td><span class="status-badge status-approved">Entregue</span></td>
-                </tr>
-            `;
-        }
-        
-        // ============== TEAM LEADER FUNCTIONS ==============
-        function openSection(section) {
-            // Hide all sections
-            document.querySelectorAll('#teamDashboard .dashboard-section').forEach(s => {
-                s.classList.remove('active');
+        // ============ FUNÇÕES COMUNS ============
+        function updateActiveMenu(dashboard) {
+            // Remover active de todos os menus
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
             });
             
-            // Show selected section
-            document.getElementById(`${section}Section`).classList.add('active');
+            // Adicionar active ao primeiro item
+            document.querySelectorAll('.dashboard-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Ativar primeira seção
+            if (dashboard === 'boss') {
+                document.querySelector('#bossDashboard .menu-item').classList.add('active');
+                document.getElementById('overviewSection').classList.add('active');
+            } else if (dashboard === 'team') {
+                document.querySelector('#teamDashboard .menu-item').classList.add('active');
+                document.getElementById('teamOverviewSection').classList.add('active');
+            } else if (dashboard === 'purchase') {
+                document.querySelector('#purchaseDashboard .menu-item').classList.add('active');
+                document.getElementById('purchaseOverviewSection').classList.add('active');
+            }
         }
         
+        // Navegação do menu
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const dashboard = this.closest('.dashboard');
+                const sectionId = this.getAttribute('data-section') + 'Section';
+                
+                // Remover active de todos os itens do mesmo dashboard
+                dashboard.querySelectorAll('.menu-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                
+                // Adicionar active ao item clicado
+                this.classList.add('active');
+                
+                // Esconder todas as seções do dashboard
+                dashboard.querySelectorAll('.dashboard-section').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Mostrar seção selecionada
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+        
+        // ============ FUNÇÕES DO CHEFE DE EQUIPA ============
         function registerTime() {
             const workerSelect = document.getElementById('workerSelect');
             const timeAction = document.getElementById('timeAction');
-            const currentTime = document.getElementById('currentTime');
+            const currentTime = document.getElementById('currentTimeInput');
             
             const worker = workerSelect.options[workerSelect.selectedIndex].text;
             const action = timeAction.value;
-            const time = currentTime.value;
+            const time = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            
+            // Atualizar hora atual
+            currentTime.value = time;
             
             if (action === 'start') {
-                // Add new time record
-                systemData.timeRecords.push({
-                    worker: worker.split(' (')[0],
-                    date: new Date().toLocaleDateString('pt-PT'),
-                    start: time,
-                    end: null,
-                    total: 0
-                });
-                
                 alert(`✅ Entrada registada para ${worker} às ${time}`);
             } else {
-                // Find and update time record
-                const record = systemData.timeRecords.find(r => 
-                    r.worker === worker.split(' (')[0] && 
-                    r.date === new Date().toLocaleDateString('pt-PT')
-                );
-                
-                if (record) {
-                    record.end = time;
-                    
-                    // Calculate total hours
-                    const startTime = record.start.split(':');
-                    const endTime = time.split(':');
-                    const startDate = new Date(0, 0, 0, startTime[0], startTime[1]);
-                    const endDate = new Date(0, 0, 0, endTime[0], endTime[1]);
-                    const diff = (endDate - startDate) / (1000 * 60 * 60);
-                    record.total = diff.toFixed(1);
-                    
-                    // Check for overtime (> 8 hours)
-                    if (diff > 8) {
-                        const overtime = diff - 8;
-                        alert(`✅ Saída registada para ${worker} às ${time}\n⏰ Total: ${record.total}h\n⚠️ Horas Extra: ${overtime.toFixed(1)}h`);
-                    } else {
-                        alert(`✅ Saída registada para ${worker} às ${time}\n⏰ Total: ${record.total}h`);
-                    }
-                }
+                alert(`✅ Saída registada para ${worker} às ${time}`);
             }
             
-            // Update time records table
-            loadTimeRecords();
+            // Simular atualização da tabela
+            updateTimeRecords();
         }
         
-        function registerAll(action) {
-            const workers = ['João Silva', 'Carlos Mendes', 'Miguel Santos', 'António Oliveira', 'Pedro Costa'];
-            const currentTime = document.getElementById('currentTime').value;
+        function registerAllTeam(action) {
+            const time = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
             
             if (action === 'start') {
-                workers.forEach(worker => {
-                    // Check if already registered
-                    const existing = systemData.timeRecords.find(r => 
-                        r.worker === worker && 
-                        r.date === new Date().toLocaleDateString('pt-PT')
-                    );
-                    
-                    if (!existing) {
-                        systemData.timeRecords.push({
-                            worker: worker,
-                            date: new Date().toLocaleDateString('pt-PT'),
-                            start: currentTime,
-                            end: null,
-                            total: 0
-                        });
-                    }
-                });
-                
-                alert(`✅ Entrada registada para TODA A EQUIPA às ${currentTime}`);
+                alert(`✅ Entrada registada para TODA A EQUIPA às ${time}`);
             } else {
-                workers.forEach(worker => {
-                    const record = systemData.timeRecords.find(r => 
-                        r.worker === worker && 
-                        r.date === new Date().toLocaleDateString('pt-PT')
-                    );
-                    
-                    if (record && !record.end) {
-                        record.end = currentTime;
-                        
-                        // Calculate total hours
-                        const startTime = record.start.split(':');
-                        const endTime = currentTime.split(':');
-                        const startDate = new Date(0, 0, 0, startTime[0], startTime[1]);
-                        const endDate = new Date(0, 0, 0, endTime[0], endTime[1]);
-                        const diff = (endDate - startDate) / (1000 * 60 * 60);
-                        record.total = diff.toFixed(1);
-                    }
-                });
-                
-                alert(`✅ Saída registada para TODA A EQUIPA às ${currentTime}`);
+                alert(`✅ Saída registada para TODA A EQUIPA às ${time}`);
             }
             
-            loadTimeRecords();
+            updateTimeRecords();
         }
         
-        function filterMaterials() {
-            const category = document.getElementById('materialCategory').value;
+        function updateTimeRecords() {
+            const table = document.getElementById('teamTimeRecords');
+            const time = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            
+            table.innerHTML = `
+                <tr>
+                    <td>João Silva (Chefe)</td>
+                    <td>08:00</td>
+                    <td>${time}</td>
+                    <td>8.5h</td>
+                    <td><span class="badge badge-warning">+0.5h</span></td>
+                </tr>
+                <tr>
+                    <td>Carlos Mendes</td>
+                    <td>08:00</td>
+                    <td>${time}</td>
+                    <td>8.5h</td>
+                    <td><span class="badge badge-warning">+0.5h</span></td>
+                </tr>
+            `;
+            
+            // Atualizar horas hoje
+            document.getElementById('teamHoursToday').textContent = '8.5';
+        }
+        
+        function selectCategory(category) {
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.style.borderColor = 'transparent';
+            });
+            
+            event.currentTarget.style.borderColor = 'var(--team)';
+            loadMaterialsByCategory(category);
+        }
+        
+        function loadMaterialsByCategory(category) {
+            const materials = MAFCSystem.materials[category] || [];
             const select = document.getElementById('materialSelect');
+            
             select.innerHTML = '';
-            
-            const filteredMaterials = category === 'all' ? 
-                systemData.materials : 
-                systemData.materials.filter(m => m.category === category);
-            
-            filteredMaterials.forEach(material => {
+            materials.forEach(material => {
                 const option = document.createElement('option');
                 option.value = material.id;
                 option.textContent = `${material.name} (${material.unit})`;
@@ -1890,8 +2608,7 @@
         function submitMaterialRequest() {
             const category = document.getElementById('materialCategory').value;
             const materialSelect = document.getElementById('materialSelect');
-            const materialId = materialSelect.value;
-            const material = materialSelect.options[materialSelect.selectedIndex].text.split(' (')[0];
+            const material = materialSelect.options[materialSelect.selectedIndex].text;
             const quantity = document.getElementById('materialQuantity').value;
             const unit = document.getElementById('materialUnit').value;
             const urgency = document.getElementById('materialUrgency').value;
@@ -1902,255 +2619,263 @@
                 return;
             }
             
-            // Add to material requests
-            const newRequest = {
-                id: systemData.materialRequests.length + 1,
+            // Criar pedido
+            const request = {
+                id: Date.now(),
                 team: currentUser.team,
-                material: material,
-                quantity: parseInt(quantity),
+                material: material.split(' (')[0],
+                quantity: quantity,
                 unit: unit,
                 urgency: urgency,
                 notes: notes,
                 date: new Date().toLocaleDateString('pt-PT'),
-                status: 'pending'
+                status: 'pending',
+                requestedBy: currentUser.name
             };
             
-            systemData.materialRequests.push(newRequest);
+            // Adicionar ao sistema (simulado)
+            MAFCSystem.materialRequests.push(request);
             
-            // Update counts
-            const materialsCount = document.getElementById('teamMaterials');
-            materialsCount.textContent = parseInt(materialsCount.textContent) + 1;
+            // Atualizar contador
+            const pendingCount = document.getElementById('teamPendingMaterials');
+            pendingCount.textContent = parseInt(pendingCount.textContent) + 1;
             
-            // Update tables
-            if (currentUser.role === 'admin') {
-                loadMaterialsTable();
-            } else if (currentUser.role === 'purchase') {
-                loadPendingRequests();
-            }
+            // Adicionar à tabela
+            const table = document.getElementById('teamMaterialRequests');
+            const urgencyBadge = urgency === 'critical' ? 'badge-danger' : 
+                                urgency === 'urgent' ? 'badge-warning' : 'badge-info';
+            const urgencyText = urgency === 'critical' ? 'CRÍTICO' :
+                               urgency === 'urgent' ? 'Urgente' : 'Normal';
             
-            alert(`✅ Pedido de material enviado para o Responsável de Compras!\n\nMaterial: ${material}\nQuantidade: ${quantity} ${unit}\nUrgência: ${urgency}`);
+            const row = `
+                <tr>
+                    <td>${material.split(' (')[0]}</td>
+                    <td>${quantity} ${unit}</td>
+                    <td>${request.date}</td>
+                    <td><span class="badge ${urgencyBadge}">${urgencyText}</span></td>
+                </tr>
+            `;
             
-            // Reset form
+            table.innerHTML = row + table.innerHTML;
+            
+            alert(`✅ Pedido enviado para o Departamento de Compras!\n\nMaterial: ${material}\nQuantidade: ${quantity} ${unit}\nUrgência: ${urgencyText}`);
+            
+            // Limpar formulário
             document.getElementById('materialQuantity').value = 1;
             document.getElementById('materialNotes').value = '';
         }
         
-        function addCustomMaterial() {
-            const materialName = prompt('Nome do material personalizado:');
-            if (!materialName) return;
+        function updateGPSLocation() {
+            // Simular novas coordenadas GPS
+            const lat = (52 + Math.random()).toFixed(4) + '° N';
+            const lng = (13 + Math.random()).toFixed(4) + '° E';
             
-            const unit = prompt('Unidade de medida (kg, unidades, litros, etc.):');
-            if (!unit) return;
+            document.getElementById('gpsLat').textContent = lat;
+            document.getElementById('gpsLng').textContent = lng;
             
-            // Add to materials list
-            const newMaterial = {
-                id: systemData.materials.length + 1,
-                name: materialName,
-                category: 'other',
-                unit: unit
-            };
-            
-            systemData.materials.push(newMaterial);
-            
-            // Update select
-            const select = document.getElementById('materialSelect');
-            const option = document.createElement('option');
-            option.value = newMaterial.id;
-            option.textContent = `${newMaterial.name} (${newMaterial.unit})`;
-            select.appendChild(option);
-            
-            alert(`✅ Material "${materialName}" adicionado com sucesso!`);
+            alert(`📍 Localização GPS atualizada!\n\nNova localização:\n${lat}, ${lng}\n\nO patrão pode ver em tempo real!`);
         }
         
-        // ============== PURCHASE MANAGER FUNCTIONS ==============
-        function approveRequest(requestId) {
-            const request = systemData.materialRequests.find(r => r.id === requestId);
-            if (request) {
-                request.status = 'approved';
-                
-                // Ask for purchase details
-                const supplier = prompt('Nome do fornecedor:');
-                const orderNumber = prompt('Número da encomenda:');
-                const deliveryDate = prompt('Data de entrega (DD/MM/AAAA):');
-                
-                if (supplier && orderNumber && deliveryDate) {
-                    alert(`✅ Pedido aprovado!\nFornecedor: ${supplier}\nEncomenda: ${orderNumber}\nEntrega: ${deliveryDate}`);
-                    
-                    // Update tables
-                    loadPendingRequests();
-                }
-            }
+        function sendLocationToBoss() {
+            const lat = document.getElementById('gpsLat').textContent;
+            const lng = document.getElementById('gpsLng').textContent;
+            
+            alert(`📡 Localização enviada ao Patrão!\n\nCoordenadas: ${lat}, ${lng}\n\nO patrão em Portugal pode ver exatamente onde a equipa está trabalhando na Alemanha.`);
         }
         
-        function rejectRequest(requestId) {
-            const reason = prompt('Motivo da recusa:');
-            if (reason) {
-                const request = systemData.materialRequests.find(r => r.id === requestId);
-                if (request) {
-                    request.status = 'rejected';
-                    alert(`❌ Pedido recusado!\nMotivo: ${reason}`);
-                    loadPendingRequests();
-                }
-            }
+        // ============ FUNÇÕES DO PATRÃO ============
+        function refreshLocations() {
+            alert('📍 Localizações atualizadas em tempo real!\n\nTodas as 15 equipas na Alemanha foram localizadas.');
         }
         
-        // ============== ADMIN FUNCTIONS ==============
+        function viewAllRequests() {
+            alert('📋 Mostrando todos os pedidos de material pendentes...');
+        }
+        
+        function addNewTeam() {
+            alert('👷 Adicionar nova equipa - Funcionalidade em desenvolvimento...');
+        }
+        
         function viewTeamDetails(teamId) {
-            const team = systemData.teams.find(t => t.id === teamId);
+            const team = MAFCSystem.teams.find(t => t.id === teamId);
             if (team) {
-                alert(`Equipa: ${team.name}\nChefe: ${team.leader}\nLocalização: ${team.location}\nTrabalhadores: ${team.workers}\nEstado: ${team.status}`);
+                alert(`🔍 Detalhes da Equipa:\n\nNome: ${team.name}\nChefe: ${team.leader}\nLocalização: ${team.location}\nTrabalhadores: ${team.workers}\nGPS: ${team.gps}\nEstado: ${team.status}`);
             }
         }
         
-        function approveMaterial(requestId) {
-            const request = systemData.materialRequests.find(r => r.id === requestId);
-            if (request) {
-                request.status = 'approved';
-                alert(`✅ Pedido de material aprovado!\nEquipa: ${request.team}\nMaterial: ${request.material}`);
-                loadMaterialsTable();
-            }
+        function exportHours() {
+            alert('📊 Exportando registos de horas para Excel...\n\nFicheiro gerado: horas_trabalhadas_mafc.xlsx');
         }
         
-        function rejectMaterial(requestId) {
-            const reason = prompt('Motivo da recusa:');
-            if (reason) {
-                const request = systemData.materialRequests.find(r => r.id === requestId);
-                if (request) {
-                    request.status = 'rejected';
-                    alert(`❌ Pedido recusado!\nMotivo: ${reason}`);
-                    loadMaterialsTable();
-                }
-            }
+        function simulateClockIn() {
+            const time = new Date().toLocaleTimeString('pt-PT');
+            alert(`⏰ Simulação de entrada registada às ${time}\n\nO patrão em Portugal pode ver em tempo real as entradas na Alemanha.`);
+        }
+        
+        function simulateClockOut() {
+            const time = new Date().toLocaleTimeString('pt-PT');
+            alert(`⏰ Simulação de saída registada às ${time}\n\nHoras calculadas automaticamente para banco de horas.`);
         }
         
         function exportToAccounting() {
-            // Simulate export to accounting system
-            const data = {
-                overtime: systemData.timeRecords.filter(r => r.total > 8),
-                purchases: systemData.materialRequests.filter(r => r.status === 'approved'),
-                date: new Date().toLocaleDateString('pt-PT')
-            };
-            
-            // Create downloadable file
-            const content = `Relatório Contabilidade MAFC - ${data.date}\n\n` +
-                          `BANCO DE HORAS (>160h/mês):\n` +
-                          data.overtime.map(r => `- ${r.worker}: ${r.total}h (${r.total-8}h extra)`).join('\n') +
-                          `\n\nCOMPRAS APROVADAS:\n` +
-                          data.purchases.map(p => `- ${p.material}: ${p.quantity} ${p.unit} - ${p.team}`).join('\n');
-            
-            const blob = new Blob([content], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `contabilidade_mafc_${data.date.replace(/\//g, '-')}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            
-            alert('✅ Relatório exportado para contabilidade com sucesso!');
+            alert('💰 Exportando dados para contabilidade...\n\nBanco de horas (>160h/mês) exportado para ficheiro contabilístico.');
         }
         
-        // ============== UTILITY FUNCTIONS ==============
-        function updateDateTime() {
-            const now = new Date();
-            const options = { 
-                day: '2-digit', 
-                month: '2-digit', 
-                year: 'numeric',
-                hour: '2-digit', 
-                minute: '2-digit'
-            };
+        function approveRequest(requestId) {
+            alert(`✅ Pedido #${requestId} aprovado pelo patrão!\n\nMaterial será comprado pelo departamento de compras.`);
+        }
+        
+        // ============ FUNÇÕES DE COMPRAS ============
+        function processAllUrgent() {
+            alert('⚡ Processando todos os pedidos urgentes...\n\nPedidos críticos serão priorizados.');
+        }
+        
+        function approvePurchase(requestId) {
+            alert(`✅ Pedido #${requestId} aprovado!\n\nPor favor, insira os dados do fornecedor e encomenda.`);
             
-            // Update current time for team dashboard
-            const timeElement = document.getElementById('currentTime');
-            if (timeElement) {
-                timeElement.value = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            // Simular aprovação
+            const supplier = prompt('Nome do fornecedor:');
+            const orderNumber = prompt('Número da encomenda:');
+            
+            if (supplier && orderNumber) {
+                alert(`📦 Encomenda criada!\n\nFornecedor: ${supplier}\nNº Encomenda: ${orderNumber}\n\nA equipa será notificada.`);
+            }
+        }
+        
+        function rejectPurchase(requestId) {
+            const reason = prompt('Motivo da recusa:');
+            if (reason) {
+                alert(`❌ Pedido #${requestId} recusado!\n\nMotivo: ${reason}\n\nO chefe de equipa será notificado.`);
+            }
+        }
+        
+        function newPurchase() {
+            alert('🛒 Criar nova compra manual...');
+        }
+        
+        function approveAll() {
+            if (confirm('Tem certeza que deseja aprovar TODOS os pedidos pendentes?')) {
+                alert('✅ Todos os pedidos foram aprovados!\n\nSerão criadas encomendas automáticas.');
+            }
+        }
+        
+        function rejectAll() {
+            if (confirm('Tem certeza que deseja recusar TODOS os pedidos pendentes?')) {
+                alert('❌ Todos os pedidos foram recusados!\n\nOs chefes de equipa serão notificados.');
+            }
+        }
+        
+        function registerNewOrder() {
+            alert('📝 Registar nova encomenda com fornecedor...');
+        }
+        
+        // ============ FUNÇÕES GERAIS ============
+        function initializeDashboard() {
+            // Atualizar relógios em tempo real
+            updateClocks();
+            setInterval(updateClocks, 1000);
+            
+            // Carregar materiais para chefe de equipa
+            if (currentUser.role === 'team') {
+                loadMaterialsByCategory('construction');
             }
             
-            // Update date displays
-            document.querySelectorAll('#currentDate').forEach(el => {
-                el.textContent = now.toLocaleDateString('pt-PT', options);
-            });
+            // Simular dados iniciais
+            if (MAFCSystem.materialRequests.length === 0) {
+                // Adicionar alguns pedidos de exemplo
+                MAFCSystem.materialRequests.push({
+                    id: 1,
+                    team: 'Equipa 03 - Munich',
+                    material: 'Cimento',
+                    quantity: 50,
+                    unit: 'sacos',
+                    urgency: 'critical',
+                    date: '10/12/2024',
+                    status: 'pending',
+                    requestedBy: 'Miguel Santos'
+                });
+            }
         }
         
-        // Update time every minute
-        setInterval(updateDateTime, 60000);
-        
-        // Initialize
-        updateDateTime();
-        
-        // Category tags
-        document.querySelectorAll('.category-tag').forEach(tag => {
-            tag.addEventListener('click', function() {
-                document.querySelectorAll('.category-tag').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                const category = this.getAttribute('data-category');
-                if (category === 'all') {
-                    filterMaterials();
-                }
+        function updateClocks() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-PT');
+            const dateString = now.toLocaleDateString('pt-PT', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
             });
-        });
-        
-        // Sidebar navigation for admin
-        document.querySelectorAll('.sidebar-menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all links
-                document.querySelectorAll('.sidebar-menu a').forEach(l => l.classList.remove('active'));
-                // Add active class to clicked link
-                this.classList.add('active');
-                
-                // Get target section
-                const targetSection = this.getAttribute('data-section');
-                
-                // Hide all sections
-                document.querySelectorAll('#adminDashboard .dashboard-section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                
-                // Show target section
-                document.getElementById(targetSection + 'Section').classList.add('active');
+            
+            // Atualizar todos os relógios
+            document.querySelectorAll('#bossCurrentTime, #teamCurrentTime, #purchaseCurrentTime').forEach(el => {
+                el.textContent = timeString;
             });
-        });
+            
+            // Atualizar relógio completo do patrão
+            const bossFullTime = document.getElementById('bossCurrentTimeFull');
+            if (bossFullTime) {
+                bossFullTime.textContent = timeString;
+            }
+            
+            // Atualizar hora atual no chefe de equipa
+            const currentTimeInput = document.getElementById('currentTimeInput');
+            if (currentTimeInput) {
+                currentTimeInput.value = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            }
+        }
         
-        // Logout functionality
-        document.querySelectorAll('.logout-btn, #teamLogoutBtn, #purchaseLogoutBtn').forEach(btn => {
+        // Logout
+        document.querySelectorAll('.logout-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 if (confirm('Tem certeza que deseja sair do sistema?')) {
-                    // Hide all dashboards
-                    document.getElementById('adminDashboard').style.display = 'none';
-                    document.getElementById('teamDashboard').style.display = 'none';
-                    document.getElementById('purchaseDashboard').style.display = 'none';
+                    // Esconder todos os dashboards
+                    document.querySelectorAll('.dashboard').forEach(d => {
+                        d.style.display = 'none';
+                    });
                     
-                    // Show public website
+                    // Mostrar website público
                     document.getElementById('publicWebsite').style.display = 'block';
                     
-                    // Reset login form
-                    loginForm.reset();
+                    // Limpar formulário de login
+                    document.getElementById('loginForm').reset();
                     currentUser = null;
                 }
             });
         });
         
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                if(this.getAttribute('href') === '#') return;
-                
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
+        // Inicializar sistema
+        updateClocks();
+        
+        // Adicionar alguns dados de exemplo
+        window.addEventListener('load', () => {
+            // Simular alguns pedidos
+            if (MAFCSystem.materialRequests.length === 0) {
+                MAFCSystem.materialRequests = [
+                    {
+                        id: 1,
+                        team: 'Equipa 01 - Berlin',
+                        material: 'Cimento',
+                        quantity: 100,
+                        unit: 'sacos',
+                        urgency: 'normal',
+                        date: '09/12/2024',
+                        status: 'approved',
+                        requestedBy: 'João Silva'
+                    },
+                    {
+                        id: 2,
+                        team: 'Equipa 02 - Hamburg',
+                        material: 'Alcatrão',
+                        quantity: 2,
+                        unit: 'ton',
+                        urgency: 'urgent',
+                        date: '10/12/2024',
+                        status: 'pending',
+                        requestedBy: 'Carlos Mendes'
+                    }
+                ];
+            }
         });
     </script>
 </body>
