@@ -480,7 +480,7 @@
             border-color: white;
         }
 
-        /* Menu Horizontal */
+        /* Menu Horizontal FIXO NO TOPO */
         .horizontal-menu {
             background: white;
             margin-top: 70px;
@@ -538,14 +538,75 @@
             font-weight: 700;
         }
 
-        /* Conteúdo do Dashboard */
+        /* Conteúdo do Dashboard - AFASTADO DO MENU FIXO */
         .dashboard-content {
             margin-top: 140px;
-            padding: 20px 30px;
+            padding: 20px 30px 80px 30px; /* Adicionado padding-bottom para o menu do fundo */
             background: #f0f2f5;
             min-height: calc(100vh - 140px);
         }
 
+        /* MENU NO FUNDO */
+        .bottom-menu {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            overflow-x: auto;
+        }
+
+        .bottom-menu-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+
+        .bottom-menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 15px;
+            color: #666;
+            text-decoration: none;
+            font-size: 0.85rem;
+            text-align: center;
+            min-width: 80px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .bottom-menu-item:hover {
+            background: #f8f9fa;
+            color: var(--primary);
+        }
+
+        .bottom-menu-item.active {
+            color: var(--primary);
+            background: #f0f7ff;
+        }
+
+        .bottom-menu-item i {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+        }
+
+        .bottom-menu-badge {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 5px;
+            border-radius: 50%;
+            min-width: 18px;
+            text-align: center;
+        }
+
+        /* Dashboard Sections */
         .dashboard-section {
             display: none;
         }
@@ -598,7 +659,7 @@
         .boss-dashboard .stat-icon { background: linear-gradient(135deg, var(--boss), #9b59b6); }
         .team-dashboard .stat-icon { background: linear-gradient(135deg, var(--team), #3498db); }
         .purchase-dashboard .stat-icon { background: linear-gradient(135deg, var(--purchase), #2ecc71); }
-        .office-dashboard .stat-icon { background: linear-gradient(135deg, var(--office), #8e44ad); }
+        .office-dashboard .stat-icon { background: linear-gradient(135deg, var(--office), #9b59b6); }
 
         .stat-info h3 {
             font-size: 2.2rem;
@@ -1067,6 +1128,12 @@
             .dashboard-content {
                 padding: 15px;
             }
+            
+            .bottom-menu-item {
+                padding: 8px 10px;
+                font-size: 0.8rem;
+                min-width: 70px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1424,6 +1491,88 @@
         </div>
     </div>
 
+    <!-- ============ MODAL FORNECEDORES ============ -->
+    <div class="modal-employee" id="supplierModal">
+        <div class="modal-employee-content">
+            <button class="close-modal-btn">&times;</button>
+            <h2><i class="fas fa-truck"></i> Gestão de Fornecedores</h2>
+            <div class="employee-form">
+                <div class="form-row">
+                    <div class="form-group-dashboard">
+                        <label>Nome do Fornecedor</label>
+                        <input type="text" id="supplierName" placeholder="Nome da empresa">
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>NIF/NIPC</label>
+                        <input type="text" id="supplierNIF" placeholder="Número de identificação fiscal">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group-dashboard">
+                        <label>Contacto</label>
+                        <input type="tel" id="supplierContact" placeholder="Telefone/WhatsApp">
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>Email</label>
+                        <input type="email" id="supplierEmail" placeholder="email@fornecedor.pt">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group-dashboard">
+                        <label>Tipo de Materiais</label>
+                        <select id="supplierType" multiple>
+                            <option value="construcao">Materiais de Construção</option>
+                            <option value="ferramentas">Ferramentas</option>
+                            <option value="equipamentos">Equipamentos</option>
+                            <option value="consumiveis">Consumíveis</option>
+                            <option value="seguranca">EPIs e Segurança</option>
+                        </select>
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>Observações</label>
+                        <textarea id="supplierNotes" rows="3" placeholder="Informações adicionais..."></textarea>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-dashboard btn-success" onclick="saveSupplier()">
+                        <i class="fas fa-save"></i> Guardar Fornecedor
+                    </button>
+                    <button type="button" class="btn-dashboard btn-danger" onclick="closeModal('supplierModal')">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3><i class="fas fa-list"></i> Lista de Fornecedores</h3>
+                <div class="filter-bar">
+                    <input type="text" id="searchSupplierList" placeholder="Pesquisar fornecedor..." onkeyup="filterSupplierList()">
+                    <select id="filterSupplierType" onchange="filterSupplierList()">
+                        <option value="all">Todos Tipos</option>
+                        <option value="construcao">Construção</option>
+                        <option value="ferramentas">Ferramentas</option>
+                        <option value="equipamentos">Equipamentos</option>
+                    </select>
+                </div>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>NIF</th>
+                            <th>Contacto</th>
+                            <th>Tipo</th>
+                            <th>Email</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="suppliersList">
+                        <!-- Lista de fornecedores será carregada aqui -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <!-- ============ DASHBOARD DO PATRÃO/ADMIN ============ -->
     <div class="dashboard boss-dashboard" id="bossDashboard">
         <!-- Top Bar -->
@@ -1445,36 +1594,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Menu Horizontal -->
-        <nav class="horizontal-menu">
-            <div class="container menu-container">
-                <a href="#" class="menu-item active" data-section="bossOverview">
-                    <i class="fas fa-tachometer-alt"></i> Visão Geral
-                </a>
-                <a href="#" class="menu-item" data-section="bossTeams">
-                    <i class="fas fa-users"></i> Equipas
-                    <span class="menu-badge" id="teamsCount">15</span>
-                </a>
-                <a href="#" class="menu-item" data-section="bossHours">
-                    <i class="fas fa-clock"></i> Controlo Horas
-                    <span class="menu-badge" id="pendingHours">42</span>
-                </a>
-                <a href="#" class="menu-item" data-section="bossPurchases">
-                    <i class="fas fa-shopping-cart"></i> Compras
-                    <span class="menu-badge" id="pendingPurchases">12</span>
-                </a>
-                <a href="#" class="menu-item" data-section="bossFinances">
-                    <i class="fas fa-euro-sign"></i> Finanças
-                </a>
-                <a href="#" class="menu-item" data-section="bossReports">
-                    <i class="fas fa-chart-bar"></i> Relatórios
-                </a>
-                <a href="#" class="menu-item" data-section="bossAudit">
-                    <i class="fas fa-shield-alt"></i> Auditoria
-                </a>
-            </div>
-        </nav>
 
         <!-- Conteúdo -->
         <div class="dashboard-content">
@@ -1693,7 +1812,83 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Finanças -->
+            <div class="dashboard-section" id="bossFinancesSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-euro-sign"></i> Gestão Financeira</h3>
+                        <button class="btn-dashboard btn-success" onclick="generateFinancialReport()">
+                            <i class="fas fa-file-pdf"></i> Relatório Mensal
+                        </button>
+                    </div>
+                    <!-- Conteúdo de finanças -->
+                </div>
+            </div>
+
+            <!-- Relatórios -->
+            <div class="dashboard-section" id="bossReportsSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-bar"></i> Relatórios e Estatísticas</h3>
+                        <button class="btn-dashboard btn-primary" onclick="exportAllReports()">
+                            <i class="fas fa-download"></i> Exportar Todos
+                        </button>
+                    </div>
+                    <!-- Conteúdo de relatórios -->
+                </div>
+            </div>
+
+            <!-- Controlo Horas -->
+            <div class="dashboard-section" id="bossHoursSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock"></i> Controlo de Horas</h3>
+                        <button class="btn-dashboard btn-info" onclick="generateHoursReport()">
+                            <i class="fas fa-file-excel"></i> Exportar Horas
+                        </button>
+                    </div>
+                    <!-- Conteúdo de controlo de horas -->
+                </div>
+            </div>
         </div>
+
+        <!-- MENU NO FUNDO PARA PATRÃO -->
+        <nav class="bottom-menu">
+            <div class="bottom-menu-container">
+                <a href="#" class="bottom-menu-item active" data-section="bossOverview">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Visão Geral</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="bossTeams">
+                    <i class="fas fa-users"></i>
+                    <span>Equipas</span>
+                    <span class="bottom-menu-badge" id="teamsCountBottom">15</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="bossHours">
+                    <i class="fas fa-clock"></i>
+                    <span>Controlo Horas</span>
+                    <span class="bottom-menu-badge" id="pendingHoursBottom">42</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="bossPurchases">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Compras</span>
+                    <span class="bottom-menu-badge" id="pendingPurchasesBottom">12</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="bossFinances">
+                    <i class="fas fa-euro-sign"></i>
+                    <span>Finanças</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="bossReports">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Relatórios</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="bossAudit">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Auditoria</span>
+                </a>
+            </div>
+        </nav>
     </div>
 
     <!-- ============ DASHBOARD ESCRITÓRIO ============ -->
@@ -1717,30 +1912,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Menu Horizontal -->
-        <nav class="horizontal-menu">
-            <div class="container menu-container">
-                <a href="#" class="menu-item active" data-section="officeDashboard">
-                    <i class="fas fa-home"></i> Dashboard
-                </a>
-                <a href="#" class="menu-item" data-section="officePeople">
-                    <i class="fas fa-user-plus"></i> Pessoal
-                </a>
-                <a href="#" class="menu-item" data-section="officeTime">
-                    <i class="fas fa-clock"></i> Marcar Horas
-                </a>
-                <a href="#" class="menu-item" data-section="officeReports">
-                    <i class="fas fa-file-alt"></i> Meu Extrato
-                </a>
-                <a href="#" class="menu-item" data-section="officeDocuments">
-                    <i class="fas fa-folder"></i> Documentos
-                </a>
-                <a href="#" class="menu-item" data-section="officeDrucker">
-                    <i class="fas fa-print"></i> Drucker
-                </a>
-            </div>
-        </nav>
 
         <!-- Conteúdo -->
         <div class="dashboard-content">
@@ -1834,6 +2005,50 @@
                         </table>
                     </div>
                 </div>
+
+                <!-- Sistema de Marcação de Horas para Todos os Funcionários -->
+                <div class="content-card" style="margin-top: 30px;">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock"></i> Marcação de Horas - Todos os Funcionários</h3>
+                        <button class="btn-dashboard btn-success" onclick="openBulkTimeModal()">
+                            <i class="fas fa-users"></i> Marcar Todos
+                        </button>
+                    </div>
+
+                    <div class="time-tracker">
+                        <div class="time-display" id="officeClock">08:45:23</div>
+                        <div class="time-buttons">
+                            <button class="btn-dashboard btn-success" onclick="markAllEntry()">
+                                <i class="fas fa-sign-in-alt"></i> Entrada Geral
+                            </button>
+                            <button class="btn-dashboard btn-warning" onclick="markAllBreak()">
+                                <i class="fas fa-coffee"></i> Pausa Geral
+                            </button>
+                            <button class="btn-dashboard btn-danger" onclick="markAllExit()">
+                                <i class="fas fa-sign-out-alt"></i> Saída Geral
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <h4><i class="fas fa-list-check"></i> Estado Atual das Marcações</h4>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Entrada</th>
+                                    <th>Saída</th>
+                                    <th>Pausa</th>
+                                    <th>Total</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="allEmployeesTime">
+                                <!-- Todos os funcionários serão listados aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <!-- Gestão de Pessoal -->
@@ -1879,12 +2094,12 @@
                 </div>
             </div>
 
-            <!-- Marcar Horas -->
+            <!-- Marcar Horas Individual -->
             <div class="dashboard-section" id="officeTimeSection">
                 <div class="content-card">
                     <div class="card-header">
                         <h3><i class="fas fa-clock"></i> Marcação Individual de Horas</h3>
-                        <div class="time-display" style="font-size: 2.5rem; color: var(--office);" id="officeClock">
+                        <div class="time-display" style="font-size: 2.5rem; color: var(--office);" id="officeClockIndividual">
                             08:45:23
                         </div>
                     </div>
@@ -1944,13 +2159,13 @@
                 </div>
             </div>
 
-            <!-- Meu Extrato -->
+            <!-- Meu Extrato com Impressão para Contabilidade -->
             <div class="dashboard-section" id="officeReportsSection">
                 <div class="content-card">
                     <div class="card-header">
-                        <h3><i class="fas fa-file-invoice"></i> Extrato Mensal</h3>
+                        <h3><i class="fas fa-file-invoice"></i> Extrato Mensal para Contabilidade</h3>
                         <button class="btn-dashboard btn-primary" onclick="generateOfficeReport()">
-                            <i class="fas fa-sync-alt"></i> Gerar
+                            <i class="fas fa-sync-alt"></i> Gerar Extrato
                         </button>
                     </div>
 
@@ -1970,6 +2185,14 @@
                                 <option value="all">Todas as Pessoas</option>
                             </select>
                         </div>
+                        <div class="form-group-dashboard">
+                            <label>Formato</label>
+                            <select id="reportFormat">
+                                <option value="pdf">PDF</option>
+                                <option value="excel">Excel</option>
+                                <option value="print">Imprimir</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="monthly-report">
@@ -1983,8 +2206,10 @@
                                 <tr>
                                     <th>Data</th>
                                     <th>Nome</th>
-                                    <th>Horas</th>
-                                    <th>Extra</th>
+                                    <th>Entrada</th>
+                                    <th>Saída</th>
+                                    <th>Horas Normais</th>
+                                    <th>Horas Extra</th>
                                     <th>Total</th>
                                 </tr>
                             </thead>
@@ -1994,14 +2219,17 @@
                         </table>
                         
                         <div class="report-actions">
-                            <button class="btn-dashboard btn-primary" onclick="printOfficeReport()">
-                                <i class="fas fa-print"></i> Imprimir
+                            <button class="btn-dashboard btn-primary" onclick="printOfficeReportForAccounting()">
+                                <i class="fas fa-print"></i> Imprimir para Contabilidade
                             </button>
-                            <button class="btn-dashboard btn-success" onclick="emailOfficeReport()">
-                                <i class="fas fa-envelope"></i> Enviar Email
+                            <button class="btn-dashboard btn-success" onclick="exportToExcel()">
+                                <i class="fas fa-file-excel"></i> Exportar Excel
                             </button>
-                            <button class="btn-dashboard btn-whatsapp" onclick="whatsappOfficeReport()">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            <button class="btn-dashboard btn-info" onclick="generatePDF()">
+                                <i class="fas fa-file-pdf"></i> Gerar PDF
+                            </button>
+                            <button class="btn-dashboard btn-whatsapp" onclick="sendToAccountingWhatsApp()">
+                                <i class="fab fa-whatsapp"></i> Enviar para Contabilidade
                             </button>
                         </div>
                     </div>
@@ -2130,6 +2358,36 @@
                 </div>
             </div>
         </div>
+
+        <!-- MENU NO FUNDO PARA ESCRITÓRIO -->
+        <nav class="bottom-menu">
+            <div class="bottom-menu-container">
+                <a href="#" class="bottom-menu-item active" data-section="officeDashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="officePeople">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Pessoal</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="officeTime">
+                    <i class="fas fa-clock"></i>
+                    <span>Marcar Horas</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="officeReports">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Meu Extrato</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="officeDocuments">
+                    <i class="fas fa-folder"></i>
+                    <span>Documentos</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="officeDrucker">
+                    <i class="fas fa-print"></i>
+                    <span>Drucker</span>
+                </a>
+            </div>
+        </nav>
     </div>
 
     <!-- ============ DASHBOARD CHEFE DE EQUIPA ============ -->
@@ -2153,27 +2411,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Menu Horizontal -->
-        <nav class="horizontal-menu">
-            <div class="container menu-container">
-                <a href="#" class="menu-item active" data-section="teamOverview">
-                    <i class="fas fa-home"></i> Visão Geral
-                </a>
-                <a href="#" class="menu-item" data-section="teamTime">
-                    <i class="fas fa-clock"></i> Controlo Horas
-                </a>
-                <a href="#" class="menu-item" data-section="teamMaterials">
-                    <i class="fas fa-boxes"></i> Pedir Materiais
-                </a>
-                <a href="#" class="menu-item" data-section="teamRequests">
-                    <i class="fas fa-clipboard-list"></i> Meus Pedidos
-                </a>
-                <a href="#" class="menu-item" data-section="teamReports">
-                    <i class="fas fa-file-alt"></i> Relatórios
-                </a>
-            </div>
-        </nav>
 
         <!-- Conteúdo -->
         <div class="dashboard-content">
@@ -2284,6 +2521,45 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- Lista de Equipas Disponíveis -->
+                <div class="content-card" style="margin-top: 30px;">
+                    <div class="card-header">
+                        <h3><i class="fas fa-users"></i> Equipas da Empresa</h3>
+                        <span class="badge badge-info" id="totalTeamsCount">15 equipas</span>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <select id="filterTeamLocationList" onchange="filterTeamList()">
+                            <option value="all">Todas Localizações</option>
+                            <option value="germany">Alemanha</option>
+                            <option value="portugal">Portugal</option>
+                        </select>
+                        <select id="filterTeamStatusList" onchange="filterTeamList()">
+                            <option value="all">Todos Estados</option>
+                            <option value="active">Ativas</option>
+                            <option value="inactive">Inativas</option>
+                        </select>
+                    </div>
+
+                    <div style="max-height: 300px; overflow-y: auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Equipa</th>
+                                    <th>Localização</th>
+                                    <th>Chefe</th>
+                                    <th>Membros</th>
+                                    <th>Obra Atual</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teamListTable">
+                                <!-- Lista de equipas será carregada aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <!-- Pedidos de Material -->
@@ -2327,7 +2603,105 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Controlo Horas da Equipa -->
+            <div class="dashboard-section" id="teamTimeSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clock"></i> Controlo de Horas da Equipa</h3>
+                        <div class="time-display" style="font-size: 2rem; color: var(--team);">
+                            <span id="teamCurrentTimeDisplay">08:45</span>
+                        </div>
+                    </div>
+
+                    <div class="time-tracker">
+                        <div class="time-buttons">
+                            <button class="btn-dashboard btn-success" onclick="markTeamEntry()">
+                                <i class="fas fa-sign-in-alt"></i> Entrada da Equipa
+                            </button>
+                            <button class="btn-dashboard btn-warning" onclick="markTeamBreak()">
+                                <i class="fas fa-coffee"></i> Pausa da Equipa
+                            </button>
+                            <button class="btn-dashboard btn-danger" onclick="markTeamExit()">
+                                <i class="fas fa-sign-out-alt"></i> Saída da Equipa
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <h4><i class="fas fa-users"></i> Membros da Equipa</h4>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Entrada</th>
+                                    <th>Saída</th>
+                                    <th>Pausa</th>
+                                    <th>Total</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teamMembersTime">
+                                <!-- Membros da equipa serão listados aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meus Pedidos -->
+            <div class="dashboard-section" id="teamRequestsSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-clipboard-list"></i> Meus Pedidos</h3>
+                        <button class="btn-dashboard btn-info" onclick="exportMyRequests()">
+                            <i class="fas fa-download"></i> Exportar
+                        </button>
+                    </div>
+                    <!-- Conteúdo dos meus pedidos -->
+                </div>
+            </div>
+
+            <!-- Relatórios -->
+            <div class="dashboard-section" id="teamReportsSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-file-alt"></i> Relatórios da Equipa</h3>
+                        <button class="btn-dashboard btn-primary" onclick="generateTeamReport()">
+                            <i class="fas fa-file-pdf"></i> Gerar Relatório
+                        </button>
+                    </div>
+                    <!-- Conteúdo de relatórios -->
+                </div>
+            </div>
         </div>
+
+        <!-- MENU NO FUNDO PARA CHEFE DE EQUIPA -->
+        <nav class="bottom-menu">
+            <div class="bottom-menu-container">
+                <a href="#" class="bottom-menu-item active" data-section="teamOverview">
+                    <i class="fas fa-home"></i>
+                    <span>Visão Geral</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="teamTime">
+                    <i class="fas fa-clock"></i>
+                    <span>Controlo Horas</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="teamMaterials">
+                    <i class="fas fa-boxes"></i>
+                    <span>Pedir Materiais</span>
+                    <span class="bottom-menu-badge" id="pendingRequestsBottom">3</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="teamRequests">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Meus Pedidos</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="teamReports">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Relatórios</span>
+                </a>
+            </div>
+        </nav>
     </div>
 
     <!-- ============ DASHBOARD COMPRAS ============ -->
@@ -2351,31 +2725,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Menu Horizontal -->
-        <nav class="horizontal-menu">
-            <div class="container menu-container">
-                <a href="#" class="menu-item active" data-section="purchaseDashboard">
-                    <i class="fas fa-home"></i> Dashboard
-                </a>
-                <a href="#" class="menu-item" data-section="purchasePending">
-                    <i class="fas fa-clock"></i> Pendentes
-                    <span class="menu-badge" id="pendingPurchasesCount">12</span>
-                </a>
-                <a href="#" class="menu-item" data-section="purchaseApproved">
-                    <i class="fas fa-check-circle"></i> Aprovados
-                </a>
-                <a href="#" class="menu-item" data-section="purchaseCompleted">
-                    <i class="fas fa-check-double"></i> Concluídos
-                </a>
-                <a href="#" class="menu-item" data-section="purchaseSuppliers">
-                    <i class="fas fa-truck"></i> Fornecedores
-                </a>
-                <a href="#" class="menu-item" data-section="purchaseReports">
-                    <i class="fas fa-chart-bar"></i> Relatórios
-                </a>
-            </div>
-        </nav>
 
         <!-- Conteúdo -->
         <div class="dashboard-content">
@@ -2442,6 +2791,43 @@
                         </thead>
                         <tbody id="purchaseUrgentTable">
                             <!-- Pedidos urgentes serão carregados aqui -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Gestão de Fornecedores -->
+                <div class="content-card" style="margin-top: 30px;">
+                    <div class="card-header">
+                        <h3><i class="fas fa-truck"></i> Fornecedores de Materiais de Construção</h3>
+                        <button class="btn-dashboard btn-success" onclick="openSupplierModal()">
+                            <i class="fas fa-plus"></i> Adicionar Fornecedor
+                        </button>
+                    </div>
+
+                    <div class="filter-bar">
+                        <input type="text" id="searchSupplier" placeholder="Pesquisar fornecedor..." onkeyup="filterSuppliers()">
+                        <select id="filterSupplierType" onchange="filterSuppliers()">
+                            <option value="all">Todos Tipos</option>
+                            <option value="construcao">Materiais de Construção</option>
+                            <option value="ferramentas">Ferramentas</option>
+                            <option value="equipamentos">Equipamentos</option>
+                        </select>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>NIF</th>
+                                <th>Contacto</th>
+                                <th>Tipo</th>
+                                <th>Email</th>
+                                <th>Avaliação</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="suppliersTable">
+                            <!-- Fornecedores serão carregados aqui -->
                         </tbody>
                     </table>
                 </div>
@@ -2564,7 +2950,64 @@
                     </table>
                 </div>
             </div>
+
+            <!-- Fornecedores -->
+            <div class="dashboard-section" id="purchaseSuppliersSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-truck"></i> Gestão de Fornecedores</h3>
+                        <button class="btn-dashboard btn-success" onclick="openSupplierModal()">
+                            <i class="fas fa-plus"></i> Novo Fornecedor
+                        </button>
+                    </div>
+                    <!-- Conteúdo de fornecedores será carregado dinamicamente -->
+                </div>
+            </div>
+
+            <!-- Relatórios -->
+            <div class="dashboard-section" id="purchaseReportsSection">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-chart-bar"></i> Relatórios de Compras</h3>
+                        <button class="btn-dashboard btn-primary" onclick="generatePurchaseReports()">
+                            <i class="fas fa-download"></i> Gerar Relatórios
+                        </button>
+                    </div>
+                    <!-- Conteúdo de relatórios -->
+                </div>
+            </div>
         </div>
+
+        <!-- MENU NO FUNDO PARA COMPRAS -->
+        <nav class="bottom-menu">
+            <div class="bottom-menu-container">
+                <a href="#" class="bottom-menu-item active" data-section="purchaseDashboard">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="purchasePending">
+                    <i class="fas fa-clock"></i>
+                    <span>Pendentes</span>
+                    <span class="bottom-menu-badge" id="pendingPurchasesCountBottom">12</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="purchaseApproved">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Aprovados</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="purchaseCompleted">
+                    <i class="fas fa-check-double"></i>
+                    <span>Concluídos</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="purchaseSuppliers">
+                    <i class="fas fa-truck"></i>
+                    <span>Fornecedores</span>
+                </a>
+                <a href="#" class="bottom-menu-item" data-section="purchaseReports">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Relatórios</span>
+                </a>
+            </div>
+        </nav>
     </div>
 
     <script>
@@ -2575,8 +3018,9 @@
             currentUser: null,
             editingEmployeeId: null,
             editingPurchaseId: null,
+            editingSupplierId: null,
             
-            // Credenciais
+            // Credenciais CORRIGIDAS - Responsável de Compras agora funciona
             credentials: {
                 boss: [
                     { code: 'mafc', password: '1234', name: 'Administrador' },
@@ -2584,10 +3028,24 @@
                 ],
                 team: [
                     { code: 'equipa01', password: '1234', name: 'João Silva', team: 'Equipa 01 - Berlin' },
-                    { code: 'equipa02', password: '1234', name: 'Carlos Mendes', team: 'Equipa 02 - Hamburg' }
+                    { code: 'equipa02', password: '1234', name: 'Carlos Mendes', team: 'Equipa 02 - Hamburg' },
+                    { code: 'equipa03', password: '1234', name: 'António Santos', team: 'Equipa 03 - Lisboa' },
+                    { code: 'equipa04', password: '1234', name: 'Miguel Costa', team: 'Equipa 04 - Porto' },
+                    { code: 'equipa05', password: '1234', name: 'Ricardo Oliveira', team: 'Equipa 05 - Frankfurt' },
+                    { code: 'equipa06', password: '1234', name: 'Pedro Martins', team: 'Equipa 06 - Munique' },
+                    { code: 'equipa07', password: '1234', name: 'Francisco Lima', team: 'Equipa 07 - Colônia' },
+                    { code: 'equipa08', password: '1234', name: 'Jorge Silva', team: 'Equipa 08 - Estugarda' },
+                    { code: 'equipa09', password: '1234', name: 'Rui Pereira', team: 'Equipa 09 - Düsseldorf' },
+                    { code: 'equipa10', password: '1234', name: 'Luís Fernandes', team: 'Equipa 10 - Essen' },
+                    { code: 'equipa11', password: '1234', name: 'Hugo Rodrigues', team: 'Equipa 11 - Dortmund' },
+                    { code: 'equipa12', password: '1234', name: 'Bruno Sousa', team: 'Equipa 12 - Bremen' },
+                    { code: 'equipa13', password: '1234', name: 'Paulo Gomes', team: 'Equipa 13 - Hanôver' },
+                    { code: 'equipa14', password: '1234', name: 'Vítor Lopes', team: 'Equipa 14 - Nuremberga' },
+                    { code: 'equipa15', password: '1234', name: 'André Marques', team: 'Equipa 15 - Leipzig' }
                 ],
                 purchase: [
-                    { code: 'compras', password: '1234', name: 'Responsável Compras' }
+                    { code: 'compras01', password: '1234', name: 'Responsável Compras' }, // Código corrigido
+                    { code: 'compras', password: '1234', name: 'Ana Compras' } // Código alternativo
                 ],
                 office: [
                     { code: 'escritorio', password: '1234', name: 'Maria Silva' },
@@ -2604,6 +3062,7 @@
             auditLog: [],
             activityLog: [],
             teams: [],
+            suppliers: [],
             
             // Inicializar dados
             init: function() {
@@ -2614,14 +3073,38 @@
                 if (this.officePeople.length === 0) {
                     this.officePeople = [
                         { id: 1, name: 'Maria Silva', whatsapp: '+351912345678', position: 'Administrativa', department: 'escritorio', status: 'active', startDate: '2023-01-15' },
-                        { id: 2, name: 'Ana Costa', whatsapp: '+351912345679', position: 'Contabilista', department: 'contabilidade', status: 'active', startDate: '2022-03-10' }
+                        { id: 2, name: 'Ana Costa', whatsapp: '+351912345679', position: 'Contabilista', department: 'contabilidade', status: 'active', startDate: '2022-03-10' },
+                        { id: 3, name: 'João Silva', whatsapp: '+351912345680', position: 'Chefe Equipa', department: 'obra', status: 'active', startDate: '2021-05-20', team: 'Equipa 01 - Berlin' },
+                        { id: 4, name: 'Carlos Mendes', whatsapp: '+351912345681', position: 'Chefe Equipa', department: 'obra', status: 'active', startDate: '2021-06-15', team: 'Equipa 02 - Hamburg' }
                     ];
                 }
                 
                 if (this.teams.length === 0) {
-                    this.teams = [
-                        { id: 1, name: 'Equipa 01 - Berlin', location: 'Berlim', members: 5, status: 'active' },
-                        { id: 2, name: 'Equipa 02 - Hamburg', location: 'Hamburgo', members: 3, status: 'active' }
+                    // Criar 15 equipas como solicitado
+                    this.teams = [];
+                    const teamLocations = ['Berlim', 'Hamburgo', 'Lisboa', 'Porto', 'Frankfurt', 'Munique', 'Colônia', 'Estugarda', 'Düsseldorf', 'Essen', 'Dortmund', 'Bremen', 'Hanôver', 'Nuremberga', 'Leipzig'];
+                    const teamStatus = ['active', 'active', 'active', 'active', 'active', 'active', 'active', 'active', 'active', 'active', 'active', 'active', 'active', 'active', 'inactive'];
+                    
+                    for (let i = 1; i <= 15; i++) {
+                        const locationIndex = i - 1;
+                        this.teams.push({
+                            id: i,
+                            name: `Equipa ${i.toString().padStart(2, '0')} - ${teamLocations[locationIndex]}`,
+                            location: teamLocations[locationIndex],
+                            leader: `Chefe ${i}`,
+                            members: Math.floor(Math.random() * 5) + 3,
+                            currentWork: `Projeto ${i}`,
+                            status: teamStatus[locationIndex],
+                            country: locationIndex < 4 ? 'Portugal' : 'Alemanha'
+                        });
+                    }
+                }
+                
+                if (this.suppliers.length === 0) {
+                    this.suppliers = [
+                        { id: 1, name: 'Cimentos de Portugal', nif: '500000001', contact: '+351219876543', email: 'vendas@cimentos.pt', type: ['construcao'], notes: 'Fornecedor principal de cimento' },
+                        { id: 2, name: 'Ferragens Lda.', nif: '500000002', contact: '+351219876544', email: 'compras@ferragens.pt', type: ['ferramentas', 'equipamentos'], notes: 'Ferramentas e equipamentos' },
+                        { id: 3, name: 'Madeiras Nobres SA', nif: '500000003', contact: '+351219876545', email: 'info@madeiras.pt', type: ['construcao'], notes: 'Madeiras para construção' }
                     ];
                 }
                 
@@ -2638,7 +3121,8 @@
                     documents: this.documents,
                     auditLog: this.auditLog,
                     activityLog: this.activityLog,
-                    teams: this.teams
+                    teams: this.teams,
+                    suppliers: this.suppliers
                 };
                 localStorage.setItem('mafcSystem', JSON.stringify(data));
             },
@@ -2655,6 +3139,7 @@
                     this.auditLog = data.auditLog || [];
                     this.activityLog = data.activityLog || [];
                     this.teams = data.teams || [];
+                    this.suppliers = data.suppliers || [];
                 }
             },
             
@@ -2665,7 +3150,7 @@
                     timestamp: new Date().toISOString(),
                     user: this.currentUser ? this.currentUser.name : 'system',
                     userRole: this.currentUser ? this.currentUser.role : 'system',
-                    ip: '127.0.0.1', // Em produção, obter IP real
+                    ip: '127.0.0.1',
                     action: action,
                     details: details,
                     module: module
@@ -2718,8 +3203,8 @@
                 handleLogin();
             });
             
-            // Menu navigation
-            document.querySelectorAll('.menu-item').forEach(item => {
+            // Menu navigation - MENU DO FUNDO
+            document.querySelectorAll('.bottom-menu-item').forEach(item => {
                 item.addEventListener('click', function(e) {
                     e.preventDefault();
                     
@@ -2727,7 +3212,7 @@
                     const sectionId = this.getAttribute('data-section') + 'Section';
                     
                     // Remover active de todos os items do mesmo dashboard
-                    dashboard.querySelectorAll('.menu-item').forEach(i => {
+                    dashboard.querySelectorAll('.bottom-menu-item').forEach(i => {
                         i.classList.remove('active');
                     });
                     
@@ -2751,7 +3236,7 @@
             // Fechar modais
             document.querySelectorAll('.close-modal-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const modal = this.closest('.modal-employee, .modal-document, .modal-monthly-report, .modal-purchase-details');
+                    const modal = this.closest('.modal-employee, .modal-document, .modal-monthly-report, .modal-purchase-details, .modal-supplier');
                     if (modal) modal.style.display = 'none';
                 });
             });
@@ -2766,6 +3251,9 @@
                 }
                 if (e.target.classList.contains('modal-purchase-details')) {
                     document.getElementById('purchaseDetailsModal').style.display = 'none';
+                }
+                if (e.target.classList.contains('modal-supplier')) {
+                    document.getElementById('supplierModal').style.display = 'none';
                 }
             });
         });
@@ -2790,7 +3278,7 @@
                 MAFCSystem.logAudit('login', `Login realizado como ${role}`);
                 loginSuccess();
             } else {
-                alert('Credenciais incorretas! Utilize:\n\nADMIN: mafc / 1234\nEQUIPA: equipa01 / 1234\nCOMPRAS: compras / 1234\nESCRITÓRIO: escritorio / 1234');
+                alert('Credenciais incorretas! Utilize:\n\nADMIN: mafc / 1234\nEQUIPAS: equipa01 a equipa15 / 1234\nCOMPRAS: compras01 / 1234\nESCRITÓRIO: escritorio / 1234');
             }
         }
         
@@ -2831,7 +3319,7 @@
                 document.getElementById('publicWebsite').style.display = 'block';
                 
                 // Fechar todos os modais
-                document.querySelectorAll('.modal, .modal-employee, .modal-document, .modal-purchase-details').forEach(modal => {
+                document.querySelectorAll('.modal, .modal-employee, .modal-document, .modal-purchase-details, .modal-supplier').forEach(modal => {
                     modal.style.display = 'none';
                 });
                 
@@ -2853,6 +3341,18 @@
             document.getElementById('totalEmployees').textContent = MAFCSystem.officePeople.length;
             document.getElementById('activeTeams').textContent = MAFCSystem.teams.filter(t => t.status === 'active').length;
             
+            // Atualizar badges do menu do fundo
+            document.getElementById('teamsCountBottom').textContent = MAFCSystem.teams.filter(t => t.status === 'active').length;
+            
+            // Calcular horas pendentes
+            const today = new Date().toLocaleDateString('pt-PT');
+            const todayRecords = MAFCSystem.timeRecords[today] || {};
+            let pendingHoursCount = 0;
+            Object.values(todayRecords).forEach(record => {
+                if (!record.exit || !record.entry) pendingHoursCount++;
+            });
+            document.getElementById('pendingHoursBottom').textContent = pendingHoursCount;
+            
             // Calcular despesas do mês
             const currentMonth = new Date().getMonth() + 1;
             const monthPurchases = MAFCSystem.purchases.filter(p => {
@@ -2865,7 +3365,7 @@
             // Pedidos pendentes
             const pendingPurchases = MAFCSystem.materialRequests.filter(r => r.status === 'pending').length;
             document.getElementById('pendingItems').textContent = pendingPurchases;
-            document.getElementById('pendingPurchases').textContent = pendingPurchases;
+            document.getElementById('pendingPurchasesBottom').textContent = pendingPurchases;
             
             // Atualizar alertas
             updateBossAlerts();
@@ -3052,10 +3552,222 @@
             // Carregar pessoas no select
             loadOfficePeopleSelect();
             
+            // Carregar todas as pessoas para marcação de horas
+            loadAllEmployeesTime();
+            
             // Carregar tabelas
             loadOfficeTodayMarks();
             loadOfficePeopleTable();
             loadOfficeDocumentsTable();
+        }
+        
+        function loadAllEmployeesTime() {
+            const tbody = document.getElementById('allEmployeesTime');
+            tbody.innerHTML = '';
+            
+            const today = new Date().toLocaleDateString('pt-PT');
+            const todayRecords = MAFCSystem.timeRecords[today] || {};
+            
+            MAFCSystem.officePeople.forEach(person => {
+                if (person.status === 'active') {
+                    const record = todayRecords[person.id] || {};
+                    const status = record.entry ? (record.exit ? '✅ Concluído' : '⏳ Em trabalho') : '⏰ Pendente';
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${person.name}</td>
+                        <td>${record.entry || '--:--'}</td>
+                        <td>${record.exit || '--:--'}</td>
+                        <td>${record.break || '--'}</td>
+                        <td>${record.totalHours ? record.totalHours + 'h' : '--'}</td>
+                        <td>
+                            <button class="btn-dashboard btn-sm btn-success" onclick="markEmployeeTime(${person.id}, 'entry')">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </button>
+                            <button class="btn-dashboard btn-sm btn-warning" onclick="markEmployeeTime(${person.id}, 'break')">
+                                <i class="fas fa-coffee"></i>
+                            </button>
+                            <button class="btn-dashboard btn-sm btn-danger" onclick="markEmployeeTime(${person.id}, 'exit')">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                }
+            });
+        }
+        
+        function markEmployeeTime(personId, type) {
+            const person = MAFCSystem.officePeople.find(p => p.id === personId);
+            if (!person) return;
+            
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            const dateString = now.toLocaleDateString('pt-PT');
+            
+            // Inicializar registos do dia se necessário
+            if (!MAFCSystem.timeRecords[dateString]) {
+                MAFCSystem.timeRecords[dateString] = {};
+            }
+            if (!MAFCSystem.timeRecords[dateString][personId]) {
+                MAFCSystem.timeRecords[dateString][personId] = {
+                    personName: person.name,
+                    personId: personId
+                };
+            }
+            
+            const record = MAFCSystem.timeRecords[dateString][personId];
+            
+            switch(type) {
+                case 'entry':
+                    record.entry = timeString;
+                    MAFCSystem.logActivity('time_entry', `${person.name} - Entrada: ${timeString}`);
+                    break;
+                case 'exit':
+                    record.exit = timeString;
+                    // Calcular horas totais
+                    if (record.entry) {
+                        const entryTime = record.entry.split(':').map(Number);
+                        const exitTime = timeString.split(':').map(Number);
+                        let totalMinutes = (exitTime[0] * 60 + exitTime[1]) - (entryTime[0] * 60 + entryTime[1]);
+                        if (totalMinutes < 0) totalMinutes += 24 * 60;
+                        
+                        // Subtrair pausa se existir
+                        if (record.break === '60') {
+                            totalMinutes -= 60;
+                        }
+                        
+                        record.totalHours = (totalMinutes / 60).toFixed(1);
+                    }
+                    MAFCSystem.logActivity('time_exit', `${person.name} - Saída: ${timeString}`);
+                    break;
+                case 'break':
+                    record.break = '60'; // 60 minutos de pausa
+                    MAFCSystem.logActivity('break', `${person.name} - Pausa de 60min`);
+                    break;
+            }
+            
+            MAFCSystem.saveToStorage();
+            
+            // Enviar notificação WhatsApp
+            const messages = {
+                'entry': `✅ ${person.name} - Entrada registada às ${timeString} - MAFC`,
+                'exit': `✅ ${person.name} - Saída registada às ${timeString} - MAFC`,
+                'break': `⏸️ ${person.name} - Pausa registada às ${timeString} - MAFC`
+            };
+            
+            const message = messages[type];
+            if (message && person.whatsapp) {
+                const url = `https://wa.me/${person.whatsapp.replace('+', '')}?text=${encodeURIComponent(message)}`;
+                window.open(url, '_blank');
+            }
+            
+            alert(`${person.name} - ${type === 'entry' ? 'Entrada' : type === 'exit' ? 'Saída' : 'Pausa'} registada às ${timeString}`);
+            loadAllEmployeesTime();
+            loadOfficeTodayMarks();
+        }
+        
+        function markAllEntry() {
+            if (confirm('Registar entrada para TODOS os funcionários ativos?')) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+                const dateString = now.toLocaleDateString('pt-PT');
+                
+                if (!MAFCSystem.timeRecords[dateString]) {
+                    MAFCSystem.timeRecords[dateString] = {};
+                }
+                
+                MAFCSystem.officePeople.forEach(person => {
+                    if (person.status === 'active') {
+                        if (!MAFCSystem.timeRecords[dateString][person.id]) {
+                            MAFCSystem.timeRecords[dateString][person.id] = {
+                                personName: person.name,
+                                personId: person.id
+                            };
+                        }
+                        MAFCSystem.timeRecords[dateString][person.id].entry = timeString;
+                    }
+                });
+                
+                MAFCSystem.saveToStorage();
+                MAFCSystem.logActivity('bulk_time_entry', 'Entrada registada para todos os funcionários');
+                alert(`Entrada registada para TODOS os funcionários às ${timeString}`);
+                loadAllEmployeesTime();
+                loadOfficeTodayMarks();
+            }
+        }
+        
+        function markAllExit() {
+            if (confirm('Registar saída para TODOS os funcionários ativos?')) {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+                const dateString = now.toLocaleDateString('pt-PT');
+                
+                if (!MAFCSystem.timeRecords[dateString]) {
+                    MAFCSystem.timeRecords[dateString] = {};
+                }
+                
+                MAFCSystem.officePeople.forEach(person => {
+                    if (person.status === 'active') {
+                        if (!MAFCSystem.timeRecords[dateString][person.id]) {
+                            MAFCSystem.timeRecords[dateString][person.id] = {
+                                personName: person.name,
+                                personId: person.id
+                            };
+                        }
+                        const record = MAFCSystem.timeRecords[dateString][person.id];
+                        record.exit = timeString;
+                        
+                        // Calcular horas totais
+                        if (record.entry) {
+                            const entryTime = record.entry.split(':').map(Number);
+                            const exitTime = timeString.split(':').map(Number);
+                            let totalMinutes = (exitTime[0] * 60 + exitTime[1]) - (entryTime[0] * 60 + entryTime[1]);
+                            if (totalMinutes < 0) totalMinutes += 24 * 60;
+                            
+                            if (record.break === '60') {
+                                totalMinutes -= 60;
+                            }
+                            
+                            record.totalHours = (totalMinutes / 60).toFixed(1);
+                        }
+                    }
+                });
+                
+                MAFCSystem.saveToStorage();
+                MAFCSystem.logActivity('bulk_time_exit', 'Saída registada para todos os funcionários');
+                alert(`Saída registada para TODOS os funcionários às ${timeString}`);
+                loadAllEmployeesTime();
+                loadOfficeTodayMarks();
+            }
+        }
+        
+        function markAllBreak() {
+            if (confirm('Registar pausa para TODOS os funcionários ativos?')) {
+                const dateString = new Date().toLocaleDateString('pt-PT');
+                
+                if (!MAFCSystem.timeRecords[dateString]) {
+                    MAFCSystem.timeRecords[dateString] = {};
+                }
+                
+                MAFCSystem.officePeople.forEach(person => {
+                    if (person.status === 'active') {
+                        if (!MAFCSystem.timeRecords[dateString][person.id]) {
+                            MAFCSystem.timeRecords[dateString][person.id] = {
+                                personName: person.name,
+                                personId: person.id
+                            };
+                        }
+                        MAFCSystem.timeRecords[dateString][person.id].break = '60';
+                    }
+                });
+                
+                MAFCSystem.saveToStorage();
+                MAFCSystem.logActivity('bulk_break', 'Pausa registada para todos os funcionários');
+                alert('Pausa registada para TODOS os funcionários (60 minutos)');
+                loadAllEmployeesTime();
+                loadOfficeTodayMarks();
+            }
         }
         
         function loadOfficePeopleSelect() {
@@ -3273,6 +3985,7 @@
             loadOfficePeopleSelect();
             loadOfficePeopleTable();
             loadOfficeTodayMarks();
+            loadAllEmployeesTime();
             
             if (MAFCSystem.currentUser.role === 'boss') {
                 loadBossData();
@@ -3311,6 +4024,7 @@
                     loadEmployeeList();
                     loadOfficePeopleSelect();
                     loadOfficePeopleTable();
+                    loadAllEmployeesTime();
                 }
             }
         }
@@ -3356,7 +4070,7 @@
             }
         }
         
-        // ============ MARCAÇÃO DE HORAS (ESCRITÓRIO) ============
+        // ============ MARCAÇÃO DE HORAS INDIVIDUAL (ESCRITÓRIO) ============
         function loadPersonWhatsApp() {
             const select = document.getElementById('officePersonSelect');
             const whatsappInput = document.getElementById('officePersonWhatsApp');
@@ -3396,7 +4110,8 @@
             }
             if (!MAFCSystem.timeRecords[dateString][personId]) {
                 MAFCSystem.timeRecords[dateString][personId] = {
-                    personName: person.name
+                    personName: person.name,
+                    personId: personId
                 };
             }
             
@@ -3417,8 +4132,8 @@
                         if (totalMinutes < 0) totalMinutes += 24 * 60;
                         
                         // Subtrair pausa se existir
-                        if (record.break) {
-                            totalMinutes -= 60; // 1 hora de pausa padrão
+                        if (record.break === '60') {
+                            totalMinutes -= 60;
                         }
                         
                         record.totalHours = (totalMinutes / 60).toFixed(1);
@@ -3430,7 +4145,7 @@
                     MAFCSystem.logActivity('break_start', `${person.name} - Início pausa`);
                     break;
                 case 'break_end':
-                    record.break = 'Concluída';
+                    record.break = '60'; // 60 minutos completos
                     MAFCSystem.logActivity('break_end', `${person.name} - Fim pausa`);
                     break;
             }
@@ -3438,11 +4153,23 @@
             MAFCSystem.saveToStorage();
             
             // Enviar notificação WhatsApp
-            sendTimeNotification(person.whatsapp, timeType, timeString);
+            const messages = {
+                'entry': `✅ ${person.name} - Entrada registada às ${timeString} - MAFC Escritório`,
+                'exit': `✅ ${person.name} - Saída registada às ${timeString} - MAFC Escritório`,
+                'break_start': `⏸️ ${person.name} - Pausa iniciada às ${timeString} - MAFC Escritório`,
+                'break_end': `⏸️ ${person.name} - Pausa terminada às ${timeString} - MAFC Escritório`
+            };
             
-            alert(`Marcação registada para ${person.name} às ${timeString}`);
+            const message = messages[timeType];
+            if (message && person.whatsapp) {
+                const url = `https://wa.me/${person.whatsapp.replace('+', '')}?text=${encodeURIComponent(message)}`;
+                window.open(url, '_blank');
+            }
+            
+            alert(`${person.name} - ${timeType === 'entry' ? 'Entrada' : timeType === 'exit' ? 'Saída' : 'Pausa'} registada às ${timeString}`);
             loadOfficeTodayMarks();
             loadOfficeDailyMarks();
+            loadAllEmployeesTime();
         }
         
         function sendTimeNotification(whatsapp, type, time) {
@@ -3485,7 +4212,7 @@
             });
         }
         
-        // ============ EXTRATO MENSAL (ESCRITÓRIO) ============
+        // ============ EXTRATO MENSAL COM IMPRESSÃO PARA CONTABILIDADE ============
         function generateOfficeReport() {
             const monthSelect = document.getElementById('officeReportMonth');
             const personSelect = document.getElementById('officeReportPerson');
@@ -3506,22 +4233,23 @@
             const monthName = monthNames[parseInt(month) - 1];
             
             document.getElementById('officeReportTitle').textContent = 
-                `Extrato - ${personName} | ${monthName} ${year}`;
+                `Extrato de Horas - ${personName} | ${monthName} ${year}`;
             
             // Gerar extrato
             const tbody = document.getElementById('officeReportBody');
             tbody.innerHTML = '';
             
             let totalHours = 0;
-            let totalExtra = 0;
+            let totalNormalHours = 0;
+            let totalExtraHours = 0;
             
             // Filtrar registos do mês
             const monthRecords = {};
             Object.keys(MAFCSystem.timeRecords).forEach(dateStr => {
                 const date = new Date(dateStr.split('/').reverse().join('-'));
                 if (date.getMonth() + 1 == month && date.getFullYear() == year) {
-                    Object.keys(MAFCSystem.timeRecords[dateStr]).forEach(personId => {
-                        const record = MAFCSystem.timeRecords[dateStr][personId];
+                    Object.keys(MAFCSystem.timeRecords[dateStr]).forEach(pid => {
+                        const record = MAFCSystem.timeRecords[dateStr][pid];
                         if (!personId || record.personId == personId) {
                             if (!monthRecords[dateStr]) monthRecords[dateStr] = [];
                             monthRecords[dateStr].push(record);
@@ -3534,210 +4262,181 @@
             Object.keys(monthRecords).sort().forEach(dateStr => {
                 monthRecords[dateStr].forEach(record => {
                     const hours = parseFloat(record.totalHours) || 0;
-                    const extra = hours > 8 ? hours - 8 : 0;
+                    const normalHours = Math.min(hours, 8);
+                    const extraHours = hours > 8 ? hours - 8 : 0;
                     
                     totalHours += hours;
-                    totalExtra += extra;
+                    totalNormalHours += normalHours;
+                    totalExtraHours += extraHours;
                     
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${dateStr}</td>
                         <td>${record.personName}</td>
-                        <td>${hours.toFixed(1)}h</td>
-                        <td>${extra > 0 ? extra.toFixed(1) + 'h' : '0'}</td>
-                        <td>${hours.toFixed(1)}h</td>
+                        <td>${record.entry || '--:--'}</td>
+                        <td>${record.exit || '--:--'}</td>
+                        <td>${normalHours.toFixed(2)}h</td>
+                        <td>${extraHours > 0 ? extraHours.toFixed(2) + 'h' : '0h'}</td>
+                        <td>${hours.toFixed(2)}h</td>
                     `;
                     tbody.appendChild(row);
                 });
             });
             
+            // Adicionar linha de totais
+            const totalRow = document.createElement('tr');
+            totalRow.style.fontWeight = 'bold';
+            totalRow.style.background = '#f8f9fa';
+            totalRow.innerHTML = `
+                <td colspan="4"><strong>TOTAIS</strong></td>
+                <td><strong>${totalNormalHours.toFixed(2)}h</strong></td>
+                <td><strong>${totalExtraHours.toFixed(2)}h</strong></td>
+                <td><strong>${totalHours.toFixed(2)}h</strong></td>
+            `;
+            tbody.appendChild(totalRow);
+            
             // Atualizar totais
             document.getElementById('officeTotalHours').textContent = 
-                `${totalHours.toFixed(1)}h (${totalExtra.toFixed(1)} extra)`;
+                `${totalHours.toFixed(2)}h (${totalNormalHours.toFixed(2)} normais + ${totalExtraHours.toFixed(2)} extra)`;
         }
         
-        function printOfficeReport() {
+        function printOfficeReportForAccounting() {
             const reportTitle = document.getElementById('officeReportTitle').textContent;
             const totalHours = document.getElementById('officeTotalHours').textContent;
+            const tableContent = document.getElementById('officeReportBody').innerHTML;
             
             const printWindow = window.open('', '_blank');
             printWindow.document.write(`
                 <html>
                     <head>
-                        <title>${reportTitle}</title>
+                        <title>${reportTitle} - Contabilidade</title>
                         <style>
-                            body { font-family: Arial, sans-serif; margin: 20px; }
-                            h1 { color: #333; }
-                            table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-                            th { background-color: #f2f2f2; }
-                            .total { font-weight: bold; margin-top: 20px; }
+                            @media print {
+                                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+                                h1 { color: #333; text-align: center; margin-bottom: 30px; }
+                                .header-info { display: flex; justify-content: space-between; margin-bottom: 30px; }
+                                .company-info { font-size: 14px; }
+                                .report-info { text-align: right; font-size: 14px; }
+                                table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 12px; }
+                                th, td { border: 1px solid #000; padding: 8px; text-align: left; }
+                                th { background-color: #f2f2f2; font-weight: bold; }
+                                .total-row { background-color: #e8e8e8; font-weight: bold; }
+                                .footer { margin-top: 50px; text-align: center; font-size: 12px; }
+                                .signatures { display: flex; justify-content: space-between; margin-top: 80px; }
+                                .signature-line { width: 200px; border-top: 1px solid #000; text-align: center; padding-top: 5px; }
+                                .stamp { margin-top: 40px; text-align: center; }
+                                @page { margin: 20mm; }
+                            }
+                            @media screen {
+                                body { font-family: Arial, sans-serif; margin: 20px; padding: 20px; background: #f5f5f5; }
+                                .print-area { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+                                h1 { color: #333; text-align: center; }
+                                table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                                th, td { border: 1px solid #ddd; padding: 10px; }
+                                th { background: #f2f2f2; }
+                                .print-button { text-align: center; margin: 30px; }
+                                button { padding: 10px 30px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+                            }
                         </style>
                     </head>
                     <body>
-                        <h1>${reportTitle}</h1>
-                        <div>Emitido em: ${new Date().toLocaleString('pt-PT')}</div>
-                        <div>Emitido por: ${MAFCSystem.currentUser.name}</div>
+                        <div class="print-area">
+                            <div class="header-info">
+                                <div class="company-info">
+                                    <h2>MAFC & FILHO, LDA.</h2>
+                                    <p>Construção Civil & Obras Públicas</p>
+                                    <p>NIF: 500000000</p>
+                                    <p>Tel: +351 123 456 789</p>
+                                </div>
+                                <div class="report-info">
+                                    <h3>${reportTitle}</h3>
+                                    <p>Emitido em: ${new Date().toLocaleString('pt-PT')}</p>
+                                    <p>Emitido por: ${MAFCSystem.currentUser.name}</p>
+                                    <p>Departamento: Escritório</p>
+                                </div>
+                            </div>
+                            
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Nome</th>
+                                        <th>Entrada</th>
+                                        <th>Saída</th>
+                                        <th>Horas Normais</th>
+                                        <th>Horas Extra</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${tableContent}
+                                </tbody>
+                            </table>
+                            
+                            <div class="footer">
+                                <p><strong>Total de horas: ${totalHours}</strong></p>
+                                <p>Documento válido para efeitos de contabilidade e processamento de salários</p>
+                                
+                                <div class="signatures">
+                                    <div class="signature-line">
+                                        Responsável Escritório<br>
+                                        ${MAFCSystem.currentUser.name}
+                                    </div>
+                                    <div class="signature-line">
+                                        Recebido por Contabilidade<br>
+                                        ________________________________
+                                    </div>
+                                </div>
+                                
+                                <div class="stamp">
+                                    <p>Carimbo e assinatura</p>
+                                    <p>________________________________</p>
+                                </div>
+                            </div>
+                        </div>
                         
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Data</th>
-                                    <th>Nome</th>
-                                    <th>Horas</th>
-                                    <th>Extra</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${document.getElementById('officeReportBody').innerHTML}
-                            </tbody>
-                        </table>
-                        
-                        <div class="total">Total de horas: ${totalHours}</div>
+                        <div class="print-button">
+                            <button onclick="window.print()">IMPRIMIR PARA CONTABILIDADE</button>
+                            <button onclick="window.close()" style="background: #6c757d; margin-left: 10px;">FECHAR</button>
+                        </div>
                         
                         <script>
                             window.onload = function() {
-                                window.print();
-                                setTimeout(function() {
-                                    window.close();
-                                }, 1000);
+                                // Auto-print option
+                                const shouldPrint = confirm('Deseja imprimir automaticamente para a contabilidade?');
+                                if (shouldPrint) {
+                                    window.print();
+                                }
                             }
                         <\/script>
                     </body>
                 </html>
             `);
             printWindow.document.close();
+            
+            MAFCSystem.logActivity('print_accounting_report', `Imprimiu extrato para contabilidade: ${reportTitle}`);
         }
         
-        function emailOfficeReport() {
+        function exportToExcel() {
+            const reportTitle = document.getElementById('officeReportTitle').textContent;
+            alert(`Exportando ${reportTitle} para Excel...\n\nEm produção, isto geraria um ficheiro Excel para a contabilidade.`);
+            MAFCSystem.logActivity('export_excel', `Exportou extrato para Excel: ${reportTitle}`);
+        }
+        
+        function generatePDF() {
+            const reportTitle = document.getElementById('officeReportTitle').textContent;
+            alert(`Gerando PDF de ${reportTitle}...\n\nEm produção, isto geraria um PDF para a contabilidade.`);
+            MAFCSystem.logActivity('generate_pdf', `Gerou PDF do extrato: ${reportTitle}`);
+        }
+        
+        function sendToAccountingWhatsApp() {
             const reportTitle = document.getElementById('officeReportTitle').textContent;
             const totalHours = document.getElementById('officeTotalHours').textContent;
             
-            const subject = encodeURIComponent(`Extrato de Horas - ${reportTitle}`);
-            const body = encodeURIComponent(`Prezados,\n\nSegue em anexo o extrato de horas.\n\nTotal: ${totalHours}\n\nAtenciosamente,\n${MAFCSystem.currentUser.name}`);
-            
-            window.open(`mailto:contabilidade@mafc-filho.pt?subject=${subject}&body=${body}`);
-        }
-        
-        function whatsappOfficeReport() {
-            const reportTitle = document.getElementById('officeReportTitle').textContent;
-            const totalHours = document.getElementById('officeTotalHours').textContent;
-            
-            const message = `📊 ${reportTitle}\n\nTotal de horas: ${totalHours}\n\nEmitido por: ${MAFCSystem.currentUser.name}`;
+            const message = `📊 EXTRATO DE HORAS PARA CONTABILIDADE\n\n${reportTitle}\n\nTotal: ${totalHours}\n\nEmitido por: ${MAFCSystem.currentUser.name}\nData: ${new Date().toLocaleString('pt-PT')}\n\nMAFC & FILHO, LDA.`;
             window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
-        }
-        
-        // ============ DOCUMENTOS (ESCRITÓRIO) ============
-        function openDocumentModal() {
-            document.getElementById('documentModal').style.display = 'flex';
             
-            // Limpar formulário
-            document.getElementById('documentType').value = 'contrato';
-            document.getElementById('documentNumber').value = '';
-            document.getElementById('documentTitle').value = '';
-            document.getElementById('documentDate').value = new Date().toISOString().split('T')[0];
-            document.getElementById('documentDescription').value = '';
-            document.getElementById('documentFile').value = '';
-        }
-        
-        function saveDocument() {
-            const type = document.getElementById('documentType').value;
-            const number = document.getElementById('documentNumber').value;
-            const title = document.getElementById('documentTitle').value;
-            const date = document.getElementById('documentDate').value;
-            const description = document.getElementById('documentDescription').value;
-            
-            if (!number || !title) {
-                alert('Por favor, preencha pelo menos o número e título!');
-                return;
-            }
-            
-            const newId = MAFCSystem.documents.length > 0 ? 
-                Math.max(...MAFCSystem.documents.map(d => d.id)) + 1 : 1;
-            
-            MAFCSystem.documents.unshift({
-                id: newId,
-                type: type,
-                number: number,
-                title: title,
-                date: date,
-                description: description,
-                createdBy: MAFCSystem.currentUser.name,
-                createdAt: new Date().toISOString()
-            });
-            
-            MAFCSystem.saveToStorage();
-            MAFCSystem.logActivity('create', `Criou documento: ${number} - ${title}`);
-            
-            alert('Documento guardado com sucesso!');
-            loadOfficeDocumentsTable();
-            closeModal('documentModal');
-        }
-        
-        function sendDocumentWhatsApp() {
-            const number = document.getElementById('documentNumber').value;
-            const title = document.getElementById('documentTitle').value;
-            
-            if (!number || !title) {
-                alert('Preencha o número e título primeiro!');
-                return;
-            }
-            
-            const message = `📄 Documento MAFC\n\nRef: ${number}\nTítulo: ${title}\nData: ${new Date().toLocaleDateString('pt-PT')}\n\nEmitido por: ${MAFCSystem.currentUser.name}`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
-        }
-        
-        function filterDocuments() {
-            // Implementar filtragem de documentos
-        }
-        
-        // ============ DRUCKER/IMPRESSÃO ============
-        function printDocument() {
-            const docType = document.getElementById('printDocumentType').value;
-            const copies = document.getElementById('printCopies').value;
-            const color = document.getElementById('printColor').checked;
-            const duplex = document.getElementById('printDuplex').checked;
-            
-            // Simular impressão
-            alert(`🖨️ Impressão iniciada!\n\nTipo: ${docType}\nCópias: ${copies}\nCor: ${color ? 'Sim' : 'Não'}\nFrente/verso: ${duplex ? 'Sim' : 'Não'}\n\nDocumento enviado para a impressora.`);
-            
-            // Registrar no histórico
-            const printEntry = {
-                id: Date.now(),
-                timestamp: new Date().toISOString(),
-                document: docType,
-                user: MAFCSystem.currentUser.name,
-                copies: copies,
-                status: 'completed'
-            };
-            
-            // Adicionar ao início do histórico
-            const historyBody = document.getElementById('printHistory');
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${new Date(printEntry.timestamp).toLocaleString('pt-PT')}</td>
-                <td>${printEntry.document}</td>
-                <td>${printEntry.user}</td>
-                <td>${printEntry.copies}</td>
-                <td><span class="badge badge-success">Concluída</span></td>
-            `;
-            historyBody.insertBefore(row, historyBody.firstChild);
-            
-            MAFCSystem.logActivity('print', `Imprimiu documento: ${docType} (${copies} cópias)`);
-        }
-        
-        function testPrinter() {
-            alert('🔧 Testando impressora...\n\nEnviando página de teste para a impressora padrão.\n\nVerifique se a impressora está ligada e com papel.');
-        }
-        
-        function previewPrint() {
-            alert('👁️ Pré-visualização de impressão\n\nMostrando como ficará o documento impresso.');
-            // Em produção, abriria uma janela de pré-visualização
-        }
-        
-        function printQueue() {
-            alert('📋 Fila de impressão\n\nMostrando todos os trabalhos na fila de impressão.');
+            MAFCSystem.logActivity('whatsapp_accounting', `Enviou extrato por WhatsApp para contabilidade: ${reportTitle}`);
         }
         
         // ============ CHEFE DE EQUIPA ============
@@ -3751,10 +4450,77 @@
             // Implementar carregamento de dados da equipa
             document.getElementById('teamMembersCount').textContent = '5';
             document.getElementById('teamHoursToday').textContent = '8.5';
-            document.getElementById('teamPendingRequests').textContent = '3';
+            
+            // Pedidos pendentes
+            const pendingRequests = MAFCSystem.materialRequests.filter(r => 
+                r.team === (MAFCSystem.currentUser.team || 'Equipa') && 
+                r.status === 'pending'
+            ).length;
+            document.getElementById('teamPendingRequests').textContent = pendingRequests;
+            document.getElementById('pendingRequestsBottom').textContent = pendingRequests;
+            
+            // Carregar lista de equipas
+            loadTeamListTable();
             
             // Carregar materiais
             loadMaterials();
+            
+            // Atualizar hora atual
+            updateTeamTimeDisplay();
+        }
+        
+        function loadTeamListTable() {
+            const tbody = document.getElementById('teamListTable');
+            tbody.innerHTML = '';
+            
+            // Atualizar contador de equipas
+            document.getElementById('totalTeamsCount').textContent = `${MAFCSystem.teams.length} equipas`;
+            
+            MAFCSystem.teams.forEach(team => {
+                const statusBadge = team.status === 'active' ? 
+                    '<span class="badge badge-success">Ativa</span>' :
+                    '<span class="badge badge-danger">Inativa</span>';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${team.name}</td>
+                    <td>${team.location}</td>
+                    <td>${team.leader}</td>
+                    <td>${team.members} membros</td>
+                    <td>${team.currentWork}</td>
+                    <td>${statusBadge}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function updateTeamTimeDisplay() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('teamCurrentTimeDisplay').textContent = timeString;
+        }
+        
+        function markTeamEntry() {
+            if (confirm(`Registar entrada para a ${MAFCSystem.currentUser.team}?`)) {
+                const timeString = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+                MAFCSystem.logActivity('team_entry', `${MAFCSystem.currentUser.team} - Entrada às ${timeString}`);
+                alert(`✅ Entrada registada para ${MAFCSystem.currentUser.team} às ${timeString}`);
+            }
+        }
+        
+        function markTeamExit() {
+            if (confirm(`Registar saída para a ${MAFCSystem.currentUser.team}?`)) {
+                const timeString = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+                MAFCSystem.logActivity('team_exit', `${MAFCSystem.currentUser.team} - Saída às ${timeString}`);
+                alert(`✅ Saída registada para ${MAFCSystem.currentUser.team} às ${timeString}`);
+            }
+        }
+        
+        function markTeamBreak() {
+            if (confirm(`Registar pausa para a ${MAFCSystem.currentUser.team}?`)) {
+                MAFCSystem.logActivity('team_break', `${MAFCSystem.currentUser.team} - Pausa registada`);
+                alert(`⏸️ Pausa registada para ${MAFCSystem.currentUser.team}`);
+            }
         }
         
         function loadMaterials() {
@@ -3767,23 +4533,33 @@
                     { id: 1, name: 'Cimento', unit: 'sacos' },
                     { id: 2, name: 'Areia', unit: 'm³' },
                     { id: 3, name: 'Brita', unit: 'm³' },
-                    { id: 4, name: 'Tijolos', unit: 'unidades' }
+                    { id: 4, name: 'Tijolos', unit: 'unidades' },
+                    { id: 5, name: 'Argamassa', unit: 'sacos' },
+                    { id: 6, name: 'Tinta', unit: 'litros' }
                 ],
                 machines: [
-                    { id: 5, name: 'Retroescavadora', unit: 'horas' },
-                    { id: 6, name: 'Compactador', unit: 'horas' }
+                    { id: 7, name: 'Retroescavadora', unit: 'horas' },
+                    { id: 8, name: 'Compactador', unit: 'horas' },
+                    { id: 9, name: 'Betoneira', unit: 'horas' },
+                    { id: 10, name: 'Grua', unit: 'horas' }
                 ],
                 tools: [
-                    { id: 7, name: 'Martelo Pneumático', unit: 'unidades' },
-                    { id: 8, name: 'Betoneira', unit: 'unidades' }
+                    { id: 11, name: 'Martelo Pneumático', unit: 'unidades' },
+                    { id: 12, name: 'Furadeira', unit: 'unidades' },
+                    { id: 13, name: 'Serra Circular', unit: 'unidades' },
+                    { id: 14, name: 'Nível Laser', unit: 'unidades' }
                 ],
                 consumables: [
-                    { id: 9, name: 'Gasóleo', unit: 'litros' },
-                    { id: 10, name: 'Óleo Hidráulico', unit: 'litros' }
+                    { id: 15, name: 'Gasóleo', unit: 'litros' },
+                    { id: 16, name: 'Óleo Hidráulico', unit: 'litros' },
+                    { id: 17, name: 'Parafusos', unit: 'caixas' },
+                    { id: 18, name: 'Pregos', unit: 'kg' }
                 ],
                 safety: [
-                    { id: 11, name: 'Capacetes', unit: 'unidades' },
-                    { id: 12, name: 'Luvas', unit: 'pares' }
+                    { id: 19, name: 'Capacetes', unit: 'unidades' },
+                    { id: 20, name: 'Luvas', unit: 'pares' },
+                    { id: 21, name: 'Botas', unit: 'pares' },
+                    { id: 22, name: 'Colete Refletor', unit: 'unidades' }
                 ]
             };
             
@@ -3848,6 +4624,10 @@
                 pendingElement.textContent = parseInt(pendingElement.textContent) + 1;
             }
             
+            // Atualizar badge do menu
+            document.getElementById('pendingRequestsBottom').textContent = 
+                parseInt(document.getElementById('pendingRequestsBottom').textContent) + 1;
+            
             // Atualizar tabela se estiver visível
             if (document.getElementById('teamMaterialRequestsTable')) {
                 loadTeamMaterialRequests();
@@ -3865,7 +4645,7 @@
             const unit = document.getElementById('materialUnit').value;
             const urgency = document.getElementById('materialUrgency').value;
             
-            const message = `🛒 NOVO PEDIDO DE MATERIAL\n\nEquipa: ${MAFCSystem.currentUser.team}\nMaterial: ${materialText}\nQuantidade: ${quantity} ${unit}\nUrgência: ${urgency}\n\nPedido enviado via sistema MAFC.`;
+            const message = `🛒 NOVO PEDIDO DE MATERIAL - ${MAFCSystem.currentUser.team}\n\nMaterial: ${materialText}\nQuantidade: ${quantity} ${unit}\nUrgência: ${urgency}\n\nPedido enviado via sistema MAFC por ${MAFCSystem.currentUser.name}.`;
             
             window.open(`https://wa.me/351123456789?text=${encodeURIComponent(message)}`, '_blank');
         }
@@ -3935,7 +4715,7 @@
             document.getElementById('purchasePendingCount').textContent = pending;
             document.getElementById('purchaseApprovedCount').textContent = approved;
             document.getElementById('purchaseCompletedCount').textContent = completed;
-            document.getElementById('pendingPurchasesCount').textContent = pending;
+            document.getElementById('pendingPurchasesCountBottom').textContent = pending;
             
             // Valor do mês
             const currentMonth = new Date().getMonth() + 1;
@@ -3951,6 +4731,7 @@
             loadPurchasePendingTable();
             loadPurchaseApprovedTable();
             loadPurchaseCompletedTable();
+            loadSuppliersTable();
         }
         
         function loadPurchaseUrgentTable() {
@@ -4211,6 +4992,198 @@
             }
         }
         
+        // ============ GESTÃO DE FORNECEDORES ============
+        function openSupplierModal() {
+            MAFCSystem.editingSupplierId = null;
+            document.getElementById('supplierModal').style.display = 'flex';
+            
+            // Limpar formulário
+            document.getElementById('supplierName').value = '';
+            document.getElementById('supplierNIF').value = '';
+            document.getElementById('supplierContact').value = '';
+            document.getElementById('supplierEmail').value = '';
+            document.getElementById('supplierType').value = '';
+            document.getElementById('supplierNotes').value = '';
+            
+            // Carregar lista
+            loadSuppliersList();
+        }
+        
+        function loadSuppliersList() {
+            const tbody = document.getElementById('suppliersList');
+            tbody.innerHTML = '';
+            
+            MAFCSystem.suppliers.forEach(supplier => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${supplier.name}</td>
+                    <td>${supplier.nif}</td>
+                    <td>${supplier.contact}</td>
+                    <td>${Array.isArray(supplier.type) ? supplier.type.join(', ') : supplier.type}</td>
+                    <td>${supplier.email}</td>
+                    <td>
+                        <button class="btn-dashboard btn-sm btn-warning" onclick="editSupplier(${supplier.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-dashboard btn-sm btn-danger" onclick="deleteSupplier(${supplier.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function saveSupplier() {
+            const name = document.getElementById('supplierName').value;
+            const nif = document.getElementById('supplierNIF').value;
+            const contact = document.getElementById('supplierContact').value;
+            const email = document.getElementById('supplierEmail').value;
+            const typeSelect = document.getElementById('supplierType');
+            const type = Array.from(typeSelect.selectedOptions).map(option => option.value);
+            const notes = document.getElementById('supplierNotes').value;
+            
+            if (!name || !nif || !contact) {
+                alert('Por favor, preencha pelo menos o nome, NIF e contacto!');
+                return;
+            }
+            
+            if (MAFCSystem.editingSupplierId) {
+                // Editar
+                const index = MAFCSystem.suppliers.findIndex(s => s.id === MAFCSystem.editingSupplierId);
+                if (index !== -1) {
+                    MAFCSystem.suppliers[index] = {
+                        ...MAFCSystem.suppliers[index],
+                        name, nif, contact, email, type, notes
+                    };
+                    MAFCSystem.logActivity('update', `Atualizou fornecedor: ${name}`);
+                }
+            } else {
+                // Adicionar novo
+                const newId = MAFCSystem.suppliers.length > 0 ? 
+                    Math.max(...MAFCSystem.suppliers.map(s => s.id)) + 1 : 1;
+                
+                MAFCSystem.suppliers.push({
+                    id: newId,
+                    name, nif, contact, email, type, notes
+                });
+                MAFCSystem.logActivity('create', `Adicionou fornecedor: ${name}`);
+            }
+            
+            MAFCSystem.saveToStorage();
+            alert('Fornecedor guardado com sucesso!');
+            
+            // Atualizar interfaces
+            loadSuppliersList();
+            loadSuppliersTable();
+            
+            closeModal('supplierModal');
+        }
+        
+        function editSupplier(id) {
+            const supplier = MAFCSystem.suppliers.find(s => s.id === id);
+            if (supplier) {
+                MAFCSystem.editingSupplierId = id;
+                document.getElementById('supplierModal').style.display = 'flex';
+                
+                // Preencher formulário
+                document.getElementById('supplierName').value = supplier.name;
+                document.getElementById('supplierNIF').value = supplier.nif;
+                document.getElementById('supplierContact').value = supplier.contact;
+                document.getElementById('supplierEmail').value = supplier.email;
+                document.getElementById('supplierNotes').value = supplier.notes;
+                
+                // Definir tipos selecionados
+                const typeSelect = document.getElementById('supplierType');
+                Array.from(typeSelect.options).forEach(option => {
+                    option.selected = Array.isArray(supplier.type) ? 
+                        supplier.type.includes(option.value) : false;
+                });
+                
+                loadSuppliersList();
+            }
+        }
+        
+        function deleteSupplier(id) {
+            if (confirm('Tem certeza que deseja remover este fornecedor?')) {
+                const supplier = MAFCSystem.suppliers.find(s => s.id === id);
+                if (supplier) {
+                    MAFCSystem.suppliers = MAFCSystem.suppliers.filter(s => s.id !== id);
+                    MAFCSystem.logActivity('delete', `Removeu fornecedor: ${supplier.name}`);
+                    MAFCSystem.saveToStorage();
+                    
+                    alert('Fornecedor removido com sucesso!');
+                    loadSuppliersList();
+                    loadSuppliersTable();
+                }
+            }
+        }
+        
+        function loadSuppliersTable() {
+            const tbody = document.getElementById('suppliersTable');
+            tbody.innerHTML = '';
+            
+            MAFCSystem.suppliers.forEach(supplier => {
+                const rating = '★★★★☆'; // Avaliação simulada
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${supplier.name}</td>
+                    <td>${supplier.nif}</td>
+                    <td>${supplier.contact}</td>
+                    <td>${Array.isArray(supplier.type) ? supplier.type.join(', ') : supplier.type}</td>
+                    <td>${supplier.email}</td>
+                    <td><span style="color: gold;">${rating}</span></td>
+                    <td>
+                        <button class="btn-dashboard btn-sm btn-info" onclick="viewSupplierDetails(${supplier.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="btn-dashboard btn-sm btn-whatsapp" onclick="contactSupplier('${supplier.name}')">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function filterSuppliers() {
+            const search = document.getElementById('searchSupplier').value.toLowerCase();
+            const type = document.getElementById('filterSupplierType').value;
+            
+            const tbody = document.getElementById('suppliersTable');
+            const rows = tbody.getElementsByTagName('tr');
+            
+            for (let row of rows) {
+                const cells = row.getElementsByTagName('td');
+                const name = cells[0].textContent.toLowerCase();
+                const supplierType = cells[3].textContent.toLowerCase();
+                
+                const matchesSearch = name.includes(search);
+                const matchesType = type === 'all' || supplierType.includes(type);
+                
+                row.style.display = matchesSearch && matchesType ? '' : 'none';
+            }
+        }
+        
+        function filterSupplierList() {
+            const search = document.getElementById('searchSupplierList').value.toLowerCase();
+            const type = document.getElementById('filterSupplierType').value;
+            
+            const tbody = document.getElementById('suppliersList');
+            const rows = tbody.getElementsByTagName('tr');
+            
+            for (let row of rows) {
+                const cells = row.getElementsByTagName('td');
+                const name = cells[0].textContent.toLowerCase();
+                const supplierType = cells[3].textContent.toLowerCase();
+                
+                const matchesSearch = name.includes(search);
+                const matchesType = type === 'all' || supplierType.includes(type);
+                
+                row.style.display = matchesSearch && matchesType ? '' : 'none';
+            }
+        }
+        
         // ============ FUNÇÕES GERAIS ============
         function updateClocks() {
             const now = new Date();
@@ -4224,10 +5197,15 @@
             });
             
             // Relógios grandes
-            ['officeClock'].forEach(id => {
+            ['officeClock', 'officeClockIndividual'].forEach(id => {
                 const element = document.getElementById(id);
                 if (element) element.textContent = timeString;
             });
+            
+            // Atualizar hora da equipa
+            if (document.getElementById('teamCurrentTimeDisplay')) {
+                document.getElementById('teamCurrentTimeDisplay').textContent = timeShort;
+            }
         }
         
         function initializeDashboard() {
@@ -4250,38 +5228,34 @@
         
         function loadSectionData(sectionId) {
             // Carregar dados específicos da seção quando ativada
-            // Esta função pode ser expandida conforme necessário
+            switch(sectionId) {
+                case 'teamMaterialsSection':
+                    loadTeamMaterialRequests();
+                    break;
+                case 'purchasePendingSection':
+                    loadPurchasePendingTable();
+                    break;
+                case 'purchaseApprovedSection':
+                    loadPurchaseApprovedTable();
+                    break;
+                case 'purchaseCompletedSection':
+                    loadPurchaseCompletedTable();
+                    break;
+                case 'purchaseSuppliersSection':
+                    loadSuppliersTable();
+                    break;
+            }
         }
         
         // ============ FUNÇÕES DE UTILIDADE ============
         function refreshTodayMarks() {
             loadOfficeTodayMarks();
+            loadAllEmployeesTime();
             alert('Marcações de hoje atualizadas!');
         }
         
         function registerAllOfficeEntry() {
-            const time = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-            const dateString = new Date().toLocaleDateString('pt-PT');
-            
-            MAFCSystem.officePeople.forEach(person => {
-                if (person.status === 'active') {
-                    if (!MAFCSystem.timeRecords[dateString]) {
-                        MAFCSystem.timeRecords[dateString] = {};
-                    }
-                    if (!MAFCSystem.timeRecords[dateString][person.id]) {
-                        MAFCSystem.timeRecords[dateString][person.id] = {
-                            personName: person.name
-                        };
-                    }
-                    MAFCSystem.timeRecords[dateString][person.id].entry = time;
-                }
-            });
-            
-            MAFCSystem.saveToStorage();
-            MAFCSystem.logActivity('bulk_time_entry', 'Registou entrada para todo o pessoal');
-            
-            alert(`Entrada registada para TODO O PESSAL às ${time}`);
-            loadOfficeTodayMarks();
+            markAllEntry();
         }
         
         function sendTimeWhatsApp() {
@@ -4314,15 +5288,117 @@
             window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
         }
         
+        function contactSupplierForRequest(requestId) {
+            const request = MAFCSystem.materialRequests.find(r => r.id === requestId);
+            if (request) {
+                const message = `📞 MAFC Compras - Pedido Urgente\n\nMaterial: ${request.material}\nQuantidade: ${request.quantity} ${request.unit}\nEquipa: ${request.team}\nUrgência: ${request.urgency}\n\nPrecisamos deste material urgentemente!`;
+                window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+            }
+        }
+        
         // ============ INICIALIZAÇÃO FINAL ============
         // Garantir que os modais fechem com ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
-                document.querySelectorAll('.modal, .modal-employee, .modal-document, .modal-purchase-details').forEach(modal => {
+                document.querySelectorAll('.modal, .modal-employee, .modal-document, .modal-purchase-details, .modal-supplier').forEach(modal => {
                     modal.style.display = 'none';
                 });
             }
         });
+        
+        // Documentos
+        function openDocumentModal() {
+            document.getElementById('documentModal').style.display = 'flex';
+            
+            // Limpar formulário
+            document.getElementById('documentType').value = 'contrato';
+            document.getElementById('documentNumber').value = '';
+            document.getElementById('documentTitle').value = '';
+            document.getElementById('documentDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('documentDescription').value = '';
+            document.getElementById('documentFile').value = '';
+        }
+        
+        function saveDocument() {
+            const type = document.getElementById('documentType').value;
+            const number = document.getElementById('documentNumber').value;
+            const title = document.getElementById('documentTitle').value;
+            const date = document.getElementById('documentDate').value;
+            const description = document.getElementById('documentDescription').value;
+            
+            if (!number || !title) {
+                alert('Por favor, preencha pelo menos o número e título!');
+                return;
+            }
+            
+            const newId = MAFCSystem.documents.length > 0 ? 
+                Math.max(...MAFCSystem.documents.map(d => d.id)) + 1 : 1;
+            
+            MAFCSystem.documents.unshift({
+                id: newId,
+                type: type,
+                number: number,
+                title: title,
+                date: date,
+                description: description,
+                createdBy: MAFCSystem.currentUser.name,
+                createdAt: new Date().toISOString()
+            });
+            
+            MAFCSystem.saveToStorage();
+            MAFCSystem.logActivity('create', `Criou documento: ${number} - ${title}`);
+            
+            alert('Documento guardado com sucesso!');
+            loadOfficeDocumentsTable();
+            closeModal('documentModal');
+        }
+        
+        // DRUCKER/IMPRESSÃO
+        function printDocument() {
+            const docType = document.getElementById('printDocumentType').value;
+            const copies = document.getElementById('printCopies').value;
+            const color = document.getElementById('printColor').checked;
+            const duplex = document.getElementById('printDuplex').checked;
+            
+            // Simular impressão
+            alert(`🖨️ Impressão iniciada!\n\nTipo: ${docType}\nCópias: ${copies}\nCor: ${color ? 'Sim' : 'Não'}\nFrente/verso: ${duplex ? 'Sim' : 'Não'}\n\nDocumento enviado para a impressora.`);
+            
+            // Registrar no histórico
+            const printEntry = {
+                id: Date.now(),
+                timestamp: new Date().toISOString(),
+                document: docType,
+                user: MAFCSystem.currentUser.name,
+                copies: copies,
+                status: 'completed'
+            };
+            
+            // Adicionar ao início do histórico
+            const historyBody = document.getElementById('printHistory');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${new Date(printEntry.timestamp).toLocaleString('pt-PT')}</td>
+                <td>${printEntry.document}</td>
+                <td>${printEntry.user}</td>
+                <td>${printEntry.copies}</td>
+                <td><span class="badge badge-success">Concluída</span></td>
+            `;
+            historyBody.insertBefore(row, historyBody.firstChild);
+            
+            MAFCSystem.logActivity('print', `Imprimiu documento: ${docType} (${copies} cópias)`);
+        }
+        
+        function testPrinter() {
+            alert('🔧 Testando impressora...\n\nEnviando página de teste para a impressora padrão.\n\nVerifique se a impressora está ligada e com papel.');
+        }
+        
+        function previewPrint() {
+            alert('👁️ Pré-visualização de impressão\n\nMostrando como ficará o documento impresso.');
+        }
+        
+        function printQueue() {
+            alert('📋 Fila de impressão\n\nMostrando todos os trabalhos na fila de impressão.');
+        }
     </script>
 </body>
 </html>
