@@ -1,19 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAFC & FILHO, LDA. - Sistema de Gestão Profissional</title>
+    <title>MAFC & FILHO, LDA. - Sistema de Gestão Integrado</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
-        }
-
+        /* ============ ESTILOS GLOBAIS ============ */
         :root {
             --primary: #1a5f7a;
             --secondary: #2d9cdb;
@@ -23,73 +16,31 @@
             --success: #27ae60;
             --warning: #f39c12;
             --danger: #e74c3c;
-            --info: #3498db;
+            --construction: #e67e22;
             --boss: #8e44ad;
             --team: #3498db;
             --purchase: #2ecc71;
             --office: #9b59b6;
-            --construction: #e67e22;
-            --gray-100: #f8f9fa;
-            --gray-200: #e9ecef;
-            --gray-300: #dee2e6;
-            --gray-400: #ced4da;
-            --gray-500: #adb5bd;
-            --gray-600: #6c757d;
-            --gray-700: #495057;
-            --gray-800: #343a40;
-            --gray-900: #212529;
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
-            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
-            --radius-sm: 6px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --transition: all 0.2s ease;
+            --sidebar-width: 250px;
+            --header-height: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
-            background: var(--light);
-            color: var(--gray-800);
+            background: #f5f7fa;
+            color: #333;
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
-        /* ============ UTILITÁRIOS ============ */
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .d-none { display: none !important; }
-        .d-flex { display: flex; }
-        .flex-column { flex-direction: column; }
-        .justify-between { justify-content: space-between; }
-        .align-center { align-items: center; }
-        .gap-1 { gap: 0.5rem; }
-        .gap-2 { gap: 1rem; }
-        .gap-3 { gap: 1.5rem; }
-        .gap-4 { gap: 2rem; }
-        .text-center { text-align: center; }
-        .text-right { text-align: right; }
-        .w-100 { width: 100%; }
-        .mt-1 { margin-top: 0.5rem; }
-        .mt-2 { margin-top: 1rem; }
-        .mt-3 { margin-top: 1.5rem; }
-        .mt-4 { margin-top: 2rem; }
-        .mb-1 { margin-bottom: 0.5rem; }
-        .mb-2 { margin-bottom: 1rem; }
-        .mb-3 { margin-bottom: 1.5rem; }
-        .mb-4 { margin-bottom: 2rem; }
-        .p-1 { padding: 0.5rem; }
-        .p-2 { padding: 1rem; }
-        .p-3 { padding: 1.5rem; }
-        .p-4 { padding: 2rem; }
-
-        /* ============ PÁGINA PÚBLICA COM MAIS FOTOS ============ */
+        /* ============ PÁGINA PÚBLICA ============ */
         #publicWebsite {
-            min-height: 100vh;
+            display: block;
         }
 
         /* Header Público */
@@ -101,7 +52,14 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
         .nav-container {
@@ -113,55 +71,45 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-            color: white;
+            gap: 15px;
         }
 
-        .logo-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--accent);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--accent);
         }
 
         .logo-text h1 {
             font-size: 1.6rem;
             font-weight: 800;
-            line-height: 1.2;
         }
 
         .logo-text span {
+            color: var(--accent);
             font-size: 0.9rem;
-            opacity: 0.9;
             display: block;
-            margin-top: 0.25rem;
+            margin-top: 3px;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 12px;
             align-items: center;
+            flex-wrap: wrap;
         }
 
-        /* Botões */
         .btn {
-            padding: 0.75rem 1.5rem;
+            padding: 10px 25px;
             border-radius: 50px;
             font-weight: 600;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
+            gap: 8px;
+            transition: all 0.3s;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
-            white-space: nowrap;
+            font-size: 0.95rem;
         }
 
         .btn-whatsapp {
@@ -174,6 +122,589 @@
             transform: translateY(-2px);
         }
 
+        .btn-email {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .btn-email:hover {
+            background: #ffb143;
+            transform: translateY(-2px);
+        }
+
+        .btn-login {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-login:hover {
+            background: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0, 48, 73, 0.9), rgba(0, 48, 73, 0.95)), 
+                        url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 150px 0 80px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        /* Services Grid */
+        .services {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--dark);
+            margin-bottom: 50px;
+            position: relative;
+            font-weight: 800;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .service-card {
+            background: var(--light);
+            padding: 35px 25px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        /* Company Stats */
+        .company-info {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            border-top: 5px solid var(--accent);
+        }
+
+        .stat-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .stat-card h3 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        /* Quote Section */
+        .quote-request {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .quote-request h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .quote-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        .public-footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+        }
+
+        /* ============ MODAL LOGIN ============ */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-header h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            outline: none;
+            background: white;
+        }
+
+        .login-submit {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .login-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 95, 122, 0.3);
+        }
+
+        /* ============ DASHBOARDS ============ */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+        }
+
+        /* Layout com Sidebar */
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: linear-gradient(180deg, var(--dark) 0%, var(--primary) 100%);
+            color: white;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: all 0.3s;
+            z-index: 100;
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .sidebar-header span {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-left-color: var(--accent);
+        }
+
+        .menu-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .menu-badge {
+            background: var(--accent);
+            color: var(--dark);
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-left: auto;
+            font-weight: 700;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            background: #f5f7fa;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: white;
+            padding: 0 30px;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .user-details h4 {
+            font-size: 0.95rem;
+            color: var(--dark);
+        }
+
+        .user-details span {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .logout-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        /* Content Area */
+        .content {
+            padding: 25px;
+            min-height: calc(100vh - var(--header-height));
+        }
+
+        /* Stats Cards */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .boss .stat-icon { background: linear-gradient(135deg, var(--boss), #9b59b6); }
+        .team .stat-icon { background: linear-gradient(135deg, var(--team), #3498db); }
+        .purchase .stat-icon { background: linear-gradient(135deg, var(--purchase), #2ecc71); }
+        .office .stat-icon { background: linear-gradient(135deg, var(--office), #8e44ad); }
+
+        .stat-content h3 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-weight: 800;
+        }
+
+        .stat-content p {
+            color: #666;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Main Cards */
+        .main-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .main-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .card-header h3 {
+            color: var(--dark);
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header h3 i {
+            color: var(--primary);
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            margin-top: 15px;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--dark);
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .data-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .data-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        /* Buttons */
+        .btn-action {
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
         .btn-primary {
             background: var(--primary);
             color: white;
@@ -182,368 +713,6 @@
         .btn-primary:hover {
             background: var(--dark);
             transform: translateY(-2px);
-        }
-
-        .btn-accent {
-            background: var(--accent);
-            color: var(--dark);
-        }
-
-        .btn-accent:hover {
-            background: #ffb143;
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section com mais fotos */
-        .hero {
-            background: linear-gradient(rgba(0, 48, 73, 0.85), rgba(0, 48, 73, 0.90)), 
-                        url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            padding: 150px 0 100px;
-            margin-top: 70px;
-            position: relative;
-        }
-
-        /* Gallery de obras */
-        .construction-gallery {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-top: 2rem;
-            padding: 2rem 0;
-        }
-
-        .gallery-item {
-            height: 200px;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .gallery-item:hover {
-            transform: scale(1.03);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 10px;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        /* ============ DASHBOARDS COM BARRA FIXA CORRIGIDA ============ */
-        .dashboard {
-            display: none;
-            min-height: 100vh;
-            background: var(--gray-100);
-            padding-top: 60px; /* Espaço para a barra fixa */
-        }
-
-        /* Top Bar - REDUZIDA */
-        .top-bar {
-            background: white;
-            padding: 0;
-            box-shadow: var(--shadow-md);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 3px solid;
-            height: 60px; /* Altura fixa reduzida */
-        }
-
-        .boss-dashboard .top-bar {
-            border-bottom-color: var(--boss);
-            background: linear-gradient(135deg, #9b59b6, var(--boss));
-        }
-
-        .team-dashboard .top-bar {
-            border-bottom-color: var(--team);
-            background: linear-gradient(135deg, #3498db, #2980b9);
-        }
-
-        .purchase-dashboard .top-bar {
-            border-bottom-color: var(--purchase);
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-        }
-
-        .office-dashboard .top-bar {
-            border-bottom-color: var(--office);
-            background: linear-gradient(135deg, var(--office), #8e44ad);
-        }
-
-        .top-bar-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 60px;
-            padding: 0;
-        }
-
-        .dashboard-brand {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .dashboard-brand i {
-            font-size: 1.5rem;
-            color: white;
-        }
-
-        .dashboard-brand h1 {
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-
-        .dashboard-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: white;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255,255,255,0.15);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            backdrop-filter: blur(10px);
-        }
-
-        .user-info i {
-            font-size: 1.1rem;
-        }
-
-        .logout-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .logout-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-1px);
-        }
-
-        /* Menu Horizontal - REDUZIDO e FIXO */
-        .horizontal-menu {
-            background: white;
-            position: fixed;
-            width: 100%;
-            top: 60px; /* Logo após a top-bar */
-            z-index: 999;
-            height: 50px; /* Altura reduzida */
-            border-bottom: 1px solid var(--gray-200);
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-
-        .menu-container {
-            display: flex;
-            height: 100%;
-            align-items: center;
-            padding: 0 20px;
-        }
-
-        .menu-item {
-            padding: 0 1rem;
-            color: var(--gray-600);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            height: 100%;
-            border-bottom: 3px solid transparent;
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-
-        .menu-item:hover {
-            color: var(--primary);
-            background: var(--gray-100);
-        }
-
-        .menu-item.active {
-            color: var(--primary);
-            border-bottom-color: var(--primary);
-            background: var(--gray-100);
-        }
-
-        .menu-item i {
-            font-size: 1rem;
-        }
-
-        .menu-badge {
-            background: var(--accent);
-            color: white;
-            font-size: 0.7rem;
-            padding: 0.15rem 0.4rem;
-            border-radius: 10px;
-            margin-left: 0.3rem;
-            font-weight: 700;
-        }
-
-        /* Conteúdo do Dashboard - AJUSTADO PARA BARRA FIXA */
-        .dashboard-content {
-            margin-top: 110px; /* 60px (top-bar) + 50px (menu) = 110px */
-            padding: 1.5rem;
-            background: var(--gray-100);
-            min-height: calc(100vh - 110px);
-        }
-
-        .dashboard-section {
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .dashboard-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        /* Cards de Estatísticas */
-        .stats-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .stat-card-horizontal {
-            background: white;
-            padding: 1rem;
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            box-shadow: var(--shadow-sm);
-            border-left: 4px solid;
-            transition: var(--transition);
-        }
-
-        .stat-card-horizontal:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .boss-dashboard .stat-card-horizontal { border-left-color: var(--boss); }
-        .team-dashboard .stat-card-horizontal { border-left-color: var(--team); }
-        .purchase-dashboard .stat-card-horizontal { border-left-color: var(--purchase); }
-        .office-dashboard .stat-card-horizontal { border-left-color: var(--office); }
-
-        .stat-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: white;
-        }
-
-        .boss-dashboard .stat-icon { background: linear-gradient(135deg, var(--boss), #9b59b6); }
-        .team-dashboard .stat-icon { background: linear-gradient(135deg, var(--team), #3498db); }
-        .purchase-dashboard .stat-icon { background: linear-gradient(135deg, var(--purchase), #2ecc71); }
-        .office-dashboard .stat-icon { background: linear-gradient(135deg, var(--office), #8e44ad); }
-
-        .stat-info h3 {
-            font-size: 1.5rem;
-            color: var(--dark);
-            margin-bottom: 0.1rem;
-            font-weight: 800;
-        }
-
-        .stat-info p {
-            color: var(--gray-600);
-            font-weight: 600;
-            font-size: 0.8rem;
-        }
-
-        /* Cards de Conteúdo */
-        .content-card {
-            background: white;
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            margin-bottom: 1.5rem;
-        }
-
-        .content-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .card-header h3 {
-            color: var(--dark);
-            font-size: 1.2rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Botões Dashboard */
-        .btn-dashboard {
-            padding: 0.6rem 1.2rem;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: var(--transition);
-            font-size: 0.9rem;
         }
 
         .btn-success {
@@ -576,54 +745,15 @@
             transform: translateY(-2px);
         }
 
-        .btn-info {
-            background: var(--info);
-            color: white;
-        }
-
-        .btn-info:hover {
-            background: #2980b9;
-            transform: translateY(-2px);
-        }
-
         .btn-sm {
-            padding: 0.3rem 0.6rem;
+            padding: 5px 10px;
             font-size: 0.8rem;
-        }
-
-        /* Tabelas */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .data-table th {
-            background: var(--primary);
-            color: white;
-            padding: 0.8rem;
-            text-align: left;
-            font-weight: 600;
-        }
-
-        .data-table td {
-            padding: 0.8rem;
-            border-bottom: 1px solid var(--gray-200);
-        }
-
-        .data-table tr:hover {
-            background: var(--gray-100);
         }
 
         /* Badges */
         .badge {
-            padding: 0.2rem 0.6rem;
-            border-radius: 50px;
+            padding: 4px 10px;
+            border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 700;
             display: inline-block;
@@ -633,129 +763,22 @@
         .badge-warning { background: #fff3cd; color: var(--warning); }
         .badge-danger { background: #f8d7da; color: var(--danger); }
         .badge-primary { background: #d1ecf1; color: var(--secondary); }
-        .badge-info { background: #d1ecf1; color: #17a2b8; }
 
-        /* Chat Interno */
-        .chat-container {
-            display: flex;
-            height: 500px;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-        }
-
-        .chat-sidebar {
-            width: 250px;
-            background: var(--gray-100);
-            border-right: 1px solid var(--gray-300);
-            overflow-y: auto;
-        }
-
-        .chat-main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .chat-header {
-            padding: 1rem;
-            background: white;
-            border-bottom: 1px solid var(--gray-300);
-            font-weight: 600;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            background: white;
-        }
-
-        .chat-input {
-            padding: 1rem;
-            background: white;
-            border-top: 1px solid var(--gray-300);
-        }
-
-        .message {
-            margin-bottom: 1rem;
-            padding: 0.8rem;
-            border-radius: var(--radius-md);
-            max-width: 70%;
-        }
-
-        .message.sent {
-            background: var(--primary);
-            color: white;
-            margin-left: auto;
-        }
-
-        .message.received {
-            background: var(--gray-200);
-            color: var(--gray-800);
-        }
-
-        /* Notificações */
-        .notifications-panel {
-            position: fixed;
-            top: 110px;
-            right: 20px;
-            width: 300px;
-            background: white;
-            border-radius: var(--radius-md);
-            box-shadow: var(--shadow-lg);
-            z-index: 1000;
-            display: none;
-        }
-
-        .notification-item {
-            padding: 1rem;
-            border-bottom: 1px solid var(--gray-200);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .notification-item:hover {
-            background: var(--gray-100);
-        }
-
-        .notification-item.unread {
-            background: #e3f2fd;
-        }
-
-        /* GPS com Google Maps */
-        .gps-container {
-            height: 400px;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            position: relative;
-        }
-
-        .gps-map {
-            width: 100%;
-            height: 100%;
-            background: var(--gray-200);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--gray-600);
-        }
-
-        /* Formulários */
+        /* Forms */
         .form-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 15px;
+            margin-bottom: 15px;
         }
 
         .form-group-dashboard {
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
         }
 
         .form-group-dashboard label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 5px;
             color: var(--dark);
             font-weight: 600;
             font-size: 0.9rem;
@@ -765,12 +788,11 @@
         .form-group-dashboard select,
         .form-group-dashboard textarea {
             width: 100%;
-            padding: 0.6rem 0.8rem;
-            border: 1px solid var(--gray-300);
-            border-radius: var(--radius-sm);
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
             font-size: 0.9rem;
-            transition: var(--transition);
-            background: white;
+            transition: all 0.3s;
         }
 
         .form-group-dashboard input:focus,
@@ -778,134 +800,252 @@
         .form-group-dashboard textarea:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 2px rgba(26, 95, 122, 0.1);
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
         }
 
         .form-actions {
             display: flex;
-            gap: 1rem;
+            gap: 10px;
             justify-content: flex-end;
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--gray-200);
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
         }
 
-        /* Time Tracker */
+        /* Modals */
+        .modal-dashboard {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-dashboard-content {
+            background: white;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .modal-dashboard-header {
+            background: linear-gradient(135deg, var(--dark), var(--primary));
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-dashboard-header h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-modal-dashboard {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-dashboard-body {
+            padding: 25px;
+            max-height: calc(90vh - 70px);
+            overflow-y: auto;
+        }
+
+        /* Time Tracking */
         .time-tracker {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 1.5rem;
-            border-radius: var(--radius-md);
-            margin-bottom: 1.5rem;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .time-display {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 15px;
         }
 
         .time-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 10px;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
-        /* Responsividade */
+        /* Material Categories */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .category-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .category-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .category-card h4 {
+            font-size: 1rem;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .sidebar {
+                width: 70px;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .sidebar-header h2,
+            .menu-item span,
+            .menu-badge,
+            .sidebar-header span {
+                display: none;
+            }
+            
+            .menu-item {
+                justify-content: center;
+                padding: 15px;
+            }
+        }
+
         @media (max-width: 768px) {
-            .dashboard-content {
-                padding: 1rem;
-                margin-top: 100px;
+            .hero {
+                padding: 120px 0 60px;
             }
             
-            .horizontal-menu {
-                height: 45px;
-                top: 55px;
+            .hero h2 {
+                font-size: 2rem;
             }
             
-            .top-bar {
-                height: 55px;
-            }
-            
-            .top-bar-content {
-                height: 55px;
-            }
-            
-            .dashboard-brand h1 {
+            .hero p {
                 font-size: 1rem;
             }
             
-            .construction-gallery {
-                grid-template-columns: repeat(2, 1fr);
+            .section-title {
+                font-size: 1.8rem;
             }
             
-            .stats-row {
+            .stats-cards {
                 grid-template-columns: 1fr;
+            }
+            
+            .main-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .top-bar {
+                padding: 0 15px;
+            }
+            
+            .content {
+                padding: 15px;
+            }
+            
+            .btn {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 1.6rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .time-display {
+                font-size: 2rem;
             }
             
             .form-row {
                 grid-template-columns: 1fr;
             }
-            
-            .chat-container {
-                flex-direction: column;
-                height: 600px;
-            }
-            
-            .chat-sidebar {
-                width: 100%;
-                height: 150px;
-                border-right: none;
-                border-bottom: 1px solid var(--gray-300);
-            }
         }
 
-        @media (max-width: 480px) {
-            .construction-gallery {
-                grid-template-columns: 1fr;
-            }
-            
-            .menu-item {
-                padding: 0 0.8rem;
-                font-size: 0.8rem;
-            }
-            
-            .btn-dashboard {
-                padding: 0.5rem 1rem;
-                font-size: 0.8rem;
-            }
-            
-            .data-table {
-                font-size: 0.8rem;
-            }
-            
-            .data-table th,
-            .data-table td {
-                padding: 0.5rem;
-            }
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-out;
         }
     </style>
 </head>
 <body>
-    <!-- ============ PÁGINA PÚBLICA COM GALERIA ============ -->
+    <!-- ============ PÁGINA PÚBLICA ============ -->
     <div id="publicWebsite">
         <header class="public-header">
             <div class="container nav-container">
-                <a href="#" class="logo">
-                    <div class="logo-icon">
-                        <i class="fas fa-hard-hat"></i>
-                    </div>
+                <div class="logo">
+                    <i class="fas fa-hard-hat"></i>
                     <div class="logo-text">
                         <h1>MAFC & FILHO, LDA.</h1>
-                        <span>Construção Civil & Obras Públicas | Desde 2001</span>
+                        <span>Construção Civil & Obras Públicas</span>
                     </div>
-                </a>
+                </div>
                 <div class="cta-buttons">
-                    <a href="#" class="btn btn-accent">
-                        <i class="fas fa-envelope"></i> Pedir Orçamento
+                    <a href="https://wa.me/351123456789" class="btn btn-whatsapp" target="_blank">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
                     </a>
-                    <a href="#" class="btn btn-primary" id="openLogin">
+                    <a href="#" class="btn btn-login" id="openLogin">
                         <i class="fas fa-sign-in-alt"></i> Acesso Sistema
                     </a>
                 </div>
@@ -914,1449 +1054,945 @@
 
         <section class="hero">
             <div class="container">
-                <h2 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: 800;">
-                    Especialistas em Construção Civil e Obras Públicas
-                </h2>
-                <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 800px;">
-                    Mais de 20 anos de experiência em saneamento, abastecimento de água, redes de fibra óptica, pavimentação e infraestruturas. 
-                    Operação em Portugal e Alemanha com 15 equipas especializadas.
-                </p>
-                <div class="d-flex gap-2">
-                    <a href="#services" class="btn btn-accent">
-                        <i class="fas fa-hard-hat"></i> Nossos Serviços
+                <h2>Sistema de Gestão Integrado</h2>
+                <p>Gestão completa de equipas, horários, materiais e compras para construção civil</p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-email">
+                        <i class="fas fa-hard-hat"></i> Serviços
                     </a>
-                    <a href="#gallery" class="btn btn-primary">
-                        <i class="fas fa-images"></i> Galeria de Obras
+                    <a href="#login" class="btn btn-whatsapp" id="openLogin2">
+                        <i class="fas fa-lock"></i> Acesso Restrito
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Galeria de Obras -->
-        <section id="gallery" class="container" style="padding: 4rem 0;">
-            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--dark);">
-                <i class="fas fa-building"></i> Nossas Obras
-            </h2>
-            <div class="construction-gallery">
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Saneamento">
-                    <div class="gallery-caption">Saneamento Urbano</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Pavimentação">
-                    <div class="gallery-caption">Pavimentação</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1534237710431-e2fc698436d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Infraestruturas">
-                    <div class="gallery-caption">Infraestruturas</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Redes de Água">
-                    <div class="gallery-caption">Redes de Água</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1541628951151-4d6c92c87f8e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Construção Civil">
-                    <div class="gallery-caption">Construção Civil</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1542902091-c8c38d5d5c7a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Obras Públicas">
-                    <div class="gallery-caption">Obras Públicas</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Equipas">
-                    <div class="gallery-caption">Nossas Equipas</div>
-                </div>
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Maquinaria">
-                    <div class="gallery-caption">Maquinaria</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Seção Serviços -->
-        <section id="services" style="background: var(--gray-100); padding: 4rem 0;">
+        <section class="services" id="services">
             <div class="container">
-                <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 3rem; color: var(--dark);">
-                    Serviços Especializados
-                </h2>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
-                    <div style="background: white; padding: 2rem; border-radius: var(--radius-md); text-align: center; box-shadow: var(--shadow-sm);">
-                        <i class="fas fa-water" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Saneamento e Águas</h3>
-                        <p>Redes de águas pluviais, sistemas de drenagem e abastecimento de água potável.</p>
+                <h2 class="section-title">Funcionalidades do Sistema</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-users-cog"></i>
+                        </div>
+                        <h3>Gestão de Equipas</h3>
+                        <p>Controle total sobre 15 equipas em Portugal e Alemanha</p>
                     </div>
-                    <div style="background: white; padding: 2rem; border-radius: var(--radius-md); text-align: center; box-shadow: var(--shadow-sm);">
-                        <i class="fas fa-satellite-dish" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Redes de Fibra Óptica</h3>
-                        <p>Instalação e manutenção de infraestruturas de telecomunicações.</p>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Controlo de Horas</h3>
+                        <p>Registo individual e banco de horas automático</p>
                     </div>
-                    <div style="background: white; padding: 2rem; border-radius: var(--radius-md); text-align: center; box-shadow: var(--shadow-sm);">
-                        <i class="fas fa-road" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                        <h3 style="font-size: 1.5rem; margin-bottom: 1rem;">Pavimentação</h3>
-                        <p>Pavimentação em cubo, betuminosa e reabilitação de vias públicas.</p>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3>Gestão de Compras</h3>
+                        <p>Pedidos de material e acompanhamento de encomendas</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Relatórios</h3>
+                        <p>Relatórios detalhados e controlo financeiro</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer style="background: var(--dark); color: white; padding: 3rem 0; text-align: center;">
+        <section class="company-info">
             <div class="container">
-                <p>&copy; 2001-2024 MAFC & FILHO, LDA. - Todos os direitos reservados.</p>
-                <p style="margin-top: 1rem; color: rgba(255,255,255,0.7);">Sistema de Gestão Profissional v2.0</p>
+                <h2 class="section-title">MAFC em Números</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h3>20+</h3>
+                        <p>Anos de Experiência</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-users"></i>
+                        <h3>15</h3>
+                        <p>Equipas Ativas</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-hard-hat"></i>
+                        <h3>40+</h3>
+                        <p>Colaboradores</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-globe-europe"></i>
+                        <h3>2</h3>
+                        <p>Países</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="public-footer">
+            <div class="container">
+                <div class="copyright">
+                    <p>&copy; 2001-2024 MAFC & FILHO, LDA. - Todos os direitos reservados.</p>
+                </div>
             </div>
         </footer>
     </div>
 
     <!-- ============ MODAL DE LOGIN ============ -->
-    <div class="modal" id="loginModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center;">
-        <div style="background: white; width: 90%; max-width: 400px; border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-lg);">
-            <div style="background: linear-gradient(135deg, var(--dark), var(--primary)); color: white; padding: 1.5rem; text-align: center; position: relative;">
-                <h2 style="font-size: 1.5rem; font-weight: 700;">
-                    <i class="fas fa-lock"></i> Acesso Sistema MAFC
-                </h2>
-                <span onclick="document.getElementById('loginModal').style.display = 'none'" style="position: absolute; top: 1rem; right: 1.5rem; font-size: 1.5rem; cursor: pointer;">&times;</span>
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-lock"></i> Acesso ao Sistema</h2>
+                <span class="close-modal">&times;</span>
             </div>
-            <div style="padding: 2rem;">
+            <div class="modal-body">
                 <form id="loginForm">
-                    <div style="margin-bottom: 1.5rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
-                            <i class="fas fa-user"></i> Código de Acesso
-                        </label>
-                        <input type="text" id="username" style="width: 100%; padding: 0.8rem; border: 1px solid var(--gray-300); border-radius: var(--radius-sm);" placeholder="Digite seu código" required>
+                    <div class="form-group">
+                        <label for="username"><i class="fas fa-user"></i> Utilizador</label>
+                        <input type="text" id="username" placeholder="Digite seu código" required>
                     </div>
-                    <div style="margin-bottom: 1.5rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
-                            <i class="fas fa-key"></i> Senha
-                        </label>
-                        <input type="password" id="password" style="width: 100%; padding: 0.8rem; border: 1px solid var(--gray-300); border-radius: var(--radius-sm);" placeholder="Digite sua senha" required>
+                    <div class="form-group">
+                        <label for="password"><i class="fas fa-key"></i> Senha</label>
+                        <input type="password" id="password" placeholder="Digite sua senha" required>
                     </div>
-                    <div style="margin-bottom: 1.5rem;">
-                        <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">
-                            <i class="fas fa-user-tag"></i> Tipo de Acesso
-                        </label>
-                        <select id="role" style="width: 100%; padding: 0.8rem; border: 1px solid var(--gray-300); border-radius: var(--radius-sm);" required>
-                            <option value="">Selecione o tipo de acesso</option>
-                            <option value="boss">Patrão/Administrador</option>
+                    <div class="form-group">
+                        <label for="role"><i class="fas fa-user-tag"></i> Tipo de Acesso</label>
+                        <select id="role" required>
+                            <option value="">Selecione o perfil</option>
+                            <option value="boss">Administrador</option>
                             <option value="team">Chefe de Equipa</option>
-                            <option value="purchase">Responsável de Compras</option>
-                            <option value="office">Empregado de Escritório</option>
+                            <option value="purchase">Responsável Compras</option>
+                            <option value="office">Escritório</option>
                         </select>
                     </div>
-                    <button type="submit" style="background: linear-gradient(135deg, var(--primary), var(--dark)); color: white; border: none; padding: 1rem; border-radius: var(--radius-sm); font-weight: 700; cursor: pointer; width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
-                        <i class="fas fa-sign-in-alt"></i> Entrar no Sistema
+                    <button type="submit" class="login-submit">
+                        <i class="fas fa-sign-in-alt"></i> Entrar
                     </button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- ============ DASHBOARD DO PATRÃO ============ -->
-    <div class="dashboard boss-dashboard" id="bossDashboard">
-        <!-- Top Bar Reduzida -->
-        <div class="top-bar">
-            <div class="container top-bar-content">
-                <div class="dashboard-brand">
-                    <i class="fas fa-crown"></i>
-                    <h1>Painel do Patrão - Controlo Total</h1>
+    <!-- ============ DASHBOARD DO ADMINISTRADOR ============ -->
+    <div class="dashboard boss" id="bossDashboard">
+        <div class="dashboard-container">
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Painel de Controlo</h2>
+                    <span>Administrador</span>
                 </div>
-                <div class="dashboard-info">
+                <nav class="sidebar-menu">
+                    <a href="#" class="menu-item active" data-section="overview">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Visão Geral</span>
+                    </a>
+                    <a href="#" class="menu-item" data-section="teams">
+                        <i class="fas fa-users"></i>
+                        <span>15 Equipas</span>
+                        <span class="menu-badge">15</span>
+                    </a>
+                    <a href="#" class="menu-item" data-section="hours">
+                        <i class="fas fa-clock"></i>
+                        <span>Controlo de Horas</span>
+                    </a>
+                    <a href="#" class="menu-item" data-section="materials">
+                        <i class="fas fa-boxes"></i>
+                        <span>Pedidos Material</span>
+                        <span class="menu-badge">12</span>
+                    </a>
+                    <a href="#" class="menu-item" data-section="purchases">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Compras</span>
+                        <span class="menu-badge">24</span>
+                    </a>
+                    <a href="#" class="menu-item" data-section="reports">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Relatórios</span>
+                    </a>
+                    <a href="#" class="menu-item" data-section="accounting">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <span>Contabilidade</span>
+                    </a>
+                </nav>
+            </aside>
+
+            <main class="main-content">
+                <header class="top-bar">
+                    <div>
+                        <h3 id="dashboardTitle">Painel do Administrador</h3>
+                    </div>
                     <div class="user-info">
-                        <i class="fas fa-user-circle"></i>
-                        <span id="bossUserName">Administrador MAFC</span>
-                    </div>
-                    <div style="font-weight: 600;" id="bossCurrentTime">10:45 AM</div>
-                    <button class="logout-btn" id="bossLogoutBtn">
-                        <i class="fas fa-sign-out-alt"></i> Sair
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Menu Horizontal Fixo -->
-        <nav class="horizontal-menu">
-            <div class="container menu-container">
-                <a href="#" class="menu-item active" data-section="overview">
-                    <i class="fas fa-tachometer-alt"></i> Visão Geral
-                </a>
-                <a href="#" class="menu-item" data-section="teams">
-                    <i class="fas fa-users"></i> 15 Equipas
-                    <span class="menu-badge">15</span>
-                </a>
-                <a href="#" class="menu-item" data-section="hours">
-                    <i class="fas fa-clock"></i> Controlo de Horas
-                    <span class="menu-badge" id="bossHoursBadge">42</span>
-                </a>
-                <a href="#" class="menu-item" data-section="materials">
-                    <i class="fas fa-boxes"></i> Pedidos Material
-                    <span class="menu-badge" id="bossMaterialsBadge">12</span>
-                </a>
-                <a href="#" class="menu-item" data-section="purchases">
-                    <i class="fas fa-shopping-cart"></i> Compras
-                    <span class="menu-badge" id="bossPurchasesBadge">24</span>
-                </a>
-                <a href="#" class="menu-item" data-section="reports">
-                    <i class="fas fa-chart-bar"></i> Relatórios
-                </a>
-                <a href="#" class="menu-item" data-section="chat" onclick="openChat()">
-                    <i class="fas fa-comments"></i> Chat
-                    <span class="menu-badge" id="chatBadge">3</span>
-                </a>
-            </div>
-        </nav>
-
-        <!-- Conteúdo -->
-        <div class="dashboard-content">
-            <!-- Seção Visão Geral -->
-            <div class="dashboard-section active" id="overviewSection">
-                <div class="stats-row">
-                    <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
                         </div>
-                        <div class="stat-info">
-                            <h3>15</h3>
-                            <p>Equipas Ativas</p>
+                        <div class="user-details">
+                            <h4 id="userName">Administrador</h4>
+                            <span id="userRole">Acesso Total</span>
                         </div>
-                    </div>
-                    <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-hard-hat"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>90</h3>
-                            <p>Trabalhadores</p>
-                        </div>
-                    </div>
-                    <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-euro-sign"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>12</h3>
-                            <p>Obras Alemanha</p>
-                        </div>
-                    </div>
-                    <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="pendingRequestsCount">8</h3>
-                            <p>Pedidos Pendentes</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-map-marker-alt"></i> Localização em Tempo Real - Alemanha</h3>
-                        <button class="btn-dashboard btn-primary" onclick="refreshLocations()">
-                            <i class="fas fa-sync-alt"></i> Atualizar
+                        <button class="logout-btn" id="logoutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Sair
                         </button>
                     </div>
-                    <div class="gps-container">
-                        <div class="gps-map" id="gpsMap">
-                            <!-- Mapa Google Maps será carregado aqui -->
-                            <div style="text-align: center;">
-                                <i class="fas fa-map-marked-alt" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                                <p>Mapa de Localização das Equipas</p>
-                                <p style="font-size: 0.9rem; color: var(--gray-500);">Integração com Google Maps</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </header>
 
-                <div class="content-card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-exclamation-circle"></i> Pedidos Urgentes</h3>
-                    </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Equipa</th>
-                                <th>Material</th>
-                                <th>Quantidade</th>
-                                <th>Urgência</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody id="urgentRequestsTable">
-                            <!-- Dados serão carregados -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Seção Equipas -->
-            <div class="dashboard-section" id="teamsSection">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-users"></i> Todas as 15 Equipas - Alemanha</h3>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <input type="text" id="teamSearch" placeholder="Pesquisar equipa..." style="padding: 0.5rem; border: 1px solid var(--gray-300); border-radius: var(--radius-sm);">
-                            <select id="teamFilter" style="padding: 0.5rem; border: 1px solid var(--gray-300); border-radius: var(--radius-sm);">
-                                <option value="all">Todas as equipas</option>
-                                <option value="berlin">Berlim</option>
-                                <option value="hamburg">Hamburgo</option>
-                                <option value="munich">Munique</option>
-                            </select>
-                        </div>
-                    </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Equipa</th>
-                                <th>Chefe</th>
-                                <th>Localização</th>
-                                <th>Obra</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody id="allTeamsTable">
-                            <!-- Equipas serão carregadas aqui -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Seção Chat -->
-            <div class="dashboard-section" id="chatSection">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-comments"></i> Chat Interno - Comunicação entre Perfis</h3>
-                        <button class="btn-dashboard btn-primary" onclick="newChat()">
-                            <i class="fas fa-plus"></i> Nova Conversa
-                        </button>
-                    </div>
-                    <div class="chat-container">
-                        <div class="chat-sidebar">
-                            <div style="padding: 1rem; border-bottom: 1px solid var(--gray-300); font-weight: 600;">
-                                Conversas
+                <div class="content">
+                    <!-- Visão Geral -->
+                    <div class="dashboard-section active" id="overviewSection">
+                        <div class="stats-cards">
+                            <div class="stat-box">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>15</h3>
+                                    <p>Equipas Ativas</p>
+                                </div>
                             </div>
-                            <div id="chatList">
-                                <!-- Lista de conversas será carregada aqui -->
+                            <div class="stat-box">
+                                <div class="stat-icon">
+                                    <i class="fas fa-hard-hat"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>42</h3>
+                                    <p>Trabalhadores</p>
+                                </div>
                             </div>
-                        </div>
-                        <div class="chat-main">
-                            <div class="chat-header" id="chatHeader">
-                                Selecione uma conversa
+                            <div class="stat-box">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>8</h3>
+                                    <p>Obras Alemanha</p>
+                                </div>
                             </div>
-                            <div class="chat-messages" id="chatMessages">
-                                <!-- Mensagens serão carregadas aqui -->
-                            </div>
-                            <div class="chat-input">
-                                <div style="display: flex; gap: 0.5rem;">
-                                    <input type="text" id="chatInput" placeholder="Digite sua mensagem..." style="flex: 1; padding: 0.8rem; border: 1px solid var(--gray-300); border-radius: var(--radius-sm);">
-                                    <button class="btn-dashboard btn-primary" onclick="sendMessage()">
-                                        <i class="fas fa-paper-plane"></i>
-                                    </button>
+                            <div class="stat-box">
+                                <div class="stat-icon">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>12</h3>
+                                    <p>Pedidos Pendentes</p>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="main-cards">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-map-marker-alt"></i> Equipas em Tempo Real</h3>
+                                    <button class="btn-action btn-primary" onclick="refreshLocations()">
+                                        <i class="fas fa-sync-alt"></i> Atualizar
+                                    </button>
+                                </div>
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Equipa</th>
+                                            <th>Localização</th>
+                                            <th>Estado</th>
+                                            <th>Horas Hoje</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="teamsTable">
+                                        <tr>
+                                            <td><strong>Equipa 01</strong></td>
+                                            <td>Berlim, Alemanha</td>
+                                            <td><span class="badge badge-success">Ativo</span></td>
+                                            <td>6.5h</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3><i class="fas fa-exclamation-triangle"></i> Pedidos Urgentes</h3>
+                                    <button class="btn-action btn-warning" onclick="viewAllRequests()">
+                                        <i class="fas fa-eye"></i> Ver Todos
+                                    </button>
+                                </div>
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Equipa</th>
+                                            <th>Material</th>
+                                            <th>Urgência</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="urgentRequests">
+                                        <tr>
+                                            <td>Equipa 03</td>
+                                            <td>Cimento (50 sacos)</td>
+                                            <td><span class="badge badge-danger">Crítico</span></td>
+                                            <td>
+                                                <button class="btn-action btn-success btn-sm" onclick="approveRequest(1)">
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestão de Equipas -->
+                    <div class="dashboard-section" id="teamsSection">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-users"></i> Gestão das 15 Equipas</h3>
+                                <button class="btn-action btn-primary" onclick="addNewTeam()">
+                                    <i class="fas fa-plus"></i> Nova Equipa
+                                </button>
+                            </div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Equipa</th>
+                                        <th>Chefe</th>
+                                        <th>Localização</th>
+                                        <th>Trabalhadores</th>
+                                        <th>Estado</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="allTeamsTable">
+                                    <!-- Equipas carregadas via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Controlo de Horas -->
+                    <div class="dashboard-section" id="hoursSection">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-clock"></i> Controlo de Horas</h3>
+                                <button class="btn-action btn-success" onclick="exportHours()">
+                                    <i class="fas fa-file-export"></i> Exportar
+                                </button>
+                            </div>
+                            <div class="time-tracker">
+                                <div class="time-display" id="currentTime">10:45:23</div>
+                                <div class="time-buttons">
+                                    <button class="btn-action btn-warning" onclick="simulateClockIn()">
+                                        <i class="fas fa-sign-in-alt"></i> Entrada
+                                    </button>
+                                    <button class="btn-action btn-danger" onclick="simulateClockOut()">
+                                        <i class="fas fa-sign-out-alt"></i> Saída
+                                    </button>
+                                </div>
+                            </div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Trabalhador</th>
+                                        <th>Equipa</th>
+                                        <th>Entrada</th>
+                                        <th>Saída</th>
+                                        <th>Total</th>
+                                        <th>Banco Horas</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="hoursTable">
+                                    <!-- Horas carregadas via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pedidos de Material -->
+                    <div class="dashboard-section" id="materialsSection">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-boxes"></i> Pedidos de Material</h3>
+                                <div class="form-row" style="margin: 0;">
+                                    <select id="filterStatus">
+                                        <option value="all">Todos</option>
+                                        <option value="pending">Pendentes</option>
+                                        <option value="approved">Aprovados</option>
+                                        <option value="completed">Concluídos</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Equipa</th>
+                                        <th>Material</th>
+                                        <th>Quantidade</th>
+                                        <th>Estado</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="materialsTable">
+                                    <!-- Pedidos carregados via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Compras -->
+                    <div class="dashboard-section" id="purchasesSection">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-shopping-cart"></i> Gestão de Compras</h3>
+                                <button class="btn-action btn-success" onclick="markAsCompleted()">
+                                    <i class="fas fa-check-double"></i> Marcar Concluído
+                                </button>
+                            </div>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Nº</th>
+                                        <th>Fornecedor</th>
+                                        <th>Material</th>
+                                        <th>Valor</th>
+                                        <th>Estado</th>
+                                        <th>Responsável</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="purchasesTable">
+                                    <!-- Compras carregadas via JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </main>
         </div>
     </div>
 
-    <!-- ============ DASHBOARD DO CHEFE DE EQUIPA ============ -->
-    <div class="dashboard team-dashboard" id="teamDashboard">
-        <div class="top-bar">
-            <div class="container top-bar-content">
-                <div class="dashboard-brand">
-                    <i class="fas fa-hard-hat"></i>
-                    <h1>Chefe de Equipa - MAFC</h1>
-                </div>
-                <div class="dashboard-info">
-                    <div class="user-info">
-                        <i class="fas fa-user-hard-hat"></i>
-                        <span id="teamUserName">Equipa 01 - Berlin</span>
-                    </div>
-                    <div style="font-weight: 600;" id="teamCurrentTime">10:45 AM</div>
-                    <button class="logout-btn" id="teamLogoutBtn">
-                        <i class="fas fa-sign-out-alt"></i> Sair
-                    </button>
-                </div>
+    <!-- ============ MODAL ADICIONAR EMPREGADO ============ -->
+    <div class="modal-dashboard" id="addEmployeeModal">
+        <div class="modal-dashboard-content">
+            <div class="modal-dashboard-header">
+                <h3><i class="fas fa-user-plus"></i> Adicionar Empregado</h3>
+                <button class="close-modal-dashboard">&times;</button>
             </div>
-        </div>
-
-        <nav class="horizontal-menu">
-            <div class="container menu-container">
-                <a href="#" class="menu-item active" data-section="teamOverview">
-                    <i class="fas fa-home"></i> Visão da Equipa
-                </a>
-                <a href="#" class="menu-item" data-section="teamTime">
-                    <i class="fas fa-clock"></i> Controlo de Horas
-                </a>
-                <a href="#" class="menu-item" data-section="teamMaterials">
-                    <i class="fas fa-boxes"></i> Pedir Materiais
-                </a>
-                <a href="#" class="menu-item" data-section="teamLocation">
-                    <i class="fas fa-map-marker-alt"></i> Localização
-                </a>
-                <a href="#" class="menu-item" data-section="teamChat" onclick="openTeamChat()">
-                    <i class="fas fa-comments"></i> Chat
-                </a>
-            </div>
-        </nav>
-
-        <div class="dashboard-content">
-            <div class="dashboard-section active" id="teamOverviewSection">
-                <div class="stats-row">
-                    <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="teamWorkersCount">6</h3>
-                            <p>Trabalhadores</p>
-                        </div>
-                    </div>
-                    <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="teamHoursToday">0</h3>
-                            <p>Horas Hoje</p>
-                        </div>
-                    </div>
-                    <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-box"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="teamPendingMaterials">0</h3>
-                            <p>Pedidos</p>
-                        </div>
-                    </div>
-                    <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>Online</h3>
-                            <p>Estado</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="content-card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-users"></i> Equipa Atual</h3>
-                    </div>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Cargo</th>
-                                <th>Estado</th>
-                                <th>Horas Mês</th>
-                            </tr>
-                        </thead>
-                        <tbody id="teamMembersTable">
-                            <!-- Membros da equipa serão carregados -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="dashboard-section" id="teamTimeSection">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-clock"></i> Controlo de Horas</h3>
-                        <div class="time-display" id="teamClock">08:45:23</div>
-                    </div>
-                    
+            <div class="modal-dashboard-body">
+                <form id="employeeForm">
                     <div class="form-row">
                         <div class="form-group-dashboard">
-                            <label>Empregado</label>
-                            <select id="workerSelect" onchange="loadWorkerDetails()">
-                                <option value="">Selecione empregado</option>
+                            <label>Nome Completo</label>
+                            <input type="text" id="empName" required>
+                        </div>
+                        <div class="form-group-dashboard">
+                            <label>WhatsApp</label>
+                            <input type="tel" id="empWhatsApp" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group-dashboard">
+                            <label>Cargo</label>
+                            <select id="empPosition" required>
+                                <option value="">Selecione</option>
+                                <option value="worker">Trabalhador</option>
+                                <option value="chief">Chefe</option>
+                                <option value="assistant">Ajudante</option>
                             </select>
                         </div>
                         <div class="form-group-dashboard">
-                            <label>Ação</label>
-                            <select id="timeAction">
-                                <option value="start">Entrada</option>
-                                <option value="end">Saída</option>
+                            <label>Equipa</label>
+                            <select id="empTeam" required>
+                                <option value="">Selecione</option>
+                                <option value="team01">Equipa 01</option>
+                                <option value="team02">Equipa 02</option>
                             </select>
                         </div>
                     </div>
-
                     <div class="form-actions">
-                        <button class="btn-dashboard btn-success" onclick="registerTime()">
-                            <i class="fas fa-check"></i> Registar Hora
+                        <button type="submit" class="btn-action btn-success">
+                            <i class="fas fa-save"></i> Guardar
+                        </button>
+                        <button type="button" class="btn-action btn-danger close-modal-dashboard">
+                            <i class="fas fa-times"></i> Cancelar
                         </button>
                     </div>
-
-                    <div class="mt-3">
-                        <h4><i class="fas fa-history"></i> Registos de Hoje</h4>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Empregado</th>
-                                    <th>Entrada</th>
-                                    <th>Saída</th>
-                                    <th>Horas</th>
-                                </tr>
-                            </thead>
-                            <tbody id="dailyTimeRecords">
-                                <!-- Registos serão carregados -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- ============ DASHBOARD DE COMPRAS ============ -->
-    <div class="dashboard purchase-dashboard" id="purchaseDashboard">
-        <div class="top-bar">
-            <div class="container top-bar-content">
-                <div class="dashboard-brand">
-                    <i class="fas fa-shopping-cart"></i>
-                    <h1>Responsável de Compras - MAFC</h1>
-                </div>
-                <div class="dashboard-info">
-                    <div class="user-info">
-                        <i class="fas fa-user-tie"></i>
-                        <span id="purchaseUserName">Departamento Compras</span>
-                    </div>
-                    <div style="font-weight: 600;" id="purchaseCurrentTime">10:45 AM</div>
-                    <button class="logout-btn" id="purchaseLogoutBtn">
-                        <i class="fas fa-sign-out-alt"></i> Sair
-                    </button>
+    <!-- ============ MODAL DETALHES COMPRA ============ -->
+    <div class="modal-dashboard" id="purchaseDetailModal">
+        <div class="modal-dashboard-content">
+            <div class="modal-dashboard-header">
+                <h3><i class="fas fa-shopping-cart"></i> Detalhes da Compra</h3>
+                <button class="close-modal-dashboard">&times;</button>
+            </div>
+            <div class="modal-dashboard-body">
+                <div id="purchaseDetailsContent">
+                    <!-- Conteúdo carregado via JavaScript -->
                 </div>
             </div>
-        </div>
-
-        <nav class="horizontal-menu">
-            <div class="container menu-container">
-                <a href="#" class="menu-item active" data-section="purchaseOverview">
-                    <i class="fas fa-tachometer-alt"></i> Visão Geral
-                </a>
-                <a href="#" class="menu-item" data-section="pendingRequests">
-                    <i class="fas fa-clipboard-list"></i> Pedidos
-                    <span class="menu-badge" id="pendingRequestsBadge">0</span>
-                </a>
-                <a href="#" class="menu-item" data-section="approvedPurchases">
-                    <i class="fas fa-check-circle"></i> Compras
-                </a>
-                <a href="#" class="menu-item" data-section="purchaseTime">
-                    <i class="fas fa-clock"></i> Minhas Horas
-                </a>
-                <a href="#" class="menu-item" data-section="purchaseChat" onclick="openPurchaseChat()">
-                    <i class="fas fa-comments"></i> Chat
-                </a>
-            </div>
-        </nav>
-
-        <div class="dashboard-content">
-            <!-- Seção Minhas Horas (NOVO para Compras) -->
-            <div class="dashboard-section" id="purchaseTimeSection">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-clock"></i> Controlo de Horas - Compras</h3>
-                        <div class="time-display" id="purchaseClock">08:45:23</div>
-                    </div>
-                    
-                    <div class="time-tracker">
-                        <div style="text-align: center; margin-bottom: 1rem;">
-                            <div style="font-size: 2.5rem; font-weight: 800;" id="purchaseTimeDisplay">--:--</div>
-                            <div style="color: rgba(255,255,255,0.9);">Horas de hoje</div>
-                        </div>
-                        <div class="time-buttons">
-                            <button class="btn-dashboard btn-success" onclick="purchaseClockIn()">
-                                <i class="fas fa-sign-in-alt"></i> Entrada
-                            </button>
-                            <button class="btn-dashboard btn-danger" onclick="purchaseClockOut()">
-                                <i class="fas fa-sign-out-alt"></i> Saída
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="mt-3">
-                        <h4><i class="fas fa-history"></i> Meu Histórico Mensal</h4>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Data</th>
-                                    <th>Entrada</th>
-                                    <th>Saída</th>
-                                    <th>Horas</th>
-                                </tr>
-                            </thead>
-                            <tbody id="purchaseTimeRecords">
-                                <!-- Registos serão carregados -->
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="form-actions">
-                        <button class="btn-dashboard btn-primary" onclick="generatePurchaseReport()">
-                            <i class="fas fa-file-pdf"></i> Gerar Relatório
-                        </button>
-                        <button class="btn-dashboard btn-success" onclick="sendToAccounting()">
-                            <i class="fas fa-paper-plane"></i> Enviar Contabilidade
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============ DASHBOARD ESCRITÓRIO ============ -->
-    <div class="dashboard office-dashboard" id="officeDashboard">
-        <div class="top-bar">
-            <div class="container top-bar-content">
-                <div class="dashboard-brand">
-                    <i class="fas fa-building"></i>
-                    <h1>Escritório - MAFC</h1>
-                </div>
-                <div class="dashboard-info">
-                    <div class="user-info">
-                        <i class="fas fa-user-tie"></i>
-                        <span id="officeUserName">Empregado Escritório</span>
-                    </div>
-                    <div style="font-weight: 600;" id="officeCurrentTime">10:45 AM</div>
-                    <button class="logout-btn" id="officeLogoutBtn">
-                        <i class="fas fa-sign-out-alt"></i> Sair
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <nav class="horizontal-menu">
-            <div class="container menu-container">
-                <a href="#" class="menu-item active" data-section="officeTime">
-                    <i class="fas fa-clock"></i> Minhas Horas
-                </a>
-                <a href="#" class="menu-item" data-section="officeReports">
-                    <i class="fas fa-file-alt"></i> Meu Extrato
-                </a>
-                <a href="#" class="menu-item" data-section="officeChat" onclick="openOfficeChat()">
-                    <i class="fas fa-comments"></i> Chat
-                </a>
-            </div>
-        </nav>
-
-        <div class="dashboard-content">
-            <div class="dashboard-section active" id="officeTimeSection">
-                <div class="content-card">
-                    <div class="card-header">
-                        <h3><i class="fas fa-clock"></i> Controlo de Horas - Escritório</h3>
-                        <div class="time-display" id="officeClock">08:45:23</div>
-                    </div>
-                    
-                    <div class="time-tracker">
-                        <div style="text-align: center; margin-bottom: 1rem;">
-                            <div style="font-size: 2.5rem; font-weight: 800;" id="officeTimeDisplay">--:--</div>
-                            <div style="color: rgba(255,255,255,0.9);">Horas de hoje</div>
-                        </div>
-                        <div class="time-buttons">
-                            <button class="btn-dashboard btn-success" onclick="officeClockIn()">
-                                <i class="fas fa-sign-in-alt"></i> Entrada
-                            </button>
-                            <button class="btn-dashboard btn-danger" onclick="officeClockOut()">
-                                <i class="fas fa-sign-out-alt"></i> Saída
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="mt-3">
-                        <h4><i class="fas fa-history"></i> Meu Histórico da Semana</h4>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Data</th>
-                                    <th>Entrada</th>
-                                    <th>Saída</th>
-                                    <th>Horas</th>
-                                </tr>
-                            </thead>
-                            <tbody id="officeTimeRecords">
-                                <!-- Registos serão carregados -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============ NOTIFICAÇÕES ============ -->
-    <div class="notifications-panel" id="notificationsPanel">
-        <div style="padding: 1rem; border-bottom: 1px solid var(--gray-300); font-weight: 600;">
-            <i class="fas fa-bell"></i> Notificações
-            <span style="float: right; cursor: pointer;" onclick="closeNotifications()">&times;</span>
-        </div>
-        <div id="notificationsList">
-            <!-- Notificações serão carregadas aqui -->
         </div>
     </div>
 
     <script>
-        // ============ SISTEMA MAFC - DADOS REAIS ============
-        
-        // 15 EQUIPAS REAIS DA ALEMANHA - 6 pessoas cada (1 chefe + 5 trabalhadores)
+        // ============ SISTEMA DE GESTÃO MAFC ============
+
+        // Estado do sistema
         const MAFCSystem = {
+            currentUser: null,
+            dashboard: null,
+            
+            // Credenciais
             credentials: {
-                boss: [
-                    { code: 'mafc', password: '1234', name: 'Administrador MAFC' }
-                ],
-                team: [
-                    // Todos os chefes têm a mesma função
-                    { code: 'berlin01', password: '1234', name: 'Hans Müller', team: 'Equipa 01 - Berlin' },
-                    { code: 'berlin02', password: '1234', name: 'Klaus Schmidt', team: 'Equipa 02 - Berlin' },
-                    { code: 'berlin03', password: '1234', name: 'Thomas Fischer', team: 'Equipa 03 - Berlin' },
-                    { code: 'hamburg01', password: '1234', name: 'Peter Weber', team: 'Equipa 04 - Hamburg' },
-                    { code: 'hamburg02', password: '1234', name: 'Michael Wagner', team: 'Equipa 05 - Hamburg' },
-                    { code: 'munich01', password: '1234', name: 'Andreas Becker', team: 'Equipa 06 - Munich' },
-                    { code: 'munich02', password: '1234', name: 'Stefan Hoffmann', team: 'Equipa 07 - Munich' },
-                    { code: 'cologne01', password: '1234', name: 'Wolfgang Schulz', team: 'Equipa 08 - Cologne' },
-                    { code: 'frankfurt01', password: '1234', name: 'Jürgen Koch', team: 'Equipa 09 - Frankfurt' },
-                    { code: 'stuttgart01', password: '1234', name: 'Dieter Bauer', team: 'Equipa 10 - Stuttgart' },
-                    { code: 'dusseldorf01', password: '1234', name: 'Rolf Richter', team: 'Equipa 11 - Düsseldorf' },
-                    { code: 'dortmund01', password: '1234', name: 'Bernd Klein', team: 'Equipa 12 - Dortmund' },
-                    { code: 'essen01', password: '1234', name: 'Uwe Wolf', team: 'Equipa 13 - Essen' },
-                    { code: 'leipzig01', password: '1234', name: 'Frank Neumann', team: 'Equipa 14 - Leipzig' },
-                    { code: 'bremen01', password: '1234', name: 'Heinz Schwarz', team: 'Equipa 15 - Bremen' }
-                ],
-                purchase: [
-                    { code: 'compras', password: '1234', name: 'Maria Silva' }
-                ],
-                office: [
-                    { code: 'escritorio', password: '1234', name: 'Ana Costa' }
-                ]
+                boss: { user: 'admin', pass: '1234', name: 'Administrador' },
+                team: { user: 'chefe', pass: '1234', name: 'Chefe de Equipa' },
+                purchase: { user: 'compras', pass: '1234', name: 'Responsável Compras' },
+                office: { user: 'escritorio', pass: '1234', name: 'Escritório' }
             },
             
-            // 15 EQUIPAS COMPLETAS - Alemanha
+            // Dados das equipas
             teams: [
-                {
-                    id: 1, name: 'Equipa 01 - Berlin', leader: 'Hans Müller', 
-                    location: 'Berlim, Kreuzberg', city: 'Berlin', workers: 6,
-                    gps: { lat: 52.5200, lng: 13.4050 }, status: 'working',
-                    currentWork: 'Saneamento Urbano - Alexanderplatz'
-                },
-                {
-                    id: 2, name: 'Equipa 02 - Berlin', leader: 'Klaus Schmidt',
-                    location: 'Berlim, Mitte', city: 'Berlin', workers: 6,
-                    gps: { lat: 52.5163, lng: 13.3777 }, status: 'working',
-                    currentWork: 'Pavimentação - Unter den Linden'
-                },
-                {
-                    id: 3, name: 'Equipa 03 - Berlin', leader: 'Thomas Fischer',
-                    location: 'Berlim, Charlottenburg', city: 'Berlin', workers: 6,
-                    gps: { lat: 52.5075, lng: 13.2904 }, status: 'working',
-                    currentWork: 'Redes Fibra Óptica - Kurfürstendamm'
-                },
-                {
-                    id: 4, name: 'Equipa 04 - Hamburg', leader: 'Peter Weber',
-                    location: 'Hamburgo, Centro', city: 'Hamburg', workers: 6,
-                    gps: { lat: 53.5511, lng: 9.9937 }, status: 'working',
-                    currentWork: 'Saneamento - Hafencity'
-                },
-                {
-                    id: 5, name: 'Equipa 05 - Hamburg', leader: 'Michael Wagner',
-                    location: 'Hamburgo, Altona', city: 'Hamburg', workers: 6,
-                    gps: { lat: 53.5507, lng: 9.9350 }, status: 'working',
-                    currentWork: 'Pavimentação - Reeperbahn'
-                },
-                {
-                    id: 6, name: 'Equipa 06 - Munich', leader: 'Andreas Becker',
-                    location: 'Munique, Centro', city: 'Munich', workers: 6,
-                    gps: { lat: 48.1351, lng: 11.5820 }, status: 'working',
-                    currentWork: 'Infraestruturas - Marienplatz'
-                },
-                {
-                    id: 7, name: 'Equipa 07 - Munich', leader: 'Stefan Hoffmann',
-                    location: 'Munique, Schwabing', city: 'Munich', workers: 6,
-                    gps: { lat: 48.1600, lng: 11.5800 }, status: 'working',
-                    currentWork: 'Redes de Água - Englischer Garten'
-                },
-                {
-                    id: 8, name: 'Equipa 08 - Cologne', leader: 'Wolfgang Schulz',
-                    location: 'Colónia, Centro', city: 'Cologne', workers: 6,
-                    gps: { lat: 50.9375, lng: 6.9603 }, status: 'working',
-                    currentWork: 'Construção Civil - Dom'
-                },
-                {
-                    id: 9, name: 'Equipa 09 - Frankfurt', leader: 'Jürgen Koch',
-                    location: 'Frankfurt, Centro', city: 'Frankfurt', workers: 6,
-                    gps: { lat: 50.1109, lng: 8.6821 }, status: 'working',
-                    currentWork: 'Obras Públicas - Römer'
-                },
-                {
-                    id: 10, name: 'Equipa 10 - Stuttgart', leader: 'Dieter Bauer',
-                    location: 'Estugarda, Centro', city: 'Stuttgart', workers: 6,
-                    gps: { lat: 48.7758, lng: 9.1829 }, status: 'working',
-                    currentWork: 'Pavimentação - Schlossplatz'
-                },
-                {
-                    id: 11, name: 'Equipa 11 - Düsseldorf', leader: 'Rolf Richter',
-                    location: 'Düsseldorf, Centro', city: 'Düsseldorf', workers: 6,
-                    gps: { lat: 51.2277, lng: 6.7735 }, status: 'working',
-                    currentWork: 'Saneamento - Königsallee'
-                },
-                {
-                    id: 12, name: 'Equipa 12 - Dortmund', leader: 'Bernd Klein',
-                    location: 'Dortmund, Centro', city: 'Dortmund', workers: 6,
-                    gps: { lat: 51.5136, lng: 7.4653 }, status: 'working',
-                    currentWork: 'Infraestruturas - Westfalenstadion'
-                },
-                {
-                    id: 13, name: 'Equipa 13 - Essen', leader: 'Uwe Wolf',
-                    location: 'Essen, Centro', city: 'Essen', workers: 6,
-                    gps: { lat: 51.4556, lng: 7.0116 }, status: 'working',
-                    currentWork: 'Redes de Fibra - Zollverein'
-                },
-                {
-                    id: 14, name: 'Equipa 14 - Leipzig', leader: 'Frank Neumann',
-                    location: 'Leipzig, Centro', city: 'Leipzig', workers: 6,
-                    gps: { lat: 51.3397, lng: 12.3731 }, status: 'working',
-                    currentWork: 'Construção Civil - Augustusplatz'
-                },
-                {
-                    id: 15, name: 'Equipa 15 - Bremen', leader: 'Heinz Schwarz',
-                    location: 'Bremen, Centro', city: 'Bremen', workers: 6,
-                    gps: { lat: 53.0793, lng: 8.8017 }, status: 'working',
-                    currentWork: 'Obras Públicas - Marktplatz'
-                }
+                { id: 1, name: 'Equipa 01 - Berlin', chief: 'João Silva', location: 'Berlim', workers: 5, status: 'active' },
+                { id: 2, name: 'Equipa 02 - Hamburg', chief: 'Carlos Mendes', location: 'Hamburgo', workers: 3, status: 'active' },
+                { id: 3, name: 'Equipa 03 - Munich', chief: 'Miguel Santos', location: 'Munique', workers: 4, status: 'active' }
             ],
             
-            // Empregados por equipa (6 por equipa - 1 chefe + 5 trabalhadores)
-            employees: {
-                // Cada equipa tem 6 pessoas
-            },
-            
-            // Chat interno
-            chat: {
-                conversations: [],
-                messages: {}
-            },
-            
-            // Notificações
-            notifications: [],
-            
-            // Registos de horas (para todos os perfis)
-            timeRecords: {
-                boss: {},
-                purchase: {},
-                office: {},
-                teams: {}
-            },
+            // Empregados
+            employees: [],
             
             // Pedidos de material
             materialRequests: [],
             
             // Compras
-            purchases: []
+            purchases: [
+                { id: 1, supplier: 'Fornecedor A', material: 'Cimento', quantity: '50 sacos', value: '1250€', status: 'pending', responsible: 'Compras 1', team: 'Equipa 03' },
+                { id: 2, supplier: 'Fornecedor B', material: 'Areia', quantity: '10 ton', value: '800€', status: 'completed', responsible: 'Compras 2', team: 'Equipa 01' }
+            ],
+            
+            // Registos de horas
+            timeRecords: []
         };
 
-        // Inicializar empregados para cada equipa
-        function initializeEmployees() {
-            MAFCSystem.teams.forEach(team => {
-                const employees = [];
-                // Chefe da equipa
-                employees.push({
-                    id: team.id * 100 + 1,
-                    name: team.leader,
-                    position: 'Chefe de Equipa',
-                    salary: 2800,
-                    status: 'active',
-                    whatsapp: '+49' + (1512345000 + team.id)
-                });
-                
-                // 5 trabalhadores
-                for (let i = 2; i <= 6; i++) {
-                    const names = ['Markus', 'Christian', 'Alexander', 'Daniel', 'Simon', 
-                                  'Philipp', 'Johannes', 'Benjamin', 'Tobias', 'Dominik',
-                                  'Sebastian', 'Martin', 'Matthias', 'Stephan', 'Florian'];
-                    const surnames = ['Meyer', 'Schneider', 'Hoffmann', 'Bauer', 'Schmidt',
-                                     'Koch', 'Richter', 'Klein', 'Wolf', 'Schröder',
-                                     'Neumann', 'Schwarz', 'Zimmermann', 'Braun', 'Krüger'];
-                    
-                    employees.push({
-                        id: team.id * 100 + i,
-                        name: `${names[(team.id + i) % names.length]} ${surnames[(team.id * i) % surnames.length]}`,
-                        position: 'Trabalhador',
-                        salary: 2200 + (i * 50),
-                        status: 'active',
-                        whatsapp: '+49' + (1512345000 + team.id * 10 + i)
-                    });
-                }
-                
-                MAFCSystem.employees[team.name] = employees;
-            });
+        // ============ FUNÇÕES DE LOGIN ============
+        document.getElementById('openLogin').addEventListener('click', openLoginModal);
+        document.getElementById('openLogin2').addEventListener('click', openLoginModal);
+        document.querySelector('.close-modal').addEventListener('click', closeLoginModal);
+
+        function openLoginModal(e) {
+            if (e) e.preventDefault();
+            document.getElementById('loginModal').style.display = 'flex';
         }
 
-        // Usuário atual
-        let currentUser = null;
-        let currentChat = null;
-        
-        // ============ LOGIN ============
-        document.getElementById('openLogin').addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('loginModal').style.display = 'flex';
-        });
-        
-        document.querySelectorAll('.modal span').forEach(closeBtn => {
-            closeBtn.addEventListener('click', function() {
-                this.closest('.modal').style.display = 'none';
-            });
-        });
-        
-        window.addEventListener('click', (e) => {
-            if (e.target.classList.contains('modal')) {
-                e.target.style.display = 'none';
-            }
-        });
-        
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const role = document.getElementById('role').value;
             
-            let userFound = null;
+            const cred = MAFCSystem.credentials[role];
             
-            if (role && MAFCSystem.credentials[role]) {
-                userFound = MAFCSystem.credentials[role].find(u => 
-                    u.code === username && u.password === password
-                );
-            }
-            
-            if (userFound) {
-                currentUser = { ...userFound, role };
+            if (cred && username === cred.user && password === cred.pass) {
+                MAFCSystem.currentUser = { 
+                    role, 
+                    name: cred.name,
+                    username: cred.user
+                };
+                
                 loginSuccess();
             } else {
-                alert('❌ Credenciais incorretas!\n\nUse:\nPatrão: mafc / 1234\nChefe: berlin01 / 1234\nCompras: compras / 1234\nEscritório: escritorio / 1234');
+                alert('Credenciais incorretas! Use:\nAdmin: admin / 1234\nChefe: chefe / 1234\nCompras: compras / 1234\nEscritório: escritorio / 1234');
             }
         });
-        
+
         function loginSuccess() {
-            document.getElementById('loginModal').style.display = 'none';
+            closeLoginModal();
             document.getElementById('publicWebsite').style.display = 'none';
             
-            // Inicializar dados
-            initializeEmployees();
-            loadSampleData();
-            
             // Mostrar dashboard apropriado
-            if (currentUser.role === 'boss') {
-                showBossDashboard();
-            } else if (currentUser.role === 'team') {
-                showTeamDashboard();
-            } else if (currentUser.role === 'purchase') {
-                showPurchaseDashboard();
-            } else if (currentUser.role === 'office') {
-                showOfficeDashboard();
-            }
+            const dashboardId = MAFCSystem.currentUser.role + 'Dashboard';
+            const dashboard = document.getElementById(dashboardId);
             
-            // Inicializar relógio
-            updateClocks();
-            setInterval(updateClocks, 1000);
-            
-            // Adicionar notificação de login
-            addNotification(`${currentUser.name} entrou no sistema`, 'info');
-        }
-        
-        // ============ DASHBOARD DO PATRÃO ============
-        function showBossDashboard() {
-            document.getElementById('bossDashboard').style.display = 'block';
-            document.getElementById('bossUserName').textContent = currentUser.name;
-            
-            // Carregar dados
-            loadBossData();
-            loadTeamsTable();
-            loadChatList();
-        }
-        
-        function loadBossData() {
-            // Carregar equipas no mapa
-            updateGPSMap();
-            
-            // Carregar pedidos urgentes
-            loadUrgentRequests();
-            
-            // Atualizar badges
-            updateBadges();
-        }
-        
-        function updateGPSMap() {
-            const mapDiv = document.getElementById('gpsMap');
-            mapDiv.innerHTML = `
-                <div style="padding: 2rem; text-align: center;">
-                    <i class="fas fa-map-marked-alt" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
-                    <h3 style="margin-bottom: 0.5rem;">15 Equipas na Alemanha</h3>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.5rem;">
-                        ${MAFCSystem.teams.map(team => `
-                            <div style="background: var(--gray-100); padding: 0.8rem; border-radius: var(--radius-sm); border-left: 4px solid var(--boss);">
-                                <div style="font-weight: 600; font-size: 0.9rem;">${team.name}</div>
-                                <div style="font-size: 0.8rem; color: var(--gray-600);">${team.location}</div>
-                                <div style="font-size: 0.75rem; color: var(--gray-500); margin-top: 0.3rem;">
-                                    <i class="fas fa-map-pin"></i> ${team.gps.lat.toFixed(4)}°, ${team.gps.lng.toFixed(4)}°
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <p style="margin-top: 1.5rem; color: var(--gray-500); font-size: 0.9rem;">
-                        <i class="fas fa-info-circle"></i> Integração com Google Maps disponível
-                    </p>
-                </div>
-            `;
-        }
-        
-        function loadTeamsTable() {
-            const table = document.getElementById('allTeamsTable');
-            table.innerHTML = MAFCSystem.teams.map(team => `
-                <tr>
-                    <td>#${team.id.toString().padStart(2, '0')}</td>
-                    <td><strong>${team.name}</strong></td>
-                    <td>${team.leader}</td>
-                    <td>${team.location}</td>
-                    <td>${team.currentWork}</td>
-                    <td><span class="badge badge-success">A Trabalhar</span></td>
-                </tr>
-            `).join('');
-        }
-        
-        function loadUrgentRequests() {
-            const table = document.getElementById('urgentRequestsTable');
-            // Dados simulados
-            const urgentRequests = [
-                { team: 'Equipa 03 - Berlin', material: 'Cimento', quantity: '50 sacos', urgency: 'Alta' },
-                { team: 'Equipa 07 - Munich', material: 'Areia', quantity: '10 m³', urgency: 'Média' },
-                { team: 'Equipa 12 - Dortmund', material: 'Tijolos', quantity: '2000 un', urgency: 'Alta' }
-            ];
-            
-            table.innerHTML = urgentRequests.map(req => `
-                <tr>
-                    <td>${req.team}</td>
-                    <td>${req.material}</td>
-                    <td>${req.quantity}</td>
-                    <td><span class="badge ${req.urgency === 'Alta' ? 'badge-danger' : 'badge-warning'}">${req.urgency}</span></td>
-                    <td><span class="badge badge-warning">Pendente</span></td>
-                </tr>
-            `).join('');
-        }
-        
-        // ============ DASHBOARD CHEFE DE EQUIPA ============
-        function showTeamDashboard() {
-            document.getElementById('teamDashboard').style.display = 'block';
-            document.getElementById('teamUserName').textContent = currentUser.team;
-            
-            // Carregar dados da equipa
-            loadTeamData();
-        }
-        
-        function loadTeamData() {
-            // Encontrar equipa do usuário
-            const team = MAFCSystem.teams.find(t => t.name === currentUser.team);
-            if (team) {
-                // Carregar membros da equipa
-                const employees = MAFCSystem.employees[team.name] || [];
-                document.getElementById('teamWorkersCount').textContent = employees.length;
+            if (dashboard) {
+                dashboard.style.display = 'block';
+                MAFCSystem.dashboard = dashboard;
                 
-                // Preencher tabela de membros
-                const table = document.getElementById('teamMembersTable');
-                table.innerHTML = employees.map(emp => `
-                    <tr>
-                        <td>${emp.name}</td>
-                        <td>${emp.position}</td>
-                        <td><span class="badge badge-success">Ativo</span></td>
-                        <td>160h</td>
-                    </tr>
-                `).join('');
+                // Atualizar informações do usuário
+                document.getElementById('userName').textContent = MAFCSystem.currentUser.name;
+                document.getElementById('userRole').textContent = MAFCSystem.currentUser.role === 'boss' ? 'Administrador' : 
+                                                                 MAFCSystem.currentUser.role === 'team' ? 'Chefe de Equipa' :
+                                                                 MAFCSystem.currentUser.role === 'purchase' ? 'Responsável Compras' : 'Escritório';
                 
-                // Preencher select de trabalhadores
-                const select = document.getElementById('workerSelect');
-                select.innerHTML = '<option value="">Selecione empregado</option>' +
-                    employees.map(emp => `<option value="${emp.id}">${emp.name}</option>`).join('');
+                // Inicializar dashboard
+                initializeDashboard();
             }
         }
-        
-        function loadWorkerDetails() {
-            // Implementar se necessário
-        }
-        
-        function registerTime() {
-            const workerId = document.getElementById('workerSelect').value;
-            const action = document.getElementById('timeAction').value;
+
+        // ============ FUNÇÕES DO DASHBOARD ============
+        function initializeDashboard() {
+            // Atualizar relógio
+            updateClock();
+            setInterval(updateClock, 1000);
             
-            if (!workerId) {
-                alert('Selecione um empregado!');
-                return;
-            }
+            // Configurar navegação do menu
+            setupMenuNavigation();
             
-            const time = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-            const date = new Date().toLocaleDateString('pt-PT');
+            // Carregar dados iniciais
+            loadDashboardData();
             
-            alert(`${action === 'start' ? 'Entrada' : 'Saída'} registada às ${time}`);
-            addNotification(`Hora ${action === 'start' ? 'entrada' : 'saída'} registada`, 'success');
-        }
-        
-        // ============ DASHBOARD COMPRAS ============
-        function showPurchaseDashboard() {
-            document.getElementById('purchaseDashboard').style.display = 'block';
-            document.getElementById('purchaseUserName').textContent = currentUser.name;
+            // Configurar modais
+            setupModals();
             
-            // Carregar dados de horas
-            loadPurchaseTimeData();
+            // Configurar logout
+            document.getElementById('logoutBtn').addEventListener('click', logout);
         }
-        
-        function loadPurchaseTimeData() {
-            // Dados simulados para horas do responsável de compras
-            const records = [
-                { date: '01/12/2024', entry: '08:30', exit: '17:15', hours: '8.75' },
-                { date: '02/12/2024', entry: '08:45', exit: '17:00', hours: '8.25' },
-                { date: '03/12/2024', entry: '08:30', exit: '17:30', hours: '9.00' },
-                { date: '04/12/2024', entry: '09:00', exit: '17:15', hours: '8.25' },
-                { date: '05/12/2024', entry: '08:30', exit: '17:00', hours: '8.50' }
-            ];
-            
-            const table = document.getElementById('purchaseTimeRecords');
-            table.innerHTML = records.map(rec => `
-                <tr>
-                    <td>${rec.date}</td>
-                    <td>${rec.entry}</td>
-                    <td>${rec.exit}</td>
-                    <td>${rec.hours}h</td>
-                </tr>
-            `).join('');
-            
-            // Calcular total
-            const total = records.reduce((sum, rec) => sum + parseFloat(rec.hours), 0);
-            document.getElementById('purchaseTimeDisplay').textContent = `${total.toFixed(1)}h`;
-        }
-        
-        function purchaseClockIn() {
-            const time = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-            alert(`Entrada registada às ${time}`);
-            addNotification('Entrada registada - Compras', 'success');
-        }
-        
-        function purchaseClockOut() {
-            const time = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-            alert(`Saída registada às ${time}`);
-            addNotification('Saída registada - Compras', 'success');
-        }
-        
-        function generatePurchaseReport() {
-            alert('Relatório de horas gerado para contabilidade!');
-            addNotification('Relatório de horas gerado', 'info');
-        }
-        
-        function sendToAccounting() {
-            alert('Horas enviadas para contabilidade com sucesso!');
-            addNotification('Horas enviadas para contabilidade', 'success');
-        }
-        
-        // ============ DASHBOARD ESCRITÓRIO ============
-        function showOfficeDashboard() {
-            document.getElementById('officeDashboard').style.display = 'block';
-            document.getElementById('officeUserName').textContent = currentUser.name;
-            
-            // Carregar dados de horas
-            loadOfficeTimeData();
-        }
-        
-        function loadOfficeTimeData() {
-            // Dados simulados para horas do escritório
-            const records = [
-                { date: 'Seg 09/12', entry: '08:30', exit: '17:15', hours: '8.75' },
-                { date: 'Ter 10/12', entry: '08:45', exit: '17:00', hours: '8.25' },
-                { date: 'Qua 11/12', entry: '08:30', exit: '17:30', hours: '9.00' },
-                { date: 'Qui 12/12', entry: '09:00', exit: '17:15', hours: '8.25' },
-                { date: 'Sex 13/12', entry: '08:30', exit: '17:00', hours: '8.50' }
-            ];
-            
-            const table = document.getElementById('officeTimeRecords');
-            table.innerHTML = records.map(rec => `
-                <tr>
-                    <td>${rec.date}</td>
-                    <td>${rec.entry}</td>
-                    <td>${rec.exit}</td>
-                    <td>${rec.hours}h</td>
-                </tr>
-            `).join('');
-            
-            // Calcular total
-            const total = records.reduce((sum, rec) => sum + parseFloat(rec.hours), 0);
-            document.getElementById('officeTimeDisplay').textContent = `${total.toFixed(1)}h`;
-        }
-        
-        function officeClockIn() {
-            const time = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-            alert(`Entrada registada às ${time}`);
-            addNotification('Entrada registada - Escritório', 'success');
-        }
-        
-        function officeClockOut() {
-            const time = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-            alert(`Saída registada às ${time}`);
-            addNotification('Saída registada - Escritório', 'success');
-        }
-        
-        // ============ CHAT INTERNO ============
-        function loadChatList() {
-            const chatList = document.getElementById('chatList');
-            // Conversas simuladas
-            const conversations = [
-                { id: 1, name: 'Equipa 01 - Berlin', lastMessage: 'Material necessário urgentemente', time: '10:30', unread: 2 },
-                { id: 2, name: 'Departamento Compras', lastMessage: 'Orçamento aprovado', time: '09:45', unread: 0 },
-                { id: 3, name: 'Escritório', lastMessage: 'Documentação pendente', time: 'Ontem', unread: 1 }
-            ];
-            
-            chatList.innerHTML = conversations.map(conv => `
-                <div class="notification-item ${conv.unread > 0 ? 'unread' : ''}" onclick="openConversation(${conv.id})" style="cursor: pointer;">
-                    <div style="font-weight: 600;">${conv.name}</div>
-                    <div style="font-size: 0.85rem; color: var(--gray-600);">${conv.lastMessage}</div>
-                    <div style="font-size: 0.75rem; color: var(--gray-500); text-align: right;">${conv.time}</div>
-                </div>
-            `).join('');
-        }
-        
-        function openConversation(id) {
-            currentChat = id;
-            const header = document.getElementById('chatHeader');
-            const messages = document.getElementById('chatMessages');
-            
-            // Dados simulados
-            if (id === 1) {
-                header.textContent = 'Equipa 01 - Berlin';
-                messages.innerHTML = `
-                    <div class="message received">
-                        <div style="font-weight: 600;">Hans Müller</div>
-                        <div>Precisamos de 50 sacos de cimento urgentemente para a obra no Alexanderplatz</div>
-                        <div style="font-size: 0.75rem; color: var(--gray-500); margin-top: 0.3rem;">10:15</div>
-                    </div>
-                    <div class="message sent">
-                        <div style="font-weight: 600;">Você</div>
-                        <div>Já foi pedido ao departamento de compras. Deve chegar amanhã.</div>
-                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-top: 0.3rem;">10:30</div>
-                    </div>
-                `;
-            }
-        }
-        
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const message = input.value.trim();
-            
-            if (message && currentChat) {
-                const messagesDiv = document.getElementById('chatMessages');
-                const time = new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-                
-                messagesDiv.innerHTML += `
-                    <div class="message sent">
-                        <div style="font-weight: 600;">Você</div>
-                        <div>${message}</div>
-                        <div style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin-top: 0.3rem;">${time}</div>
-                    </div>
-                `;
-                
-                input.value = '';
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-                
-                addNotification('Nova mensagem enviada', 'info');
-            }
-        }
-        
-        // ============ NOTIFICAÇÕES ============
-        function addNotification(message, type = 'info') {
-            const notification = {
-                id: Date.now(),
-                message: message,
-                type: type,
-                time: new Date().toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }),
-                read: false
-            };
-            
-            MAFCSystem.notifications.unshift(notification);
-            updateNotificationBadge();
-            
-            // Mostrar notificação toast
-            showToast(message, type);
-        }
-        
-        function showToast(message, type) {
-            const toast = document.createElement('div');
-            toast.style.cssText = `
-                position: fixed;
-                top: 120px;
-                right: 20px;
-                background: ${type === 'success' ? 'var(--success)' : type === 'warning' ? 'var(--warning)' : 'var(--info)'};
-                color: white;
-                padding: 1rem;
-                border-radius: var(--radius-sm);
-                box-shadow: var(--shadow-lg);
-                z-index: 10000;
-                animation: slideIn 0.3s ease;
-            `;
-            
-            toast.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 0.5rem;">
-                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
-                    <div>${message}</div>
-                </div>
-            `;
-            
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-        
-        function updateNotificationBadge() {
-            const unread = MAFCSystem.notifications.filter(n => !n.read).length;
-            const badge = document.getElementById('chatBadge');
-            if (badge) badge.textContent = unread > 0 ? unread : '';
-        }
-        
-        // ============ FUNÇÕES COMUNS ============
-        function updateClocks() {
+
+        function updateClock() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('pt-PT');
-            const timeShort = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
-            
-            // Atualizar todos os relógios
-            document.querySelectorAll('#bossCurrentTime, #teamCurrentTime, #purchaseCurrentTime, #officeCurrentTime').forEach(el => {
-                if (el) el.textContent = timeShort;
-            });
-            
-            // Atualizar relógios grandes
-            document.querySelectorAll('#teamClock, #purchaseClock, #officeClock').forEach(el => {
-                if (el) el.textContent = timeString;
-            });
+            document.getElementById('currentTime').textContent = timeString;
         }
-        
-        function updateBadges() {
-            // Atualizar badges com dados simulados
-            document.getElementById('bossHoursBadge').textContent = '90';
-            document.getElementById('bossMaterialsBadge').textContent = '8';
-            document.getElementById('bossPurchasesBadge').textContent = '15';
-            document.getElementById('pendingRequestsBadge').textContent = '8';
-        }
-        
-        function refreshLocations() {
-            alert('📍 Localizações das 15 equipas atualizadas!');
-            addNotification('Localizações GPS atualizadas', 'info');
-        }
-        
-        function openChat() {
-            // Ativar seção chat
-            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
-            document.querySelector('[data-section="chat"]').classList.add('active');
-            
-            document.querySelectorAll('.dashboard-section').forEach(section => section.classList.remove('active'));
-            document.getElementById('chatSection').classList.add('active');
-        }
-        
-        function newChat() {
-            alert('Nova conversa - Funcionalidade em desenvolvimento');
-        }
-        
-        // Navegação do menu
-        document.querySelectorAll('.menu-item').forEach(item => {
-            item.addEventListener('click', function(e) {
-                if (this.getAttribute('onclick')) return; // Se tem onclick próprio
-                
-                e.preventDefault();
-                const sectionId = this.getAttribute('data-section') + 'Section';
-                
-                // Remover active de todos os itens do mesmo dashboard
-                const dashboard = this.closest('.dashboard');
-                dashboard.querySelectorAll('.menu-item').forEach(i => {
-                    i.classList.remove('active');
-                });
-                
-                // Adicionar active ao item clicado
-                this.classList.add('active');
-                
-                // Esconder todas as seções do dashboard
-                dashboard.querySelectorAll('.dashboard-section').forEach(section => {
-                    section.classList.remove('active');
-                });
-                
-                // Mostrar seção selecionada
-                const section = document.getElementById(sectionId);
-                if (section) section.classList.add('active');
-            });
-        });
-        
-        // Logout
-        document.querySelectorAll('.logout-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (confirm('Tem certeza que deseja sair?')) {
-                    // Esconder todos os dashboards
-                    document.querySelectorAll('.dashboard').forEach(d => {
-                        d.style.display = 'none';
+
+        function setupMenuNavigation() {
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remover active de todos
+                    document.querySelectorAll('.menu-item').forEach(i => {
+                        i.classList.remove('active');
                     });
                     
-                    // Mostrar website público
-                    document.getElementById('publicWebsite').style.display = 'block';
+                    // Adicionar active ao clicado
+                    this.classList.add('active');
                     
-                    // Fechar modal
-                    document.getElementById('loginModal').style.display = 'none';
+                    // Mostrar seção correspondente
+                    const sectionId = this.getAttribute('data-section') + 'Section';
+                    document.querySelectorAll('.dashboard-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
                     
-                    // Limpar formulário
-                    document.getElementById('loginForm').reset();
-                    currentUser = null;
-                    
-                    addNotification('Sessão terminada', 'info');
-                }
+                    const targetSection = document.getElementById(sectionId);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                        targetSection.classList.add('fade-in');
+                        
+                        // Atualizar título
+                        document.getElementById('dashboardTitle').textContent = 
+                            this.querySelector('span').textContent;
+                    }
+                });
             });
-        });
-        
-        // Carregar dados de exemplo
-        function loadSampleData() {
-            // Pedidos de material simulados
-            MAFCSystem.materialRequests = [
-                { id: 1, team: 'Equipa 03 - Berlin', material: 'Cimento', quantity: '50 sacos', urgency: 'Alta', status: 'pending' },
-                { id: 2, team: 'Equipa 07 - Munich', material: 'Areia', quantity: '10 m³', urgency: 'Média', status: 'approved' },
-                { id: 3, team: 'Equipa 12 - Dortmund', material: 'Tijolos', quantity: '2000 un', urgency: 'Alta', status: 'pending' }
-            ];
-            
-            // Compras simuladas
-            MAFCSystem.purchases = [
-                { id: 1, team: 'Equipa 01', material: 'Cimento', quantity: '100 sacos', value: '500€', status: 'delivered' },
-                { id: 2, team: 'Equipa 04', material: 'Areia', quantity: '20 m³', value: '400€', status: 'ordered' }
-            ];
-            
-            // Notificações iniciais
-            MAFCSystem.notifications = [
-                { id: 1, message: 'Bem-vindo ao sistema MAFC', type: 'info', time: '09:00', read: true },
-                { id: 2, message: 'Equipa 03 pediu material urgente', type: 'warning', time: '10:15', read: false },
-                { id: 3, message: 'Compras aprovadas para entrega', type: 'success', time: '10:30', read: false }
-            ];
-            
-            updateNotificationBadge();
         }
-        
-        // Inicializar
-        updateClocks();
-        setInterval(updateClocks, 1000);
-        
-        // Adicionar estilos de animação
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
+
+        function loadDashboardData() {
+            // Carregar equipas
+            const teamsTable = document.getElementById('allTeamsTable');
+            if (teamsTable) {
+                teamsTable.innerHTML = '';
+                MAFCSystem.teams.forEach(team => {
+                    const row = `
+                        <tr>
+                            <td>#${team.id}</td>
+                            <td><strong>${team.name}</strong></td>
+                            <td>${team.chief}</td>
+                            <td>${team.location}</td>
+                            <td>${team.workers} trabalhadores</td>
+                            <td><span class="badge ${team.status === 'active' ? 'badge-success' : 'badge-danger'}">${team.status === 'active' ? 'Ativo' : 'Inativo'}</span></td>
+                            <td>
+                                <button class="btn-action btn-primary btn-sm" onclick="viewTeam(${team.id})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-action btn-warning btn-sm" onclick="editTeam(${team.id})">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    teamsTable.innerHTML += row;
+                });
             }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
+            
+            // Carregar pedidos de material
+            const materialsTable = document.getElementById('materialsTable');
+            if (materialsTable) {
+                materialsTable.innerHTML = '';
+                MAFCSystem.materialRequests.forEach(request => {
+                    const statusBadge = request.status === 'pending' ? 'badge-warning' :
+                                        request.status === 'approved' ? 'badge-primary' : 'badge-success';
+                    const statusText = request.status === 'pending' ? 'Pendente' :
+                                       request.status === 'approved' ? 'Aprovado' : 'Concluído';
+                    
+                    const row = `
+                        <tr>
+                            <td>${request.date}</td>
+                            <td>${request.team}</td>
+                            <td>${request.material}</td>
+                            <td>${request.quantity}</td>
+                            <td><span class="badge ${statusBadge}">${statusText}</span></td>
+                            <td>
+                                <button class="btn-action btn-success btn-sm" onclick="approveRequest(${request.id})">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn-action btn-danger btn-sm" onclick="rejectRequest(${request.id})">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                    materialsTable.innerHTML += row;
+                });
             }
-        `;
-        document.head.appendChild(style);
+            
+            // Carregar compras
+            const purchasesTable = document.getElementById('purchasesTable');
+            if (purchasesTable) {
+                purchasesTable.innerHTML = '';
+                MAFCSystem.purchases.forEach(purchase => {
+                    const statusBadge = purchase.status === 'pending' ? 'badge-warning' :
+                                        purchase.status === 'in_progress' ? 'badge-primary' : 'badge-success';
+                    const statusText = purchase.status === 'pending' ? 'Pendente' :
+                                       purchase.status === 'in_progress' ? 'Em Andamento' : 'Concluído';
+                    
+                    const row = `
+                        <tr>
+                            <td>#${purchase.id}</td>
+                            <td>${purchase.supplier}</td>
+                            <td>${purchase.material}</td>
+                            <td>${purchase.value}</td>
+                            <td><span class="badge ${statusBadge}">${statusText}</span></td>
+                            <td>${purchase.responsible}</td>
+                            <td>
+                                <button class="btn-action btn-primary btn-sm" onclick="viewPurchase(${purchase.id})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                ${purchase.status === 'completed' ? '' : `
+                                    <button class="btn-action btn-success btn-sm" onclick="completePurchase(${purchase.id})">
+                                        <i class="fas fa-check-double"></i>
+                                    </button>
+                                `}
+                            </td>
+                        </tr>
+                    `;
+                    purchasesTable.innerHTML += row;
+                });
+            }
+        }
+
+        function setupModals() {
+            // Fechar modais ao clicar no X
+            document.querySelectorAll('.close-modal-dashboard').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.modal-dashboard').style.display = 'none';
+                });
+            });
+            
+            // Fechar modais ao clicar fora
+            document.querySelectorAll('.modal-dashboard').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Formulário de empregado
+            const employeeForm = document.getElementById('employeeForm');
+            if (employeeForm) {
+                employeeForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    saveEmployee();
+                });
+            }
+        }
+
+        // ============ FUNÇÕES DO ADMINISTRADOR ============
+        function refreshLocations() {
+            alert('Localizações atualizadas com sucesso!');
+        }
+
+        function viewAllRequests() {
+            alert('Mostrando todos os pedidos...');
+        }
+
+        function approveRequest(id) {
+            if (confirm('Aprovar este pedido?')) {
+                alert(`Pedido #${id} aprovado com sucesso!`);
+                loadDashboardData();
+            }
+        }
+
+        function addNewTeam() {
+            alert('Funcionalidade para adicionar nova equipa...');
+        }
+
+        function viewTeam(id) {
+            const team = MAFCSystem.teams.find(t => t.id === id);
+            if (team) {
+                alert(`Equipa: ${team.name}\nChefe: ${team.chief}\nLocalização: ${team.location}\nTrabalhadores: ${team.workers}`);
+            }
+        }
+
+        function editTeam(id) {
+            alert(`Editando equipa #${id}...`);
+        }
+
+        function exportHours() {
+            alert('Exportando registos de horas para Excel...');
+        }
+
+        function simulateClockIn() {
+            alert('Entrada simulada registada!');
+        }
+
+        function simulateClockOut() {
+            alert('Saída simulada registada!');
+        }
+
+        function rejectRequest(id) {
+            if (confirm('Recusar este pedido?')) {
+                alert(`Pedido #${id} recusado!`);
+                loadDashboardData();
+            }
+        }
+
+        // ============ FUNÇÕES DE COMPRAS ============
+        function viewPurchase(id) {
+            const purchase = MAFCSystem.purchases.find(p => p.id === id);
+            if (purchase) {
+                const modal = document.getElementById('purchaseDetailModal');
+                const content = document.getElementById('purchaseDetailsContent');
+                
+                content.innerHTML = `
+                    <div class="form-group-dashboard">
+                        <label>Número:</label>
+                        <p><strong>#${purchase.id}</strong></p>
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>Fornecedor:</label>
+                        <p>${purchase.supplier}</p>
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>Material:</label>
+                        <p>${purchase.material}</p>
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>Quantidade:</label>
+                        <p>${purchase.quantity}</p>
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>Valor:</label>
+                        <p>${purchase.value}</p>
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>Estado:</label>
+                        <p><span class="badge ${purchase.status === 'pending' ? 'badge-warning' : purchase.status === 'in_progress' ? 'badge-primary' : 'badge-success'}">
+                            ${purchase.status === 'pending' ? 'Pendente' : purchase.status === 'in_progress' ? 'Em Andamento' : 'Concluído'}
+                        </span></p>
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>Responsável:</label>
+                        <p>${purchase.responsible}</p>
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>Equipa Solicitante:</label>
+                        <p>${purchase.team}</p>
+                    </div>
+                    <div class="form-actions">
+                        ${purchase.status !== 'completed' ? `
+                            <button class="btn-action btn-success" onclick="completePurchase(${purchase.id})">
+                                <i class="fas fa-check-double"></i> Marcar como Concluído
+                            </button>
+                        ` : ''}
+                        <button class="btn-action btn-primary close-modal-dashboard">
+                            <i class="fas fa-times"></i> Fechar
+                        </button>
+                    </div>
+                `;
+                
+                modal.style.display = 'flex';
+            }
+        }
+
+        function completePurchase(id) {
+            if (confirm('Marcar esta compra como concluída?')) {
+                const purchase = MAFCSystem.purchases.find(p => p.id === id);
+                if (purchase) {
+                    purchase.status = 'completed';
+                    alert(`Compra #${id} marcada como concluída!`);
+                    loadDashboardData();
+                    document.getElementById('purchaseDetailModal').style.display = 'none';
+                }
+            }
+        }
+
+        function markAsCompleted() {
+            alert('Selecione uma compra para marcar como concluída...');
+        }
+
+        // ============ FUNÇÕES GERAIS ============
+        function saveEmployee() {
+            const name = document.getElementById('empName').value;
+            const whatsapp = document.getElementById('empWhatsApp').value;
+            const position = document.getElementById('empPosition').value;
+            const team = document.getElementById('empTeam').value;
+            
+            if (name && whatsapp && position && team) {
+                const newEmployee = {
+                    id: MAFCSystem.employees.length + 1,
+                    name,
+                    whatsapp,
+                    position,
+                    team,
+                    status: 'active'
+                };
+                
+                MAFCSystem.employees.push(newEmployee);
+                alert('Empregado adicionado com sucesso!');
+                document.getElementById('addEmployeeModal').style.display = 'none';
+                document.getElementById('employeeForm').reset();
+                
+                // Atualizar contador de trabalhadores na equipa
+                const teamObj = MAFCSystem.teams.find(t => t.name.includes(team));
+                if (teamObj) {
+                    teamObj.workers++;
+                }
+            } else {
+                alert('Por favor, preencha todos os campos!');
+            }
+        }
+
+        function logout() {
+            if (confirm('Tem certeza que deseja sair?')) {
+                // Esconder todos os dashboards
+                document.querySelectorAll('.dashboard').forEach(d => {
+                    d.style.display = 'none';
+                });
+                
+                // Mostrar website público
+                document.getElementById('publicWebsite').style.display = 'block';
+                
+                // Limpar dados do usuário
+                MAFCSystem.currentUser = null;
+                MAFCSystem.dashboard = null;
+            }
+        }
+
+        // Fechar modal ao clicar fora
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('loginModal')) {
+                closeLoginModal();
+            }
+        });
+
+        // Inicializar relógio
+        updateClock();
     </script>
 </body>
 </html>
