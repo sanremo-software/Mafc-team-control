@@ -30,8 +30,6 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
             background: var(--light);
             overflow-x: hidden;
         }
@@ -41,7 +39,6 @@
             min-height: 100vh;
         }
 
-        /* Header Publico */
         .public-header {
             background: linear-gradient(135deg, var(--dark), var(--primary));
             color: white;
@@ -143,10 +140,8 @@
             box-shadow: 0 8px 20px rgba(26, 95, 122, 0.3);
         }
 
-        /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(0, 48, 73, 0.88), rgba(0, 48, 73, 0.92)), 
-                        url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1800&q=80');
+            background: linear-gradient(rgba(0, 48, 73, 0.88), rgba(0, 48, 73, 0.92));
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -161,7 +156,6 @@
             margin-bottom: 25px;
             font-weight: 900;
             text-transform: uppercase;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.4);
             line-height: 1.2;
         }
 
@@ -181,7 +175,6 @@
             flex-wrap: wrap;
         }
 
-        /* Services Grid */
         .services {
             padding: 100px 0;
             background: white;
@@ -222,30 +215,12 @@
             text-align: center;
             transition: all 0.4s;
             border: 3px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: var(--accent);
-            transform: translateY(-100%);
-            transition: transform 0.3s;
         }
 
         .service-card:hover {
             transform: translateY(-15px);
             border-color: var(--accent);
             box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-        }
-
-        .service-card:hover:before {
-            transform: translateY(0);
         }
 
         .service-icon {
@@ -261,7 +236,6 @@
             font-weight: 700;
         }
 
-        /* Company Stats */
         .company-info {
             padding: 100px 0;
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -301,7 +275,6 @@
             font-weight: 800;
         }
 
-        /* Quote Section */
         .quote-request {
             background: linear-gradient(135deg, var(--dark), var(--primary));
             color: white;
@@ -323,7 +296,6 @@
             flex-wrap: wrap;
         }
 
-        /* Footer */
         .public-footer {
             background: var(--dark);
             color: white;
@@ -357,12 +329,6 @@
             z-index: 2000;
             align-items: center;
             justify-content: center;
-            animation: fadeIn 0.3s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .modal-content {
@@ -371,13 +337,7 @@
             max-width: 500px;
             border-radius: 20px;
             overflow: hidden;
-            animation: modalSlideIn 0.4s;
             box-shadow: 0 25px 50px rgba(0,0,0,0.3);
-        }
-
-        @keyframes modalSlideIn {
-            from { transform: translateY(-50px) scale(0.9); opacity: 0; }
-            to { transform: translateY(0) scale(1); opacity: 1; }
         }
 
         .modal-header {
@@ -470,7 +430,6 @@
             background: #f0f2f5;
         }
 
-        /* Top Bar Horizontal */
         .top-bar {
             background: white;
             padding: 0;
@@ -482,7 +441,6 @@
             border-bottom: 5px solid;
         }
 
-        /* Cores diferentes para cada dashboard */
         .boss-dashboard .top-bar {
             border-bottom-color: var(--boss);
             background: linear-gradient(135deg, #9b59b6, var(--boss));
@@ -569,7 +527,6 @@
             border-color: white;
         }
 
-        /* Menu Horizontal */
         .horizontal-menu {
             background: white;
             margin-top: 70px;
@@ -599,7 +556,6 @@
             white-space: nowrap;
             border-bottom: 4px solid transparent;
             transition: all 0.3s;
-            position: relative;
         }
 
         .menu-item:hover {
@@ -627,7 +583,6 @@
             font-weight: 700;
         }
 
-        /* Conteúdo do Dashboard */
         .dashboard-content {
             margin-top: 140px;
             padding: 20px 30px;
@@ -643,7 +598,6 @@
             display: block;
         }
 
-        /* Cards de Estatísticas */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -702,7 +656,6 @@
             font-size: 1rem;
         }
 
-        /* Grids de Conteúdo */
         .content-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
@@ -710,7 +663,6 @@
             margin-bottom: 30px;
         }
 
-        /* Cards de Conteúdo */
         .content-card {
             background: white;
             border-radius: 15px;
@@ -742,11 +694,6 @@
             gap: 12px;
         }
 
-        .card-header h3 i {
-            color: var(--primary);
-        }
-
-        /* Botões */
         .btn-dashboard {
             padding: 12px 25px;
             border-radius: 10px;
@@ -806,7 +753,6 @@
             font-size: 0.85rem;
         }
 
-        /* Tabelas */
         .data-table {
             width: 100%;
             border-collapse: collapse;
@@ -834,7 +780,6 @@
             background: #f8f9fa;
         }
 
-        /* Badges */
         .badge {
             padding: 6px 12px;
             border-radius: 20px;
@@ -849,7 +794,6 @@
         .badge-primary { background: #d1ecf1; color: var(--secondary); }
         .badge-info { background: #d1ecf1; color: #17a2b8; }
 
-        /* Formulários */
         .form-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -899,7 +843,6 @@
             border-top: 2px solid #f0f0f0;
         }
 
-        /* Time Tracker */
         .time-tracker {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -922,7 +865,6 @@
             justify-content: center;
         }
 
-        /* Material Categories */
         .categories-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -952,7 +894,6 @@
             margin-bottom: 10px;
         }
 
-        /* GPS Tracker */
         .gps-tracker {
             background: linear-gradient(135deg, #11998e, #38ef7d);
             color: white;
@@ -977,45 +918,6 @@
             backdrop-filter: blur(10px);
         }
 
-        /* ============ MODAIS ============ */
-        .modal-employee, .modal-monthly-report {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.85);
-            z-index: 2001;
-            display: none;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-employee-content, .modal-monthly-report-content {
-            background: white;
-            width: 90%;
-            max-width: 600px;
-            border-radius: 15px;
-            padding: 30px;
-            position: relative;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        .close-employee-modal, .close-report-modal {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: var(--dark);
-        }
-
-        .close-employee-modal:hover, .close-report-modal:hover {
-            color: var(--danger);
-        }
-
-        /* Extrato Mensal */
         .monthly-report {
             background: white;
             border-radius: 10px;
@@ -1040,7 +942,6 @@
             margin-top: 20px;
         }
 
-        /* Tabela de Horários */
         .time-sheet-table {
             width: 100%;
             border-collapse: collapse;
@@ -1066,9 +967,9 @@
             }
         }
 
-        @media (max-width: 992px) {
+        @media (max-width: 768px) {
             .hero h2 {
-                font-size: 2.8rem;
+                font-size: 2.2rem;
             }
             
             .section-title {
@@ -1089,81 +990,11 @@
                 padding: 15px;
             }
         }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding: 150px 0 80px;
-            }
-            
-            .hero h2 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1.2rem;
-            }
-            
-            .stats-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-            
-            .top-bar-content {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            .dashboard-info {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .menu-item {
-                padding: 12px 15px;
-            }
-            
-            .content-card {
-                padding: 20px;
-            }
-            
-            .time-display {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h2 {
-                font-size: 1.8rem;
-            }
-            
-            .section-title {
-                font-size: 1.8rem;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-            
-            .dashboard-content {
-                padding: 10px;
-            }
-            
-            .modal-employee-content,
-            .modal-monthly-report-content {
-                padding: 20px;
-            }
-        }
     </style>
 </head>
 <body>
     <!-- ============ PÁGINA PÚBLICA ============ -->
     <div id="publicWebsite">
-        <!-- Header Público -->
         <header class="public-header">
             <div class="container nav-container">
                 <div class="logo">
@@ -1174,12 +1005,10 @@
                     </div>
                 </div>
                 <div class="cta-buttons">
-                    <a href="https://wa.me/351123456789?text=Olá MAFC,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20uma%20obra" 
-                       class="btn btn-whatsapp" target="_blank">
+                    <a href="https://wa.me/351123456789" class="btn btn-whatsapp" target="_blank">
                         <i class="fab fa-whatsapp"></i> WhatsApp
                     </a>
-                    <a href="mailto:orcamentos@mafc-filho.pt?subject=Solicitação de Orçamento&body=Olá MAFC,%0D%0A%0D%0AGostaria de solicitar um orçamento para:" 
-                       class="btn btn-email">
+                    <a href="mailto:orcamentos@mafc-filho.pt" class="btn btn-email">
                         <i class="fas fa-envelope"></i> Pedir Orçamento
                     </a>
                     <a href="#" class="btn btn-login" id="openLogin">
@@ -1189,11 +1018,10 @@
             </div>
         </header>
 
-        <!-- Hero Section -->
         <section class="hero">
             <div class="container">
                 <h2>Especialistas em Construção Civil e Obras Públicas</h2>
-                <p>Mais de 20 anos de experiência em saneamento, abastecimento de água, redes de fibra óptica, pavimentação e infraestruturas. Operação em Portugal e Alemanha com 15 equipas especializadas.</p>
+                <p>Mais de 20 anos de experiência em saneamento, abastecimento de água, redes de fibra óptica, pavimentação e infraestruturas.</p>
                 <div class="hero-buttons">
                     <a href="#services" class="btn btn-email">
                         <i class="fas fa-hard-hat"></i> Nossos Serviços
@@ -1205,36 +1033,27 @@
             </div>
         </section>
 
-        <!-- Services -->
         <section class="services" id="services">
             <div class="container">
                 <h2 class="section-title">Serviços Especializados</h2>
                 <div class="services-grid">
                     <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-water"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-water"></i></div>
                         <h3>Saneamento e Águas</h3>
-                        <p>Redes de águas pluviais, sistemas de drenagem e abastecimento de água potável.</p>
+                        <p>Redes de águas pluviais e abastecimento de água potável.</p>
                     </div>
                     <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-satellite-dish"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-satellite-dish"></i></div>
                         <h3>Redes de Fibra Óptica</h3>
-                        <p>Instalação e manutenção de infraestruturas de telecomunicações.</p>
+                        <p>Instalação e manutenção de telecomunicações.</p>
                     </div>
                     <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-road"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-road"></i></div>
                         <h3>Pavimentação</h3>
-                        <p>Pavimentação em cubo, betuminosa e reabilitação de vias públicas.</p>
+                        <p>Pavimentação em cubo, betuminosa e reabilitação de vias.</p>
                     </div>
                     <div class="service-card">
-                        <div class="service-icon">
-                            <i class="fas fa-bolt"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-bolt"></i></div>
                         <h3>Redes EDP e Gás</h3>
                         <p>Instalação de infraestruturas elétricas e de gás natural.</p>
                     </div>
@@ -1242,60 +1061,39 @@
             </div>
         </section>
 
-        <!-- Company Info -->
         <section class="company-info">
             <div class="container">
                 <h2 class="section-title">MAFC em Números</h2>
                 <div class="stats-grid">
-                    <div class="stat-card">
-                        <i class="fas fa-calendar-alt"></i>
-                        <h3>20+</h3>
-                        <p>Anos de Experiência</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-users"></i>
-                        <h3>40+</h3>
-                        <p>Colaboradores</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-hard-hat"></i>
-                        <h3>15</h3>
-                        <p>Equipas Ativas</p>
-                    </div>
-                    <div class="stat-card">
-                        <i class="fas fa-globe-europe"></i>
-                        <h3>2</h3>
-                        <p>Países de Operação</p>
-                    </div>
+                    <div class="stat-card"><i class="fas fa-calendar-alt"></i><h3>20+</h3><p>Anos de Experiência</p></div>
+                    <div class="stat-card"><i class="fas fa-users"></i><h3>40+</h3><p>Colaboradores</p></div>
+                    <div class="stat-card"><i class="fas fa-hard-hat"></i><h3>15</h3><p>Equipas Ativas</p></div>
+                    <div class="stat-card"><i class="fas fa-globe-europe"></i><h3>2</h3><p>Países de Operação</p></div>
                 </div>
             </div>
         </section>
 
-        <!-- Quote Request -->
         <section class="quote-request" id="quote">
             <div class="container">
                 <h2>Solicite um Orçamento Gratuito</h2>
-                <p>Tem um projeto de construção? Entre em contacto connosco para uma avaliação personalizada.</p>
+                <p>Tem um projeto de construção? Entre em contacto connosco.</p>
                 <div class="quote-buttons">
-                    <a href="https://wa.me/351123456789?text=Olá MAFC,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20uma%20obra" 
-                       class="btn btn-whatsapp" target="_blank">
+                    <a href="https://wa.me/351123456789" class="btn btn-whatsapp" target="_blank">
                         <i class="fab fa-whatsapp"></i> WhatsApp
                     </a>
-                    <a href="mailto:orcamentos@mafc-filho.pt?subject=Solicitação de Orçamento&body=Olá MAFC,%0D%0A%0D%0AGostaria de solicitar um orçamento para:" 
-                       class="btn btn-email">
+                    <a href="mailto:orcamentos@mafc-filho.pt" class="btn btn-email">
                         <i class="fas fa-envelope"></i> Email
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Footer -->
         <footer class="public-footer">
             <div class="container">
                 <div class="footer-content">
                     <div>
                         <h3>MAFC & FILHO, LDA.</h3>
-                        <p>Constituída em 2001, somos especialistas em construção civil e obras públicas com operação em Portugal e Alemanha.</p>
+                        <p>Constituída em 2001, especialistas em construção civil e obras públicas.</p>
                     </div>
                 </div>
                 <div class="copyright">
@@ -1340,143 +1138,8 @@
         </div>
     </div>
 
-    <!-- ============ MODAL GESTÃO DE EMPREGADOS ============ -->
-    <div class="modal-employee" id="employeeModal">
-        <div class="modal-employee-content">
-            <span class="close-employee-modal">&times;</span>
-            <h2><i class="fas fa-user-plus"></i> Gestão de Empregados</h2>
-            <div class="employee-form">
-                <div class="form-row">
-                    <div class="form-group-dashboard">
-                        <label>Nome Completo</label>
-                        <input type="text" id="employeeName" placeholder="Nome do empregado">
-                    </div>
-                    <div class="form-group-dashboard">
-                        <label>Número de WhatsApp</label>
-                        <input type="tel" id="employeeWhatsApp" placeholder="+351 912 345 678">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group-dashboard">
-                        <label>Cargo</label>
-                        <select id="employeePosition">
-                            <option value="worker">Trabalhador</option>
-                            <option value="assistant">Ajudante</option>
-                            <option value="specialist">Especialista</option>
-                            <option value="driver">Motorista</option>
-                        </select>
-                    </div>
-                    <div class="form-group-dashboard">
-                        <label>Salário Base (€/mês)</label>
-                        <input type="number" id="employeeSalary" placeholder="1200">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group-dashboard">
-                        <label>Data de Início</label>
-                        <input type="date" id="employeeStartDate">
-                    </div>
-                    <div class="form-group-dashboard">
-                        <label>Estado</label>
-                        <select id="employeeStatus">
-                            <option value="active">Ativo</option>
-                            <option value="inactive">Inativo</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn-dashboard btn-success" onclick="saveEmployee()">
-                        <i class="fas fa-save"></i> Guardar Empregado
-                    </button>
-                    <button type="button" class="btn-dashboard btn-danger" onclick="closeEmployeeModal()">
-                        <i class="fas fa-times"></i> Cancelar
-                    </button>
-                </div>
-            </div>
-            
-            <div style="margin-top: 30px;">
-                <h3><i class="fas fa-list"></i> Empregados da Equipa</h3>
-                <table class="data-table" style="margin-top: 15px;">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>WhatsApp</th>
-                            <th>Cargo</th>
-                            <th>Estado</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="employeesList">
-                        <!-- Lista de empregados será carregada aqui -->
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============ MODAL EXTRATO MENSAL ============ -->
-    <div class="modal-monthly-report" id="monthlyReportModal">
-        <div class="modal-monthly-report-content">
-            <span class="close-report-modal">&times;</span>
-            <h2><i class="fas fa-file-invoice"></i> Extrato Mensal - Horas Trabalhadas</h2>
-            
-            <div class="form-row">
-                <div class="form-group-dashboard">
-                    <label>Mês/Ano</label>
-                    <select id="reportMonth">
-                        <option value="12-2024">Dezembro 2024</option>
-                        <option value="11-2024">Novembro 2024</option>
-                        <option value="10-2024">Outubro 2024</option>
-                        <option value="09-2024">Setembro 2024</option>
-                    </select>
-                </div>
-                <div class="form-group-dashboard">
-                    <label>Empregado</label>
-                    <select id="reportEmployee">
-                        <option value="all">Todos os Empregados</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="monthly-report">
-                <div class="report-header">
-                    <h4 id="reportTitle">Extrato de Horas - Dezembro 2024</h4>
-                    <span class="badge badge-success" id="totalHours">160 horas</span>
-                </div>
-                
-                <table class="time-sheet-table" id="timeSheetTable">
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Entrada</th>
-                            <th>Saída</th>
-                            <th>Horas</th>
-                            <th>Extra</th>
-                        </tr>
-                    </thead>
-                    <tbody id="timeSheetBody">
-                        <!-- Dados do extrato serão carregados aqui -->
-                    </tbody>
-                </table>
-                
-                <div class="report-actions">
-                    <button class="btn-dashboard btn-primary" onclick="printReport()">
-                        <i class="fas fa-print"></i> Imprimir (Drucker)
-                    </button>
-                    <button class="btn-dashboard btn-success" onclick="sendReportEmail()">
-                        <i class="fas fa-envelope"></i> Enviar por Email
-                    </button>
-                    <button class="btn-dashboard btn-whatsapp" onclick="sendReportWhatsApp()">
-                        <i class="fab fa-whatsapp"></i> Enviar WhatsApp
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- ============ DASHBOARD DO PATRÃO ============ -->
     <div class="dashboard boss-dashboard" id="bossDashboard">
-        <!-- Top Bar -->
         <div class="top-bar">
             <div class="container top-bar-content">
                 <div class="dashboard-brand">
@@ -1488,7 +1151,7 @@
                         <i class="fas fa-user-circle"></i>
                         <span id="bossUserName">Administrador MAFC</span>
                     </div>
-                    <div id="bossCurrentTime" style="font-weight: 600;">10:45 AM</div>
+                    <div id="bossCurrentTime">10:45 AM</div>
                     <button class="logout-btn" id="bossLogoutBtn">
                         <i class="fas fa-sign-out-alt"></i> Sair
                     </button>
@@ -1496,7 +1159,6 @@
             </div>
         </div>
 
-        <!-- Menu Horizontal -->
         <nav class="horizontal-menu">
             <div class="container menu-container">
                 <a href="#" class="menu-item active" data-section="overview">
@@ -1534,46 +1196,24 @@
             </div>
         </nav>
 
-        <!-- Conteúdo -->
         <div class="dashboard-content">
-            <!-- Seção Visão Geral -->
             <div class="dashboard-section active" id="overviewSection">
                 <div class="stats-row">
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>15</h3>
-                            <p>Equipas Ativas</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-info"><h3>15</h3><p>Equipas Ativas</p></div>
                     </div>
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-hard-hat"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>42</h3>
-                            <p>Trabalhadores</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-hard-hat"></i></div>
+                        <div class="stat-info"><h3>42</h3><p>Trabalhadores</p></div>
                     </div>
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-euro-sign"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>8</h3>
-                            <p>Obras Alemanha</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-euro-sign"></i></div>
+                        <div class="stat-info"><h3>8</h3><p>Obras Alemanha</p></div>
                     </div>
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3>12</h3>
-                            <p>Pedidos Pendentes</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><h3>12</h3><p>Pedidos Pendentes</p></div>
                     </div>
                 </div>
 
@@ -1595,22 +1235,7 @@
                                     <th>GPS</th>
                                 </tr>
                             </thead>
-                            <tbody id="bossTeamsTable">
-                                <tr>
-                                    <td><strong>Equipa 01 - Berlin</strong></td>
-                                    <td>Berlim, Kreuzberg</td>
-                                    <td>Saneamento Urbano</td>
-                                    <td><span class="badge badge-success">A Trabalhar</span></td>
-                                    <td>52.5200° N</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Equipa 02 - Hamburg</strong></td>
-                                    <td>Hamburgo, Centro</td>
-                                    <td>Pavimentação</td>
-                                    <td><span class="badge badge-success">A Trabalhar</span></td>
-                                    <td>53.5511° N</td>
-                                </tr>
-                            </tbody>
+                            <tbody id="bossTeamsTable"></tbody>
                         </table>
                     </div>
 
@@ -1631,25 +1256,12 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody id="urgentRequestsTable">
-                                <tr>
-                                    <td>Equipa 03</td>
-                                    <td>Cimento</td>
-                                    <td>50 sacos</td>
-                                    <td><span class="badge badge-danger">CRÍTICO</span></td>
-                                    <td>
-                                        <button class="btn-dashboard btn-success btn-sm" onclick="approveRequest(1)">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tbody id="urgentRequestsTable"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- Seção Equipas -->
             <div class="dashboard-section" id="teamsSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -1657,14 +1269,6 @@
                         <button class="btn-dashboard btn-primary" onclick="addNewTeam()">
                             <i class="fas fa-plus"></i> Nova Equipa
                         </button>
-                    </div>
-                    <div class="form-row">
-                        <input type="text" placeholder="Pesquisar equipa..." id="teamSearch">
-                        <select id="teamFilter">
-                            <option value="all">Todas as equipas</option>
-                            <option value="germany">Alemanha</option>
-                            <option value="portugal">Portugal</option>
-                        </select>
                     </div>
                     <table class="data-table">
                         <thead>
@@ -1678,14 +1282,11 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="allTeamsTable">
-                            <!-- Equipas serão carregadas aqui -->
-                        </tbody>
+                        <tbody id="allTeamsTable"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Seção Controlo de Horas -->
             <div class="dashboard-section" id="hoursSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -1718,21 +1319,11 @@
                                 <th>Banco Horas</th>
                             </tr>
                         </thead>
-                        <tbody id="hoursTable">
-                            <tr>
-                                <td>João Silva</td>
-                                <td>Equipa 01</td>
-                                <td>08:00</td>
-                                <td>16:30</td>
-                                <td>8.5h</td>
-                                <td><span class="badge badge-warning">+0.5h</span></td>
-                            </tr>
-                        </tbody>
+                        <tbody id="hoursTable"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Seção Contabilidade -->
             <div class="dashboard-section" id="accountingSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -1740,23 +1331,6 @@
                         <button class="btn-dashboard btn-success" onclick="exportToAccounting()">
                             <i class="fas fa-file-excel"></i> Exportar Excel
                         </button>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group-dashboard">
-                            <label>Mês de Referência</label>
-                            <select id="accountingMonth">
-                                <option value="12">Dezembro 2024</option>
-                                <option value="11">Novembro 2024</option>
-                            </select>
-                        </div>
-                        <div class="form-group-dashboard">
-                            <label>Filtrar por Equipa</label>
-                            <select id="accountingTeam">
-                                <option value="all">Todas as Equipas</option>
-                                <option value="team01">Equipa 01 - Berlin</option>
-                            </select>
-                        </div>
                     </div>
 
                     <table class="data-table">
@@ -1771,17 +1345,7 @@
                                 <th>Valor</th>
                             </tr>
                         </thead>
-                        <tbody id="accountingTable">
-                            <tr>
-                                <td>João Silva</td>
-                                <td>Equipa 01</td>
-                                <td>160</td>
-                                <td>12</td>
-                                <td>172</td>
-                                <td><span class="badge badge-danger">+12h</span></td>
-                                <td>360€</td>
-                            </tr>
-                        </tbody>
+                        <tbody id="accountingTable"></tbody>
                     </table>
                 </div>
             </div>
@@ -1790,7 +1354,6 @@
 
     <!-- ============ DASHBOARD DO CHEFE DE EQUIPA ============ -->
     <div class="dashboard team-dashboard" id="teamDashboard">
-        <!-- Top Bar -->
         <div class="top-bar">
             <div class="container top-bar-content">
                 <div class="dashboard-brand">
@@ -1802,7 +1365,7 @@
                         <i class="fas fa-user-hard-hat"></i>
                         <span id="teamUserName">Equipa 01 - Berlin</span>
                     </div>
-                    <div id="teamCurrentTime" style="font-weight: 600;">10:45 AM</div>
+                    <div id="teamCurrentTime">10:45 AM</div>
                     <button class="logout-btn" id="teamLogoutBtn">
                         <i class="fas fa-sign-out-alt"></i> Sair
                     </button>
@@ -1810,7 +1373,6 @@
             </div>
         </div>
 
-        <!-- Menu Horizontal -->
         <nav class="horizontal-menu">
             <div class="container menu-container">
                 <a href="#" class="menu-item active" data-section="teamOverview">
@@ -1834,46 +1396,24 @@
             </div>
         </nav>
 
-        <!-- Conteúdo -->
         <div class="dashboard-content">
-            <!-- Visão da Equipa -->
             <div class="dashboard-section active" id="teamOverviewSection">
                 <div class="stats-row">
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="teamWorkersCount">5</h3>
-                            <p>Trabalhadores</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-info"><h3 id="teamWorkersCount">5</h3><p>Trabalhadores</p></div>
                     </div>
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="teamHoursToday">4.5</h3>
-                            <p>Horas Hoje</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><h3 id="teamHoursToday">4.5</h3><p>Horas Hoje</p></div>
                     </div>
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-box"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="teamPendingMaterials">3</h3>
-                            <p>Pedidos Pendentes</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-box"></i></div>
+                        <div class="stat-info"><h3 id="teamPendingMaterials">3</h3><p>Pedidos Pendentes</p></div>
                     </div>
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="teamStatus">Online</h3>
-                            <p>Estado</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info"><h3 id="teamStatus">Online</h3><p>Estado</p></div>
                     </div>
                 </div>
 
@@ -1895,9 +1435,7 @@
                                     <th>WhatsApp</th>
                                 </tr>
                             </thead>
-                            <tbody id="teamTimeRecords">
-                                <!-- Dados serão carregados aqui -->
-                            </tbody>
+                            <tbody id="teamTimeRecords"></tbody>
                         </table>
                     </div>
 
@@ -1918,15 +1456,12 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody id="teamMaterialRequests">
-                                <!-- Dados serão carregados aqui -->
-                            </tbody>
+                            <tbody id="teamMaterialRequests"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- Controlo de Horas -->
             <div class="dashboard-section" id="teamTimeSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -1945,7 +1480,7 @@
                         </div>
                         <div class="form-group-dashboard">
                             <label>WhatsApp</label>
-                            <input type="text" id="workerWhatsApp" readonly placeholder="Selecione um trabalhador">
+                            <input type="text" id="workerWhatsApp" readonly>
                         </div>
                         <div class="form-group-dashboard">
                             <label>Ação</label>
@@ -1979,14 +1514,11 @@
                                 <th>Extra</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Histórico será carregado aqui -->
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Gestão de Empregados -->
             <div class="dashboard-section" id="teamEmployeesSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -1997,7 +1529,7 @@
                     </div>
                     
                     <div class="form-row">
-                        <input type="text" id="searchEmployee" placeholder="Pesquisar empregado..." onkeyup="searchEmployees()">
+                        <input type="text" id="searchEmployee" placeholder="Pesquisar empregado...">
                         <select id="filterEmployeeStatus">
                             <option value="all">Todos os estados</option>
                             <option value="active">Ativos</option>
@@ -2016,14 +1548,11 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="teamEmployeesTable">
-                            <!-- Empregados serão carregados aqui -->
-                        </tbody>
+                        <tbody id="teamEmployeesTable"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Extrato Mensal -->
             <div class="dashboard-section" id="teamReportsSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -2039,7 +1568,6 @@
                             <select id="teamReportMonth">
                                 <option value="12-2024">Dezembro 2024</option>
                                 <option value="11-2024">Novembro 2024</option>
-                                <option value="10-2024">Outubro 2024</option>
                             </select>
                         </div>
                         <div class="form-group-dashboard">
@@ -2066,9 +1594,7 @@
                                     <th>Total</th>
                                 </tr>
                             </thead>
-                            <tbody id="teamTimeSheetBody">
-                                <!-- Dados do extrato serão carregados aqui -->
-                            </tbody>
+                            <tbody id="teamTimeSheetBody"></tbody>
                         </table>
                         
                         <div class="report-actions">
@@ -2086,7 +1612,6 @@
                 </div>
             </div>
 
-            <!-- Pedir Materiais -->
             <div class="dashboard-section" id="teamMaterialsSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -2098,22 +1623,18 @@
                         <div class="category-card" onclick="selectCategory('construction')">
                             <i class="fas fa-brick"></i>
                             <h4>Materiais Construção</h4>
-                            <p>Cimento, areia, brita...</p>
                         </div>
                         <div class="category-card" onclick="selectCategory('machines')">
                             <i class="fas fa-tractor"></i>
                             <h4>Máquinas</h4>
-                            <p>Retroescavadoras, camiões...</p>
                         </div>
                         <div class="category-card" onclick="selectCategory('tools')">
                             <i class="fas fa-tools"></i>
                             <h4>Ferramentas</h4>
-                            <p>Equipamentos especializados</p>
                         </div>
                         <div class="category-card" onclick="selectCategory('consumables')">
                             <i class="fas fa-gas-pump"></i>
                             <h4>Consumíveis</h4>
-                            <p>Gasóleo, óleo, EPIs...</p>
                         </div>
                     </div>
 
@@ -2139,31 +1660,6 @@
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group-dashboard">
-                            <label>Unidade</label>
-                            <select id="materialUnit">
-                                <option value="sacos">sacos</option>
-                                <option value="ton">toneladas</option>
-                                <option value="m3">m³</option>
-                                <option value="litros">litros</option>
-                            </select>
-                        </div>
-                        <div class="form-group-dashboard">
-                            <label>Urgência</label>
-                            <select id="materialUrgency">
-                                <option value="normal">Normal (1-2 semanas)</option>
-                                <option value="urgent">Urgente (3-5 dias)</option>
-                                <option value="critical">Crítico (24-48h)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group-dashboard">
-                        <label>Observações</label>
-                        <textarea id="materialNotes" rows="3" placeholder="Detalhes sobre o material necessário..."></textarea>
-                    </div>
-
                     <div class="form-actions">
                         <button class="btn-dashboard btn-success" onclick="submitMaterialRequest()">
                             <i class="fas fa-paper-plane"></i> Enviar para Compras
@@ -2171,14 +1667,10 @@
                         <button class="btn-dashboard btn-whatsapp" onclick="submitMaterialRequestWhatsApp()">
                             <i class="fab fa-whatsapp"></i> WhatsApp Compras
                         </button>
-                        <button class="btn-dashboard btn-primary" onclick="addCustomMaterial()">
-                            <i class="fas fa-plus"></i> Material Personalizado
-                        </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Localização -->
             <div class="dashboard-section" id="teamLocationSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -2213,7 +1705,6 @@
 
     <!-- ============ DASHBOARD DE COMPRAS ============ -->
     <div class="dashboard purchase-dashboard" id="purchaseDashboard">
-        <!-- Top Bar -->
         <div class="top-bar">
             <div class="container top-bar-content">
                 <div class="dashboard-brand">
@@ -2225,7 +1716,7 @@
                         <i class="fas fa-user-tie"></i>
                         <span id="purchaseUserName">Departamento Compras</span>
                     </div>
-                    <div id="purchaseCurrentTime" style="font-weight: 600;">10:45 AM</div>
+                    <div id="purchaseCurrentTime">10:45 AM</div>
                     <button class="logout-btn" id="purchaseLogoutBtn">
                         <i class="fas fa-sign-out-alt"></i> Sair
                     </button>
@@ -2233,7 +1724,6 @@
             </div>
         </div>
 
-        <!-- Menu Horizontal -->
         <nav class="horizontal-menu">
             <div class="container menu-container">
                 <a href="#" class="menu-item active" data-section="purchaseOverview">
@@ -2259,46 +1749,24 @@
             </div>
         </nav>
 
-        <!-- Conteúdo -->
         <div class="dashboard-content">
-            <!-- Visão Geral Compras -->
             <div class="dashboard-section active" id="purchaseOverviewSection">
                 <div class="stats-row">
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="pendingCount">12</h3>
-                            <p>Pedidos Pendentes</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><h3 id="pendingCount">12</h3><p>Pedidos Pendentes</p></div>
                     </div>
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="approvedCount">24</h3>
-                            <p>Compras Aprovadas</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-check"></i></div>
+                        <div class="stat-info"><h3 id="approvedCount">24</h3><p>Compras Aprovadas</p></div>
                     </div>
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-euro-sign"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="monthBudget">18.5K</h3>
-                            <p>Orçamento Mês (€)</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-euro-sign"></i></div>
+                        <div class="stat-info"><h3 id="monthBudget">18.5K</h3><p>Orçamento Mês (€)</p></div>
                     </div>
                     <div class="stat-card-horizontal">
-                        <div class="stat-icon">
-                            <i class="fas fa-truck"></i>
-                        </div>
-                        <div class="stat-info">
-                            <h3 id="suppliersCount">8</h3>
-                            <p>Fornecedores Ativos</p>
-                        </div>
+                        <div class="stat-icon"><i class="fas fa-truck"></i></div>
+                        <div class="stat-info"><h3 id="suppliersCount">8</h3><p>Fornecedores Ativos</p></div>
                     </div>
                 </div>
 
@@ -2320,25 +1788,7 @@
                                     <th>Ações</th>
                                 </tr>
                             </thead>
-                            <tbody id="urgentPurchaseRequests">
-                                <tr>
-                                    <td>Equipa 03 - Munich</td>
-                                    <td>Cimento</td>
-                                    <td>50 sacos</td>
-                                    <td><span class="badge badge-danger">CRÍTICO</span></td>
-                                    <td>
-                                        <button class="btn-dashboard btn-success btn-sm" onclick="approvePurchase(1)">
-                                            <i class="fas fa-check"></i>
-                                        </button>
-                                        <button class="btn-dashboard btn-danger btn-sm" onclick="rejectPurchase(1)">
-                                            <i class="fas fa-times"></i>
-                                        </button>
-                                        <button class="btn-dashboard btn-whatsapp btn-sm" onclick="contactSupplierWhatsApp(1)">
-                                            <i class="fab fa-whatsapp"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tbody id="urgentPurchaseRequests"></tbody>
                         </table>
                     </div>
 
@@ -2360,26 +1810,12 @@
                                     <th>WhatsApp</th>
                                 </tr>
                             </thead>
-                            <tbody id="recentPurchases">
-                                <tr>
-                                    <td>#ENCM-001</td>
-                                    <td>Fornecedor A</td>
-                                    <td>Cimento</td>
-                                    <td>1.250€</td>
-                                    <td><span class="badge badge-success">15/12</span></td>
-                                    <td>
-                                        <button class="btn-dashboard btn-whatsapp btn-sm" onclick="contactSupplier('Fornecedor A')">
-                                            <i class="fab fa-whatsapp"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <tbody id="recentPurchases"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
-            <!-- Pedidos Pendentes -->
             <div class="dashboard-section" id="pendingRequestsSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -2391,28 +1827,6 @@
                             <button class="btn-dashboard btn-danger" onclick="rejectAll()">
                                 <i class="fas fa-ban"></i> Recusar Todos
                             </button>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group-dashboard">
-                            <label>Filtrar por Equipa</label>
-                            <select id="filterByTeam">
-                                <option value="all">Todas as Equipas</option>
-                                <option value="team01">Equipa 01 - Berlin</option>
-                            </select>
-                        </div>
-                        <div class="form-group-dashboard">
-                            <label>Filtrar por Urgência</label>
-                            <select id="filterByUrgency">
-                                <option value="all">Todas</option>
-                                <option value="critical">Crítico</option>
-                                <option value="urgent">Urgente</option>
-                            </select>
-                        </div>
-                        <div class="form-group-dashboard">
-                            <label>Pesquisar Material</label>
-                            <input type="text" id="searchMaterial" placeholder="Nome do material...">
                         </div>
                     </div>
 
@@ -2429,34 +1843,11 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="allPendingRequests">
-                            <tr>
-                                <td>10/12/2024</td>
-                                <td>Equipa 03 - Munich</td>
-                                <td>Cimento</td>
-                                <td>50 sacos</td>
-                                <td><span class="badge badge-danger">CRÍTICO</span></td>
-                                <td>Miguel Santos</td>
-                                <td>
-                                    <button class="btn-dashboard btn-whatsapp btn-sm" onclick="contactTeamWhatsApp('Equipa 03')">
-                                        <i class="fab fa-whatsapp"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <button class="btn-dashboard btn-success" onclick="approvePurchase(1)">
-                                        <i class="fas fa-check"></i> Aprovar
-                                    </button>
-                                    <button class="btn-dashboard btn-danger" onclick="rejectPurchase(1)">
-                                        <i class="fas fa-times"></i> Recusar
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="allPendingRequests"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Compras Aprovadas -->
             <div class="dashboard-section" id="approvedPurchasesSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -2464,24 +1855,6 @@
                         <button class="btn-dashboard btn-primary" onclick="registerNewOrder()">
                             <i class="fas fa-plus"></i> Nova Encomenda
                         </button>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group-dashboard">
-                            <label>Fornecedor</label>
-                            <select id="supplierSelect">
-                                <option value="all">Todos Fornecedores</option>
-                                <option value="supplierA">Fornecedor A</option>
-                            </select>
-                        </div>
-                        <div class="form-group-dashboard">
-                            <label>Estado</label>
-                            <select id="orderStatus">
-                                <option value="all">Todos</option>
-                                <option value="ordered">Encomendado</option>
-                                <option value="delivered">Entregue</option>
-                            </select>
-                        </div>
                     </div>
 
                     <table class="data-table">
@@ -2498,27 +1871,7 @@
                                 <th>Fatura</th>
                             </tr>
                         </thead>
-                        <tbody id="approvedPurchasesTable">
-                            <tr>
-                                <td><strong>#ENCM-001</strong></td>
-                                <td>Fornecedor A</td>
-                                <td>Cimento</td>
-                                <td>50 sacos</td>
-                                <td>1.250€</td>
-                                <td>15/12/2024</td>
-                                <td><span class="badge badge-warning">Encomendado</span></td>
-                                <td>
-                                    <button class="btn-dashboard btn-whatsapp btn-sm" onclick="contactSupplier('Fornecedor A')">
-                                        <i class="fab fa-whatsapp"></i>
-                                    </button>
-                                </td>
-                                <td>
-                                    <button class="btn-dashboard btn-primary btn-sm">
-                                        <i class="fas fa-file-invoice"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="approvedPurchasesTable"></tbody>
                     </table>
                 </div>
             </div>
@@ -2527,7 +1880,6 @@
 
     <!-- ============ DASHBOARD ESCRITÓRIO ============ -->
     <div class="dashboard office-dashboard" id="officeDashboard">
-        <!-- Top Bar -->
         <div class="top-bar">
             <div class="container top-bar-content">
                 <div class="dashboard-brand">
@@ -2539,7 +1891,7 @@
                         <i class="fas fa-user-tie"></i>
                         <span id="officeUserName">Empregado Escritório</span>
                     </div>
-                    <div id="officeCurrentTime" style="font-weight: 600;">10:45 AM</div>
+                    <div id="officeCurrentTime">10:45 AM</div>
                     <button class="logout-btn" id="officeLogoutBtn">
                         <i class="fas fa-sign-out-alt"></i> Sair
                     </button>
@@ -2547,7 +1899,6 @@
             </div>
         </div>
 
-        <!-- Menu Horizontal -->
         <nav class="horizontal-menu">
             <div class="container menu-container">
                 <a href="#" class="menu-item active" data-section="officeTime">
@@ -2565,9 +1916,7 @@
             </div>
         </nav>
 
-        <!-- Conteúdo -->
         <div class="dashboard-content">
-            <!-- Marcar Horas -->
             <div class="dashboard-section active" id="officeTimeSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -2579,40 +1928,20 @@
 
                     <div class="stats-row">
                         <div class="stat-card-horizontal">
-                            <div class="stat-icon">
-                                <i class="fas fa-sign-in-alt"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3 id="officeTodayEntry">--:--</h3>
-                                <p>Entrada Hoje</p>
-                            </div>
+                            <div class="stat-icon"><i class="fas fa-sign-in-alt"></i></div>
+                            <div class="stat-info"><h3 id="officeTodayEntry">--:--</h3><p>Entrada Hoje</p></div>
                         </div>
                         <div class="stat-card-horizontal">
-                            <div class="stat-icon">
-                                <i class="fas fa-sign-out-alt"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3 id="officeTodayExit">--:--</h3>
-                                <p>Saída Hoje</p>
-                            </div>
+                            <div class="stat-icon"><i class="fas fa-sign-out-alt"></i></div>
+                            <div class="stat-info"><h3 id="officeTodayExit">--:--</h3><p>Saída Hoje</p></div>
                         </div>
                         <div class="stat-card-horizontal">
-                            <div class="stat-icon">
-                                <i class="fas fa-business-time"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3 id="officeMonthHours">0</h3>
-                                <p>Horas Mês</p>
-                            </div>
+                            <div class="stat-icon"><i class="fas fa-business-time"></i></div>
+                            <div class="stat-info"><h3 id="officeMonthHours">0</h3><p>Horas Mês</p></div>
                         </div>
                         <div class="stat-card-horizontal">
-                            <div class="stat-icon">
-                                <i class="fas fa-coffee"></i>
-                            </div>
-                            <div class="stat-info">
-                                <h3 id="officeStatus">Ausente</h3>
-                                <p>Estado</p>
-                            </div>
+                            <div class="stat-icon"><i class="fas fa-coffee"></i></div>
+                            <div class="stat-info"><h3 id="officeStatus">Ausente</h3><p>Estado</p></div>
                         </div>
                     </div>
 
@@ -2639,20 +1968,11 @@
                                 <th>Total</th>
                             </tr>
                         </thead>
-                        <tbody id="officeWeekRecords">
-                            <tr>
-                                <td>Seg 09/12</td>
-                                <td>08:30</td>
-                                <td>17:15</td>
-                                <td>1h</td>
-                                <td>7.75h</td>
-                            </tr>
-                        </tbody>
+                        <tbody id="officeWeekRecords"></tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- Meu Extrato -->
             <div class="dashboard-section" id="officeReportsSection">
                 <div class="content-card">
                     <div class="card-header">
@@ -2668,7 +1988,6 @@
                             <select id="officeReportMonth">
                                 <option value="12-2024">Dezembro 2024</option>
                                 <option value="11-2024">Novembro 2024</option>
-                                <option value="10-2024">Outubro 2024</option>
                             </select>
                         </div>
                     </div>
@@ -2689,22 +2008,7 @@
                                     <th>Extra</th>
                                 </tr>
                             </thead>
-                            <tbody id="officeReportBody">
-                                <tr>
-                                    <td>Seg 02/12</td>
-                                    <td>08:30</td>
-                                    <td>17:15</td>
-                                    <td>8.75h</td>
-                                    <td>0.75h</td>
-                                </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr style="background: #f8f9fa; font-weight: bold;">
-                                    <td colspan="3">TOTAL DO MÊS</td>
-                                    <td id="officeMonthTotal">160h</td>
-                                    <td id="officeMonthExtra">12h</td>
-                                </tr>
-                            </tfoot>
+                            <tbody id="officeReportBody"></tbody>
                         </table>
                         
                         <div class="report-actions">
@@ -2724,91 +2028,145 @@
         </div>
     </div>
 
+    <!-- ============ MODAL GESTÃO DE EMPREGADOS ============ -->
+    <div class="modal-employee" id="employeeModal">
+        <div class="modal-employee-content">
+            <span class="close-employee-modal">&times;</span>
+            <h2><i class="fas fa-user-plus"></i> Gestão de Empregados</h2>
+            <div class="employee-form">
+                <div class="form-row">
+                    <div class="form-group-dashboard">
+                        <label>Nome Completo</label>
+                        <input type="text" id="employeeName" placeholder="Nome do empregado">
+                    </div>
+                    <div class="form-group-dashboard">
+                        <label>Número de WhatsApp</label>
+                        <input type="tel" id="employeeWhatsApp" placeholder="+351 912 345 678">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-dashboard btn-success" onclick="saveEmployee()">
+                        <i class="fas fa-save"></i> Guardar Empregado
+                    </button>
+                    <button type="button" class="btn-dashboard btn-danger" onclick="closeEmployeeModal()">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h3><i class="fas fa-list"></i> Empregados da Equipa</h3>
+                <table class="data-table" style="margin-top: 15px;">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>WhatsApp</th>
+                            <th>Cargo</th>
+                            <th>Estado</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeesList"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ MODAL EXTRATO MENSAL ============ -->
+    <div class="modal-monthly-report" id="monthlyReportModal">
+        <div class="modal-monthly-report-content">
+            <span class="close-report-modal">&times;</span>
+            <h2><i class="fas fa-file-invoice"></i> Extrato Mensal - Horas Trabalhadas</h2>
+            
+            <div class="form-row">
+                <div class="form-group-dashboard">
+                    <label>Mês/Ano</label>
+                    <select id="reportMonth">
+                        <option value="12-2024">Dezembro 2024</option>
+                        <option value="11-2024">Novembro 2024</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="monthly-report">
+                <div class="report-header">
+                    <h4 id="reportTitle">Extrato de Horas - Dezembro 2024</h4>
+                    <span class="badge badge-success" id="totalHours">160 horas</span>
+                </div>
+                
+                <table class="time-sheet-table" id="timeSheetTable">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Entrada</th>
+                            <th>Saída</th>
+                            <th>Horas</th>
+                            <th>Extra</th>
+                        </tr>
+                    </thead>
+                    <tbody id="timeSheetBody"></tbody>
+                </table>
+                
+                <div class="report-actions">
+                    <button class="btn-dashboard btn-primary" onclick="printReport()">
+                        <i class="fas fa-print"></i> Imprimir (Drucker)
+                    </button>
+                    <button class="btn-dashboard btn-success" onclick="sendReportEmail()">
+                        <i class="fas fa-envelope"></i> Enviar por Email
+                    </button>
+                    <button class="btn-dashboard btn-whatsapp" onclick="sendReportWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Enviar WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ============ SISTEMA COMPLETO MAFC ============
-        
-        // Dados do Sistema
         const MAFCSystem = {
-            // Credenciais de acesso
             credentials: {
-                // PATRÃO/ADMIN - Acesso total de qualquer país
                 boss: [
                     { code: 'mafc', password: '1234', name: 'Administrador MAFC' },
-                    { code: 'patrao', password: 'admin123', name: 'Patrão Portugal' },
-                    { code: 'admin', password: 'mafc2024', name: 'Administrador Geral' }
+                    { code: 'patrao', password: 'admin123', name: 'Patrão Portugal' }
                 ],
-                
-                // CHEFES DE EQUIPA (15 equipas)
                 team: [
                     { code: 'equipa01', password: '1234', name: 'João Silva', team: 'Equipa 01 - Berlin' },
-                    { code: 'equipa02', password: '1234', name: 'Carlos Mendes', team: 'Equipa 02 - Hamburg' },
-                    { code: 'equipa03', password: '1234', name: 'Miguel Santos', team: 'Equipa 03 - Munich' }
+                    { code: 'equipa02', password: '1234', name: 'Carlos Mendes', team: 'Equipa 02 - Hamburg' }
                 ],
-                
-                // RESPONSÁVEL DE COMPRAS
                 purchase: [
-                    { code: 'compras', password: '1234', name: 'Responsável Compras' },
-                    { code: 'compras1', password: 'mafc123', name: 'Departamento Compras' }
+                    { code: 'compras', password: '1234', name: 'Responsável Compras' }
                 ],
-                
-                // ESCRITÓRIO
                 office: [
-                    { code: 'escritorio', password: '1234', name: 'Maria Silva', department: 'Administração' },
-                    { code: 'contabilidade', password: '1234', name: 'Ana Costa', department: 'Contabilidade' }
+                    { code: 'escritorio', password: '1234', name: 'Maria Silva', department: 'Administração' }
                 ]
             },
             
-            // Dados das equipas
             teams: [
-                { id: 1, name: 'Equipa 01 - Berlin', leader: 'João Silva', location: 'Berlim, Kreuzberg', workers: 5, status: 'working', gps: '52.5200° N, 13.4050° E' },
-                { id: 2, name: 'Equipa 02 - Hamburg', leader: 'Carlos Mendes', location: 'Hamburgo, Centro', workers: 3, status: 'working', gps: '53.5511° N, 9.9937° E' }
+                { id: 1, name: 'Equipa 01 - Berlin', leader: 'João Silva', location: 'Berlim, Kreuzberg', workers: 5, status: 'working', gps: '52.5200° N, 13.4050° E' }
             ],
             
-            // Empregados por equipa
             employees: {
                 'Equipa 01 - Berlin': [
-                    { id: 1, name: 'João Silva', whatsapp: '+351912345678', position: 'Chefe', salary: 2500, status: 'active', startDate: '2020-01-15' },
-                    { id: 2, name: 'Carlos Mendes', whatsapp: '+351912345679', position: 'Trabalhador', salary: 1200, status: 'active', startDate: '2022-03-10' },
-                    { id: 3, name: 'Miguel Santos', whatsapp: '+351912345680', position: 'Especialista', salary: 1800, status: 'active', startDate: '2021-06-22' }
-                ],
-                'Equipa 02 - Hamburg': [
-                    { id: 4, name: 'António Oliveira', whatsapp: '+351912345681', position: 'Chefe', salary: 2500, status: 'active', startDate: '2019-11-05' }
+                    { id: 1, name: 'João Silva', whatsapp: '+351912345678', position: 'Chefe', salary: 2500, status: 'active', startDate: '2020-01-15' }
                 ]
             },
             
-            // Registos de horas
             timeRecords: {
                 'Equipa 01 - Berlin': {},
-                'Equipa 02 - Hamburg': {},
                 'Escritório': {}
             },
             
-            // Materiais
             materials: {
                 construction: [
-                    { id: 1, name: 'Cimento', unit: 'sacos', averagePrice: 5 },
-                    { id: 2, name: 'Areia', unit: 'm³', averagePrice: 25 },
-                    { id: 3, name: 'Brita', unit: 'm³', averagePrice: 30 }
-                ],
-                machines: [
-                    { id: 4, name: 'Retroescavadora', unit: 'horas', averagePrice: 60 }
-                ],
-                tools: [
-                    { id: 5, name: 'Martelo Pneumático', unit: 'unidades', averagePrice: 250 }
-                ],
-                consumables: [
-                    { id: 6, name: 'Gasóleo', unit: 'litros', averagePrice: 1.6 }
+                    { id: 1, name: 'Cimento', unit: 'sacos', averagePrice: 5 }
                 ]
             },
             
-            // Pedidos de material
             materialRequests: [],
-            
-            // Compras aprovadas
             purchases: []
         };
         
-        // Usuário atual
         let currentUser = null;
         let editingEmployeeId = null;
         
@@ -2837,7 +2195,6 @@
             
             let userFound = null;
             
-            // Verificar credenciais baseado no tipo de acesso
             if (role === 'boss') {
                 userFound = MAFCSystem.credentials.boss.find(u => 
                     u.code === username && u.password === password
@@ -2868,7 +2225,6 @@
             document.getElementById('loginModal').style.display = 'none';
             document.getElementById('publicWebsite').style.display = 'none';
             
-            // Mostrar dashboard apropriado
             if (currentUser.role === 'boss') {
                 showBossDashboard();
             } else if (currentUser.role === 'team') {
@@ -2879,7 +2235,6 @@
                 showOfficeDashboard();
             }
             
-            // Inicializar dados
             initializeDashboard();
         }
         
@@ -2887,16 +2242,11 @@
         function showBossDashboard() {
             document.getElementById('bossDashboard').style.display = 'block';
             document.getElementById('bossUserName').textContent = currentUser.name;
-            
-            // Atualizar menu ativo
             updateActiveMenu('boss');
-            
-            // Carregar dados
             loadBossData();
         }
         
         function loadBossData() {
-            // Carregar equipas
             const teamsTable = document.getElementById('bossTeamsTable');
             teamsTable.innerHTML = '';
             
@@ -2917,7 +2267,6 @@
                 teamsTable.innerHTML += row;
             });
             
-            // Carregar todas as equipas
             const allTeamsTable = document.getElementById('allTeamsTable');
             allTeamsTable.innerHTML = '';
             
@@ -2934,9 +2283,6 @@
                             <button class="btn-dashboard btn-primary btn-sm" onclick="viewTeamDetails(${team.id})">
                                 <i class="fas fa-eye"></i>
                             </button>
-                            <button class="btn-dashboard btn-warning btn-sm" onclick="editTeam(${team.id})">
-                                <i class="fas fa-edit"></i>
-                            </button>
                         </td>
                     </tr>
                 `;
@@ -2948,34 +2294,23 @@
         function showTeamDashboard() {
             document.getElementById('teamDashboard').style.display = 'block';
             document.getElementById('teamUserName').textContent = currentUser.team || currentUser.name;
-            
-            // Atualizar menu ativo
             updateActiveMenu('team');
-            
-            // Carregar dados da equipa
             loadTeamData();
         }
         
         function loadTeamData() {
-            // Encontrar dados da equipa
             const teamData = MAFCSystem.teams.find(t => t.name === currentUser.team);
             
             if (teamData) {
-                // Atualizar contadores
                 const employees = MAFCSystem.employees[currentUser.team] || [];
                 document.getElementById('teamWorkersCount').textContent = employees.length;
-                document.getElementById('teamHoursToday').textContent = '4.5';
                 document.getElementById('teamPendingMaterials').textContent = '3';
                 document.getElementById('teamStatus').textContent = teamData.status === 'working' ? 'Online' : 'Offline';
                 
-                // Atualizar GPS
                 document.getElementById('gpsLat').textContent = teamData.gps.split(',')[0];
                 document.getElementById('gpsLng').textContent = teamData.gps.split(',')[1];
                 
-                // Carregar lista de empregados
                 loadEmployeesList();
-                
-                // Carregar registos do dia
                 loadDailyTimeRecords();
             }
         }
@@ -2986,27 +2321,21 @@
             const teamEmployeesTable = document.getElementById('teamEmployeesTable');
             const teamReportEmployee = document.getElementById('teamReportEmployee');
             
-            // Limpar selects
             workerSelect.innerHTML = '<option value="">Selecione um trabalhador</option>';
             teamReportEmployee.innerHTML = '<option value="all">Todos os Empregados</option>';
-            
-            // Limpar tabela
             teamEmployeesTable.innerHTML = '';
             
             employees.forEach(emp => {
-                // Adicionar ao select de trabalhadores
                 const option = document.createElement('option');
                 option.value = emp.id;
                 option.textContent = emp.name;
                 workerSelect.appendChild(option);
                 
-                // Adicionar ao select de relatórios
                 const reportOption = document.createElement('option');
                 reportOption.value = emp.id;
                 reportOption.textContent = emp.name;
                 teamReportEmployee.appendChild(reportOption);
                 
-                // Adicionar à tabela
                 const statusBadge = emp.status === 'active' ? 
                     '<span class="badge badge-success">Ativo</span>' :
                     '<span class="badge badge-danger">Inativo</span>';
@@ -3021,9 +2350,6 @@
                         <td>
                             <button class="btn-dashboard btn-warning btn-sm" onclick="editEmployee(${emp.id})">
                                 <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-dashboard btn-danger btn-sm" onclick="deleteEmployee(${emp.id})">
-                                <i class="fas fa-trash"></i>
                             </button>
                             <button class="btn-dashboard btn-success btn-sm" onclick="viewEmployeeReport(${emp.id})">
                                 <i class="fas fa-file-alt"></i>
@@ -3069,15 +2395,10 @@
             editingEmployeeId = null;
             document.getElementById('employeeModal').style.display = 'flex';
             
-            // Limpar formulário
             document.getElementById('employeeName').value = '';
             document.getElementById('employeeWhatsApp').value = '+351 ';
-            document.getElementById('employeePosition').value = 'worker';
-            document.getElementById('employeeSalary').value = '1200';
             document.getElementById('employeeStartDate').value = new Date().toISOString().split('T')[0];
-            document.getElementById('employeeStatus').value = 'active';
             
-            // Carregar lista de empregados
             loadModalEmployeesList();
         }
         
@@ -3106,9 +2427,6 @@
                             <button class="btn-dashboard btn-warning btn-sm" onclick="editEmployee(${emp.id})">
                                 <i class="fas fa-edit"></i>
                             </button>
-                            <button class="btn-dashboard btn-danger btn-sm" onclick="deleteEmployee(${emp.id})">
-                                <i class="fas fa-trash"></i>
-                            </button>
                         </td>
                     </tr>
                 `;
@@ -3119,10 +2437,7 @@
         function saveEmployee() {
             const name = document.getElementById('employeeName').value;
             const whatsapp = document.getElementById('employeeWhatsApp').value;
-            const position = document.getElementById('employeePosition').value;
-            const salary = document.getElementById('employeeSalary').value;
             const startDate = document.getElementById('employeeStartDate').value;
-            const status = document.getElementById('employeeStatus').value;
             
             if (!name || !whatsapp) {
                 alert('Por favor, preencha pelo menos o nome e WhatsApp!');
@@ -3134,21 +2449,16 @@
             }
             
             if (editingEmployeeId) {
-                // Editar empregado existente
                 const index = MAFCSystem.employees[currentUser.team].findIndex(e => e.id === editingEmployeeId);
                 if (index !== -1) {
                     MAFCSystem.employees[currentUser.team][index] = {
                         ...MAFCSystem.employees[currentUser.team][index],
                         name,
                         whatsapp,
-                        position,
-                        salary: parseInt(salary),
-                        startDate,
-                        status
+                        startDate
                     };
                 }
             } else {
-                // Adicionar novo empregado
                 const newId = MAFCSystem.employees[currentUser.team].length > 0 ? 
                     Math.max(...MAFCSystem.employees[currentUser.team].map(e => e.id)) + 1 : 1;
                 
@@ -3156,21 +2466,19 @@
                     id: newId,
                     name,
                     whatsapp,
-                    position,
-                    salary: parseInt(salary),
+                    position: 'Trabalhador',
+                    salary: 1200,
                     startDate,
-                    status
+                    status: 'active'
                 });
             }
             
             alert(`✅ Empregado ${editingEmployeeId ? 'editado' : 'adicionado'} com sucesso!`);
             
-            // Atualizar listas
             loadEmployeesList();
             loadModalEmployeesList();
             loadDailyTimeRecords();
             
-            // Fechar modal
             closeEmployeeModal();
         }
         
@@ -3182,72 +2490,12 @@
                 editingEmployeeId = id;
                 document.getElementById('employeeModal').style.display = 'flex';
                 
-                // Preencher formulário
                 document.getElementById('employeeName').value = employee.name;
                 document.getElementById('employeeWhatsApp').value = employee.whatsapp;
-                document.getElementById('employeePosition').value = employee.position;
-                document.getElementById('employeeSalary').value = employee.salary;
                 document.getElementById('employeeStartDate').value = employee.startDate;
-                document.getElementById('employeeStatus').value = employee.status;
                 
-                // Carregar lista de empregados
                 loadModalEmployeesList();
             }
-        }
-        
-        function deleteEmployee(id) {
-            if (confirm('Tem certeza que deseja remover este empregado?')) {
-                MAFCSystem.employees[currentUser.team] = MAFCSystem.employees[currentUser.team].filter(e => e.id !== id);
-                
-                alert('✅ Empregado removido com sucesso!');
-                
-                // Atualizar listas
-                loadEmployeesList();
-                loadModalEmployeesList();
-                loadDailyTimeRecords();
-            }
-        }
-        
-        function searchEmployees() {
-            const searchTerm = document.getElementById('searchEmployee').value.toLowerCase();
-            const filterStatus = document.getElementById('filterEmployeeStatus').value;
-            const employees = MAFCSystem.employees[currentUser.team] || [];
-            
-            const filtered = employees.filter(emp => {
-                const matchesSearch = emp.name.toLowerCase().includes(searchTerm) || 
-                                     emp.whatsapp.includes(searchTerm) ||
-                                     emp.position.toLowerCase().includes(searchTerm);
-                const matchesStatus = filterStatus === 'all' || emp.status === filterStatus;
-                return matchesSearch && matchesStatus;
-            });
-            
-            const table = document.getElementById('teamEmployeesTable');
-            table.innerHTML = '';
-            
-            filtered.forEach(emp => {
-                const statusBadge = emp.status === 'active' ? 
-                    '<span class="badge badge-success">Ativo</span>' :
-                    '<span class="badge badge-danger">Inativo</span>';
-                
-                const row = `
-                    <tr>
-                        <td>${emp.name}</td>
-                        <td>${emp.whatsapp}</td>
-                        <td>${emp.position}</td>
-                        <td>${emp.salary}€</td>
-                        <td>${statusBadge}</td>
-                        <td>
-                            <button class="btn-dashboard btn-warning btn-sm" onclick="editEmployee(${emp.id})">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn-dashboard btn-danger btn-sm" onclick="deleteEmployee(${emp.id})">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    </tr>
-                `;
-                table.innerHTML += row;
-            });
         }
         
         // ============ CONTROLO DE HORAS INDIVIDUAL ============
@@ -3293,7 +2541,6 @@
             const timeString = time.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
             const dateString = time.toLocaleDateString('pt-PT');
             
-            // Inicializar registos se necessário
             if (!MAFCSystem.timeRecords[currentUser.team]) {
                 MAFCSystem.timeRecords[currentUser.team] = {};
             }
@@ -3309,9 +2556,6 @@
                 };
                 
                 alert(`✅ Entrada registada para ${employee.name} às ${timeString}`);
-                
-                // Enviar WhatsApp de confirmação
-                sendTimeConfirmationWhatsApp(employee.whatsapp, 'entrada', timeString);
             } else {
                 const empRecord = MAFCSystem.timeRecords[currentUser.team][dateString][selectedId] || {};
                 
@@ -3320,7 +2564,6 @@
                     return;
                 }
                 
-                // Calcular horas trabalhadas
                 const entryTime = empRecord.entry;
                 const [entryHours, entryMinutes] = entryTime.split(':').map(Number);
                 const [exitHours, exitMinutes] = timeString.split(':').map(Number);
@@ -3332,7 +2575,6 @@
                 const minutes = totalMinutes % 60;
                 const totalTime = `${hours}h${minutes > 0 ? `${minutes}m` : ''}`;
                 
-                // Calcular horas extra (acima de 8 horas)
                 const normalHours = 8 * 60;
                 const extraMinutes = Math.max(0, totalMinutes - normalHours);
                 const extraHours = extraMinutes > 0 ? `${Math.floor(extraMinutes / 60)}h${extraMinutes % 60}m` : '0';
@@ -3345,24 +2587,9 @@
                 };
                 
                 alert(`✅ Saída registada para ${employee.name} às ${timeString}\n\nHoras trabalhadas: ${totalTime}\nHoras extra: ${extraHours}`);
-                
-                // Enviar WhatsApp de confirmação
-                sendTimeConfirmationWhatsApp(employee.whatsapp, 'saída', timeString, totalTime, extraHours);
             }
             
-            // Atualizar tabela
             loadDailyTimeRecords();
-        }
-        
-        function sendTimeConfirmationWhatsApp(whatsapp, type, time, total = '', extra = '') {
-            const message = type === 'entrada' ? 
-                `✅ Entrada registada às ${time} - MAFC Team Control` :
-                `✅ Saída registada às ${time}\nHoras: ${total}\nExtra: ${extra} - MAFC Team Control`;
-            
-            const whatsappUrl = `https://wa.me/${whatsapp.replace('+', '')}?text=${encodeURIComponent(message)}`;
-            
-            // Abrir WhatsApp em nova aba (simulação)
-            window.open(whatsappUrl, '_blank');
         }
         
         function sendWhatsAppReminder() {
@@ -3429,7 +2656,6 @@
             const [month, year] = monthSelect.value.split('-');
             const employeeId = employeeSelect.value === 'all' ? null : parseInt(employeeSelect.value);
             
-            // Encontrar empregado
             let employeeName = 'Todos os Empregados';
             if (employeeId) {
                 const employees = MAFCSystem.employees[currentUser.team] || [];
@@ -3439,7 +2665,6 @@
                 }
             }
             
-            // Atualizar título
             const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 
                                'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
             const monthName = monthNames[parseInt(month) - 1];
@@ -3447,14 +2672,12 @@
             document.getElementById('teamReportTitle').textContent = 
                 `Extrato - ${employeeName} | ${monthName} ${year}`;
             
-            // Gerar dados do extrato (simulado)
             const timeSheetBody = document.getElementById('teamTimeSheetBody');
             timeSheetBody.innerHTML = '';
             
             let totalHours = 0;
             let totalExtra = 0;
             
-            // Simular 20 dias de trabalho
             for (let day = 1; day <= 20; day++) {
                 const date = `${day.toString().padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
                 const hours = 8 + Math.random();
@@ -3475,26 +2698,12 @@
                 timeSheetBody.innerHTML += row;
             }
             
-            // Atualizar totais
             document.getElementById('teamTotalHours').textContent = 
                 `${totalHours.toFixed(1)}h (${totalExtra.toFixed(1)} extra)`;
-            
-            // Atualizar também no modal
-            if (document.getElementById('reportTitle')) {
-                document.getElementById('reportTitle').textContent = 
-                    `Extrato - ${employeeName} | ${monthName} ${year}`;
-                document.getElementById('totalHours').textContent = 
-                    `${totalHours.toFixed(1)} horas`;
-                
-                // Preencher tabela do modal
-                const modalBody = document.getElementById('timeSheetBody');
-                modalBody.innerHTML = timeSheetBody.innerHTML;
-            }
         }
         
         function printTeamReport() {
             alert('🖨️ Preparando para impressão...\n\nO relatório será enviado para a impressora padrão (Drucker).');
-            // Em produção, aqui seria window.print()
         }
         
         function sendTeamReportWhatsApp() {
@@ -3503,7 +2712,6 @@
             
             const message = `📊 ${reportTitle}\n\nTotal de horas: ${totalHours}\n\nEnviado do sistema MAFC Team Control`;
             
-            // Aqui seria o WhatsApp da contabilidade
             const whatsappUrl = `https://wa.me/351123456789?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
@@ -3537,49 +2745,35 @@
             const materialId = materialSelect.value;
             const materialText = materialSelect.options[materialSelect.selectedIndex].text;
             const quantity = document.getElementById('materialQuantity').value;
-            const unit = document.getElementById('materialUnit').value;
-            const urgency = document.getElementById('materialUrgency').value;
-            const notes = document.getElementById('materialNotes').value;
             
             if (!materialId || !quantity) {
                 alert('Por favor, selecione um material e quantidade!');
                 return;
             }
             
-            // Criar pedido
             const request = {
                 id: Date.now(),
                 team: currentUser.team,
                 material: materialText.split(' (')[0],
                 quantity: quantity,
-                unit: unit,
-                urgency: urgency,
-                notes: notes,
                 date: new Date().toLocaleDateString('pt-PT'),
                 status: 'pending',
                 requestedBy: currentUser.name
             };
             
-            // Adicionar ao sistema
             MAFCSystem.materialRequests.push(request);
             
-            // Atualizar contador
             const pendingCount = document.getElementById('teamPendingMaterials');
             pendingCount.textContent = parseInt(pendingCount.textContent) + 1;
             
-            // Adicionar à tabela
             const table = document.getElementById('teamMaterialRequests');
-            const urgencyBadge = urgency === 'critical' ? 'badge-danger' : 
-                                urgency === 'urgent' ? 'badge-warning' : 'badge-info';
-            const urgencyText = urgency === 'critical' ? 'CRÍTICO' :
-                               urgency === 'urgent' ? 'Urgente' : 'Normal';
             
             const row = `
                 <tr>
                     <td>${materialText.split(' (')[0]}</td>
-                    <td>${quantity} ${unit}</td>
+                    <td>${quantity}</td>
                     <td>${request.date}</td>
-                    <td><span class="badge ${urgencyBadge}">${urgencyText}</span></td>
+                    <td><span class="badge badge-info">Pendente</span></td>
                     <td>
                         <button class="btn-dashboard btn-whatsapp btn-sm" onclick="followUpRequestWhatsApp(${request.id})">
                             <i class="fab fa-whatsapp"></i>
@@ -3590,58 +2784,31 @@
             
             table.innerHTML = row + table.innerHTML;
             
-            alert(`✅ Pedido enviado para o Departamento de Compras!\n\nMaterial: ${materialText}\nQuantidade: ${quantity} ${unit}\nUrgência: ${urgencyText}`);
-            
-            // Limpar formulário
-            document.getElementById('materialQuantity').value = 1;
-            document.getElementById('materialNotes').value = '';
+            alert(`✅ Pedido enviado para o Departamento de Compras!\n\nMaterial: ${materialText}\nQuantidade: ${quantity}`);
         }
         
         function submitMaterialRequestWhatsApp() {
-            // Primeiro enviar pelo sistema
             submitMaterialRequest();
             
-            // Depois abrir WhatsApp para follow-up
             const materialSelect = document.getElementById('materialSelect');
             const materialText = materialSelect.options[materialSelect.selectedIndex].text;
             const quantity = document.getElementById('materialQuantity').value;
-            const unit = document.getElementById('materialUnit').value;
-            const urgency = document.getElementById('materialUrgency').value;
             
-            const urgencyText = urgency === 'critical' ? 'URGENTE - CRÍTICO' :
-                               urgency === 'urgent' ? 'Urgente' : 'Normal';
+            const message = `🛒 PEDIDO DE MATERIAL - ${currentUser.team}\n\nMaterial: ${materialText}\nQuantidade: ${quantity}\n\nPedido enviado via sistema MAFC.`;
             
-            const message = `🛒 PEDIDO DE MATERIAL - ${currentUser.team}\n\nMaterial: ${materialText}\nQuantidade: ${quantity} ${unit}\nUrgência: ${urgencyText}\n\nPedido enviado via sistema MAFC.`;
-            
-            // WhatsApp do departamento de compras
             const whatsappUrl = `https://wa.me/351123456789?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
-        }
-        
-        function followUpRequestWhatsApp(requestId) {
-            const request = MAFCSystem.materialRequests.find(r => r.id === requestId);
-            if (request) {
-                const message = `📦 FOLLOW-UP PEDIDO #${requestId}\n\nEquipa: ${request.team}\nMaterial: ${request.material}\nQuantidade: ${request.quantity} ${request.unit}\nData: ${request.date}\n\nPor favor, atualize o estado deste pedido.`;
-                
-                const whatsappUrl = `https://wa.me/351123456789?text=${encodeURIComponent(message)}`;
-                window.open(whatsappUrl, '_blank');
-            }
         }
         
         // ============ DASHBOARD DE COMPRAS ============
         function showPurchaseDashboard() {
             document.getElementById('purchaseDashboard').style.display = 'block';
             document.getElementById('purchaseUserName').textContent = currentUser.name;
-            
-            // Atualizar menu ativo
             updateActiveMenu('purchase');
-            
-            // Carregar dados
             loadPurchaseData();
         }
         
         function loadPurchaseData() {
-            // Atualizar contadores
             document.getElementById('pendingCount').textContent = MAFCSystem.materialRequests.length;
             document.getElementById('approvedCount').textContent = MAFCSystem.purchases.length;
             document.getElementById('monthBudget').textContent = '18.5K';
@@ -3651,16 +2818,15 @@
         function contactSupplierWhatsApp(requestId) {
             const request = MAFCSystem.materialRequests.find(r => r.id === requestId);
             if (request) {
-                const message = `📞 CONTATO FORNECEDOR - MAFC\n\nNecessitamos de:\nMaterial: ${request.material}\nQuantidade: ${request.quantity} ${request.unit}\nUrgência: ${request.urgency}\n\nPor favor, envie orçamento e prazo de entrega.`;
+                const message = `📞 CONTATO FORNECEDOR - MAFC\n\nNecessitamos de:\nMaterial: ${request.material}\nQuantidade: ${request.quantity}\n\nPor favor, envie orçamento.`;
                 
-                // Simulação - abrir WhatsApp genérico
                 const whatsappUrl = `https://wa.me/351123456789?text=${encodeURIComponent(message)}`;
                 window.open(whatsappUrl, '_blank');
             }
         }
         
         function contactTeamWhatsApp(teamName) {
-            const message = `📞 DEPARTAMENTO DE COMPRAS - MAFC\n\nOlá ${teamName},\n\nRecebemos o seu pedido de material.\nEm breve entraremos em contacto com atualizações.\n\nObrigado!`;
+            const message = `📞 DEPARTAMENTO DE COMPRAS - MAFC\n\nOlá ${teamName},\n\nRecebemos o seu pedido de material.\nEm breve entraremos em contacto.\n\nObrigado!`;
             
             const whatsappUrl = `https://wa.me/351123456789?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
@@ -3670,21 +2836,14 @@
         function showOfficeDashboard() {
             document.getElementById('officeDashboard').style.display = 'block';
             document.getElementById('officeUserName').textContent = currentUser.name;
-            
-            // Atualizar menu ativo
             updateActiveMenu('office');
-            
-            // Carregar dados
             loadOfficeData();
         }
         
         function loadOfficeData() {
-            // Inicializar registos do escritório
             if (!MAFCSystem.timeRecords['Escritório']) {
                 MAFCSystem.timeRecords['Escritório'] = {};
             }
-            
-            // Atualizar registos do dia
             updateOfficeTodayRecords();
         }
         
@@ -3724,7 +2883,6 @@
             let totalMinutes = (exitHours * 60 + exitMinutes) - (entryHours * 60 + entryMinutes);
             if (totalMinutes < 0) totalMinutes += 24 * 60;
             
-            // Subtrair 1 hora de pausa
             totalMinutes = Math.max(0, totalMinutes - 60);
             
             const hours = Math.floor(totalMinutes / 60);
@@ -3739,10 +2897,6 @@
             
             alert(`✅ Saída registada às ${timeString}\n\nHoras trabalhadas: ${totalTime} (com 1h de pausa)`);
             updateOfficeTodayRecords();
-        }
-        
-        function officePause() {
-            alert('⏸️ Pausa registada\n\n1 hora de pausa será deduzida automaticamente no cálculo final.');
         }
         
         function updateOfficeTodayRecords() {
@@ -3766,18 +2920,16 @@
             document.getElementById('officeReportTitle').textContent = 
                 `Extrato - ${currentUser.name} | ${monthName} ${year}`;
             
-            // Gerar dados do extrato (simulado)
             const tableBody = document.getElementById('officeReportBody');
             tableBody.innerHTML = '';
             
             let totalHours = 0;
             let totalExtra = 0;
             
-            // Simular 20 dias úteis
             for (let day = 1; day <= 20; day++) {
                 const date = `${day.toString().padStart(2, '0')}/${month.padStart(2, '0')}/${year}`;
-                const hours = 8 + Math.random() * 0.5; // 8-8.5 horas
-                const extra = Math.random() > 0.8 ? Math.random() * 1.5 : 0; // 0-1.5 horas extra
+                const hours = 8 + Math.random() * 0.5;
+                const extra = Math.random() > 0.8 ? Math.random() * 1.5 : 0;
                 
                 totalHours += hours;
                 totalExtra += extra;
@@ -3794,7 +2946,6 @@
                 tableBody.innerHTML += row;
             }
             
-            // Atualizar totais
             document.getElementById('officeMonthTotal').textContent = totalHours.toFixed(1) + 'h';
             document.getElementById('officeMonthExtra').textContent = totalExtra.toFixed(1) + 'h';
             document.getElementById('officeTotalHours').textContent = totalHours.toFixed(1) + ' horas';
@@ -3803,34 +2954,20 @@
         
         function printOfficeReport() {
             alert('🖨️ Preparando para impressão...\n\nO extrato será enviado para a impressora padrão (Drucker).');
-            // Em produção: window.print()
         }
         
         function emailOfficeReport() {
             const reportTitle = document.getElementById('officeReportTitle').textContent;
             const totalHours = document.getElementById('officeMonthTotal').textContent;
-            const extraHours = document.getElementById('officeMonthExtra').textContent;
             
             const subject = encodeURIComponent(`Extrato Horas - ${currentUser.name}`);
-            const body = encodeURIComponent(`Prezada Contabilidade,\n\nSegue extrato de horas:\n\n${reportTitle}\nTotal horas: ${totalHours}\nHoras extra: ${extraHours}\n\nAtenciosamente,\n${currentUser.name}`);
+            const body = encodeURIComponent(`Prezada Contabilidade,\n\nSegue extrato de horas:\n\n${reportTitle}\nTotal horas: ${totalHours}\n\nAtenciosamente,\n${currentUser.name}`);
             
             window.open(`mailto:contabilidade@mafc-filho.pt?subject=${subject}&body=${body}`);
         }
         
-        function whatsAppOfficeReport() {
-            const reportTitle = document.getElementById('officeReportTitle').textContent;
-            const totalHours = document.getElementById('officeMonthTotal').textContent;
-            const extraHours = document.getElementById('officeMonthExtra').textContent;
-            
-            const message = `📊 ${reportTitle}\n\nTotal horas: ${totalHours}\nHoras extra: ${extraHours}\n\nEnviado por: ${currentUser.name}`;
-            
-            const whatsappUrl = `https://wa.me/351123456789?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        }
-        
         // ============ FUNÇÕES COMUNS ============
         function updateActiveMenu(dashboard) {
-            // Remover active de todos os menus do dashboard atual
             const currentDashboard = document.querySelector(`.${dashboard}-dashboard`);
             if (currentDashboard) {
                 currentDashboard.querySelectorAll('.menu-item').forEach(item => {
@@ -3841,7 +2978,6 @@
                     section.classList.remove('active');
                 });
                 
-                // Ativar primeira seção
                 const firstMenuItem = currentDashboard.querySelector('.menu-item');
                 if (firstMenuItem) {
                     firstMenuItem.classList.add('active');
@@ -3852,7 +2988,6 @@
             }
         }
         
-        // Navegação do menu
         document.querySelectorAll('.menu-item').forEach(item => {
             item.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -3860,20 +2995,16 @@
                 const dashboard = this.closest('.dashboard');
                 const sectionId = this.getAttribute('data-section') + 'Section';
                 
-                // Remover active de todos os itens do mesmo dashboard
                 dashboard.querySelectorAll('.menu-item').forEach(i => {
                     i.classList.remove('active');
                 });
                 
-                // Adicionar active ao item clicado
                 this.classList.add('active');
                 
-                // Esconder todas as seções do dashboard
                 dashboard.querySelectorAll('.dashboard-section').forEach(section => {
                     section.classList.remove('active');
                 });
                 
-                // Mostrar seção selecionada
                 const section = document.getElementById(sectionId);
                 if (section) section.classList.add('active');
             });
@@ -3881,7 +3012,7 @@
         
         // ============ FUNÇÕES DO PATRÃO ============
         function refreshLocations() {
-            alert('📍 Localizações atualizadas em tempo real!\n\nTodas as equipas na Alemanha foram localizadas.');
+            alert('📍 Localizações atualizadas em tempo real!');
         }
         
         function viewAllRequests() {
@@ -3889,59 +3020,42 @@
         }
         
         function addNewTeam() {
-            alert('👷 Adicionar nova equipa - Funcionalidade em desenvolvimento...');
+            alert('👷 Adicionar nova equipa...');
         }
         
         function viewTeamDetails(teamId) {
             const team = MAFCSystem.teams.find(t => t.id === teamId);
             if (team) {
-                alert(`🔍 Detalhes da Equipa:\n\nNome: ${team.name}\nChefe: ${team.leader}\nLocalização: ${team.location}\nTrabalhadores: ${team.workers}\nGPS: ${team.gps}\nEstado: ${team.status}`);
+                alert(`🔍 Detalhes da Equipa:\n\nNome: ${team.name}\nChefe: ${team.leader}\nLocalização: ${team.location}\nTrabalhadores: ${team.workers}`);
             }
         }
         
         function exportHours() {
-            alert('📊 Exportando registos de horas para Excel...\n\nFicheiro gerado: horas_trabalhadas_mafc.xlsx');
+            alert('📊 Exportando registos de horas para Excel...');
         }
         
         function simulateClockIn() {
             const time = new Date().toLocaleTimeString('pt-PT');
-            alert(`⏰ Simulação de entrada registada às ${time}\n\nO patrão em Portugal pode ver em tempo real as entradas na Alemanha.`);
-        }
-        
-        function simulateClockOut() {
-            const time = new Date().toLocaleTimeString('pt-PT');
-            alert(`⏰ Simulação de saída registada às ${time}\n\nHoras calculadas automaticamente para banco de horas.`);
+            alert(`⏰ Simulação de entrada registada às ${time}`);
         }
         
         function exportToAccounting() {
-            alert('💰 Exportando dados para contabilidade...\n\nBanco de horas (>160h/mês) exportado para ficheiro contabilístico.');
-        }
-        
-        function approveRequest(requestId) {
-            alert(`✅ Pedido #${requestId} aprovado pelo patrão!\n\nMaterial será comprado pelo departamento de compras.`);
+            alert('💰 Exportando dados para contabilidade...');
         }
         
         // ============ FUNÇÕES DE COMPRAS ============
         function processAllUrgent() {
-            alert('⚡ Processando todos os pedidos urgentes...\n\nPedidos críticos serão priorizados.');
+            alert('⚡ Processando todos os pedidos urgentes...');
         }
         
         function approvePurchase(requestId) {
-            alert(`✅ Pedido #${requestId} aprovado!\n\nPor favor, insira os dados do fornecedor e encomenda.`);
-            
-            // Simular aprovação
-            const supplier = prompt('Nome do fornecedor:');
-            const orderNumber = prompt('Número da encomenda:');
-            
-            if (supplier && orderNumber) {
-                alert(`📦 Encomenda criada!\n\nFornecedor: ${supplier}\nNº Encomenda: ${orderNumber}\n\nA equipa será notificada.`);
-            }
+            alert(`✅ Pedido #${requestId} aprovado!`);
         }
         
         function rejectPurchase(requestId) {
             const reason = prompt('Motivo da recusa:');
             if (reason) {
-                alert(`❌ Pedido #${requestId} recusado!\n\nMotivo: ${reason}\n\nO chefe de equipa será notificado.`);
+                alert(`❌ Pedido #${requestId} recusado!\n\nMotivo: ${reason}`);
             }
         }
         
@@ -3951,39 +3065,35 @@
         
         function approveAll() {
             if (confirm('Tem certeza que deseja aprovar TODOS os pedidos pendentes?')) {
-                alert('✅ Todos os pedidos foram aprovados!\n\nSerão criadas encomendas automáticas.');
+                alert('✅ Todos os pedidos foram aprovados!');
             }
         }
         
         function rejectAll() {
             if (confirm('Tem certeza que deseja recusar TODOS os pedidos pendentes?')) {
-                alert('❌ Todos os pedidos foram recusados!\n\nOs chefes de equipa serão notificados.');
+                alert('❌ Todos os pedidos foram recusados!');
             }
         }
         
         function registerNewOrder() {
-            alert('📝 Registar nova encomenda com fornecedor...');
+            alert('📝 Registar nova encomenda...');
         }
         
         // ============ FUNÇÕES GERAIS ============
         function initializeDashboard() {
-            // Atualizar relógios em tempo real
             updateClocks();
             setInterval(updateClocks, 1000);
             
-            // Carregar materiais para chefe de equipa
             if (currentUser.role === 'team') {
                 loadMaterialsByCategory('construction');
             }
             
-            // Adicionar event listeners para fechar modais
             document.querySelectorAll('.close-employee-modal, .close-report-modal').forEach(closeBtn => {
                 closeBtn.addEventListener('click', function() {
                     this.closest('.modal-employee, .modal-monthly-report').style.display = 'none';
                 });
             });
             
-            // Fechar modais ao clicar fora
             window.addEventListener('click', function(e) {
                 if (e.target.classList.contains('modal-employee')) {
                     document.getElementById('employeeModal').style.display = 'none';
@@ -3999,35 +3109,28 @@
             const timeString = now.toLocaleTimeString('pt-PT');
             const timeShort = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
             
-            // Atualizar todos os relógios
             document.querySelectorAll('#bossCurrentTime, #teamCurrentTime, #purchaseCurrentTime, #officeCurrentTime').forEach(el => {
                 if (el) el.textContent = timeShort;
             });
             
-            // Atualizar relógios grandes
             document.querySelectorAll('#bossCurrentTimeFull, #teamClock, #officeClock').forEach(el => {
                 if (el) el.textContent = timeString;
             });
         }
         
-        // Logout
         document.querySelectorAll('.logout-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 if (confirm('Tem certeza que deseja sair do sistema?')) {
-                    // Esconder todos os dashboards
                     document.querySelectorAll('.dashboard').forEach(d => {
                         d.style.display = 'none';
                     });
                     
-                    // Mostrar website público
                     document.getElementById('publicWebsite').style.display = 'block';
                     
-                    // Fechar todos os modais
                     document.querySelectorAll('.modal, .modal-employee, .modal-monthly-report').forEach(modal => {
                         modal.style.display = 'none';
                     });
                     
-                    // Limpar formulário de login
                     document.getElementById('loginForm').reset();
                     currentUser = null;
                     editingEmployeeId = null;
@@ -4035,13 +3138,10 @@
             });
         });
         
-        // Inicializar sistema
         updateClocks();
         initializeDashboard();
         
-        // Adicionar event listeners para modais
         window.addEventListener('load', () => {
-            // Fechar modais com ESC
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     document.querySelectorAll('.modal, .modal-employee, .modal-monthly-report').forEach(modal => {
