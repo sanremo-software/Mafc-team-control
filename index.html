@@ -1099,6 +1099,38 @@
             gap: 10px;
         }
 
+        /* ESTILOS PARA SISTEMA ESCRITÓRIO NOS OUTROS DASHBOARDS */
+        .team-dashboard .office-section {
+            border-left: 5px solid var(--team);
+        }
+
+        .purchase-dashboard .office-section {
+            border-left: 5px solid var(--purchase);
+        }
+
+        /* Cards específicos para escritório */
+        .office-card {
+            background: linear-gradient(135deg, #f8f9fa, #ffffff);
+            border: 2px solid #e9ecef;
+        }
+
+        .office-card .card-header {
+            background: rgba(255, 255, 255, 0.9);
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        /* Botões específicos para escritório */
+        .btn-office {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+            border: none;
+        }
+
+        .btn-office:hover {
+            background: linear-gradient(135deg, #495057, #343a40);
+            transform: translateY(-2px);
+        }
+
         /* Responsividade */
         @media (max-width: 1200px) {
             .content-grid {
@@ -1325,10 +1357,10 @@
                         <label for="role"><i class="fas fa-user-tag"></i> Tipo de Acesso</label>
                         <select id="role" required>
                             <option value="">Selecione o tipo de acesso</option>
-                            <option value="boss">Administração Geral</option>
-                            <option value="team">Chefe de Equipa</option>
+                            <option value="boss">Administração Geral (Patrão/Admin)</option>
+                            <option value="team">Chefe de Equipa (Obra/Campo)</option>
                             <option value="purchase">Responsável de Compras</option>
-                            <option value="office">Escritório</option>
+                            <option value="office">Escritório (Gestão RH/Horas)</option>
                         </select>
                     </div>
                     <button type="submit" class="login-submit">
@@ -2674,6 +2706,157 @@
                     <!-- Conteúdo de relatórios -->
                 </div>
             </div>
+
+            <!-- ============ SISTEMA ESCRITÓRIO - CHEFE DE EQUIPA ============ -->
+            <div class="dashboard-section" id="teamOfficeSection">
+                <div class="content-card office-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-building"></i> Sistema de Escritório - Acesso Chefe de Equipa</h3>
+                        <button class="btn-dashboard btn-info" onclick="syncWithOffice()">
+                            <i class="fas fa-sync-alt"></i> Sincronizar
+                        </button>
+                    </div>
+                    
+                    <div class="stats-row">
+                        <div class="stat-card-horizontal">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="teamOfficeHours">8.5</h3>
+                                <p>Horas Hoje</p>
+                            </div>
+                        </div>
+                        <div class="stat-card-horizontal">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="teamOfficeDocs">3</h3>
+                                <p>Documentos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card-horizontal">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="teamOfficePeople">5</h3>
+                                <p>Pessoal Equipa</p>
+                            </div>
+                        </div>
+                        <div class="stat-card-horizontal">
+                            <div class="stat-icon">
+                                <i class="fas fa-print"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="teamOfficePrints">2</h3>
+                                <p>Impressões</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SUBSISTEMAS PARA CHEFE DE EQUIPA -->
+                    <div class="content-grid">
+                        <!-- CONTROLE DE HORAS DA EQUIPA -->
+                        <div class="content-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-clock"></i> Controle de Horas - Minha Equipa</h3>
+                                <button class="btn-dashboard btn-success" onclick="teamTimeEntry()">
+                                    <i class="fas fa-sign-in-alt"></i> Entrada
+                                </button>
+                            </div>
+                            
+                            <div class="time-tracker">
+                                <div class="time-display" id="teamOfficeClock">08:45:23</div>
+                                <div class="time-buttons">
+                                    <button class="btn-dashboard btn-success" onclick="teamOfficeMark('entry')">
+                                        <i class="fas fa-sign-in-alt"></i> Entrada
+                                    </button>
+                                    <button class="btn-dashboard btn-warning" onclick="teamOfficeMark('break')">
+                                        <i class="fas fa-coffee"></i> Pausa
+                                    </button>
+                                    <button class="btn-dashboard btn-danger" onclick="teamOfficeMark('exit')">
+                                        <i class="fas fa-sign-out-alt"></i> Saída
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <table class="data-table" style="margin-top: 20px;">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Entrada</th>
+                                        <th>Saída</th>
+                                        <th>Total</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teamOfficeTimeTable">
+                                    <!-- Horas da equipa serão carregadas aqui -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- DOCUMENTOS DA EQUIPA -->
+                        <div class="content-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-file-alt"></i> Documentos da Equipa</h3>
+                                <button class="btn-dashboard btn-primary" onclick="teamOfficeNewDoc()">
+                                    <i class="fas fa-plus"></i> Novo
+                                </button>
+                            </div>
+                            
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Descrição</th>
+                                        <th>Data</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="teamOfficeDocsTable">
+                                    <!-- Documentos da equipa -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- IMPRESSÃO RÁPIDA PARA CHEFE DE EQUIPA -->
+                    <div class="content-card" style="margin-top: 30px;">
+                        <div class="card-header">
+                            <h3><i class="fas fa-print"></i> Impressão Rápida</h3>
+                            <span class="badge badge-info">Escritório Central</span>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group-dashboard">
+                                <label>Tipo de Documento</label>
+                                <select id="teamPrintType">
+                                    <option value="relatorio">Relatório Diário</option>
+                                    <option value="horas">Folha de Horas</option>
+                                    <option value="material">Requisito Material</option>
+                                    <option value="outro">Outro</option>
+                                </select>
+                            </div>
+                            <div class="form-group-dashboard">
+                                <label>Cópias</label>
+                                <input type="number" id="teamPrintCopies" value="1" min="1" max="10">
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="btn-dashboard btn-primary" onclick="teamOfficePrint()">
+                                <i class="fas fa-print"></i> Enviar para Impressão
+                            </button>
+                            <button class="btn-dashboard btn-whatsapp" onclick="teamOfficeWhatsApp()">
+                                <i class="fab fa-whatsapp"></i> Partilhar WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- MENU NO FUNDO PARA CHEFE DE EQUIPA -->
@@ -2692,9 +2875,9 @@
                     <span>Pedir Materiais</span>
                     <span class="bottom-menu-badge" id="pendingRequestsBottom">3</span>
                 </a>
-                <a href="#" class="bottom-menu-item" data-section="teamRequests">
-                    <i class="fas fa-clipboard-list"></i>
-                    <span>Meus Pedidos</span>
+                <a href="#" class="bottom-menu-item" data-section="teamOffice">
+                    <i class="fas fa-building"></i>
+                    <span>Escritório</span>
                 </a>
                 <a href="#" class="bottom-menu-item" data-section="teamReports">
                     <i class="fas fa-file-alt"></i>
@@ -2976,6 +3159,199 @@
                     <!-- Conteúdo de relatórios -->
                 </div>
             </div>
+
+            <!-- ============ SISTEMA ESCRITÓRIO - RESPONSÁVEL DE COMPRAS ============ -->
+            <div class="dashboard-section" id="purchaseOfficeSection">
+                <div class="content-card office-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-building"></i> Sistema de Escritório - Acesso Compras</h3>
+                        <button class="btn-dashboard btn-info" onclick="syncPurchasesWithOffice()">
+                            <i class="fas fa-sync-alt"></i> Sincronizar
+                        </button>
+                    </div>
+                    
+                    <div class="stats-row">
+                        <div class="stat-card-horizontal">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-invoice"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="purchaseOfficeInvoices">24</h3>
+                                <p>Faturas Mês</p>
+                            </div>
+                        </div>
+                        <div class="stat-card-horizontal">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="purchaseOfficeHours">7.5</h3>
+                                <p>Minhas Horas</p>
+                            </div>
+                        </div>
+                        <div class="stat-card-horizontal">
+                            <div class="stat-icon">
+                                <i class="fas fa-print"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="purchaseOfficePrints">8</h3>
+                                <p>Impressões</p>
+                            </div>
+                        </div>
+                        <div class="stat-card-horizontal">
+                            <div class="stat-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3 id="purchaseOfficeDocs">15</h3>
+                                <p>Documentos</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- SUBSISTEMAS PARA COMPRAS -->
+                    <div class="content-grid">
+                        <!-- CONTROLE DE HORAS PESSOAIS -->
+                        <div class="content-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-clock"></i> Meu Controle de Horas</h3>
+                                <div class="time-display" style="font-size: 2rem; color: var(--purchase);">
+                                    <span id="purchasePersonalClock">08:45</span>
+                                </div>
+                            </div>
+                            
+                            <div class="time-buttons" style="justify-content: center; margin: 20px 0;">
+                                <button class="btn-dashboard btn-success" onclick="purchaseOfficeMark('entry')">
+                                    <i class="fas fa-sign-in-alt"></i> Entrada
+                                </button>
+                                <button class="btn-dashboard btn-warning" onclick="purchaseOfficeMark('break')">
+                                    <i class="fas fa-coffee"></i> Pausa
+                                </button>
+                                <button class="btn-dashboard btn-danger" onclick="purchaseOfficeMark('exit')">
+                                    <i class="fas fa-sign-out-alt"></i> Saída
+                                </button>
+                            </div>
+                            
+                            <div style="margin-top: 20px;">
+                                <h4><i class="fas fa-history"></i> Meu Extrato Semanal</h4>
+                                <table class="data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Dia</th>
+                                            <th>Entrada</th>
+                                            <th>Saída</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="purchasePersonalTime">
+                                        <!-- Horas pessoais -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <!-- DOCUMENTOS DE COMPRAS -->
+                        <div class="content-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-file-contract"></i> Documentos de Compras</h3>
+                                <button class="btn-dashboard btn-primary" onclick="purchaseOfficeNewDoc()">
+                                    <i class="fas fa-plus"></i> Novo
+                                </button>
+                            </div>
+                            
+                            <div class="filter-bar">
+                                <select id="purchaseDocFilter" onchange="filterPurchaseDocs()">
+                                    <option value="all">Todos</option>
+                                    <option value="fatura">Faturas</option>
+                                    <option value="ordem">Ordens Compra</option>
+                                    <option value="contrato">Contratos</option>
+                                </select>
+                                <input type="date" id="purchaseDocDate" onchange="filterPurchaseDocs()">
+                            </div>
+                            
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Número</th>
+                                        <th>Tipo</th>
+                                        <th>Fornecedor</th>
+                                        <th>Valor</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="purchaseOfficeDocsTable">
+                                    <!-- Documentos de compras -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- IMPRESSÃO PARA COMPRAS -->
+                    <div class="content-card" style="margin-top: 30px;">
+                        <div class="card-header">
+                            <h3><i class="fas fa-print"></i> Sistema de Impressão - Compras</h3>
+                            <button class="btn-dashboard btn-info" onclick="showPrintQueue()">
+                                <i class="fas fa-list"></i> Fila de Impressão
+                            </button>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group-dashboard">
+                                <label>Documento para Impressão</label>
+                                <select id="purchasePrintDoc">
+                                    <option value="ordem">Ordem de Compra</option>
+                                    <option value="fatura">Fatura</option>
+                                    <option value="relatorio">Relatório Mensal</option>
+                                    <option value="contrato">Contrato</option>
+                                </select>
+                            </div>
+                            <div class="form-group-dashboard">
+                                <label>Número de Cópias</label>
+                                <input type="number" id="purchasePrintCopies" value="2" min="1" max="20">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group-dashboard">
+                            <label>Impressora</label>
+                            <select id="purchasePrinter">
+                                <option value="escritorio">Escritório Central</option>
+                                <option value="compras">Compras Local</option>
+                                <option value="contabilidade">Contabilidade</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button class="btn-dashboard btn-primary" onclick="purchaseOfficePrint()">
+                                <i class="fas fa-print"></i> IMPRIMIR AGORA
+                            </button>
+                            <button class="btn-dashboard btn-success" onclick="savePurchaseForPrint()">
+                                <i class="fas fa-save"></i> Guardar para Imprimir
+                            </button>
+                            <button class="btn-dashboard btn-whatsapp" onclick="sharePurchaseDoc()">
+                                <i class="fab fa-whatsapp"></i> Partilhar Fornecedor
+                            </button>
+                        </div>
+                        
+                        <div style="margin-top: 30px;">
+                            <h4><i class="fas fa-history"></i> Últimas Impressões</h4>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Documento</th>
+                                        <th>Cópias</th>
+                                        <th>Impressora</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="purchasePrintHistory">
+                                    <!-- Histórico de impressões -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- MENU NO FUNDO PARA COMPRAS -->
@@ -2998,9 +3374,9 @@
                     <i class="fas fa-check-double"></i>
                     <span>Concluídos</span>
                 </a>
-                <a href="#" class="bottom-menu-item" data-section="purchaseSuppliers">
-                    <i class="fas fa-truck"></i>
-                    <span>Fornecedores</span>
+                <a href="#" class="bottom-menu-item" data-section="purchaseOffice">
+                    <i class="fas fa-building"></i>
+                    <span>Escritório</span>
                 </a>
                 <a href="#" class="bottom-menu-item" data-section="purchaseReports">
                     <i class="fas fa-chart-bar"></i>
@@ -4467,6 +4843,9 @@
             
             // Atualizar hora atual
             updateTeamTimeDisplay();
+            
+            // Carregar dados do escritório
+            loadTeamOfficeData();
         }
         
         function loadTeamListTable() {
@@ -4699,6 +5078,115 @@
             });
         }
         
+        // ============ SISTEMA ESCRITÓRIO PARA CHEFE DE EQUIPA ============
+        
+        function loadTeamOfficeData() {
+            // Atualizar contadores
+            const today = new Date().toLocaleDateString('pt-PT');
+            const todayRecords = MAFCSystem.timeRecords[today] || {};
+            
+            // Calcular horas da equipa
+            let teamHours = 0;
+            Object.values(todayRecords).forEach(record => {
+                if (record.totalHours) teamHours += parseFloat(record.totalHours);
+            });
+            document.getElementById('teamOfficeHours').textContent = teamHours.toFixed(1);
+            
+            // Documentos da equipa
+            const teamDocs = MAFCSystem.documents.filter(doc => 
+                doc.createdBy === MAFCSystem.currentUser.name
+            ).length;
+            document.getElementById('teamOfficeDocs').textContent = teamDocs;
+            
+            // Número de pessoas na equipa
+            const teamPeople = MAFCSystem.officePeople.filter(p => 
+                p.department === 'obra' || p.position.includes('Equipa')
+            ).length;
+            document.getElementById('teamOfficePeople').textContent = teamPeople;
+            
+            // Carregar tabela de horas
+            loadTeamOfficeTimeTable();
+            
+            // Carregar documentos da equipa
+            loadTeamOfficeDocsTable();
+        }
+        
+        function loadTeamOfficeTimeTable() {
+            const tbody = document.getElementById('teamOfficeTimeTable');
+            tbody.innerHTML = '';
+            
+            const today = new Date().toLocaleDateString('pt-PT');
+            const todayRecords = MAFCSystem.timeRecords[today] || {};
+            
+            // Mostrar membros da equipa atual
+            const teamMembers = MAFCSystem.officePeople.filter(p => 
+                p.status === 'active' && 
+                (p.department === 'obra' || p.position.includes('Equipa'))
+            );
+            
+            teamMembers.forEach(person => {
+                const record = todayRecords[person.id] || {};
+                const status = record.entry ? (record.exit ? '✅ Concluído' : '⏳ Trabalhando') : '⏰ Pendente';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${person.name}</td>
+                    <td>${record.entry || '--:--'}</td>
+                    <td>${record.exit || '--:--'}</td>
+                    <td>${record.totalHours ? record.totalHours + 'h' : '--'}</td>
+                    <td><span class="badge ${status.includes('✅') ? 'badge-success' : status.includes('⏳') ? 'badge-warning' : 'badge-secondary'}">${status}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        function teamOfficeMark(type) {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            const dateString = now.toLocaleDateString('pt-PT');
+            const teamName = MAFCSystem.currentUser.team || MAFCSystem.currentUser.name;
+            
+            let action = '';
+            switch(type) {
+                case 'entry':
+                    action = `Entrada da ${teamName} às ${timeString}`;
+                    break;
+                case 'break':
+                    action = `Pausa da ${teamName} às ${timeString}`;
+                    break;
+                case 'exit':
+                    action = `Saída da ${teamName} às ${timeString}`;
+                    break;
+            }
+            
+            MAFCSystem.logActivity(`team_${type}`, action);
+            alert(`✅ ${action}`);
+            
+            // Atualizar tabela
+            loadTeamOfficeTimeTable();
+            
+            // Atualizar contador de horas
+            setTimeout(() => {
+                loadTeamOfficeData();
+            }, 100);
+        }
+        
+        function teamOfficePrint() {
+            const docType = document.getElementById('teamPrintType').value;
+            const copies = document.getElementById('teamPrintCopies').value;
+            
+            alert(`🖨️ Documento enviado para impressão no escritório!\n\nTipo: ${docType}\nCópias: ${copies}\n\nO documento estará disponível no escritório central.`);
+            
+            MAFCSystem.logActivity('team_print', `Enviou para impressão: ${docType} (${copies} cópias)`);
+        }
+        
+        function teamOfficeWhatsApp() {
+            const docType = document.getElementById('teamPrintType').value;
+            const message = `📋 ${MAFCSystem.currentUser.team || 'Equipa'} - ${docType}\n\nPreparado para revisão e impressão.\n\nGerado por: ${MAFCSystem.currentUser.name}`;
+            
+            window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+        }
+        
         // ============ DASHBOARD COMPRAS ============
         function showPurchaseDashboard() {
             document.getElementById('purchaseDashboard').style.display = 'block';
@@ -4732,6 +5220,9 @@
             loadPurchaseApprovedTable();
             loadPurchaseCompletedTable();
             loadSuppliersTable();
+            
+            // Carregar dados do escritório
+            loadPurchaseOfficeData();
         }
         
         function loadPurchaseUrgentTable() {
@@ -5184,6 +5675,137 @@
             }
         }
         
+        // ============ SISTEMA ESCRITÓRIO PARA RESPONSÁVEL DE COMPRAS ============
+        
+        function loadPurchaseOfficeData() {
+            // Atualizar contadores
+            const currentMonth = new Date().getMonth() + 1;
+            const monthInvoices = MAFCSystem.purchases.filter(p => 
+                p.status === 'completed' && 
+                new Date(p.completionDate).getMonth() + 1 === currentMonth
+            ).length;
+            document.getElementById('purchaseOfficeInvoices').textContent = monthInvoices;
+            
+            // Horas pessoais
+            const today = new Date().toLocaleDateString('pt-PT');
+            const todayRecords = MAFCSystem.timeRecords[today] || {};
+            const userId = MAFCSystem.currentUser.id || 1;
+            const myRecord = todayRecords[userId];
+            const myHours = myRecord ? myRecord.totalHours || '0' : '0';
+            document.getElementById('purchaseOfficeHours').textContent = myHours;
+            
+            // Carregar horas pessoais
+            loadPurchasePersonalTime();
+            
+            // Carregar documentos de compras
+            loadPurchaseOfficeDocsTable();
+            
+            // Carregar histórico de impressões
+            loadPurchasePrintHistory();
+        }
+        
+        function purchaseOfficeMark(type) {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' });
+            const dateString = now.toLocaleDateString('pt-PT');
+            const userName = MAFCSystem.currentUser.name;
+            
+            // Registrar no sistema
+            if (!MAFCSystem.timeRecords[dateString]) {
+                MAFCSystem.timeRecords[dateString] = {};
+            }
+            
+            // Criar ID de usuário se não existir
+            const userId = MAFCSystem.currentUser.id || Date.now() % 1000;
+            if (!MAFCSystem.timeRecords[dateString][userId]) {
+                MAFCSystem.timeRecords[dateString][userId] = {
+                    personName: userName,
+                    personId: userId
+                };
+            }
+            
+            const record = MAFCSystem.timeRecords[dateString][userId];
+            
+            switch(type) {
+                case 'entry':
+                    record.entry = timeString;
+                    MAFCSystem.logActivity('purchase_entry', `${userName} - Entrada às ${timeString}`);
+                    break;
+                case 'exit':
+                    record.exit = timeString;
+                    // Calcular horas
+                    if (record.entry) {
+                        const entryTime = record.entry.split(':').map(Number);
+                        const exitTime = timeString.split(':').map(Number);
+                        let totalMinutes = (exitTime[0] * 60 + exitTime[1]) - (entryTime[0] * 60 + entryTime[1]);
+                        if (totalMinutes < 0) totalMinutes += 24 * 60;
+                        record.totalHours = (totalMinutes / 60).toFixed(1);
+                    }
+                    MAFCSystem.logActivity('purchase_exit', `${userName} - Saída às ${timeString}`);
+                    break;
+                case 'break':
+                    record.break = '30'; // 30 minutos
+                    MAFCSystem.logActivity('purchase_break', `${userName} - Pausa`);
+                    break;
+            }
+            
+            MAFCSystem.saveToStorage();
+            alert(`✅ ${userName} - ${type === 'entry' ? 'Entrada' : type === 'exit' ? 'Saída' : 'Pausa'} registada às ${timeString}`);
+            
+            // Atualizar dados
+            loadPurchaseOfficeData();
+        }
+        
+        function loadPurchasePersonalTime() {
+            const tbody = document.getElementById('purchasePersonalTime');
+            tbody.innerHTML = '';
+            
+            const userId = MAFCSystem.currentUser.id || 1;
+            const userName = MAFCSystem.currentUser.name;
+            
+            // Últimos 7 dias
+            for (let i = 6; i >= 0; i--) {
+                const date = new Date();
+                date.setDate(date.getDate() - i);
+                const dateString = date.toLocaleDateString('pt-PT');
+                const dayName = date.toLocaleDateString('pt-PT', { weekday: 'short' });
+                
+                const record = MAFCSystem.timeRecords[dateString] ? 
+                    MAFCSystem.timeRecords[dateString][userId] : null;
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${dayName} (${dateString})</td>
+                    <td>${record ? record.entry || '--:--' : '--:--'}</td>
+                    <td>${record ? record.exit || '--:--' : '--:--'}</td>
+                    <td>${record ? (record.totalHours || '0') + 'h' : '0h'}</td>
+                `;
+                tbody.appendChild(row);
+            }
+        }
+        
+        function purchaseOfficePrint() {
+            const docType = document.getElementById('purchasePrintDoc').value;
+            const copies = document.getElementById('purchasePrintCopies').value;
+            const printer = document.getElementById('purchasePrinter').value;
+            
+            alert(`🖨️ IMPRESSÃO INICIADA!\n\nDocumento: ${docType}\nCópias: ${copies}\nImpressora: ${printer}\n\nDocumento enviado com sucesso.`);
+            
+            // Adicionar ao histórico
+            const historyBody = document.getElementById('purchasePrintHistory');
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${new Date().toLocaleString('pt-PT')}</td>
+                <td>${docType}</td>
+                <td>${copies}</td>
+                <td>${printer}</td>
+                <td><span class="badge badge-success">Concluída</span></td>
+            `;
+            historyBody.insertBefore(row, historyBody.firstChild);
+            
+            MAFCSystem.logActivity('purchase_print', `Imprimiu ${docType} (${copies} cópias) na ${printer}`);
+        }
+        
         // ============ FUNÇÕES GERAIS ============
         function updateClocks() {
             const now = new Date();
@@ -5197,7 +5819,7 @@
             });
             
             // Relógios grandes
-            ['officeClock', 'officeClockIndividual'].forEach(id => {
+            ['officeClock', 'officeClockIndividual', 'teamOfficeClock'].forEach(id => {
                 const element = document.getElementById(id);
                 if (element) element.textContent = timeString;
             });
@@ -5205,6 +5827,11 @@
             // Atualizar hora da equipa
             if (document.getElementById('teamCurrentTimeDisplay')) {
                 document.getElementById('teamCurrentTimeDisplay').textContent = timeShort;
+            }
+            
+            // Atualizar hora pessoal compras
+            if (document.getElementById('purchasePersonalClock')) {
+                document.getElementById('purchasePersonalClock').textContent = timeShort;
             }
         }
         
@@ -5232,6 +5859,9 @@
                 case 'teamMaterialsSection':
                     loadTeamMaterialRequests();
                     break;
+                case 'teamOfficeSection':
+                    loadTeamOfficeData();
+                    break;
                 case 'purchasePendingSection':
                     loadPurchasePendingTable();
                     break;
@@ -5243,6 +5873,9 @@
                     break;
                 case 'purchaseSuppliersSection':
                     loadSuppliersTable();
+                    break;
+                case 'purchaseOfficeSection':
+                    loadPurchaseOfficeData();
                     break;
             }
         }
@@ -5296,17 +5929,38 @@
             }
         }
         
-        // ============ INICIALIZAÇÃO FINAL ============
-        // Garantir que os modais fechem com ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal, .modal-employee, .modal-document, .modal-purchase-details, .modal-supplier').forEach(modal => {
-                    modal.style.display = 'none';
-                });
-            }
-        });
+        // ============ FUNÇÕES ADICIONAIS ============
+        function syncWithOffice() {
+            alert('🔄 Sincronizando com escritório central...\n\nDados atualizados com sucesso!');
+            MAFCSystem.logActivity('sync_office', 'Sincronizou dados com escritório');
+        }
         
-        // Documentos
+        function syncPurchasesWithOffice() {
+            alert('🔄 Sincronizando compras com escritório...\n\nDados de faturas e documentos atualizados!');
+            MAFCSystem.logActivity('sync_purchases_office', 'Sincronizou compras com escritório');
+        }
+        
+        function teamOfficeNewDoc() {
+            alert('📄 Criar novo documento da equipa\n\nFunção em desenvolvimento...');
+        }
+        
+        function purchaseOfficeNewDoc() {
+            alert('📄 Criar novo documento de compras\n\nFunção em desenvolvimento...');
+        }
+        
+        function showPrintQueue() {
+            alert('📋 Mostrando fila de impressão...\n\nFunção em desenvolvimento...');
+        }
+        
+        function savePurchaseForPrint() {
+            alert('💾 Documento guardado para impressão posterior\n\nPode aceder na fila de impressão.');
+        }
+        
+        function sharePurchaseDoc() {
+            alert('📤 Partilhar documento com fornecedor\n\nFunção em desenvolvimento...');
+        }
+        
+        // ============ FUNÇÕES DE DOCUMENTOS ============
         function openDocumentModal() {
             document.getElementById('documentModal').style.display = 'flex';
             
@@ -5401,4 +6055,4 @@
         }
     </script>
 </body>
-    </html>
+                        </html>
