@@ -33,15 +33,17 @@
             color: var(--dark);
             padding: 20px;
             background-image: linear-gradient(to bottom right, #fff5e6, #e6f7ff);
+            min-height: 100vh;
         }
         
         .container {
-            max-width: 1800px;
+            max-width: 1400px;
             margin: 0 auto;
             background-color: white;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             overflow: hidden;
+            min-height: 90vh;
         }
         
         header {
@@ -55,13 +57,13 @@
         }
         
         .header-left h1 {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             margin-bottom: 5px;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
         
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             opacity: 0.9;
             font-weight: 300;
         }
@@ -99,14 +101,11 @@
             background: rgba(0, 123, 255, 0.7);
         }
         
-        .action-btn.shopping {
-            background: rgba(111, 66, 193, 0.7);
-        }
-        
         .tabs {
             display: flex;
             background-color: var(--light);
             border-bottom: 2px solid var(--light-gray);
+            flex-wrap: wrap;
         }
         
         .tab {
@@ -116,6 +115,9 @@
             color: var(--gray);
             border-bottom: 3px solid transparent;
             transition: all 0.3s;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
         }
         
         .tab:hover {
@@ -128,24 +130,9 @@
             background-color: white;
         }
         
-        .content {
-            display: flex;
-            flex-wrap: wrap;
-            min-height: 700px;
-        }
-        
         .main-content {
-            flex: 3;
-            min-width: 600px;
             padding: 30px;
-        }
-        
-        .sidebar {
-            flex: 2;
-            min-width: 400px;
-            padding: 30px;
-            background-color: var(--light);
-            border-left: 1px solid var(--light-gray);
+            min-height: 600px;
         }
         
         .section-title {
@@ -157,6 +144,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .section-subtitle {
@@ -196,6 +185,7 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         
         .date-display {
@@ -260,10 +250,6 @@
             width: auto;
         }
         
-        .btn-purple {
-            background: linear-gradient(to right, var(--purple), #8a63d2);
-        }
-        
         .btn-success {
             background: linear-gradient(to right, var(--success), #5cd85c);
         }
@@ -288,6 +274,8 @@
             padding: 15px;
             border-bottom: 1px solid var(--light-gray);
             transition: background-color 0.2s;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         .production-item:hover {
@@ -303,6 +291,7 @@
             flex-direction: column;
             gap: 5px;
             flex: 1;
+            min-width: 200px;
         }
         
         .item-name {
@@ -372,6 +361,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         .flavor-name {
@@ -402,7 +393,7 @@
         
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 15px;
             margin-top: 25px;
         }
@@ -440,38 +431,6 @@
             opacity: 0.5;
         }
         
-        .quick-flavors {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .quick-flavor-btn {
-            background-color: white;
-            border: 1px solid var(--light-gray);
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-align: center;
-            font-weight: 500;
-        }
-        
-        .quick-flavor-btn:hover {
-            background-color: var(--primary-light);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-        
-        .flavor-fruit {
-            border-left: 4px solid var(--success);
-        }
-        
-        .flavor-milk {
-            border-left: 4px solid var(--secondary);
-        }
-        
         .modal {
             display: none;
             position: fixed;
@@ -483,6 +442,7 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
         
         .modal-content {
@@ -490,8 +450,8 @@
             padding: 30px;
             border-radius: 15px;
             max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
+            width: 100%;
+            max-height: 90vh;
             overflow-y: auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
@@ -501,6 +461,8 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         .modal-title {
@@ -533,18 +495,22 @@
             background-color: white;
             border-radius: 8px;
             border: 1px solid var(--light-gray);
+            flex-wrap: wrap;
         }
         
         .ingredient-name {
-            flex: 1;
+            flex: 2;
+            min-width: 150px;
         }
         
         .ingredient-quantity {
-            width: 100px;
+            flex: 1;
+            min-width: 100px;
         }
         
         .ingredient-unit {
-            width: 80px;
+            flex: 1;
+            min-width: 80px;
         }
         
         .ingredient-actions {
@@ -552,102 +518,41 @@
             gap: 5px;
         }
         
-        .shopping-list {
-            margin-top: 20px;
-        }
-        
-        .shopping-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            border-bottom: 1px solid var(--light-gray);
-            background-color: white;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .shopping-item:hover {
-            background-color: #f9f9f9;
-        }
-        
-        .shopping-item-info {
-            flex: 1;
-        }
-        
-        .shopping-item-name {
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .shopping-item-details {
-            font-size: 0.9rem;
-            color: var(--gray);
-            margin-top: 3px;
-        }
-        
-        .shopping-item-quantity {
-            font-weight: 600;
-            color: var(--primary);
-            margin-right: 15px;
-            min-width: 100px;
-            text-align: right;
-        }
-        
-        .classic-flavors-container {
+        .quick-flavors {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
             margin-top: 15px;
+            margin-bottom: 20px;
         }
         
-        .classic-flavor-card {
+        .quick-flavor-btn {
             background-color: white;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
             border: 1px solid var(--light-gray);
+            padding: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
+            transition: all 0.2s;
+            text-align: center;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
         }
         
-        .classic-flavor-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .quick-flavor-btn:hover {
+            background-color: var(--primary-light);
             border-color: var(--primary);
+            transform: translateY(-2px);
         }
         
-        .classic-flavor-card.selected {
-            border-color: var(--primary);
-            background-color: rgba(255, 123, 156, 0.05);
-            box-shadow: 0 0 0 3px rgba(255, 123, 156, 0.2);
+        .flavor-fruit {
+            border-left: 4px solid var(--success);
         }
         
-        .classic-flavor-name {
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-        
-        .classic-flavor-type {
-            font-size: 0.8rem;
-            color: var(--gray);
-            background-color: #f0f0f0;
-            padding: 2px 8px;
-            border-radius: 10px;
-            display: inline-block;
-        }
-        
-        .flavor-fruit-badge {
-            background-color: rgba(40, 167, 69, 0.1);
-            color: var(--success);
-        }
-        
-        .flavor-milk-badge {
-            background-color: rgba(54, 181, 176, 0.1);
-            color: var(--secondary);
+        .flavor-milk {
+            border-left: 4px solid var(--secondary);
         }
         
         .quantity-selector {
@@ -655,6 +560,7 @@
             align-items: center;
             gap: 10px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
         }
         
         .quantity-btn {
@@ -685,32 +591,61 @@
             text-align: center;
         }
         
-        .selected-flavors-list {
-            margin-top: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .selected-flavor-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            border-bottom: 1px dashed var(--light-gray);
-            background-color: white;
-            border-radius: 8px;
-            margin-bottom: 5px;
-        }
-        
-        .selected-flavor-info {
-            flex: 1;
-        }
-        
-        .selected-flavor-quantity {
+        .flavor-type-badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 10px;
             font-weight: 600;
+        }
+        
+        .flavor-type-fruit {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+        }
+        
+        .flavor-type-milk {
+            background-color: rgba(54, 181, 176, 0.1);
             color: var(--secondary);
-            min-width: 80px;
-            text-align: right;
+        }
+        
+        .flavor-quantity-input {
+            width: 80px;
+            padding: 8px 10px;
+            border: 2px solid var(--light-gray);
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .add-flavor-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 2px dashed var(--light-gray);
+        }
+        
+        .flavor-quick-add {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .flavor-quick-add input {
+            flex: 2;
+            min-width: 200px;
+        }
+        
+        .flavor-quick-add select {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        .flavor-quick-add .btn {
+            flex: 1;
+            min-width: 120px;
+            margin: 0;
         }
         
         .recipe-ingredients {
@@ -731,96 +666,42 @@
             border-bottom: 1px dotted #ddd;
         }
         
-        .flavor-actions {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        .mobile-optimized {
             display: flex;
-            gap: 5px;
+            flex-direction: column;
+            gap: 15px;
         }
         
-        .flavor-action-btn {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            border: none;
-            background-color: rgba(255, 255, 255, 0.8);
-            color: var(--gray);
-            cursor: pointer;
+        .mobile-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            transition: all 0.2s;
-        }
-        
-        .flavor-action-btn:hover {
-            transform: scale(1.1);
-        }
-        
-        .flavor-action-btn.delete {
-            color: var(--danger);
-        }
-        
-        .flavor-action-btn.edit {
-            color: var(--secondary);
-        }
-        
-        .out-of-stock {
-            opacity: 0.6;
-            position: relative;
-        }
-        
-        .out-of-stock::after {
-            content: "AUSVERKAUFT";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-15deg);
-            background-color: var(--danger);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 0.7rem;
-            font-weight: bold;
-            z-index: 2;
-        }
-        
-        .shopping-out-of-stock {
-            background-color: rgba(220, 53, 69, 0.05);
-            border-left: 4px solid var(--danger);
-        }
-        
-        .out-of-stock-toggle {
-            display: flex;
-            align-items: center;
             gap: 10px;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
+            flex-wrap: wrap;
         }
         
+        .mobile-row > * {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 1200px) {
-            .content {
-                flex-direction: column;
+            .header-left h1 {
+                font-size: 2rem;
             }
             
-            .sidebar {
-                border-left: none;
-                border-top: 1px solid var(--light-gray);
+            .tab {
+                min-width: 180px;
+                padding: 15px 20px;
             }
         }
         
-        @media (max-width: 768px) {
-            header {
-                flex-direction: column;
-                gap: 15px;
+        @media (max-width: 992px) {
+            .header-left h1 {
+                font-size: 1.8rem;
             }
             
-            .header-right {
-                width: 100%;
-                justify-content: center;
+            .subtitle {
+                font-size: 0.9rem;
             }
             
             .action-btn {
@@ -828,35 +709,219 @@
                 font-size: 0.9rem;
             }
             
+            .tab {
+                min-width: 150px;
+                padding: 12px 15px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .header-right {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .header-left h1 {
+                font-size: 1.6rem;
+            }
+            
             .tabs {
                 overflow-x: auto;
+                flex-wrap: nowrap;
             }
             
             .tab {
-                padding: 15px 20px;
+                min-width: 140px;
+                white-space: nowrap;
+            }
+            
+            .main-content {
+                padding: 20px;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .date-selector {
+                justify-content: center;
+            }
+            
+            .date-display {
+                min-width: 150px;
+                font-size: 1rem;
+            }
+            
+            .flavor-quick-add {
+                flex-direction: column;
+            }
+            
+            .flavor-quick-add > * {
+                width: 100%;
+            }
+            
+            .production-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .item-actions {
+                align-self: flex-end;
+            }
+            
+            .quick-flavors {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+            
+            .modal-content {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .ingredient-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+            
+            .ingredient-name,
+            .ingredient-quantity,
+            .ingredient-unit {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header-left h1 {
+                font-size: 1.4rem;
+            }
+            
+            .action-btn {
+                padding: 8px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .action-btn span {
+                display: none;
+            }
+            
+            .action-btn i {
+                margin-right: 0;
+            }
+            
+            .tab {
+                min-width: 120px;
+                padding: 10px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .date-display {
+                min-width: 120px;
                 font-size: 0.9rem;
+                padding: 8px 12px;
             }
             
-            .main-content, .sidebar {
-                min-width: 100%;
+            .date-nav-btn {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
             }
             
-            .classic-flavors-container {
+            .btn {
+                padding: 12px 20px;
+                font-size: 1rem;
+            }
+            
+            .btn-small {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .quick-flavors {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            }
+            
+            .stat-card {
+                padding: 15px;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+            }
+            
+            .flavor-card {
+                padding: 15px;
+            }
+            
+            .production-item {
+                padding: 12px;
+            }
+            
+            .item-name {
+                font-size: 1rem;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            /* Tablet Optimierungen */
+            .container {
+                max-width: 95%;
+            }
+            
+            .quick-flavors {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            
+            .production-item {
+                align-items: flex-start;
+            }
+            
+            .item-actions {
+                margin-top: 10px;
+            }
+        }
+        
+        @media (min-width: 1025px) {
+            /* Desktop Optimierungen */
+            .container {
+                max-width: 1400px;
+            }
+            
+            .main-content {
+                max-width: 100%;
             }
         }
         
         @media print {
-            header, .tabs, .sidebar, .action-btn, .date-nav-btn, .action-icon {
+            header, .tabs, .action-btn, .date-nav-btn, .action-icon, .add-flavor-section, .quick-flavors {
                 display: none !important;
             }
             
             .container {
                 box-shadow: none;
+                border-radius: 0;
             }
             
             .production-item {
                 break-inside: avoid;
+                border: 1px solid #ddd;
+                margin-bottom: 10px;
             }
             
             .main-content {
@@ -868,6 +933,11 @@
                 max-height: none;
                 border: none;
             }
+            
+            body {
+                background: white;
+                padding: 0;
+            }
         }
     </style>
 </head>
@@ -876,17 +946,14 @@
         <header>
             <div class="header-left">
                 <h1>Gelateria Produktionsmanager</h1>
-                <p class="subtitle">Tägliche Produktion, Rezepte und Einkaufslistenverwaltung</p>
+                <p class="subtitle">Tägliche Produktion und Rezeptverwaltung</p>
             </div>
             <div class="header-right">
-                <button class="action-btn shopping" onclick="generateShoppingList()">
-                    <i class="fas fa-shopping-cart"></i> Einkaufsliste
-                </button>
                 <button class="action-btn whatsapp" onclick="sendToWhatsApp()">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
+                    <i class="fab fa-whatsapp"></i> <span>WhatsApp</span>
                 </button>
                 <button class="action-btn print" onclick="printProduction()">
-                    <i class="fas fa-print"></i> Drucken
+                    <i class="fas fa-print"></i> <span>Drucken</span>
                 </button>
             </div>
         </header>
@@ -898,17 +965,14 @@
             <div class="tab" data-tab="recipes" onclick="switchTab('recipes')">
                 <i class="fas fa-book"></i> Rezepte
             </div>
-            <div class="tab" data-tab="shopping" onclick="switchTab('shopping')">
-                <i class="fas fa-shopping-cart"></i> Einkaufsliste
-            </div>
             <div class="tab" data-tab="history" onclick="switchTab('history')">
                 <i class="fas fa-history"></i> Verlauf
             </div>
         </div>
         
-        <div class="content">
+        <div class="main-content">
             <!-- TÄGLICHE PRODUKTION -->
-            <div class="main-content tab-content active" id="production-tab">
+            <div class="tab-content active" id="production-tab">
                 <div class="section-title">
                     Tagesproduktion
                     <span class="section-subtitle" id="current-date-display"></span>
@@ -927,39 +991,56 @@
                     </button>
                 </div>
                 
-                <div class="form-group">
-                    <label for="flavor-select">Eisgeschmack auswählen:</label>
-                    <select id="flavor-select" onchange="onFlavorSelect()">
-                        <option value="">Eisgeschmack auswählen oder neues Rezept hinzufügen...</option>
-                    </select>
+                <div class="add-flavor-section">
+                    <h3 style="color: var(--primary); margin-bottom: 15px;">Eissorte hinzufügen</h3>
+                    
+                    <div class="mobile-optimized">
+                        <div class="form-group">
+                            <label for="flavor-select">Vorhandene Eissorte auswählen:</label>
+                            <select id="flavor-select" onchange="onFlavorSelect()">
+                                <option value="">Eissorte auswählen...</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flavor-quick-add">
+                            <input type="text" id="new-flavor-name" placeholder="Neue Eissorte eingeben">
+                            <select id="new-flavor-type">
+                                <option value="Fruto">Fruchteis</option>
+                                <option value="Leite">Milcheis</option>
+                            </select>
+                            <button class="btn btn-small" onclick="addNewFlavorQuick()">
+                                <i class="fas fa-plus"></i> Neue Sorte
+                            </button>
+                        </div>
+                        
+                        <div class="quantity-selector">
+                            <label>Menge (Liter):</label>
+                            <button class="quantity-btn" onclick="adjustQuantity(-1)">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <div class="quantity-display" id="quantity-display">3</div>
+                            <button class="quantity-btn" onclick="adjustQuantity(1)">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notes">Notizen (optional):</label>
+                            <textarea id="notes" rows="2" placeholder="Besondere Hinweise für diese Produktion..."></textarea>
+                        </div>
+                        
+                        <button class="btn" onclick="addToProduction()">
+                            <i class="fas fa-plus-circle"></i> Zur Produktion hinzufügen
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="quantity-selector">
-                    <label>Menge (Liter):</label>
-                    <button class="quantity-btn" onclick="adjustQuantity(-1)">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <div class="quantity-display" id="quantity-display">3</div>
-                    <button class="quantity-btn" onclick="adjustQuantity(1)">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                    <div style="flex: 1;"></div>
-                    <button class="btn btn-small" onclick="openRecipeModal('new')">
-                        <i class="fas fa-plus"></i> Neues Rezept
-                    </button>
+                <div class="quick-flavors" id="quick-flavors">
+                    <!-- Schnellauswahl für Eissorten wird hier geladen -->
                 </div>
                 
-                <div class="form-group">
-                    <label for="notes">Notizen (optional):</label>
-                    <textarea id="notes" rows="2" placeholder="Besondere Hinweise für diese Produktion..."></textarea>
-                </div>
-                
-                <button class="btn" onclick="addToProduction()">
-                    <i class="fas fa-plus-circle"></i> Zur Tagesproduktion hinzufügen
-                </button>
-                
-                <div class="section-title" style="margin-top: 30px;">
-                    Produktionsliste
+                <div class="section-title">
+                    Aktuelle Produktionsliste
                     <span class="section-subtitle" id="production-count">0 Artikel</span>
                 </div>
                 
@@ -968,7 +1049,7 @@
                     <div class="empty-state">
                         <i class="fas fa-ice-cream"></i>
                         <h3>Heute keine Produktion hinzugefügt</h3>
-                        <p>Beginnen Sie mit dem Hinzufügen von Eisgeschmacksrichtungen zur Tagesproduktion mithilfe des obigen Formulars.</p>
+                        <p>Beginnen Sie mit dem Hinzufügen von Eissorten zur Tagesproduktion.</p>
                     </div>
                 </div>
                 
@@ -990,10 +1071,14 @@
                         <div class="stat-label">Milcheis-Sorten</div>
                     </div>
                 </div>
+                
+                <button class="btn btn-secondary" onclick="clearProduction()" style="margin-top: 30px;">
+                    <i class="fas fa-trash-alt"></i> Gesamte Tagesproduktion löschen
+                </button>
             </div>
             
             <!-- REZEPTE -->
-            <div class="main-content tab-content" id="recipes-tab">
+            <div class="tab-content" id="recipes-tab">
                 <div class="section-title">
                     Rezeptverwaltung
                     <button class="btn btn-small" onclick="openRecipeModal('new')">
@@ -1011,54 +1096,8 @@
                 </div>
             </div>
             
-            <!-- EINKAUFSLISTE -->
-            <div class="main-content tab-content" id="shopping-tab">
-                <div class="section-title">
-                    Einkaufsliste
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn btn-small btn-success" onclick="markAllAsAvailable()">
-                            <i class="fas fa-check"></i> Alle verfügbar
-                        </button>
-                        <button class="btn btn-small btn-warning" onclick="markAllOutOfStock()">
-                            <i class="fas fa-times"></i> Alle ausverkauft
-                        </button>
-                        <button class="btn btn-small btn-purple" onclick="clearShoppingList()">
-                            <i class="fas fa-trash"></i> Liste leeren
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="shopping-list" id="shopping-list">
-                    <!-- Einkaufslistenartikel werden hier hinzugefügt -->
-                    <div class="empty-state">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h3>Einkaufsliste leer</h3>
-                        <p>Generieren Sie eine Einkaufsliste aus der aktuellen Produktion oder fügen Sie fehlende Produkte manuell hinzu.</p>
-                    </div>
-                </div>
-                
-                <div class="section-title" style="margin-top: 30px;">
-                    Fehlende Produkte hinzufügen
-                </div>
-                
-                <div class="form-group">
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="new-ingredient-name" placeholder="Produktname" style="flex: 2;">
-                        <input type="text" id="new-ingredient-quantity" placeholder="Menge" style="flex: 1;">
-                        <input type="text" id="new-ingredient-unit" placeholder="Einheit (g, ml, usw.)" style="flex: 1;">
-                        <button class="btn btn-small" onclick="addManualIngredient()">
-                            <i class="fas fa-plus"></i> Hinzufügen
-                        </button>
-                    </div>
-                    <div class="out-of-stock-toggle">
-                        <input type="checkbox" id="new-ingredient-out-of-stock">
-                        <label for="new-ingredient-out-of-stock">Dieses Produkt ist ausverkauft</label>
-                    </div>
-                </div>
-            </div>
-            
             <!-- VERLAUF -->
-            <div class="main-content tab-content" id="history-tab">
+            <div class="tab-content" id="history-tab">
                 <div class="section-title">
                     Produktionsverlauf
                     <div class="date-selector" style="margin: 0;">
@@ -1076,63 +1115,6 @@
                         <p>Wählen Sie einen Monat, um den Produktionsverlauf anzuzeigen.</p>
                     </div>
                 </div>
-            </div>
-            
-            <!-- SIDEBAR -->
-            <div class="sidebar">
-                <div class="section-title">
-                    Klassische Gelateria-Eissorten
-                    <div style="display: flex; gap: 5px;">
-                        <button class="btn btn-small" onclick="addNewClassicFlavor()" title="Neuen klassischen Geschmack hinzufügen">
-                            <i class="fas fa-plus"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="classic-flavors-container" id="classic-flavors">
-                    <!-- Klassische Eissorten werden hier geladen -->
-                </div>
-                
-                <div class="section-title" style="margin-top: 30px;">
-                    Ausgewählte Eissorten
-                </div>
-                
-                <div class="selected-flavors-list" id="selected-flavors">
-                    <!-- Ausgewählte Eissorten werden hier angezeigt -->
-                    <div class="empty-state" style="padding: 20px;">
-                        <p>Wählen Sie klassische Eissorten links aus, um sie zur Produktion hinzuzufügen</p>
-                    </div>
-                </div>
-                
-                <div class="quantity-selector" style="margin-top: 20px; justify-content: center;">
-                    <label>Menge pro Sorte:</label>
-                    <button class="quantity-btn" onclick="adjustSelectedQuantity(-1)">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <div class="quantity-display" id="selected-quantity-display">3</div>
-                    <button class="quantity-btn" onclick="adjustSelectedQuantity(1)">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-                
-                <button class="btn" onclick="addSelectedFlavors()" style="margin-top: 15px;">
-                    <i class="fas fa-plus-circle"></i> Ausgewählte hinzufügen
-                </button>
-                
-                <div class="stats-grid" style="margin-top: 25px;">
-                    <div class="stat-card">
-                        <div class="stat-value" id="sidebar-fruit">0</div>
-                        <div class="stat-label">Fruchteis-Sorten</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="sidebar-milk">0</div>
-                        <div class="stat-label">Milcheis-Sorten</div>
-                    </div>
-                </div>
-                
-                <button class="btn btn-secondary" onclick="clearProduction()" style="margin-top: 20px;">
-                    <i class="fas fa-trash-alt"></i> Tagesproduktion leeren
-                </button>
             </div>
         </div>
     </div>
@@ -1161,27 +1143,20 @@
                 </div>
                 
                 <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="recipe-is-classic">
-                        Als klassische Gelateria-Sorte hinzufügen
-                    </label>
-                </div>
-                
-                <div class="form-group">
                     <label for="recipe-content">Rezept (Zutaten und Zubereitung):</label>
                     <textarea id="recipe-content" rows="8" placeholder="Beschreiben Sie die Zutaten und den Zubereitungsprozess..."></textarea>
                 </div>
                 
                 <div class="form-group">
-                    <label>Rezeptzutaten (für Einkaufsliste):</label>
+                    <label>Rezeptzutaten (optional):</label>
                     <div id="ingredients-list">
                         <!-- Zutaten werden hier hinzugefügt -->
                     </div>
-                    <div style="display: flex; gap: 10px; margin-top: 10px;">
-                        <input type="text" id="ingredient-name" placeholder="Zutatname" style="flex: 1;">
-                        <input type="text" id="ingredient-quantity" placeholder="Menge" style="width: 100px;">
-                        <input type="text" id="ingredient-unit" placeholder="Einheit" style="width: 100px;">
-                        <button type="button" class="btn btn-small" onclick="addIngredient()">
+                    <div style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
+                        <input type="text" id="ingredient-name" placeholder="Zutatname" style="flex: 2; min-width: 150px;">
+                        <input type="text" id="ingredient-quantity" placeholder="Menge" style="flex: 1; min-width: 80px;">
+                        <input type="text" id="ingredient-unit" placeholder="Einheit" style="flex: 1; min-width: 80px;">
+                        <button type="button" class="btn btn-small" onclick="addIngredient()" style="flex: 0;">
                             <i class="fas fa-plus"></i>
                         </button>
                     </div>
@@ -1198,14 +1173,11 @@
         // Systemdaten
         let production = {}; // Produktion nach Datum
         let recipes = []; // Eisrezepte
-        let shoppingList = []; // Einkaufsliste
-        let selectedFlavors = []; // Im Sidebar ausgewählte Eissorten
-        let selectedQuantity = 3; // Standardmenge für ausgewählte Eissorten
         let currentDate = new Date(); // Aktuell ausgewähltes Datum
         let currentQuantity = 3; // Aktuelle Menge für Produktion
         
-        // Klassische Gelateria-Eissorten
-        let classicFlavors = [
+        // Klassische Gelateria-Eissorten (nur für Schnellauswahl)
+        const classicFlavors = [
             { name: "Stracciatella", type: "Leite", category: "klassisch", recipe: "Milchbasis mit Bitterschokoladenflocken." },
             { name: "Vanille", type: "Leite", category: "klassisch", recipe: "Traditionelle Vanille mit Vanilleschote." },
             { name: "Schokolade", type: "Leite", category: "klassisch", recipe: "Intensive belgische Schokolade." },
@@ -1231,17 +1203,14 @@
             // Aktuelles Datum einrichten
             updateDateDisplay();
             
-            // Klassische Eissorten laden
-            loadClassicFlavors();
+            // Schnellauswahl laden
+            loadQuickFlavors();
             
             // Rezepte laden
             loadRecipes();
             
             // Produktion für aktuellen Tag laden
             loadProductionForDate(getDateKey(currentDate));
-            
-            // Einkaufsliste laden
-            loadShoppingList();
             
             // Monate für Verlauf einrichten
             setupHistoryMonths();
@@ -1251,7 +1220,6 @@
             
             // Mengenanzeige aktualisieren
             updateQuantityDisplay();
-            updateSelectedQuantityDisplay();
         });
         
         // Zwischen Tabs wechseln
@@ -1284,22 +1252,10 @@
                 saveRecipes();
             }
             
-            // Klassische Eissorten laden
-            const savedClassicFlavors = localStorage.getItem('gelateriaClassicFlavors');
-            if (savedClassicFlavors) {
-                classicFlavors = JSON.parse(savedClassicFlavors);
-            }
-            
             // Produktion laden
             const savedProduction = localStorage.getItem('gelateriaProduction');
             if (savedProduction) {
                 production = JSON.parse(savedProduction);
-            }
-            
-            // Einkaufsliste laden
-            const savedShoppingList = localStorage.getItem('gelateriaShoppingList');
-            if (savedShoppingList) {
-                shoppingList = JSON.parse(savedShoppingList);
             }
         }
         
@@ -1307,19 +1263,11 @@
         function saveRecipes() {
             localStorage.setItem('gelateriaRecipes', JSON.stringify(recipes));
             loadRecipes();
-        }
-        
-        function saveClassicFlavors() {
-            localStorage.setItem('gelateriaClassicFlavors', JSON.stringify(classicFlavors));
-            loadClassicFlavors();
+            loadQuickFlavors();
         }
         
         function saveProduction() {
             localStorage.setItem('gelateriaProduction', JSON.stringify(production));
-        }
-        
-        function saveShoppingList() {
-            localStorage.setItem('gelateriaShoppingList', JSON.stringify(shoppingList));
         }
         
         // Datumsfunktionen
@@ -1360,15 +1308,6 @@
             document.getElementById('quantity-display').textContent = currentQuantity;
         }
         
-        function adjustSelectedQuantity(change) {
-            selectedQuantity = Math.max(1, selectedQuantity + change);
-            updateSelectedQuantityDisplay();
-        }
-        
-        function updateSelectedQuantityDisplay() {
-            document.getElementById('selected-quantity-display').textContent = selectedQuantity;
-        }
-        
         // Produktion für bestimmtes Datum laden
         function loadProductionForDate(dateKey) {
             const productionList = document.getElementById('production-list');
@@ -1391,13 +1330,13 @@
                             <div class="item-info">
                                 <div class="item-name">${item.name}</div>
                                 <div class="item-details">
-                                    <span>${item.quantity} Liter</span>
+                                    <span><strong>${item.quantity} Liter</strong></span>
                                     <span>${recipe.type === 'Fruto' ? 'Fruchteis' : recipe.type === 'Leite' ? 'Milcheis' : 'Typ nicht definiert'}</span>
                                     ${item.notes ? `<span>Notizen: ${item.notes}</span>` : ''}
                                 </div>
                             </div>
                             <div class="item-actions">
-                                <button class="action-icon edit" onclick="editProductionItem('${dateKey}', ${index})" title="Bearbeiten">
+                                <button class="action-icon edit" onclick="editProductionItem('${dateKey}', ${index})" title="Menge bearbeiten">
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <button class="action-icon delete" onclick="removeProductionItem('${dateKey}', ${index})" title="Entfernen">
@@ -1411,6 +1350,52 @@
             }
             
             updateProductionStats(dateKey);
+        }
+        
+        // Neue Eissorte schnell hinzufügen
+        function addNewFlavorQuick() {
+            const name = document.getElementById('new-flavor-name').value.trim();
+            const type = document.getElementById('new-flavor-type').value;
+            
+            if (!name) {
+                showNotification('Bitte einen Namen für die neue Eissorte eingeben!', 'warning');
+                return;
+            }
+            
+            // Überprüfen, ob bereits existiert
+            if (recipes.some(r => r.name.toLowerCase() === name.toLowerCase())) {
+                showNotification('Diese Eissorte existiert bereits!', 'warning');
+                return;
+            }
+            
+            // Neue Eissorte zu Rezepten hinzufügen
+            recipes.push({
+                name: name,
+                type: type,
+                category: "benutzerdefiniert",
+                recipe: "Kein Rezept hinzugefügt."
+            });
+            
+            // In Auswahlbox hinzufügen
+            const flavorSelect = document.getElementById('flavor-select');
+            const option = document.createElement('option');
+            option.value = name;
+            option.textContent = name;
+            flavorSelect.appendChild(option);
+            
+            // Auswahlbox auf neue Sorte setzen
+            flavorSelect.value = name;
+            
+            // Schnellauswahl aktualisieren
+            loadQuickFlavors();
+            
+            // Rezepte speichern
+            saveRecipes();
+            
+            // Feld leeren
+            document.getElementById('new-flavor-name').value = '';
+            
+            showNotification(`Neue Eissorte "${name}" hinzugefügt!`, 'success');
         }
         
         // Zur Produktion hinzufügen
@@ -1457,56 +1442,11 @@
             loadProductionForDate(dateKey);
             
             // Formular leeren
-            flavorSelect.value = '';
             document.getElementById('notes').value = '';
             currentQuantity = 3;
             updateQuantityDisplay();
             
-            showNotification(`${selectedFlavor} zur Produktion hinzugefügt!`, 'success');
-        }
-        
-        // Ausgewählte Eissorten hinzufügen
-        function addSelectedFlavors() {
-            if (selectedFlavors.length === 0) {
-                showNotification('Bitte wählen Sie zuerst Eissorten aus!', 'warning');
-                return;
-            }
-            
-            const dateKey = getDateKey(currentDate);
-            
-            // Array für dieses Datum initialisieren, falls nicht vorhanden
-            if (!production[dateKey]) {
-                production[dateKey] = [];
-            }
-            
-            // Jede ausgewählte Eissorte hinzufügen
-            selectedFlavors.forEach(flavorName => {
-                const existingIndex = production[dateKey].findIndex(item => item.name === flavorName);
-                
-                if (existingIndex >= 0) {
-                    // Vorhandene Menge aktualisieren
-                    production[dateKey][existingIndex].quantity += selectedQuantity;
-                } else {
-                    // Neuen Artikel hinzufügen
-                    production[dateKey].push({
-                        name: flavorName,
-                        quantity: selectedQuantity,
-                        notes: '',
-                        timestamp: new Date().toISOString()
-                    });
-                }
-            });
-            
-            // Speichern und aktualisieren
-            saveProduction();
-            loadProductionForDate(dateKey);
-            
-            showNotification(`${selectedFlavors.length} Eissorten zur Produktion hinzugefügt!`, 'success');
-            
-            // Auswahl leeren
-            selectedFlavors = [];
-            updateSelectedFlavorsList();
-            updateClassicFlavorsDisplay();
+            showNotification(`${selectedFlavor} (${currentQuantity}L) zur Produktion hinzugefügt!`, 'success');
         }
         
         // Artikel aus Produktion entfernen
@@ -1525,28 +1465,20 @@
             }
         }
         
-        // Produktionsartikel bearbeiten
+        // Produktionsartikel bearbeiten (Menge ändern)
         function editProductionItem(dateKey, index) {
             const item = production[dateKey][index];
             
-            // Formular mit Artikeldaten ausfüllen
-            document.getElementById('flavor-select').value = item.name;
-            currentQuantity = item.quantity;
-            updateQuantityDisplay();
-            document.getElementById('notes').value = item.notes || '';
+            const newQuantity = prompt(`Neue Menge für "${item.name}" eingeben (in Litern):`, item.quantity);
             
-            // Aktuellen Artikel entfernen
-            production[dateKey].splice(index, 1);
-            
-            // Wenn keine Artikel mehr vorhanden sind, Datum entfernen
-            if (production[dateKey].length === 0) {
-                delete production[dateKey];
+            if (newQuantity !== null && !isNaN(newQuantity) && newQuantity > 0) {
+                production[dateKey][index].quantity = parseInt(newQuantity);
+                saveProduction();
+                loadProductionForDate(dateKey);
+                showNotification(`Menge für ${item.name} aktualisiert!`, 'success');
+            } else if (newQuantity !== null) {
+                showNotification('Bitte eine gültige Menge eingeben!', 'warning');
             }
-            
-            saveProduction();
-            loadProductionForDate(dateKey);
-            
-            showNotification('Artikel zur Bearbeitung bereit!', 'info');
         }
         
         // Produktionsstatistiken aktualisieren
@@ -1576,8 +1508,6 @@
             document.getElementById('total-liters').textContent = totalLiters;
             document.getElementById('fruit-production').textContent = fruitCount;
             document.getElementById('milk-production').textContent = milkCount;
-            document.getElementById('sidebar-fruit').textContent = fruitCount;
-            document.getElementById('sidebar-milk').textContent = milkCount;
         }
         
         // Tagesproduktion leeren
@@ -1597,198 +1527,53 @@
             }
         }
         
-        // Klassische Eissorten im Sidebar laden
-        function loadClassicFlavors() {
-            const container = document.getElementById('classic-flavors');
+        // Schnellauswahl für Eissorten laden
+        function loadQuickFlavors() {
+            const container = document.getElementById('quick-flavors');
             const flavorSelect = document.getElementById('flavor-select');
             
             container.innerHTML = '';
-            flavorSelect.innerHTML = '<option value="">Eisgeschmack auswählen oder neues Rezept hinzufügen...</option>';
+            flavorSelect.innerHTML = '<option value="">Eissorte auswählen...</option>';
+            
+            // Sortiere Rezepte alphabetisch
+            const sortedRecipes = [...recipes].sort((a, b) => a.name.localeCompare(b.name));
             
             // Alle Rezepte zum Auswahlmenü hinzufügen
-            recipes.forEach(flavor => {
+            sortedRecipes.forEach(flavor => {
                 const option = document.createElement('option');
                 option.value = flavor.name;
                 option.textContent = flavor.name;
                 flavorSelect.appendChild(option);
             });
             
-            // Klassische Eissorten zum Sidebar hinzufügen
-            classicFlavors.forEach((flavor, index) => {
-                const isSelected = selectedFlavors.includes(flavor.name);
-                const card = document.createElement('div');
-                card.className = `classic-flavor-card ${isSelected ? 'selected' : ''} ${flavor.outOfStock ? 'out-of-stock' : ''}`;
-                card.onclick = (e) => {
-                    if (!e.target.closest('.flavor-actions')) {
-                        toggleFlavorSelection(flavor.name);
-                    }
+            // Nur klassische Eissorten für Schnellauswahl anzeigen
+            const classicFiltered = sortedRecipes.filter(flavor => 
+                classicFlavors.some(cf => cf.name === flavor.name)
+            );
+            
+            if (classicFiltered.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--gray);">Keine klassischen Eissorten verfügbar</p>';
+                return;
+            }
+            
+            classicFiltered.forEach(flavor => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `quick-flavor-btn ${flavor.type === 'Fruto' ? 'flavor-fruit' : 'flavor-milk'}`;
+                button.onclick = () => {
+                    document.getElementById('flavor-select').value = flavor.name;
+                    showNotification(`${flavor.name} ausgewählt!`, 'info');
                 };
                 
-                card.innerHTML = `
-                    <div class="flavor-actions">
-                        <button class="flavor-action-btn edit" onclick="editClassicFlavor(${index})" title="Bearbeiten">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="flavor-action-btn delete" onclick="deleteClassicFlavor(${index})" title="Löschen">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                    <div class="classic-flavor-name">${flavor.name}</div>
-                    <div class="classic-flavor-type ${flavor.type === 'Fruto' ? 'flavor-fruit-badge' : 'flavor-milk-badge'}">
+                button.innerHTML = `
+                    <div style="font-weight: 600;">${flavor.name}</div>
+                    <div class="flavor-type-badge ${flavor.type === 'Fruto' ? 'flavor-type-fruit' : 'flavor-type-milk'}">
                         ${flavor.type === 'Fruto' ? 'Fruchteis' : 'Milcheis'}
                     </div>
-                    ${flavor.recipe ? `<div style="margin-top: 8px; font-size: 0.8rem; color: #888;">${flavor.recipe.substring(0, 50)}...</div>` : ''}
-                    ${flavor.outOfStock ? `<div style="margin-top: 5px; font-size: 0.7rem; color: var(--danger);"><i class="fas fa-exclamation-triangle"></i> Ausverkauft</div>` : ''}
                 `;
                 
-                container.appendChild(card);
+                container.appendChild(button);
             });
-            
-            document.getElementById('flavors-count').textContent = `${classicFlavors.length} klassische Sorten`;
-        }
-        
-        // Klassischen Eisgeschmack hinzufügen
-        function addNewClassicFlavor() {
-            const flavorName = prompt("Name des neuen klassischen Eisgeschmacks eingeben:");
-            if (!flavorName) return;
-            
-            const flavorType = prompt("Typ eingeben (Fruto für Fruchteis, Leite für Milcheis):");
-            if (!flavorType || (flavorType !== 'Fruto' && flavorType !== 'Leite')) {
-                showNotification('Ungültiger Typ! Bitte "Fruto" oder "Leite" eingeben.', 'warning');
-                return;
-            }
-            
-            const flavorRecipe = prompt("Rezept beschreiben (optional):");
-            
-            classicFlavors.push({
-                name: flavorName,
-                type: flavorType,
-                category: "klassisch",
-                recipe: flavorRecipe || ""
-            });
-            
-            // Auch zum allgemeinen Rezeptbestand hinzufügen
-            if (!recipes.some(r => r.name === flavorName)) {
-                recipes.push({
-                    name: flavorName,
-                    type: flavorType,
-                    category: "klassisch",
-                    recipe: flavorRecipe || ""
-                });
-                saveRecipes();
-            }
-            
-            saveClassicFlavors();
-            loadClassicFlavors();
-            showNotification(`${flavorName} als klassische Sorte hinzugefügt!`, 'success');
-        }
-        
-        // Klassischen Eisgeschmack bearbeiten
-        function editClassicFlavor(index) {
-            const flavor = classicFlavors[index];
-            
-            const newName = prompt("Neuen Namen eingeben:", flavor.name);
-            if (!newName) return;
-            
-            const newType = prompt("Neuen Typ eingeben (Fruto/Leite):", flavor.type);
-            if (!newType) return;
-            
-            const newRecipe = prompt("Neues Rezept eingeben:", flavor.recipe || "");
-            
-            classicFlavors[index] = {
-                ...flavor,
-                name: newName,
-                type: newType,
-                recipe: newRecipe || flavor.recipe
-            };
-            
-            // Auch im allgemeinen Rezeptbestand aktualisieren
-            const recipeIndex = recipes.findIndex(r => r.name === flavor.name);
-            if (recipeIndex >= 0) {
-                recipes[recipeIndex] = {
-                    ...recipes[recipeIndex],
-                    name: newName,
-                    type: newType,
-                    recipe: newRecipe || flavor.recipe
-                };
-                saveRecipes();
-            }
-            
-            saveClassicFlavors();
-            loadClassicFlavors();
-            showNotification(`${flavor.name} aktualisiert!`, 'success');
-        }
-        
-        // Klassischen Eisgeschmack löschen
-        function deleteClassicFlavor(index) {
-            const flavor = classicFlavors[index];
-            
-            if (confirm(`Sind Sie sicher, dass Sie die klassische Sorte "${flavor.name}" löschen möchten?`)) {
-                classicFlavors.splice(index, 1);
-                saveClassicFlavors();
-                loadClassicFlavors();
-                showNotification(`${flavor.name} gelöscht!`, 'info');
-            }
-        }
-        
-        // Auswahl klassischer Eisgeschmack umschalten
-        function toggleFlavorSelection(flavorName) {
-            const index = selectedFlavors.indexOf(flavorName);
-            
-            if (index >= 0) {
-                selectedFlavors.splice(index, 1);
-            } else {
-                selectedFlavors.push(flavorName);
-            }
-            
-            updateClassicFlavorsDisplay();
-            updateSelectedFlavorsList();
-        }
-        
-        // Anzeige klassischer Eisgeschmacksrichtungen aktualisieren
-        function updateClassicFlavorsDisplay() {
-            document.querySelectorAll('.classic-flavor-card').forEach(card => {
-                const flavorName = card.querySelector('.classic-flavor-name').textContent;
-                if (selectedFlavors.includes(flavorName)) {
-                    card.classList.add('selected');
-                } else {
-                    card.classList.remove('selected');
-                }
-            });
-        }
-        
-        // Liste ausgewählter Eisgeschmacksrichtungen aktualisieren
-        function updateSelectedFlavorsList() {
-            const container = document.getElementById('selected-flavors');
-            
-            if (selectedFlavors.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state" style="padding: 20px;">
-                        <p>Wählen Sie klassische Eissorten links aus, um sie zur Produktion hinzuzufügen</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let html = '';
-            selectedFlavors.forEach(flavorName => {
-                const flavor = classicFlavors.find(f => f.name === flavorName) || {};
-                html += `
-                    <div class="selected-flavor-item">
-                        <div class="selected-flavor-info">
-                            <div class="flavor-name">${flavorName}</div>
-                            <div class="flavor-type ${flavor.type === 'Fruto' ? 'flavor-fruit-badge' : 'flavor-milk-badge'}" style="display: inline-block; margin-top: 3px;">
-                                ${flavor.type === 'Fruto' ? 'Fruchteis' : 'Milcheis'}
-                            </div>
-                        </div>
-                        <div class="selected-flavor-quantity">
-                            ${selectedQuantity} Liter
-                        </div>
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = html;
         }
         
         // Wenn ein Eisgeschmack im Dropdown ausgewählt wird
@@ -1820,8 +1605,11 @@
                 return;
             }
             
+            // Sortiere Rezepte alphabetisch
+            const sortedRecipes = [...recipes].sort((a, b) => a.name.localeCompare(b.name));
+            
             let html = '';
-            recipes.forEach((flavor, index) => {
+            sortedRecipes.forEach((flavor, index) => {
                 const isClassic = classicFlavors.some(cf => cf.name === flavor.name);
                 html += `
                     <div class="flavor-card">
@@ -1832,7 +1620,7 @@
                                 ${isClassic ? '<span style="margin-left: 10px; background-color: #ffc107; color: #333; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;">Klassisch</span>' : ''}
                             </div>
                         </div>
-                        ${flavor.recipe ? `<div class="flavor-recipe">${flavor.recipe}</div>` : ''}
+                        ${flavor.recipe && flavor.recipe !== "Kein Rezept hinzugefügt." ? `<div class="flavor-recipe">${flavor.recipe}</div>` : ''}
                         ${flavor.ingredients && flavor.ingredients.length > 0 ? `
                             <div class="recipe-ingredients">
                                 <strong>Zutaten:</strong>
@@ -1848,18 +1636,16 @@
                             <button class="btn btn-small" onclick="openRecipeModal('edit', ${index})">
                                 <i class="fas fa-edit"></i> Bearbeiten
                             </button>
-                            ${!isClassic ? `
-                                <button class="btn btn-small" style="background: var(--danger);" onclick="deleteRecipe(${index})">
-                                    <i class="fas fa-trash"></i> Löschen
-                                </button>
-                            ` : ''}
+                            <button class="btn btn-small" style="background: var(--danger);" onclick="deleteRecipe(${index})">
+                                <i class="fas fa-trash"></i> Löschen
+                            </button>
                         </div>
                     </div>
                 `;
             });
             
             container.innerHTML = html;
-            loadClassicFlavors(); // Auch Auswahlmenü aktualisieren
+            loadQuickFlavors(); // Auch Auswahlmenü aktualisieren
         }
         
         // Rezeptmodal öffnen
@@ -1876,7 +1662,6 @@
                 title.textContent = 'Neues Rezept';
                 form.reset();
                 document.getElementById('recipe-id').value = '';
-                document.getElementById('recipe-is-classic').checked = false;
             } else if (mode === 'edit' && recipeIndex !== null) {
                 title.textContent = 'Rezept bearbeiten';
                 const recipe = recipes[recipeIndex];
@@ -1885,7 +1670,6 @@
                     document.getElementById('recipe-name').value = recipe.name;
                     document.getElementById('recipe-type').value = recipe.type;
                     document.getElementById('recipe-content').value = recipe.recipe || '';
-                    document.getElementById('recipe-is-classic').checked = classicFlavors.some(cf => cf.name === recipe.name);
                     
                     // Vorhandene Zutaten hinzufügen
                     if (recipe.ingredients) {
@@ -1962,7 +1746,6 @@
             const name = document.getElementById('recipe-name').value;
             const type = document.getElementById('recipe-type').value;
             const content = document.getElementById('recipe-content').value;
-            const isClassic = document.getElementById('recipe-is-classic').checked;
             
             if (!name.trim()) {
                 showNotification('Bitte einen Namen für den Eisgeschmack eingeben!', 'warning');
@@ -1985,30 +1768,17 @@
                 }
             });
             
-            // Überprüfen, ob es sich um eine Bearbeitung oder Erstellung handelt
             let existingIndex = id ? parseInt(id) : -1;
             
             if (existingIndex >= 0 && existingIndex < recipes.length) {
                 // Vorhandenes Rezept aktualisieren
-                const oldName = recipes[existingIndex].name;
                 recipes[existingIndex] = { 
                     name, 
                     type, 
                     recipe: content,
-                    ingredients: ingredients.length > 0 ? ingredients : undefined
+                    ingredients: ingredients.length > 0 ? ingredients : undefined,
+                    category: recipes[existingIndex].category || "benutzerdefiniert"
                 };
-                
-                // Auch in klassischen Eissorten aktualisieren, falls vorhanden
-                const classicIndex = classicFlavors.findIndex(cf => cf.name === oldName);
-                if (classicIndex >= 0) {
-                    classicFlavors[classicIndex] = {
-                        ...classicFlavors[classicIndex],
-                        name,
-                        type,
-                        recipe: content
-                    };
-                    saveClassicFlavors();
-                }
             } else {
                 // Überprüfen, ob bereits ein Eisgeschmack mit diesem Namen existiert
                 const duplicateIndex = recipes.findIndex(r => r.name === name);
@@ -2020,7 +1790,8 @@
                         name, 
                         type, 
                         recipe: content,
-                        ingredients: ingredients.length > 0 ? ingredients : undefined
+                        ingredients: ingredients.length > 0 ? ingredients : undefined,
+                        category: recipes[duplicateIndex].category || "benutzerdefiniert"
                     };
                     existingIndex = duplicateIndex;
                 } else {
@@ -2029,26 +1800,15 @@
                         name, 
                         type, 
                         recipe: content,
-                        ingredients: ingredients.length > 0 ? ingredients : undefined
+                        ingredients: ingredients.length > 0 ? ingredients : undefined,
+                        category: "benutzerdefiniert"
                     });
                     existingIndex = recipes.length - 1;
                 }
             }
             
-            // Als klassische Sorte hinzufügen, wenn angefordert
-            if (isClassic && !classicFlavors.some(cf => cf.name === name)) {
-                classicFlavors.push({
-                    name,
-                    type,
-                    category: "klassisch",
-                    recipe: content || ""
-                });
-                saveClassicFlavors();
-            }
-            
             // Speichern und aktualisieren
             saveRecipes();
-            loadRecipes();
             closeRecipeModal();
             
             showNotification(`Rezept für ${name} erfolgreich gespeichert!`, 'success');
@@ -2062,226 +1822,10 @@
                 return;
             }
             
-            // Auch aus klassischen Eissorten entfernen, falls vorhanden
-            const classicIndex = classicFlavors.findIndex(cf => cf.name === flavor.name);
-            if (classicIndex >= 0) {
-                classicFlavors.splice(classicIndex, 1);
-                saveClassicFlavors();
-            }
-            
             recipes.splice(index, 1);
             saveRecipes();
-            loadRecipes();
             
             showNotification(`Rezept für ${flavor.name} gelöscht!`, 'info');
-        }
-        
-        // EINKAUFSLISTE GENERIEREN
-        function generateShoppingList() {
-            const dateKey = getDateKey(currentDate);
-            const productionData = production[dateKey] || [];
-            
-            if (productionData.length === 0) {
-                showNotification('Keine Produktion zum Generieren einer Einkaufsliste!', 'warning');
-                return;
-            }
-            
-            shoppingList = [];
-            
-            // Jeden Produktionsartikel verarbeiten
-            productionData.forEach(item => {
-                const recipe = recipes.find(r => r.name === item.name);
-                
-                if (recipe && recipe.ingredients) {
-                    // Für jede Zutat im Rezept Menge basierend auf Produktion anpassen
-                    recipe.ingredients.forEach(ingredient => {
-                        // Multiplikator basierend auf produzierter Menge berechnen
-                        // (Annahme: Rezept ist für 1 Liter)
-                        const multiplier = item.quantity;
-                        
-                        // Überprüfen, ob die Zutat bereits in der Liste ist
-                        const existingIngredient = shoppingList.find(i => 
-                            i.name.toLowerCase() === ingredient.name.toLowerCase() && 
-                            i.unit === ingredient.unit
-                        );
-                        
-                        if (existingIngredient) {
-                            // Falls bereits vorhanden, Menge hinzufügen
-                            existingIngredient.quantity = addQuantities(
-                                existingIngredient.quantity, 
-                                multiplyQuantity(ingredient.quantity, multiplier)
-                            );
-                            existingIngredient.source = existingIngredient.source 
-                                ? `${existingIngredient.source}, ${item.name}`
-                                : `Für: ${item.name} (${item.quantity}L)`;
-                        } else {
-                            // Falls nicht vorhanden, neue hinzufügen
-                            shoppingList.push({
-                                name: ingredient.name,
-                                quantity: multiplyQuantity(ingredient.quantity, multiplier),
-                                unit: ingredient.unit,
-                                source: `Für: ${item.name} (${item.quantity}L)`,
-                                outOfStock: false
-                            });
-                        }
-                    });
-                }
-            });
-            
-            saveShoppingList();
-            loadShoppingList();
-            
-            // Zur Einkaufsliste-Tab wechseln
-            switchTab('shopping');
-            
-            showNotification('Einkaufsliste erfolgreich generiert!', 'success');
-        }
-        
-        // Hilfsfunktionen für Mengen
-        function multiplyQuantity(quantityStr, multiplier) {
-            // Versuchen, in Zahl umzuwandeln
-            const quantity = parseFloat(quantityStr);
-            if (!isNaN(quantity)) {
-                return (quantity * multiplier).toString();
-            }
-            return quantityStr;
-        }
-        
-        function addQuantities(q1, q2) {
-            const num1 = parseFloat(q1);
-            const num2 = parseFloat(q2);
-            
-            if (!isNaN(num1) && !isNaN(num2)) {
-                return (num1 + num2).toString();
-            }
-            return q1;
-        }
-        
-        // Einkaufsliste laden
-        function loadShoppingList() {
-            const container = document.getElementById('shopping-list');
-            
-            if (shoppingList.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-shopping-cart"></i>
-                        <h3>Einkaufsliste leer</h3>
-                        <p>Generieren Sie eine Einkaufsliste aus der aktuellen Produktion oder fügen Sie fehlende Produkte manuell hinzu.</p>
-                    </div>
-                `;
-                return;
-            }
-            
-            let html = '';
-            shoppingList.forEach((item, index) => {
-                html += `
-                    <div class="shopping-item ${item.outOfStock ? 'shopping-out-of-stock' : ''}">
-                        <div class="shopping-item-info">
-                            <div class="shopping-item-name">${item.name}</div>
-                            <div class="shopping-item-details">${item.source || 'Manuell hinzugefügt'}</div>
-                        </div>
-                        <div class="shopping-item-quantity">
-                            ${item.quantity} ${item.unit}
-                            ${item.outOfStock ? '<br><small style="color: var(--danger);">Ausverkauft</small>' : ''}
-                        </div>
-                        <div class="item-actions">
-                            <button class="action-icon ${item.outOfStock ? 'edit' : 'delete'}" onclick="toggleOutOfStock(${index})" title="${item.outOfStock ? 'Als verfügbar markieren' : 'Als ausverkauft markieren'}">
-                                <i class="fas ${item.outOfStock ? 'fa-check' : 'fa-times'}"></i>
-                            </button>
-                            <button class="action-icon delete" onclick="removeShoppingItem(${index})" title="Entfernen">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            container.innerHTML = html;
-        }
-        
-        // Ausverkauft-Status umschalten
-        function toggleOutOfStock(index) {
-            shoppingList[index].outOfStock = !shoppingList[index].outOfStock;
-            saveShoppingList();
-            loadShoppingList();
-            showNotification(`Artikel ${shoppingList[index].outOfStock ? 'als ausverkauft markiert' : 'als verfügbar markiert'}!`, 'info');
-        }
-        
-        // Alle als verfügbar markieren
-        function markAllAsAvailable() {
-            shoppingList.forEach(item => {
-                item.outOfStock = false;
-            });
-            saveShoppingList();
-            loadShoppingList();
-            showNotification('Alle Artikel als verfügbar markiert!', 'success');
-        }
-        
-        // Alle als ausverkauft markieren
-        function markAllOutOfStock() {
-            shoppingList.forEach(item => {
-                item.outOfStock = true;
-            });
-            saveShoppingList();
-            loadShoppingList();
-            showNotification('Alle Artikel als ausverkauft markiert!', 'info');
-        }
-        
-        // Zutat manuell zur Einkaufsliste hinzufügen
-        function addManualIngredient() {
-            const name = document.getElementById('new-ingredient-name').value;
-            const quantity = document.getElementById('new-ingredient-quantity').value;
-            const unit = document.getElementById('new-ingredient-unit').value;
-            const outOfStock = document.getElementById('new-ingredient-out-of-stock').checked;
-            
-            if (!name.trim() || !quantity.trim()) {
-                showNotification('Bitte Produktname und Menge ausfüllen!', 'warning');
-                return;
-            }
-            
-            shoppingList.push({
-                name: name.trim(),
-                quantity: quantity.trim(),
-                unit: unit.trim() || 'Stk',
-                source: 'Manuell hinzugefügt',
-                outOfStock: outOfStock
-            });
-            
-            saveShoppingList();
-            loadShoppingList();
-            
-            // Felder leeren
-            document.getElementById('new-ingredient-name').value = '';
-            document.getElementById('new-ingredient-quantity').value = '';
-            document.getElementById('new-ingredient-unit').value = '';
-            document.getElementById('new-ingredient-out-of-stock').checked = false;
-            
-            showNotification('Produkt zur Einkaufsliste hinzugefügt!', 'success');
-        }
-        
-        // Artikel aus Einkaufsliste entfernen
-        function removeShoppingItem(index) {
-            if (confirm('Diesen Artikel aus der Einkaufsliste entfernen?')) {
-                shoppingList.splice(index, 1);
-                saveShoppingList();
-                loadShoppingList();
-                showNotification('Artikel aus Einkaufsliste entfernt!', 'info');
-            }
-        }
-        
-        // Einkaufsliste leeren
-        function clearShoppingList() {
-            if (shoppingList.length === 0) {
-                showNotification('Die Einkaufsliste ist bereits leer!', 'warning');
-                return;
-            }
-            
-            if (confirm('Gesamte Einkaufsliste löschen?')) {
-                shoppingList = [];
-                saveShoppingList();
-                loadShoppingList();
-                showNotification('Einkaufsliste geleert!', 'info');
-            }
         }
         
         // Monate für Verlauf einrichten
@@ -2536,7 +2080,6 @@
         
         // Benachrichtigung anzeigen
         function showNotification(message, type) {
-            // Einfache Benachrichtigungsimplementierung
             const colors = {
                 success: '#28a745',
                 warning: '#ffc107',
@@ -2544,7 +2087,6 @@
                 info: '#17a2b8'
             };
             
-            // Benachrichtigungselement erstellen
             const notification = document.createElement('div');
             notification.style.cssText = `
                 position: fixed;
@@ -2574,7 +2116,6 @@
             
             document.body.appendChild(notification);
             
-            // Nach 3 Sekunden entfernen
             setTimeout(() => {
                 notification.style.animation = 'slideOut 0.3s ease-in';
                 setTimeout(() => {
@@ -2584,7 +2125,6 @@
                 }, 300);
             }, 3000);
             
-            // Animationsstile hinzufügen, falls nicht vorhanden
             if (!document.querySelector('#notification-styles')) {
                 const style = document.createElement('style');
                 style.id = 'notification-styles';
@@ -2600,6 +2140,22 @@
                 `;
                 document.head.appendChild(style);
             }
+        }
+        
+        // Touch-Optimierung für Mobilgeräte
+        document.addEventListener('touchstart', function() {}, {passive: true});
+        
+        // Verhindert Zoom bei Doppeltipp auf iOS
+        document.addEventListener('dblclick', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+        
+        // Bessere Touch-Zielgrößen für Mobilgeräte
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('button, .action-icon, .tab, .quick-flavor-btn').forEach(el => {
+                el.style.minHeight = '44px';
+                el.style.minWidth = '44px';
+            });
         }
     </script>
 </body>
