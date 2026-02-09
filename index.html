@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gelateria Manager - Sistema Completo</title>
+    <title>Gelateria Production Manager</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #ff7b9c;
+            --primary-light: #ffccd5;
+            --secondary: #36b5b0;
+            --light: #fffaf7;
+            --dark: #333;
+            --gray: #666;
+            --light-gray: #f0e6e0;
+            --success: #28a745;
+            --warning: #ffc107;
+            --danger: #dc3545;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -15,13 +28,13 @@
         
         body {
             background-color: #f9f7f5;
-            color: #333;
+            color: var(--dark);
             padding: 20px;
-            background-image: linear-gradient(to bottom right, #fff5e6, #ffe8f0);
+            background-image: linear-gradient(to bottom right, #fff5e6, #e6f7ff);
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             background-color: white;
             border-radius: 20px;
@@ -30,16 +43,18 @@
         }
         
         header {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             padding: 25px 30px;
-            text-align: center;
-            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
         
-        h1 {
+        .header-left h1 {
             font-size: 2.5rem;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
         }
         
@@ -49,11 +64,7 @@
             font-weight: 300;
         }
         
-        .action-buttons {
-            position: absolute;
-            right: 30px;
-            top: 50%;
-            transform: translateY(-50%);
+        .header-right {
             display: flex;
             gap: 15px;
         }
@@ -62,7 +73,7 @@
             background: rgba(255, 255, 255, 0.2);
             border: 2px solid rgba(255, 255, 255, 0.3);
             color: white;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
@@ -70,6 +81,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            white-space: nowrap;
         }
         
         .action-btn:hover {
@@ -77,37 +89,74 @@
             transform: translateY(-2px);
         }
         
+        .action-btn.whatsapp {
+            background: rgba(37, 211, 102, 0.7);
+        }
+        
+        .action-btn.print {
+            background: rgba(0, 123, 255, 0.7);
+        }
+        
+        .tabs {
+            display: flex;
+            background-color: var(--light);
+            border-bottom: 2px solid var(--light-gray);
+        }
+        
+        .tab {
+            padding: 18px 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--gray);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .tab:hover {
+            background-color: rgba(255, 123, 156, 0.1);
+        }
+        
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            background-color: white;
+        }
+        
         .content {
             display: flex;
             flex-wrap: wrap;
-            min-height: 600px;
+            min-height: 700px;
         }
         
-        .left-panel {
+        .main-content {
+            flex: 3;
+            min-width: 600px;
+            padding: 30px;
+        }
+        
+        .sidebar {
             flex: 1;
             min-width: 350px;
             padding: 30px;
-            background-color: #fffaf7;
-            border-right: 1px solid #f0e6e0;
-        }
-        
-        .right-panel {
-            flex: 2;
-            min-width: 500px;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
+            background-color: var(--light);
+            border-left: 1px solid var(--light-gray);
         }
         
         .section-title {
             font-size: 1.5rem;
-            color: #ff7b9c;
+            color: var(--primary);
             margin-bottom: 20px;
             padding-bottom: 10px;
-            border-bottom: 2px dashed #ffccd5;
+            border-bottom: 2px dashed var(--primary-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+        
+        .section-subtitle {
+            font-size: 0.9rem;
+            color: var(--gray);
+            font-weight: normal;
         }
         
         .form-group {
@@ -118,43 +167,62 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #555;
+            color: var(--gray);
         }
         
         select, input, textarea {
             width: 100%;
             padding: 12px 15px;
-            border: 2px solid #f0e6e0;
+            border: 2px solid var(--light-gray);
             border-radius: 10px;
             font-size: 1rem;
             transition: all 0.3s;
         }
         
         select:focus, input:focus, textarea:focus {
-            border-color: #ff9a9e;
+            border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(255, 154, 158, 0.2);
+            box-shadow: 0 0 0 3px rgba(255, 123, 156, 0.2);
         }
         
-        .radio-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 10px;
-        }
-        
-        .radio-option {
+        .date-selector {
             display: flex;
             align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
         
-        .radio-option input {
-            width: auto;
-            margin-right: 8px;
+        .date-display {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+            background-color: var(--light);
+            padding: 10px 15px;
+            border-radius: 10px;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .date-nav-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .date-nav-btn:hover {
+            background-color: var(--secondary);
         }
         
         .btn {
-            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            background: linear-gradient(to right, var(--primary), var(--secondary));
             color: white;
             border: none;
             padding: 14px 25px;
@@ -173,138 +241,183 @@
         
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.3);
-        }
-        
-        .btn:active {
-            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(255, 123, 156, 0.3);
         }
         
         .btn-secondary {
             background: linear-gradient(to right, #6c757d, #868e96);
         }
         
-        .btn-whatsapp {
-            background: linear-gradient(to right, #25D366, #128C7E);
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+            width: auto;
         }
         
-        .btn-print {
-            background: linear-gradient(to right, #007bff, #0056b3);
-        }
-        
-        .flavor-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+        .production-list {
             margin-top: 20px;
-            flex-grow: 1;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid var(--light-gray);
+            border-radius: 10px;
+            padding: 10px;
+        }
+        
+        .production-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid var(--light-gray);
+            transition: background-color 0.2s;
+        }
+        
+        .production-item:hover {
+            background-color: rgba(255, 204, 213, 0.1);
+        }
+        
+        .production-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .item-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary);
+        }
+        
+        .item-details {
+            display: flex;
+            gap: 15px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-icon {
+            background: none;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .action-icon.edit {
+            color: var(--secondary);
+        }
+        
+        .action-icon.edit:hover {
+            background-color: rgba(54, 181, 176, 0.1);
+        }
+        
+        .action-icon.delete {
+            color: var(--danger);
+        }
+        
+        .action-icon.delete:hover {
+            background-color: rgba(220, 53, 69, 0.1);
         }
         
         .flavor-card {
             background-color: white;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid #f0e6e0;
+            margin-bottom: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--light-gray);
             transition: transform 0.3s;
-            position: relative;
         }
         
         .flavor-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
         }
         
         .flavor-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .flavor-name {
             font-weight: 700;
             font-size: 1.2rem;
-            color: #ff7b9c;
+            color: var(--primary);
         }
         
         .flavor-type {
-            background-color: #ffe8f0;
-            color: #ff7b9c;
+            background-color: var(--primary-light);
+            color: var(--primary);
             padding: 4px 10px;
             border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 600;
         }
         
-        .flavor-details {
-            margin-bottom: 15px;
-            color: #666;
-        }
-        
-        .flavor-size {
-            font-weight: 600;
-            color: #ff9a9e;
-        }
-        
         .flavor-recipe {
             font-style: italic;
-            color: #888;
+            color: var(--gray);
             font-size: 0.9rem;
-            border-top: 1px dashed #f0e6e0;
+            border-top: 1px dashed var(--light-gray);
             padding-top: 10px;
             margin-top: 10px;
             max-height: 100px;
             overflow-y: auto;
         }
         
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #aaa;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 25px;
         }
         
-        .empty-state img {
-            width: 100px;
-            opacity: 0.5;
-            margin-bottom: 20px;
-        }
-        
-        .flavor-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #fffaf7;
+        .stat-card {
+            background-color: white;
             border-radius: 12px;
-            border: 1px solid #f0e6e0;
-        }
-        
-        .stat-item {
+            padding: 20px;
             text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--light-gray);
         }
         
         .stat-value {
             font-size: 2rem;
             font-weight: 700;
-            color: #ff7b9c;
+            color: var(--primary);
+            margin-bottom: 5px;
         }
         
         .stat-label {
             font-size: 0.9rem;
-            color: #888;
+            color: var(--gray);
         }
         
-        .quick-add-section {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 12px;
-            border: 1px solid #e9ecef;
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #aaa;
+        }
+        
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            opacity: 0.5;
         }
         
         .quick-flavors {
@@ -316,7 +429,7 @@
         
         .quick-flavor-btn {
             background-color: white;
-            border: 1px solid #dee2e6;
+            border: 1px solid var(--light-gray);
             padding: 10px;
             border-radius: 8px;
             cursor: pointer;
@@ -326,34 +439,17 @@
         }
         
         .quick-flavor-btn:hover {
-            background-color: #ffe8f0;
-            border-color: #ff9a9e;
+            background-color: var(--primary-light);
+            border-color: var(--primary);
             transform: translateY(-2px);
         }
         
-        .quick-flavor-btn.fruit {
-            border-left: 4px solid #28a745;
+        .flavor-fruit {
+            border-left: 4px solid var(--success);
         }
         
-        .quick-flavor-btn.milk {
-            border-left: 4px solid #17a2b8;
-        }
-        
-        .remove-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #ffccd5;
-            color: #ff3366;
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .flavor-milk {
+            border-left: 4px solid var(--secondary);
         }
         
         .modal {
@@ -389,7 +485,7 @@
         
         .modal-title {
             font-size: 1.5rem;
-            color: #ff7b9c;
+            color: var(--primary);
         }
         
         .close-modal {
@@ -400,44 +496,57 @@
             color: #999;
         }
         
-        @media (max-width: 1100px) {
-            .action-buttons {
-                position: static;
-                transform: none;
-                justify-content: center;
-                margin-top: 20px;
-            }
-            
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 1200px) {
             .content {
                 flex-direction: column;
             }
             
-            .left-panel {
-                border-right: none;
-                border-bottom: 1px solid #f0e6e0;
-            }
-            
-            .flavor-list {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            .sidebar {
+                border-left: none;
+                border-top: 1px solid var(--light-gray);
             }
         }
         
         @media (max-width: 768px) {
-            .action-buttons {
+            header {
                 flex-direction: column;
+                gap: 15px;
             }
             
-            .flavor-list {
-                grid-template-columns: 1fr;
+            .header-right {
+                width: 100%;
+                justify-content: center;
             }
             
-            .quick-flavors {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            .action-btn {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .tabs {
+                overflow-x: auto;
+            }
+            
+            .tab {
+                padding: 15px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .main-content, .sidebar {
+                min-width: 100%;
             }
         }
         
         @media print {
-            .action-buttons, .left-panel, .remove-btn, .btn {
+            header, .tabs, .sidebar, .action-btn, .date-nav-btn, .action-icon {
                 display: none !important;
             }
             
@@ -445,25 +554,18 @@
                 box-shadow: none;
             }
             
-            .flavor-list {
-                display: block !important;
-            }
-            
-            .flavor-card {
+            .production-item {
                 break-inside: avoid;
-                margin-bottom: 20px;
-                box-shadow: none;
-                border: 1px solid #ddd;
             }
             
-            .right-panel {
+            .main-content {
                 width: 100%;
+                padding: 20px;
             }
             
-            header {
-                background: #fff !important;
-                color: #000 !important;
-                text-shadow: none !important;
+            .production-list {
+                max-height: none;
+                border: none;
             }
         }
     </style>
@@ -471,451 +573,916 @@
 <body>
     <div class="container">
         <header>
-            <div>
-                <h1>Gelateria Manager Pro</h1>
-                <p class="subtitle">Sistema completo de gestão de produção de gelados</p>
+            <div class="header-left">
+                <h1>Gelateria Production Manager</h1>
+                <p class="subtitle">Sistema de produção diária e gestão de receitas</p>
             </div>
-            <div class="action-buttons">
-                <button class="action-btn" onclick="sendToWhatsApp()">
-                    <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+            <div class="header-right">
+                <button class="action-btn whatsapp" onclick="sendToWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
                 </button>
-                <button class="action-btn" onclick="printProduction()">
-                    <i class="fas fa-print"></i> Imprimir Lista
+                <button class="action-btn print" onclick="printProduction()">
+                    <i class="fas fa-print"></i> Imprimir
                 </button>
             </div>
         </header>
         
+        <div class="tabs">
+            <div class="tab active" data-tab="production" onclick="switchTab('production')">
+                <i class="fas fa-ice-cream"></i> Produção Diária
+            </div>
+            <div class="tab" data-tab="recipes" onclick="switchTab('recipes')">
+                <i class="fas fa-book"></i> Receitas
+            </div>
+            <div class="tab" data-tab="history" onclick="switchTab('history')">
+                <i class="fas fa-history"></i> Histórico
+            </div>
+        </div>
+        
         <div class="content">
-            <div class="left-panel">
-                <h2 class="section-title">Adicionar Novo Gelado</h2>
+            <!-- PRODUÇÃO DIÁRIA -->
+            <div class="main-content tab-content active" id="production-tab">
+                <div class="section-title">
+                    Produção do Dia
+                    <span class="section-subtitle" id="current-date-display"></span>
+                </div>
                 
-                <form id="icecream-form">
-                    <div class="form-group">
-                        <label for="flavor-name">Nome do Sabor:</label>
-                        <input type="text" id="flavor-name" placeholder="Ex: Stracciatella, Vanille, Schokolade..." required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Tipo de Gelado:</label>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="type-fruit" name="type" value="Fruto" checked>
-                                <label for="type-fruit">Fruto</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="type-milk" name="type" value="Leite">
-                                <label for="type-milk">Leite</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="quantity">Quantidade (Litros):</label>
-                        <select id="quantity" required>
-                            <option value="3">3 Litros</option>
-                            <option value="4" selected>4 Litros</option>
-                            <option value="5">5 Litros</option>
-                            <option value="6">6 Litros</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="recipe">Receita (Ingredientes e Preparação):</label>
-                        <textarea id="recipe" rows="6" placeholder="Descreva os ingredientes e o processo de preparação deste sabor..."></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn">
-                        <i class="fas fa-plus-circle"></i> Adicionar à Lista de Produção
+                <div class="date-selector">
+                    <button class="date-nav-btn" onclick="changeDate(-1)">
+                        <i class="fas fa-chevron-left"></i>
                     </button>
-                </form>
+                    <div class="date-display" id="selected-date"></div>
+                    <button class="date-nav-btn" onclick="changeDate(1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button class="date-nav-btn" onclick="goToToday()" title="Hoje">
+                        <i class="fas fa-calendar-day"></i>
+                    </button>
+                </div>
                 
-                <div class="quick-add-section">
-                    <h3>Sabores Comuns da Gelateria</h3>
-                    <p>Clique para adicionar rapidamente:</p>
-                    <div class="quick-flavors" id="quick-flavors">
-                        <!-- Sabores serão adicionados via JavaScript -->
+                <div class="form-group">
+                    <label for="flavor-select">Selecionar Sabor:</label>
+                    <select id="flavor-select">
+                        <!-- Sabores serão carregados dinamicamente -->
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="quantity">Quantidade (Litros):</label>
+                    <select id="quantity">
+                        <option value="1">1 Litro</option>
+                        <option value="2">2 Litros</option>
+                        <option value="3" selected>3 Litros</option>
+                        <option value="4">4 Litros</option>
+                        <option value="5">5 Litros</option>
+                        <option value="6">6 Litros</option>
+                        <option value="8">8 Litros</option>
+                        <option value="10">10 Litros</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Notas (opcional):</label>
+                    <textarea id="notes" rows="3" placeholder="Notas especiais para esta produção..."></textarea>
+                </div>
+                
+                <button class="btn" onclick="addToProduction()">
+                    <i class="fas fa-plus-circle"></i> Adicionar à Produção do Dia
+                </button>
+                
+                <div class="section-title" style="margin-top: 30px;">
+                    Lista de Produção
+                    <span class="section-subtitle" id="production-count">0 itens</span>
+                </div>
+                
+                <div class="production-list" id="production-list">
+                    <!-- Itens de produção serão adicionados aqui -->
+                    <div class="empty-state">
+                        <i class="fas fa-ice-cream"></i>
+                        <h3>Nenhuma produção adicionada hoje</h3>
+                        <p>Comece adicionando sabores à produção do dia usando o formulário acima.</p>
                     </div>
                 </div>
                 
-                <div class="flavor-stats">
-                    <div class="stat-item">
-                        <div class="stat-value" id="total-flavors">0</div>
-                        <div class="stat-label">Sabores</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-production">0</div>
+                        <div class="stat-label">Itens de Produção</div>
                     </div>
-                    <div class="stat-item">
+                    <div class="stat-card">
                         <div class="stat-value" id="total-liters">0</div>
-                        <div class="stat-label">Litros totais</div>
+                        <div class="stat-label">Litros Totais</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="fruit-count">0</div>
-                        <div class="stat-label">Fruto</div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="fruit-production">0</div>
+                        <div class="stat-label">Sabores de Fruto</div>
                     </div>
-                    <div class="stat-item">
-                        <div class="stat-value" id="milk-count">0</div>
-                        <div class="stat-label">Leite</div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="milk-production">0</div>
+                        <div class="stat-label">Sabores de Leite</div>
                     </div>
                 </div>
-                
-                <button class="btn btn-secondary" onclick="showRecipeModal()">
-                    <i class="fas fa-book"></i> Ver Todas as Receitas
-                </button>
-                
-                <button class="btn btn-secondary" onclick="clearAll()" style="margin-top: 10px;">
-                    <i class="fas fa-trash-alt"></i> Limpar Tudo
-                </button>
             </div>
             
-            <div class="right-panel">
-                <h2 class="section-title">
-                    Lista de Produção do Dia
-                    <span id="current-date"></span>
-                </h2>
+            <!-- RECEITAS -->
+            <div class="main-content tab-content" id="recipes-tab">
+                <div class="section-title">
+                    Gestão de Receitas
+                    <button class="btn btn-small" onclick="openRecipeModal('new')">
+                        <i class="fas fa-plus"></i> Nova Receita
+                    </button>
+                </div>
                 
-                <div id="flavors-container">
-                    <!-- Aqui serão exibidos os gelados adicionados -->
+                <div class="quick-flavors" id="common-flavors">
+                    <!-- Sabores comuns serão carregados aqui -->
+                </div>
+                
+                <div id="recipes-list">
+                    <!-- Receitas serão carregadas aqui -->
                     <div class="empty-state">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5IDZMMjAgNU0xNiAxNEwyMCAxME0xNCAxOEwxNiAxNk0xMiAyMEwxMyAxOU0xOCAxMkwyMiA4TTggOEw0IDRNNCA0TDggOE00IDRMMyA1TTggOEw0IDEyTTQgMTJMMCAxNk0xMiAyNEwxNiAyME0xNiAyMEwyMiAxNE0xNiAyMEwyMCAxNk0xNiAyMEwxMiAxNk0yMCAxNkwyMiAxNCIgc3Ryb2tlPSIjQ0NDIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Ícone de sorvete">
-                        <h3>Nenhum gelado adicionado ainda</h3>
-                        <p>Comece adicionando os sabores que precisa produzir hoje usando o formulário ao lado.</p>
+                        <i class="fas fa-book-open"></i>
+                        <h3>Nenhuma receita adicionada</h3>
+                        <p>Adicione suas receitas ou use os sabores comuns acima.</p>
                     </div>
                 </div>
+            </div>
+            
+            <!-- HISTÓRICO -->
+            <div class="main-content tab-content" id="history-tab">
+                <div class="section-title">
+                    Histórico de Produção
+                    <div class="date-selector" style="margin: 0;">
+                        <select id="history-month" onchange="loadHistory()" style="width: auto;">
+                            <!-- Meses serão preenchidos dinamicamente -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="history-content">
+                    <!-- Histórico será carregado aqui -->
+                    <div class="empty-state">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Histórico de produção</h3>
+                        <p>Selecione um mês para ver o histórico de produção.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                <div class="section-title">
+                    Sabores da Gelateria
+                    <span class="section-subtitle" id="flavors-count">0 sabores</span>
+                </div>
+                
+                <div id="flavors-sidebar">
+                    <!-- Sabores serão carregados aqui -->
+                    <div class="empty-state">
+                        <i class="fas fa-cone"></i>
+                        <p>Adicione sabores na aba "Receitas"</p>
+                    </div>
+                </div>
+                
+                <div class="section-title" style="margin-top: 30px;">
+                    Produção por Tipo
+                </div>
+                
+                <div class="flavor-card">
+                    <div class="flavor-header">
+                        <div class="flavor-name">Sabores de Fruto</div>
+                        <div class="flavor-type">Fruto</div>
+                    </div>
+                    <div class="stat-value" id="sidebar-fruit">0</div>
+                    <div class="stat-label">itens na produção atual</div>
+                </div>
+                
+                <div class="flavor-card">
+                    <div class="flavor-header">
+                        <div class="flavor-name">Sabores de Leite</div>
+                        <div class="flavor-type">Leite</div>
+                    </div>
+                    <div class="stat-value" id="sidebar-milk">0</div>
+                    <div class="stat-label">itens na produção atual</div>
+                </div>
+                
+                <button class="btn btn-secondary" onclick="clearProduction()" style="margin-top: 20px;">
+                    <i class="fas fa-trash-alt"></i> Limpar Produção do Dia
+                </button>
             </div>
         </div>
     </div>
     
-    <!-- Modal para ver todas as receitas -->
+    <!-- MODAL PARA RECEITAS -->
     <div class="modal" id="recipe-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">Receitas dos Gelados</h2>
+                <h2 class="modal-title" id="modal-title">Nova Receita</h2>
                 <button class="close-modal" onclick="closeRecipeModal()">&times;</button>
             </div>
-            <div id="all-recipes">
-                <!-- Receitas serão adicionadas aqui -->
-            </div>
+            <form id="recipe-form">
+                <input type="hidden" id="recipe-id">
+                
+                <div class="form-group">
+                    <label for="recipe-name">Nome do Sabor:</label>
+                    <input type="text" id="recipe-name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipe-type">Tipo de Gelado:</label>
+                    <select id="recipe-type" required>
+                        <option value="Fruto">Fruto</option>
+                        <option value="Leite">Leite</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="recipe-content">Receita (Ingredientes e Preparação):</label>
+                    <textarea id="recipe-content" rows="8" placeholder="Descreva os ingredientes e o processo de preparação..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn">
+                    <i class="fas fa-save"></i> Salvar Receita
+                </button>
+            </form>
         </div>
     </div>
 
     <script>
-        // Armazenar gelados
-        let iceCreams = [];
+        // Dados do sistema
+        let production = {}; // Produção por data
+        let recipes = []; // Receitas de sabores
+        let currentDate = new Date(); // Data atual selecionada
         
-        // Sabores pré-definidos da gelateria
+        // Sabores comuns da gelateria
         const commonFlavors = [
-            { name: "Stracciatella", type: "Leite", recipe: "Base de leite com lascas de chocolate preto. Ingredientes: leite, natas, açúcar, chocolate preto em lascas." },
-            { name: "Vanille", type: "Leite", recipe: "Baunilha tradicional com vagem de baunilha. Ingredientes: leite, natas, açúcar, vagem de baunilha, gema de ovo." },
-            { name: "Schokolade", type: "Leite", recipe: "Chocolate intenso belga. Ingredientes: leite, natas, açúcar, cacau em pó de qualidade, chocolate preto derretido." },
-            { name: "Amarena Kirch", type: "Fruto", recipe: "Creme branco com cerejas Amarena. Ingredientes: leite, natas, açúcar, cerejas Amarena, calda de cereja." },
-            { name: "Haselnüsse", type: "Leite", recipe: "Avelãs torradas e moídas. Ingredientes: leite, natas, açúcar, pasta de avelã, avelãs trituradas." },
-            { name: "Walnuss", type: "Leite", recipe: "Nozes frescas caramelizadas. Ingredientes: leite, natas, açúcar, nozes, caramelo." },
-            { name: "Cookies", type: "Leite", recipe: "Base de baunilha com pedaços de bolacha. Ingredientes: leite, natas, açúcar, bolacha tipo cookie triturada." },
-            { name: "Snickers", type: "Leite", recipe: "Caramelo, amendoim e chocolate. Ingredientes: leite, natas, açúcar, caramelo, amendoim, chocolate." },
-            { name: "dunkel Schokolade", type: "Leite", recipe: "Chocolate preto 70% cacau. Ingredientes: leite, natas, açúcar, chocolate preto de alta qualidade." },
-            { name: "Weiß Schokolade", type: "Leite", recipe: "Chocolate branco cremoso. Ingredientes: leite, natas, açúcar, chocolate branco, baunilha." },
-            { name: "Erdbeer", type: "Fruto", recipe: "Morango fresco. Ingredientes: morangos frescos, açúcar, sumo de limão, um pouco de natas." },
-            { name: "Himbeere", type: "Fruto", recipe: "Framboesa silvestre. Ingredientes: framboesas frescas, açúcar, sumo de limão." },
-            { name: "Mango", type: "Fruto", recipe: "Manga madura tropical. Ingredientes: polpa de manga, açúcar, sumo de limão, um pouco de natas." },
-            { name: "Zitrone", type: "Fruto", recipe: "Limão siciliano. Ingredientes: sumo de limão fresco, casca de limão, açúcar, um pouco de natas." },
-            { name: "Banane", type: "Fruto", recipe: "Banana madura caramelizada. Ingredientes: bananas maduras, açúcar mascavado, canela, sumo de limão." }
+            { name: "Stracciatella", type: "Leite", recipe: "Base de leite com lascas de chocolate preto." },
+            { name: "Vanille", type: "Leite", recipe: "Baunilha tradicional com vagem de baunilha." },
+            { name: "Schokolade", type: "Leite", recipe: "Chocolate intenso belga." },
+            { name: "Amarena Kirch", type: "Fruto", recipe: "Creme branco com cerejas Amarena." },
+            { name: "Haselnüsse", type: "Leite", recipe: "Avelãs torradas e moídas." },
+            { name: "Walnuss", type: "Leite", recipe: "Nozes frescas caramelizadas." },
+            { name: "Cookies", type: "Leite", recipe: "Base de baunilha com pedaços de bolacha." },
+            { name: "Snickers", type: "Leite", recipe: "Caramelo, amendoim e chocolate." },
+            { name: "dunkel Schokolade", type: "Leite", recipe: "Chocolate preto 70% cacau." },
+            { name: "Weiß Schokolade", type: "Leite", recipe: "Chocolate branco cremoso." },
+            { name: "Erdbeer", type: "Fruto", recipe: "Morango fresco." },
+            { name: "Himbeere", type: "Fruto", recipe: "Framboesa silvestre." },
+            { name: "Mango", type: "Fruto", recipe: "Manga madura tropical." },
+            { name: "Zitrone", type: "Fruto", recipe: "Limão siciliano." },
+            { name: "Banane", type: "Fruto", recipe: "Banana madura caramelizada." }
         ];
         
-        // Inicializar a página
+        // Inicializar o sistema
         document.addEventListener('DOMContentLoaded', function() {
-            // Exibir data atual
-            const today = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('current-date').textContent = today.toLocaleDateString('pt-PT', options);
+            // Carregar dados salvos
+            loadSavedData();
             
-            // Recuperar dados salvos no localStorage
-            const savedIceCreams = localStorage.getItem('gelateriaIceCreams');
-            if (savedIceCreams) {
-                iceCreams = JSON.parse(savedIceCreams);
-                updateFlavorList();
-                updateStats();
-            }
+            // Configurar data atual
+            updateDateDisplay();
             
-            // Carregar sabores rápidos
-            loadQuickFlavors();
+            // Carregar sabores comuns
+            loadCommonFlavors();
+            
+            // Carregar receitas
+            loadRecipes();
+            
+            // Carregar produção do dia atual
+            loadProductionForDate(getDateKey(currentDate));
+            
+            // Configurar meses para histórico
+            setupHistoryMonths();
+            
+            // Configurar formulário de receita
+            document.getElementById('recipe-form').addEventListener('submit', saveRecipe);
         });
         
-        // Carregar sabores rápidos
-        function loadQuickFlavors() {
-            const container = document.getElementById('quick-flavors');
-            container.innerHTML = '';
+        // Trocar entre abas
+        function switchTab(tabName) {
+            // Atualizar tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.tab === tabName) {
+                    tab.classList.add('active');
+                }
+            });
             
-            commonFlavors.forEach(flavor => {
+            // Atualizar conteúdo
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.getElementById(tabName + '-tab').classList.add('active');
+        }
+        
+        // Carregar dados salvos
+        function loadSavedData() {
+            // Carregar receitas
+            const savedRecipes = localStorage.getItem('gelateriaRecipes');
+            if (savedRecipes) {
+                recipes = JSON.parse(savedRecipes);
+            } else {
+                // Se não houver receitas salvas, carregar as comuns
+                recipes = [...commonFlavors];
+                saveRecipes();
+            }
+            
+            // Carregar produção
+            const savedProduction = localStorage.getItem('gelateriaProduction');
+            if (savedProduction) {
+                production = JSON.parse(savedProduction);
+            }
+        }
+        
+        // Salvar dados
+        function saveRecipes() {
+            localStorage.setItem('gelateriaRecipes', JSON.stringify(recipes));
+        }
+        
+        function saveProduction() {
+            localStorage.setItem('gelateriaProduction', JSON.stringify(production));
+        }
+        
+        // Funções de data
+        function getDateKey(date) {
+            return date.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+        }
+        
+        function formatDate(date) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('pt-PT', options);
+        }
+        
+        function updateDateDisplay() {
+            document.getElementById('selected-date').textContent = formatDate(currentDate);
+            document.getElementById('current-date-display').textContent = formatDate(new Date());
+        }
+        
+        function changeDate(days) {
+            currentDate.setDate(currentDate.getDate() + days);
+            updateDateDisplay();
+            loadProductionForDate(getDateKey(currentDate));
+        }
+        
+        function goToToday() {
+            currentDate = new Date();
+            updateDateDisplay();
+            loadProductionForDate(getDateKey(currentDate));
+        }
+        
+        // Carregar produção para uma data específica
+        function loadProductionForDate(dateKey) {
+            const productionList = document.getElementById('production-list');
+            const productionData = production[dateKey] || [];
+            
+            if (productionData.length === 0) {
+                productionList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-ice-cream"></i>
+                        <h3>Nenhuma produção adicionada neste dia</h3>
+                        <p>Adicione sabores à produção usando o formulário.</p>
+                    </div>
+                `;
+            } else {
+                let html = '';
+                productionData.forEach((item, index) => {
+                    const recipe = recipes.find(r => r.name === item.name) || {};
+                    html += `
+                        <div class="production-item">
+                            <div class="item-info">
+                                <div class="item-name">${item.name}</div>
+                                <div class="item-details">
+                                    <span>${item.quantity} Litros</span>
+                                    <span>${recipe.type || 'Tipo não definido'}</span>
+                                    ${item.notes ? `<span>Notas: ${item.notes}</span>` : ''}
+                                </div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="action-icon edit" onclick="editProductionItem('${dateKey}', ${index})" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="action-icon delete" onclick="removeProductionItem('${dateKey}', ${index})" title="Remover">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                productionList.innerHTML = html;
+            }
+            
+            updateProductionStats(dateKey);
+            updateFlavorsSidebar();
+        }
+        
+        // Adicionar à produção
+        function addToProduction() {
+            const flavorSelect = document.getElementById('flavor-select');
+            const selectedFlavor = flavorSelect.value;
+            const quantity = document.getElementById('quantity').value;
+            const notes = document.getElementById('notes').value;
+            
+            if (!selectedFlavor) {
+                showNotification('Selecione um sabor primeiro!', 'warning');
+                return;
+            }
+            
+            const dateKey = getDateKey(currentDate);
+            
+            // Inicializar array para esta data se não existir
+            if (!production[dateKey]) {
+                production[dateKey] = [];
+            }
+            
+            // Adicionar novo item
+            production[dateKey].push({
+                name: selectedFlavor,
+                quantity: parseInt(quantity),
+                notes: notes,
+                timestamp: new Date().toISOString()
+            });
+            
+            // Salvar e atualizar
+            saveProduction();
+            loadProductionForDate(dateKey);
+            
+            // Limpar formulário
+            document.getElementById('notes').value = '';
+            document.getElementById('quantity').value = '3';
+            
+            showNotification(`${selectedFlavor} adicionado à produção!`, 'success');
+        }
+        
+        // Remover item da produção
+        function removeProductionItem(dateKey, index) {
+            if (confirm('Tem certeza que deseja remover este item da produção?')) {
+                production[dateKey].splice(index, 1);
+                
+                // Remover data se não houver mais itens
+                if (production[dateKey].length === 0) {
+                    delete production[dateKey];
+                }
+                
+                saveProduction();
+                loadProductionForDate(dateKey);
+                showNotification('Item removido da produção!', 'info');
+            }
+        }
+        
+        // Editar item da produção
+        function editProductionItem(dateKey, index) {
+            const item = production[dateKey][index];
+            
+            // Preencher formulário com dados do item
+            document.getElementById('flavor-select').value = item.name;
+            document.getElementById('quantity').value = item.quantity;
+            document.getElementById('notes').value = item.notes || '';
+            
+            // Remover item atual
+            production[dateKey].splice(index, 1);
+            
+            // Se não houver mais itens, remover data
+            if (production[dateKey].length === 0) {
+                delete production[dateKey];
+            }
+            
+            saveProduction();
+            loadProductionForDate(dateKey);
+            
+            showNotification('Item pronto para edição!', 'info');
+        }
+        
+        // Atualizar estatísticas de produção
+        function updateProductionStats(dateKey) {
+            const productionData = production[dateKey] || [];
+            const totalItems = productionData.length;
+            const totalLiters = productionData.reduce((sum, item) => sum + item.quantity, 0);
+            
+            // Contar por tipo
+            let fruitCount = 0;
+            let milkCount = 0;
+            
+            productionData.forEach(item => {
+                const recipe = recipes.find(r => r.name === item.name);
+                if (recipe) {
+                    if (recipe.type === 'Fruto') {
+                        fruitCount++;
+                    } else if (recipe.type === 'Leite') {
+                        milkCount++;
+                    }
+                }
+            });
+            
+            // Atualizar UI
+            document.getElementById('production-count').textContent = `${totalItems} itens`;
+            document.getElementById('total-production').textContent = totalItems;
+            document.getElementById('total-liters').textContent = totalLiters;
+            document.getElementById('fruit-production').textContent = fruitCount;
+            document.getElementById('milk-production').textContent = milkCount;
+            document.getElementById('sidebar-fruit').textContent = fruitCount;
+            document.getElementById('sidebar-milk').textContent = milkCount;
+        }
+        
+        // Limpar produção do dia atual
+        function clearProduction() {
+            const dateKey = getDateKey(currentDate);
+            
+            if (!production[dateKey] || production[dateKey].length === 0) {
+                showNotification('Não há produção para limpar hoje!', 'warning');
+                return;
+            }
+            
+            if (confirm('Tem certeza que deseja limpar toda a produção deste dia?')) {
+                delete production[dateKey];
+                saveProduction();
+                loadProductionForDate(dateKey);
+                showNotification('Produção do dia limpa com sucesso!', 'info');
+            }
+        }
+        
+        // Carregar sabores comuns
+        function loadCommonFlavors() {
+            const container = document.getElementById('common-flavors');
+            const flavorSelect = document.getElementById('flavor-select');
+            
+            container.innerHTML = '';
+            flavorSelect.innerHTML = '<option value="">Selecione um sabor...</option>';
+            
+            recipes.forEach(flavor => {
+                // Adicionar ao seletor de produção
+                const option = document.createElement('option');
+                option.value = flavor.name;
+                option.textContent = flavor.name;
+                flavorSelect.appendChild(option);
+                
+                // Adicionar aos sabores comuns
                 const button = document.createElement('button');
                 button.type = 'button';
-                button.className = `quick-flavor-btn ${flavor.type === 'Fruto' ? 'fruit' : 'milk'}`;
+                button.className = `quick-flavor-btn ${flavor.type === 'Fruto' ? 'flavor-fruit' : 'flavor-milk'}`;
                 button.textContent = flavor.name;
-                button.onclick = () => addQuickFlavor(flavor);
+                button.onclick = () => {
+                    document.getElementById('flavor-select').value = flavor.name;
+                    document.getElementById('recipe-type').value = flavor.type;
+                    document.getElementById('recipe-content').value = flavor.recipe || '';
+                    showNotification(`${flavor.name} selecionado!`, 'success');
+                };
                 container.appendChild(button);
             });
+            
+            document.getElementById('flavors-count').textContent = `${recipes.length} sabores`;
         }
         
-        // Adicionar sabor rápido
-        function addQuickFlavor(flavor) {
-            document.getElementById('flavor-name').value = flavor.name;
+        // Atualizar sidebar de sabores
+        function updateFlavorsSidebar() {
+            const container = document.getElementById('flavors-sidebar');
             
-            if (flavor.type === 'Fruto') {
-                document.getElementById('type-fruit').checked = true;
-            } else {
-                document.getElementById('type-milk').checked = true;
-            }
-            
-            if (flavor.recipe) {
-                document.getElementById('recipe').value = flavor.recipe;
-            }
-            
-            // Focar no campo de quantidade
-            document.getElementById('quantity').focus();
-        }
-        
-        // Adicionar novo gelado
-        document.getElementById('icecream-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Obter valores do formulário
-            const flavorName = document.getElementById('flavor-name').value;
-            const flavorType = document.querySelector('input[name="type"]:checked').value;
-            const quantity = document.getElementById('quantity').value;
-            const recipe = document.getElementById('recipe').value;
-            
-            // Criar novo gelado
-            const newIceCream = {
-                id: Date.now(),
-                name: flavorName,
-                type: flavorType,
-                quantity: parseInt(quantity),
-                recipe: recipe,
-                date: new Date().toLocaleDateString('pt-PT')
-            };
-            
-            // Adicionar à lista
-            iceCreams.push(newIceCream);
-            
-            // Atualizar interface
-            updateFlavorList();
-            updateStats();
-            
-            // Salvar no localStorage
-            localStorage.setItem('gelateriaIceCreams', JSON.stringify(iceCreams));
-            
-            // Resetar formulário
-            document.getElementById('icecream-form').reset();
-            document.getElementById('type-fruit').checked = true;
-            
-            // Focar no campo de nome
-            document.getElementById('flavor-name').focus();
-            
-            // Mostrar mensagem de sucesso
-            showNotification(`Gelado "${flavorName}" adicionado com sucesso!`, 'success');
-        });
-        
-        // Atualizar lista de gelados
-        function updateFlavorList() {
-            const container = document.getElementById('flavors-container');
-            
-            if (iceCreams.length === 0) {
+            if (recipes.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5IDZMMjAgNU0xNiAxNEwyMCAxME0xNCAxOEwxNiAxNk0xMiAyMEwxMyAxOU0xOCAxMkwyMiA4TTggOEw0IDRNNCA0TDggOE00IDRMMyA1TTggOEw0IDEyTTQgMTJMMCAxNk0xMiAyNEwxNiAyME0xNiAyMEwyMiAxNE0xNiAyMEwyMCAxNk0xNiAyMEwxMiAxNk0yMCAxNkwyMiAxNCIgc3Ryb2tlPSIjQ0NDIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Ícone de sorvete">
-                        <h3>Nenhum gelado adicionado ainda</h3>
-                        <p>Comece adicionando os sabores que precisa produzir hoje usando o formulário ao lado.</p>
+                        <i class="fas fa-cone"></i>
+                        <p>Adicione sabores na aba "Receitas"</p>
                     </div>
                 `;
                 return;
             }
             
-            // Ordenar por tipo (fruto primeiro, depois leite)
-            const sortedIceCreams = [...iceCreams].sort((a, b) => {
-                if (a.type === 'Fruto' && b.type === 'Leite') return -1;
-                if (a.type === 'Leite' && b.type === 'Fruto') return 1;
-                return a.name.localeCompare(b.name);
-            });
-            
-            // Gerar HTML para cada gelado
-            let flavorsHTML = '<div class="flavor-list">';
-            
-            sortedIceCreams.forEach(iceCream => {
-                flavorsHTML += `
-                    <div class="flavor-card" data-id="${iceCream.id}">
-                        <button class="remove-btn" onclick="removeFlavor(${iceCream.id})" title="Remover">
-                            <i class="fas fa-times"></i>
-                        </button>
+            let html = '';
+            recipes.forEach(flavor => {
+                html += `
+                    <div class="flavor-card">
                         <div class="flavor-header">
-                            <div class="flavor-name">${iceCream.name}</div>
-                            <div class="flavor-type">${iceCream.type}</div>
+                            <div class="flavor-name">${flavor.name}</div>
+                            <div class="flavor-type">${flavor.type}</div>
                         </div>
-                        <div class="flavor-details">
-                            <div><strong>Quantidade:</strong> <span class="flavor-size">${iceCream.quantity} Litros</span></div>
-                            <div><strong>Data:</strong> ${iceCream.date}</div>
+                        ${flavor.recipe ? `<div class="flavor-recipe">${flavor.recipe}</div>` : ''}
+                        <div style="margin-top: 10px; display: flex; gap: 10px;">
+                            <button class="btn btn-small" onclick="openRecipeModal('edit', '${flavor.name}')">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            <button class="btn btn-small" style="background: var(--danger);" onclick="deleteRecipe('${flavor.name}')">
+                                <i class="fas fa-trash"></i> Remover
+                            </button>
                         </div>
-                        ${iceCream.recipe ? `<div class="flavor-recipe"><strong>Receita:</strong> ${iceCream.recipe}</div>` : ''}
                     </div>
                 `;
             });
             
-            flavorsHTML += '</div>';
-            container.innerHTML = flavorsHTML;
+            container.innerHTML = html;
         }
         
-        // Atualizar estatísticas
-        function updateStats() {
-            const totalFlavors = iceCreams.length;
-            const totalLiters = iceCreams.reduce((sum, iceCream) => sum + iceCream.quantity, 0);
-            const fruitCount = iceCreams.filter(iceCream => iceCream.type === 'Fruto').length;
-            const milkCount = iceCreams.filter(iceCream => iceCream.type === 'Leite').length;
+        // Carregar receitas
+        function loadRecipes() {
+            updateFlavorsSidebar();
+            loadCommonFlavors();
+        }
+        
+        // Abrir modal de receita
+        function openRecipeModal(mode, flavorName = null) {
+            const modal = document.getElementById('recipe-modal');
+            const title = document.getElementById('modal-title');
+            const form = document.getElementById('recipe-form');
             
-            document.getElementById('total-flavors').textContent = totalFlavors;
-            document.getElementById('total-liters').textContent = totalLiters;
-            document.getElementById('fruit-count').textContent = fruitCount;
-            document.getElementById('milk-count').textContent = milkCount;
-        }
-        
-        // Remover um sabor
-        function removeFlavor(id) {
-            if (confirm('Tem certeza que deseja remover este gelado da lista?')) {
-                iceCreams = iceCreams.filter(iceCream => iceCream.id !== id);
-                updateFlavorList();
-                updateStats();
-                localStorage.setItem('gelateriaIceCreams', JSON.stringify(iceCreams));
-                showNotification('Gelado removido com sucesso!', 'info');
+            if (mode === 'new') {
+                title.textContent = 'Nova Receita';
+                form.reset();
+                document.getElementById('recipe-id').value = '';
+            } else if (mode === 'edit' && flavorName) {
+                title.textContent = 'Editar Receita';
+                const recipe = recipes.find(r => r.name === flavorName);
+                if (recipe) {
+                    document.getElementById('recipe-id').value = recipe.name;
+                    document.getElementById('recipe-name').value = recipe.name;
+                    document.getElementById('recipe-type').value = recipe.type;
+                    document.getElementById('recipe-content').value = recipe.recipe || '';
+                }
             }
+            
+            modal.style.display = 'flex';
         }
         
-        // Limpar toda a lista
-        function clearAll() {
-            if (iceCreams.length === 0) {
-                showNotification('A lista já está vazia!', 'info');
+        // Fechar modal de receita
+        function closeRecipeModal() {
+            document.getElementById('recipe-modal').style.display = 'none';
+        }
+        
+        // Salvar receita
+        function saveRecipe(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('recipe-id').value;
+            const name = document.getElementById('recipe-name').value;
+            const type = document.getElementById('recipe-type').value;
+            const content = document.getElementById('recipe-content').value;
+            
+            if (!name.trim()) {
+                showNotification('Digite um nome para o sabor!', 'warning');
                 return;
             }
             
-            if (confirm('Tem certeza que deseja remover todos os gelados da lista? Esta ação não pode ser desfeita.')) {
-                iceCreams = [];
-                updateFlavorList();
-                updateStats();
-                localStorage.removeItem('gelateriaIceCreams');
-                showNotification('Lista limpa com sucesso!', 'info');
+            // Verificar se é uma edição ou criação
+            const existingIndex = recipes.findIndex(r => r.name === id);
+            
+            if (existingIndex >= 0) {
+                // Atualizar receita existente
+                recipes[existingIndex] = { name, type, recipe: content };
+            } else {
+                // Verificar se já existe um sabor com este nome
+                const duplicateIndex = recipes.findIndex(r => r.name === name);
+                if (duplicateIndex >= 0) {
+                    if (!confirm('Já existe um sabor com este nome. Deseja substituir?')) {
+                        return;
+                    }
+                    recipes[duplicateIndex] = { name, type, recipe: content };
+                } else {
+                    // Adicionar nova receita
+                    recipes.push({ name, type, recipe: content });
+                }
             }
+            
+            // Salvar e atualizar
+            saveRecipes();
+            loadRecipes();
+            closeRecipeModal();
+            
+            showNotification(`Receita de ${name} salva com sucesso!`, 'success');
+        }
+        
+        // Excluir receita
+        function deleteRecipe(flavorName) {
+            if (!confirm(`Tem certeza que deseja excluir a receita de ${flavorName}?`)) {
+                return;
+            }
+            
+            recipes = recipes.filter(r => r.name !== flavorName);
+            saveRecipes();
+            loadRecipes();
+            
+            showNotification(`Receita de ${flavorName} excluída!`, 'info');
+        }
+        
+        // Configurar meses para histórico
+        function setupHistoryMonths() {
+            const select = document.getElementById('history-month');
+            const currentDate = new Date();
+            
+            // Adicionar opções para os últimos 12 meses
+            for (let i = 0; i < 12; i++) {
+                const date = new Date();
+                date.setMonth(currentDate.getMonth() - i);
+                
+                const year = date.getFullYear();
+                const month = date.getMonth();
+                const monthName = date.toLocaleDateString('pt-PT', { month: 'long' });
+                const value = `${year}-${String(month + 1).padStart(2, '0')}`;
+                
+                const option = document.createElement('option');
+                option.value = value;
+                option.textContent = `${monthName.charAt(0).toUpperCase() + monthName.slice(1)} ${year}`;
+                
+                if (i === 0) {
+                    option.selected = true;
+                }
+                
+                select.appendChild(option);
+            }
+            
+            // Carregar histórico do mês atual
+            loadHistory();
+        }
+        
+        // Carregar histórico
+        function loadHistory() {
+            const monthValue = document.getElementById('history-month').value;
+            const [year, month] = monthValue.split('-').map(Number);
+            
+            const container = document.getElementById('history-content');
+            
+            // Filtrar produção para o mês selecionado
+            const monthProduction = {};
+            Object.keys(production).forEach(dateKey => {
+                const [prodYear, prodMonth] = dateKey.split('-').map(Number);
+                if (prodYear === year && prodMonth === month) {
+                    monthProduction[dateKey] = production[dateKey];
+                }
+            });
+            
+            if (Object.keys(monthProduction).length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-chart-line"></i>
+                        <h3>Sem produção neste mês</h3>
+                        <p>Não há registros de produção para o mês selecionado.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Ordenar datas
+            const sortedDates = Object.keys(monthProduction).sort().reverse();
+            
+            let html = '';
+            sortedDates.forEach(dateKey => {
+                const date = new Date(dateKey);
+                const formattedDate = date.toLocaleDateString('pt-PT', { weekday: 'short', day: '2-digit', month: 'short' });
+                const dayProduction = monthProduction[dateKey];
+                const totalLiters = dayProduction.reduce((sum, item) => sum + item.quantity, 0);
+                
+                html += `
+                    <div class="flavor-card">
+                        <div class="flavor-header">
+                            <div class="flavor-name">${formattedDate}</div>
+                            <div class="flavor-type">${dayProduction.length} itens</div>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <strong>Total:</strong> ${totalLiters} litros<br>
+                            <strong>Sabores:</strong> ${dayProduction.map(item => `${item.name} (${item.quantity}L)`).join(', ')}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
         }
         
         // Enviar por WhatsApp
         function sendToWhatsApp() {
-            if (iceCreams.length === 0) {
-                showNotification('Adicione pelo menos um gelado antes de enviar!', 'warning');
+            const dateKey = getDateKey(currentDate);
+            const productionData = production[dateKey] || [];
+            
+            if (productionData.length === 0) {
+                showNotification('Não há produção para enviar hoje!', 'warning');
                 return;
             }
             
-            // Formatar mensagem para WhatsApp
-            const today = new Date().toLocaleDateString('pt-PT');
-            let message = `*LISTA DE PRODUÇÃO DA GELATERIA - ${today}*\n\n`;
+            // Formatar mensagem
+            const formattedDate = formatDate(currentDate);
+            let message = `*PRODUÇÃO DA GELATERIA - ${formattedDate}*\n\n`;
             
             // Agrupar por tipo
-            const fruitFlavors = iceCreams.filter(f => f.type === 'Fruto');
-            const milkFlavors = iceCreams.filter(f => f.type === 'Leite');
+            const fruitItems = [];
+            const milkItems = [];
             
-            if (fruitFlavors.length > 0) {
+            productionData.forEach(item => {
+                const recipe = recipes.find(r => r.name === item.name);
+                if (recipe && recipe.type === 'Fruto') {
+                    fruitItems.push(item);
+                } else {
+                    milkItems.push(item);
+                }
+            });
+            
+            // Adicionar itens de fruto
+            if (fruitItems.length > 0) {
                 message += `*GELADOS DE FRUTO:*\n`;
-                fruitFlavors.forEach(flavor => {
-                    message += `• ${flavor.name}: ${flavor.quantity}L\n`;
+                fruitItems.forEach(item => {
+                    message += `• ${item.name}: ${item.quantity}L${item.notes ? ` (${item.notes})` : ''}\n`;
                 });
                 message += '\n';
             }
             
-            if (milkFlavors.length > 0) {
+            // Adicionar itens de leite
+            if (milkItems.length > 0) {
                 message += `*GELADOS DE LEITE:*\n`;
-                milkFlavors.forEach(flavor => {
-                    message += `• ${flavor.name}: ${flavor.quantity}L\n`;
+                milkItems.forEach(item => {
+                    message += `• ${item.name}: ${item.quantity}L${item.notes ? ` (${item.notes})` : ''}\n`;
                 });
                 message += '\n';
             }
             
             // Adicionar totais
-            const totalLiters = iceCreams.reduce((sum, f) => sum + f.quantity, 0);
-            message += `*TOTAL:* ${iceCreams.length} sabores, ${totalLiters} litros\n`;
-            message += `\nProdução gerada pelo Gelateria Manager Pro`;
+            const totalLiters = productionData.reduce((sum, item) => sum + item.quantity, 0);
+            message += `*TOTAL:* ${productionData.length} sabores, ${totalLiters} litros\n`;
+            message += `\nGerado pelo Gelateria Production Manager`;
             
-            // Codificar para URL
+            // Codificar e abrir WhatsApp
             const encodedMessage = encodeURIComponent(message);
-            
-            // Abrir WhatsApp Web ou app
             window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
             
-            showNotification('Preparando para enviar por WhatsApp...', 'success');
+            showNotification('Abrindo WhatsApp...', 'success');
         }
         
-        // Imprimir lista de produção
+        // Imprimir produção
         function printProduction() {
-            if (iceCreams.length === 0) {
-                showNotification('Adicione pelo menos um gelado antes de imprimir!', 'warning');
+            const dateKey = getDateKey(currentDate);
+            const productionData = production[dateKey] || [];
+            
+            if (productionData.length === 0) {
+                showNotification('Não há produção para imprimir hoje!', 'warning');
                 return;
             }
             
-            // Criar uma versão impressão amigável
+            // Criar janela de impressão
             const printWindow = window.open('', '_blank');
-            const today = new Date().toLocaleDateString('pt-PT', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
+            const formattedDate = formatDate(currentDate);
             
             let printContent = `
                 <!DOCTYPE html>
                 <html lang="pt">
                 <head>
                     <meta charset="UTF-8">
-                    <title>Lista de Produção - Gelateria</title>
+                    <title>Produção da Gelateria - ${formattedDate}</title>
                     <style>
                         body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
-                        h1 { color: #ff7b9c; text-align: center; }
-                        h2 { color: #555; border-bottom: 2px solid #ffccd5; padding-bottom: 5px; }
-                        .date { text-align: center; margin-bottom: 30px; color: #777; }
-                        .section { margin-bottom: 30px; }
-                        .flavor-item { margin-bottom: 15px; padding: 10px; border: 1px solid #eee; border-radius: 5px; }
-                        .flavor-name { font-weight: bold; color: #ff7b9c; }
-                        .flavor-details { margin-left: 20px; color: #666; }
-                        .recipe { font-style: italic; color: #888; margin-top: 5px; font-size: 0.9em; }
-                        .totals { margin-top: 40px; padding: 20px; background-color: #f9f9f9; border-radius: 10px; text-align: center; }
-                        .total-value { font-size: 1.5em; font-weight: bold; color: #ff7b9c; }
+                        h1 { color: #ff7b9c; text-align: center; margin-bottom: 5px; }
+                        .date { text-align: center; margin-bottom: 30px; color: #666; }
+                        .section { margin-bottom: 25px; }
+                        .section-title { font-weight: bold; color: #36b5b0; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
+                        .item { margin-bottom: 10px; padding: 8px; border: 1px solid #eee; border-radius: 5px; }
+                        .item-name { font-weight: bold; color: #ff7b9c; }
+                        .item-details { margin-left: 15px; color: #666; font-size: 0.9em; }
+                        .totals { margin-top: 30px; padding: 15px; background-color: #f9f9f9; border-radius: 8px; text-align: center; }
+                        .total-value { font-size: 1.3em; font-weight: bold; color: #ff7b9c; }
                         @media print {
+                            body { font-size: 11pt; }
                             .no-print { display: none; }
-                            body { font-size: 12pt; }
                         }
                     </style>
                 </head>
                 <body>
-                    <h1>Lista de Produção - Gelateria</h1>
-                    <div class="date">${today}</div>
+                    <h1>Produção da Gelateria</h1>
+                    <div class="date">${formattedDate}</div>
             `;
             
             // Agrupar por tipo
-            const fruitFlavors = iceCreams.filter(f => f.type === 'Fruto');
-            const milkFlavors = iceCreams.filter(f => f.type === 'Leite');
+            const fruitItems = [];
+            const milkItems = [];
             
-            if (fruitFlavors.length > 0) {
-                printContent += `<div class="section"><h2>Gelados de Fruto (${fruitFlavors.length})</h2>`;
-                fruitFlavors.forEach(flavor => {
+            productionData.forEach(item => {
+                const recipe = recipes.find(r => r.name === item.name);
+                if (recipe && recipe.type === 'Fruto') {
+                    fruitItems.push(item);
+                } else {
+                    milkItems.push(item);
+                }
+            });
+            
+            // Adicionar itens de fruto
+            if (fruitItems.length > 0) {
+                printContent += `<div class="section"><div class="section-title">Gelados de Fruto (${fruitItems.length})</div>`;
+                fruitItems.forEach(item => {
                     printContent += `
-                        <div class="flavor-item">
-                            <div class="flavor-name">${flavor.name}</div>
-                            <div class="flavor-details">Quantidade: ${flavor.quantity} Litros</div>
-                            ${flavor.recipe ? `<div class="recipe">Receita: ${flavor.recipe}</div>` : ''}
+                        <div class="item">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-details">
+                                Quantidade: ${item.quantity} Litros
+                                ${item.notes ? `<br>Notas: ${item.notes}` : ''}
+                            </div>
                         </div>
                     `;
                 });
                 printContent += `</div>`;
             }
             
-            if (milkFlavors.length > 0) {
-                printContent += `<div class="section"><h2>Gelados de Leite (${milkFlavors.length})</h2>`;
-                milkFlavors.forEach(flavor => {
+            // Adicionar itens de leite
+            if (milkItems.length > 0) {
+                printContent += `<div class="section"><div class="section-title">Gelados de Leite (${milkItems.length})</div>`;
+                milkItems.forEach(item => {
                     printContent += `
-                        <div class="flavor-item">
-                            <div class="flavor-name">${flavor.name}</div>
-                            <div class="flavor-details">Quantidade: ${flavor.quantity} Litros</div>
-                            ${flavor.recipe ? `<div class="recipe">Receita: ${flavor.recipe}</div>` : ''}
+                        <div class="item">
+                            <div class="item-name">${item.name}</div>
+                            <div class="item-details">
+                                Quantidade: ${item.quantity} Litros
+                                ${item.notes ? `<br>Notas: ${item.notes}` : ''}
+                            </div>
                         </div>
                     `;
                 });
@@ -923,14 +1490,14 @@
             }
             
             // Adicionar totais
-            const totalLiters = iceCreams.reduce((sum, f) => sum + f.quantity, 0);
+            const totalLiters = productionData.reduce((sum, item) => sum + item.quantity, 0);
             printContent += `
                 <div class="totals">
-                    <div><strong>TOTAL DE SABORES:</strong> <span class="total-value">${iceCreams.length}</span></div>
+                    <div><strong>TOTAL DE SABORES:</strong> <span class="total-value">${productionData.length}</span></div>
                     <div><strong>TOTAL DE LITROS:</strong> <span class="total-value">${totalLiters} L</span></div>
                 </div>
                 <div class="no-print" style="margin-top: 30px; text-align: center;">
-                    <button onclick="window.print()" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Imprimir</button>
+                    <button onclick="window.print()" style="padding: 10px 20px; background-color: #36b5b0; color: white; border: none; border-radius: 5px; cursor: pointer;">Imprimir</button>
                 </div>
             </body>
             </html>
@@ -942,97 +1509,10 @@
             showNotification('Preparando para impressão...', 'success');
         }
         
-        // Mostrar modal de receitas
-        function showRecipeModal() {
-            const modal = document.getElementById('recipe-modal');
-            const recipesContainer = document.getElementById('all-recipes');
-            
-            if (iceCreams.length === 0) {
-                recipesContainer.innerHTML = '<p>Nenhuma receita adicionada ainda.</p>';
-            } else {
-                let recipesHTML = '';
-                iceCreams.forEach(iceCream => {
-                    if (iceCream.recipe) {
-                        recipesHTML += `
-                            <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
-                                <h3 style="color: #ff7b9c; margin-bottom: 5px;">${iceCream.name} (${iceCream.type})</h3>
-                                <p><strong>Quantidade:</strong> ${iceCream.quantity} Litros</p>
-                                <p>${iceCream.recipe}</p>
-                            </div>
-                        `;
-                    }
-                });
-                
-                if (recipesHTML === '') {
-                    recipesHTML = '<p>Nenhuma receita detalhada foi adicionada aos gelados.</p>';
-                }
-                
-                recipesContainer.innerHTML = recipesHTML;
-            }
-            
-            modal.style.display = 'flex';
-        }
-        
-        // Fechar modal de receitas
-        function closeRecipeModal() {
-            document.getElementById('recipe-modal').style.display = 'none';
-        }
-        
         // Mostrar notificação
         function showNotification(message, type) {
-            // Criar elemento de notificação
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                padding: 15px 20px;
-                border-radius: 8px;
-                color: white;
-                font-weight: 600;
-                z-index: 10000;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-                animation: slideIn 0.3s ease-out;
-            `;
-            
-            // Cor baseada no tipo
-            if (type === 'success') {
-                notification.style.backgroundColor = '#28a745';
-            } else if (type === 'warning') {
-                notification.style.backgroundColor = '#ffc107';
-            } else if (type === 'info') {
-                notification.style.backgroundColor = '#17a2b8';
-            } else {
-                notification.style.backgroundColor = '#ff7b9c';
-            }
-            
-            notification.textContent = message;
-            document.body.appendChild(notification);
-            
-            // Remover após 3 segundos
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease-out';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-            
-            // Adicionar animações CSS
-            if (!document.querySelector('#notification-styles')) {
-                const style = document.createElement('style');
-                style.id = 'notification-styles';
-                style.textContent = `
-                    @keyframes slideIn {
-                        from { transform: translateX(100%); opacity: 0; }
-                        to { transform: translateX(0); opacity: 1; }
-                    }
-                    @keyframes slideOut {
-                        from { transform: translateX(0); opacity: 1; }
-                        to { transform: translateX(100%); opacity: 0; }
-                    }
-                `;
-                document.head.appendChild(style);
-            }
+            // Implementação da notificação
+            alert(`[${type.toUpperCase()}] ${message}`);
         }
     </script>
 </body>
