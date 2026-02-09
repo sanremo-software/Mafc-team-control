@@ -17,6 +17,8 @@
             --success: #28a745;
             --warning: #ffc107;
             --danger: #dc3545;
+            --info: #17a2b8;
+            --purple: #6f42c1;
         }
         
         * {
@@ -34,7 +36,7 @@
         }
         
         .container {
-            max-width: 1600px;
+            max-width: 1800px;
             margin: 0 auto;
             background-color: white;
             border-radius: 20px;
@@ -97,6 +99,10 @@
             background: rgba(0, 123, 255, 0.7);
         }
         
+        .action-btn.shopping {
+            background: rgba(111, 66, 193, 0.7);
+        }
+        
         .tabs {
             display: flex;
             background-color: var(--light);
@@ -135,8 +141,8 @@
         }
         
         .sidebar {
-            flex: 1;
-            min-width: 350px;
+            flex: 2;
+            min-width: 400px;
             padding: 30px;
             background-color: var(--light);
             border-left: 1px solid var(--light-gray);
@@ -254,6 +260,10 @@
             width: auto;
         }
         
+        .btn-purple {
+            background: linear-gradient(to right, var(--purple), #8a63d2);
+        }
+        
         .production-list {
             margin-top: 20px;
             max-height: 500px;
@@ -284,6 +294,7 @@
             display: flex;
             flex-direction: column;
             gap: 5px;
+            flex: 1;
         }
         
         .item-name {
@@ -297,6 +308,7 @@
             gap: 15px;
             color: var(--gray);
             font-size: 0.9rem;
+            flex-wrap: wrap;
         }
         
         .item-actions {
@@ -469,7 +481,7 @@
             background-color: white;
             padding: 30px;
             border-radius: 15px;
-            max-width: 500px;
+            max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
@@ -502,6 +514,212 @@
         
         .tab-content.active {
             display: block;
+        }
+        
+        .ingredient-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+            border: 1px solid var(--light-gray);
+        }
+        
+        .ingredient-name {
+            flex: 1;
+        }
+        
+        .ingredient-quantity {
+            width: 100px;
+        }
+        
+        .ingredient-unit {
+            width: 80px;
+        }
+        
+        .ingredient-actions {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .shopping-list {
+            margin-top: 20px;
+        }
+        
+        .shopping-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--light-gray);
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .shopping-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .shopping-item-info {
+            flex: 1;
+        }
+        
+        .shopping-item-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .shopping-item-details {
+            font-size: 0.9rem;
+            color: var(--gray);
+            margin-top: 3px;
+        }
+        
+        .shopping-item-quantity {
+            font-weight: 600;
+            color: var(--primary);
+            margin-right: 15px;
+            min-width: 100px;
+            text-align: right;
+        }
+        
+        .classic-flavors-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .classic-flavor-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--light-gray);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .classic-flavor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary);
+        }
+        
+        .classic-flavor-card.selected {
+            border-color: var(--primary);
+            background-color: rgba(255, 123, 156, 0.05);
+            box-shadow: 0 0 0 3px rgba(255, 123, 156, 0.2);
+        }
+        
+        .classic-flavor-name {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        .classic-flavor-type {
+            font-size: 0.8rem;
+            color: var(--gray);
+            background-color: #f0f0f0;
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        
+        .flavor-fruit-badge {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+        }
+        
+        .flavor-milk-badge {
+            background-color: rgba(54, 181, 176, 0.1);
+            color: var(--secondary);
+        }
+        
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background-color: white;
+            color: var(--primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        
+        .quantity-btn:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .quantity-display {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            min-width: 60px;
+            text-align: center;
+        }
+        
+        .selected-flavors-list {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .selected-flavor-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px dashed var(--light-gray);
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 5px;
+        }
+        
+        .selected-flavor-info {
+            flex: 1;
+        }
+        
+        .selected-flavor-quantity {
+            font-weight: 600;
+            color: var(--secondary);
+            min-width: 80px;
+            text-align: right;
+        }
+        
+        .recipe-ingredients {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .ingredient-list-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+            border-bottom: 1px dotted #ddd;
         }
         
         @media (max-width: 1200px) {
@@ -543,6 +761,10 @@
             .main-content, .sidebar {
                 min-width: 100%;
             }
+            
+            .classic-flavors-container {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
         }
         
         @media print {
@@ -575,9 +797,12 @@
         <header>
             <div class="header-left">
                 <h1>Gelateria Production Manager</h1>
-                <p class="subtitle">Sistema de produção diária e gestão de receitas</p>
+                <p class="subtitle">Sistema de produção diária, receitas e lista de compras</p>
             </div>
             <div class="header-right">
+                <button class="action-btn shopping" onclick="generateShoppingList()">
+                    <i class="fas fa-shopping-cart"></i> Lista de Compras
+                </button>
                 <button class="action-btn whatsapp" onclick="sendToWhatsApp()">
                     <i class="fab fa-whatsapp"></i> WhatsApp
                 </button>
@@ -593,6 +818,9 @@
             </div>
             <div class="tab" data-tab="recipes" onclick="switchTab('recipes')">
                 <i class="fas fa-book"></i> Receitas
+            </div>
+            <div class="tab" data-tab="shopping" onclick="switchTab('shopping')">
+                <i class="fas fa-shopping-cart"></i> Lista de Compras
             </div>
             <div class="tab" data-tab="history" onclick="switchTab('history')">
                 <i class="fas fa-history"></i> Histórico
@@ -622,28 +850,29 @@
                 
                 <div class="form-group">
                     <label for="flavor-select">Selecionar Sabor:</label>
-                    <select id="flavor-select">
-                        <!-- Sabores serão carregados dinamicamente -->
+                    <select id="flavor-select" onchange="onFlavorSelect()">
+                        <option value="">Selecione um sabor ou adicione nova receita...</option>
                     </select>
                 </div>
                 
-                <div class="form-group">
-                    <label for="quantity">Quantidade (Litros):</label>
-                    <select id="quantity">
-                        <option value="1">1 Litro</option>
-                        <option value="2">2 Litros</option>
-                        <option value="3" selected>3 Litros</option>
-                        <option value="4">4 Litros</option>
-                        <option value="5">5 Litros</option>
-                        <option value="6">6 Litros</option>
-                        <option value="8">8 Litros</option>
-                        <option value="10">10 Litros</option>
-                    </select>
+                <div class="quantity-selector">
+                    <label>Quantidade (Litros):</label>
+                    <button class="quantity-btn" onclick="adjustQuantity(-1)">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <div class="quantity-display" id="quantity-display">3</div>
+                    <button class="quantity-btn" onclick="adjustQuantity(1)">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <div style="flex: 1;"></div>
+                    <button class="btn btn-small" onclick="openRecipeModal('new')">
+                        <i class="fas fa-plus"></i> Nova Receita
+                    </button>
                 </div>
                 
                 <div class="form-group">
                     <label for="notes">Notas (opcional):</label>
-                    <textarea id="notes" rows="3" placeholder="Notas especiais para esta produção..."></textarea>
+                    <textarea id="notes" rows="2" placeholder="Notas especiais para esta produção..."></textarea>
                 </div>
                 
                 <button class="btn" onclick="addToProduction()">
@@ -693,16 +922,46 @@
                     </button>
                 </div>
                 
-                <div class="quick-flavors" id="common-flavors">
-                    <!-- Sabores comuns serão carregados aqui -->
-                </div>
-                
                 <div id="recipes-list">
                     <!-- Receitas serão carregadas aqui -->
                     <div class="empty-state">
                         <i class="fas fa-book-open"></i>
                         <h3>Nenhuma receita adicionada</h3>
-                        <p>Adicione suas receitas ou use os sabores comuns acima.</p>
+                        <p>Adicione suas receitas usando o botão acima.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- LISTA DE COMPRAS -->
+            <div class="main-content tab-content" id="shopping-tab">
+                <div class="section-title">
+                    Lista de Compras
+                    <button class="btn btn-small btn-purple" onclick="clearShoppingList()">
+                        <i class="fas fa-trash"></i> Limpar Lista
+                    </button>
+                </div>
+                
+                <div class="shopping-list" id="shopping-list">
+                    <!-- Itens da lista de compras serão adicionados aqui -->
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Lista de compras vazia</h3>
+                        <p>Gere uma lista de compras a partir da produção atual ou adicione ingredientes manualmente.</p>
+                    </div>
+                </div>
+                
+                <div class="section-title" style="margin-top: 30px;">
+                    Adicionar Ingrediente Manualmente
+                </div>
+                
+                <div class="form-group">
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="new-ingredient-name" placeholder="Nome do ingrediente" style="flex: 2;">
+                        <input type="text" id="new-ingredient-quantity" placeholder="Quantidade" style="flex: 1;">
+                        <input type="text" id="new-ingredient-unit" placeholder="Unidade (g, ml, etc.)" style="flex: 1;">
+                        <button class="btn btn-small" onclick="addManualIngredient()">
+                            <i class="fas fa-plus"></i> Adicionar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -731,38 +990,49 @@
             <!-- SIDEBAR -->
             <div class="sidebar">
                 <div class="section-title">
-                    Sabores da Gelateria
+                    Sabores Clássicos da Gelateria
                     <span class="section-subtitle" id="flavors-count">0 sabores</span>
                 </div>
                 
-                <div id="flavors-sidebar">
-                    <!-- Sabores serão carregados aqui -->
-                    <div class="empty-state">
-                        <i class="fas fa-cone"></i>
-                        <p>Adicione sabores na aba "Receitas"</p>
-                    </div>
+                <div class="classic-flavors-container" id="classic-flavors">
+                    <!-- Sabores clássicos serão carregados aqui -->
                 </div>
                 
                 <div class="section-title" style="margin-top: 30px;">
-                    Produção por Tipo
+                    Sabores Selecionados
                 </div>
                 
-                <div class="flavor-card">
-                    <div class="flavor-header">
-                        <div class="flavor-name">Sabores de Fruto</div>
-                        <div class="flavor-type">Fruto</div>
+                <div class="selected-flavors-list" id="selected-flavors">
+                    <!-- Sabores selecionados serão mostrados aqui -->
+                    <div class="empty-state" style="padding: 20px;">
+                        <p>Selecione sabores clássicos à esquerda para adicionar à produção</p>
                     </div>
-                    <div class="stat-value" id="sidebar-fruit">0</div>
-                    <div class="stat-label">itens na produção atual</div>
                 </div>
                 
-                <div class="flavor-card">
-                    <div class="flavor-header">
-                        <div class="flavor-name">Sabores de Leite</div>
-                        <div class="flavor-type">Leite</div>
+                <div class="quantity-selector" style="margin-top: 20px; justify-content: center;">
+                    <label>Quantidade por sabor:</label>
+                    <button class="quantity-btn" onclick="adjustSelectedQuantity(-1)">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <div class="quantity-display" id="selected-quantity-display">3</div>
+                    <button class="quantity-btn" onclick="adjustSelectedQuantity(1)">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                
+                <button class="btn" onclick="addSelectedFlavors()" style="margin-top: 15px;">
+                    <i class="fas fa-plus-circle"></i> Adicionar Selecionados
+                </button>
+                
+                <div class="stats-grid" style="margin-top: 25px;">
+                    <div class="stat-card">
+                        <div class="stat-value" id="sidebar-fruit">0</div>
+                        <div class="stat-label">Sabores de Fruto</div>
                     </div>
-                    <div class="stat-value" id="sidebar-milk">0</div>
-                    <div class="stat-label">itens na produção atual</div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="sidebar-milk">0</div>
+                        <div class="stat-label">Sabores de Leite</div>
+                    </div>
                 </div>
                 
                 <button class="btn btn-secondary" onclick="clearProduction()" style="margin-top: 20px;">
@@ -800,6 +1070,21 @@
                     <textarea id="recipe-content" rows="8" placeholder="Descreva os ingredientes e o processo de preparação..."></textarea>
                 </div>
                 
+                <div class="form-group">
+                    <label>Ingredientes da Receita (para lista de compras):</label>
+                    <div id="ingredients-list">
+                        <!-- Ingredientes serão adicionados aqui -->
+                    </div>
+                    <div style="display: flex; gap: 10px; margin-top: 10px;">
+                        <input type="text" id="ingredient-name" placeholder="Nome do ingrediente" style="flex: 1;">
+                        <input type="text" id="ingredient-quantity" placeholder="Quantidade" style="width: 100px;">
+                        <input type="text" id="ingredient-unit" placeholder="Unidade" style="width: 100px;">
+                        <button type="button" class="btn btn-small" onclick="addIngredient()">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                
                 <button type="submit" class="btn">
                     <i class="fas fa-save"></i> Salvar Receita
                 </button>
@@ -811,25 +1096,29 @@
         // Dados do sistema
         let production = {}; // Produção por data
         let recipes = []; // Receitas de sabores
+        let shoppingList = []; // Lista de compras
+        let selectedFlavors = []; // Sabores selecionados no sidebar
+        let selectedQuantity = 3; // Quantidade padrão para sabores selecionados
         let currentDate = new Date(); // Data atual selecionada
+        let currentQuantity = 3; // Quantidade atual para produção
         
-        // Sabores comuns da gelateria
-        const commonFlavors = [
-            { name: "Stracciatella", type: "Leite", recipe: "Base de leite com lascas de chocolate preto." },
-            { name: "Vanille", type: "Leite", recipe: "Baunilha tradicional com vagem de baunilha." },
-            { name: "Schokolade", type: "Leite", recipe: "Chocolate intenso belga." },
-            { name: "Amarena Kirch", type: "Fruto", recipe: "Creme branco com cerejas Amarena." },
-            { name: "Haselnüsse", type: "Leite", recipe: "Avelãs torradas e moídas." },
-            { name: "Walnuss", type: "Leite", recipe: "Nozes frescas caramelizadas." },
-            { name: "Cookies", type: "Leite", recipe: "Base de baunilha com pedaços de bolacha." },
-            { name: "Snickers", type: "Leite", recipe: "Caramelo, amendoim e chocolate." },
-            { name: "dunkel Schokolade", type: "Leite", recipe: "Chocolate preto 70% cacau." },
-            { name: "Weiß Schokolade", type: "Leite", recipe: "Chocolate branco cremoso." },
-            { name: "Erdbeer", type: "Fruto", recipe: "Morango fresco." },
-            { name: "Himbeere", type: "Fruto", recipe: "Framboesa silvestre." },
-            { name: "Mango", type: "Fruto", recipe: "Manga madura tropical." },
-            { name: "Zitrone", type: "Fruto", recipe: "Limão siciliano." },
-            { name: "Banane", type: "Fruto", recipe: "Banana madura caramelizada." }
+        // Sabores clássicos da gelateria
+        const classicFlavors = [
+            { name: "Stracciatella", type: "Leite", category: "clássico", recipe: "Base de leite com lascas de chocolate preto." },
+            { name: "Vanille", type: "Leite", category: "clássico", recipe: "Baunilha tradicional com vagem de baunilha." },
+            { name: "Schokolade", type: "Leite", category: "clássico", recipe: "Chocolate intenso belga." },
+            { name: "Amarena Kirch", type: "Fruto", category: "clássico", recipe: "Creme branco com cerejas Amarena." },
+            { name: "Haselnüsse", type: "Leite", category: "clássico", recipe: "Avelãs torradas e moídas." },
+            { name: "Walnuss", type: "Leite", category: "clássico", recipe: "Nozes frescas caramelizadas." },
+            { name: "Cookies", type: "Leite", category: "clássico", recipe: "Base de baunilha com pedaços de bolacha." },
+            { name: "Snickers", type: "Leite", category: "clássico", recipe: "Caramelo, amendoim e chocolate." },
+            { name: "dunkel Schokolade", type: "Leite", category: "clássico", recipe: "Chocolate preto 70% cacau." },
+            { name: "Weiß Schokolade", type: "Leite", category: "clássico", recipe: "Chocolate branco cremoso." },
+            { name: "Erdbeer", type: "Fruto", category: "clássico", recipe: "Morango fresco." },
+            { name: "Himbeere", type: "Fruto", category: "clássico", recipe: "Framboesa silvestre." },
+            { name: "Mango", type: "Fruto", category: "clássico", recipe: "Manga madura tropical." },
+            { name: "Zitrone", type: "Fruto", category: "clássico", recipe: "Limão siciliano." },
+            { name: "Banane", type: "Fruto", category: "clássico", recipe: "Banana madura caramelizada." }
         ];
         
         // Inicializar o sistema
@@ -840,8 +1129,8 @@
             // Configurar data atual
             updateDateDisplay();
             
-            // Carregar sabores comuns
-            loadCommonFlavors();
+            // Carregar sabores clássicos
+            loadClassicFlavors();
             
             // Carregar receitas
             loadRecipes();
@@ -849,11 +1138,18 @@
             // Carregar produção do dia atual
             loadProductionForDate(getDateKey(currentDate));
             
+            // Carregar lista de compras
+            loadShoppingList();
+            
             // Configurar meses para histórico
             setupHistoryMonths();
             
             // Configurar formulário de receita
             document.getElementById('recipe-form').addEventListener('submit', saveRecipe);
+            
+            // Atualizar display da quantidade
+            updateQuantityDisplay();
+            updateSelectedQuantityDisplay();
         });
         
         // Trocar entre abas
@@ -881,8 +1177,8 @@
             if (savedRecipes) {
                 recipes = JSON.parse(savedRecipes);
             } else {
-                // Se não houver receitas salvas, carregar as comuns
-                recipes = [...commonFlavors];
+                // Se não houver receitas salvas, carregar as clássicas
+                recipes = [...classicFlavors];
                 saveRecipes();
             }
             
@@ -891,15 +1187,26 @@
             if (savedProduction) {
                 production = JSON.parse(savedProduction);
             }
+            
+            // Carregar lista de compras
+            const savedShoppingList = localStorage.getItem('gelateriaShoppingList');
+            if (savedShoppingList) {
+                shoppingList = JSON.parse(savedShoppingList);
+            }
         }
         
         // Salvar dados
         function saveRecipes() {
             localStorage.setItem('gelateriaRecipes', JSON.stringify(recipes));
+            loadRecipes();
         }
         
         function saveProduction() {
             localStorage.setItem('gelateriaProduction', JSON.stringify(production));
+        }
+        
+        function saveShoppingList() {
+            localStorage.setItem('gelateriaShoppingList', JSON.stringify(shoppingList));
         }
         
         // Funções de data
@@ -927,6 +1234,25 @@
             currentDate = new Date();
             updateDateDisplay();
             loadProductionForDate(getDateKey(currentDate));
+        }
+        
+        // Ajustar quantidade
+        function adjustQuantity(change) {
+            currentQuantity = Math.max(1, currentQuantity + change);
+            updateQuantityDisplay();
+        }
+        
+        function updateQuantityDisplay() {
+            document.getElementById('quantity-display').textContent = currentQuantity;
+        }
+        
+        function adjustSelectedQuantity(change) {
+            selectedQuantity = Math.max(1, selectedQuantity + change);
+            updateSelectedQuantityDisplay();
+        }
+        
+        function updateSelectedQuantityDisplay() {
+            document.getElementById('selected-quantity-display').textContent = selectedQuantity;
         }
         
         // Carregar produção para uma data específica
@@ -971,14 +1297,12 @@
             }
             
             updateProductionStats(dateKey);
-            updateFlavorsSidebar();
         }
         
         // Adicionar à produção
         function addToProduction() {
             const flavorSelect = document.getElementById('flavor-select');
             const selectedFlavor = flavorSelect.value;
-            const quantity = document.getElementById('quantity').value;
             const notes = document.getElementById('notes').value;
             
             if (!selectedFlavor) {
@@ -993,23 +1317,82 @@
                 production[dateKey] = [];
             }
             
-            // Adicionar novo item
-            production[dateKey].push({
-                name: selectedFlavor,
-                quantity: parseInt(quantity),
-                notes: notes,
-                timestamp: new Date().toISOString()
-            });
+            // Verificar se o sabor já existe na produção de hoje
+            const existingIndex = production[dateKey].findIndex(item => item.name === selectedFlavor);
+            
+            if (existingIndex >= 0) {
+                // Atualizar quantidade existente
+                production[dateKey][existingIndex].quantity += currentQuantity;
+                if (notes) {
+                    production[dateKey][existingIndex].notes = production[dateKey][existingIndex].notes 
+                        ? `${production[dateKey][existingIndex].notes}, ${notes}`
+                        : notes;
+                }
+            } else {
+                // Adicionar novo item
+                production[dateKey].push({
+                    name: selectedFlavor,
+                    quantity: currentQuantity,
+                    notes: notes,
+                    timestamp: new Date().toISOString()
+                });
+            }
             
             // Salvar e atualizar
             saveProduction();
             loadProductionForDate(dateKey);
             
             // Limpar formulário
+            flavorSelect.value = '';
             document.getElementById('notes').value = '';
-            document.getElementById('quantity').value = '3';
+            currentQuantity = 3;
+            updateQuantityDisplay();
             
             showNotification(`${selectedFlavor} adicionado à produção!`, 'success');
+        }
+        
+        // Adicionar sabores selecionados
+        function addSelectedFlavors() {
+            if (selectedFlavors.length === 0) {
+                showNotification('Selecione sabores primeiro!', 'warning');
+                return;
+            }
+            
+            const dateKey = getDateKey(currentDate);
+            
+            // Inicializar array para esta data se não existir
+            if (!production[dateKey]) {
+                production[dateKey] = [];
+            }
+            
+            // Adicionar cada sabor selecionado
+            selectedFlavors.forEach(flavorName => {
+                const existingIndex = production[dateKey].findIndex(item => item.name === flavorName);
+                
+                if (existingIndex >= 0) {
+                    // Atualizar quantidade existente
+                    production[dateKey][existingIndex].quantity += selectedQuantity;
+                } else {
+                    // Adicionar novo item
+                    production[dateKey].push({
+                        name: flavorName,
+                        quantity: selectedQuantity,
+                        notes: '',
+                        timestamp: new Date().toISOString()
+                    });
+                }
+            });
+            
+            // Salvar e atualizar
+            saveProduction();
+            loadProductionForDate(dateKey);
+            
+            showNotification(`${selectedFlavors.length} sabores adicionados à produção!`, 'success');
+            
+            // Limpar seleção
+            selectedFlavors = [];
+            updateSelectedFlavorsList();
+            updateClassicFlavorsDisplay();
         }
         
         // Remover item da produção
@@ -1034,7 +1417,8 @@
             
             // Preencher formulário com dados do item
             document.getElementById('flavor-select').value = item.name;
-            document.getElementById('quantity').value = item.quantity;
+            currentQuantity = item.quantity;
+            updateQuantityDisplay();
             document.getElementById('notes').value = item.notes || '';
             
             // Remover item atual
@@ -1099,68 +1483,95 @@
             }
         }
         
-        // Carregar sabores comuns
-        function loadCommonFlavors() {
-            const container = document.getElementById('common-flavors');
+        // Carregar sabores clássicos no sidebar
+        function loadClassicFlavors() {
+            const container = document.getElementById('classic-flavors');
             const flavorSelect = document.getElementById('flavor-select');
             
             container.innerHTML = '';
-            flavorSelect.innerHTML = '<option value="">Selecione um sabor...</option>';
+            flavorSelect.innerHTML = '<option value="">Selecione um sabor ou adicione nova receita...</option>';
             
+            // Adicionar receitas personalizadas ao seletor
             recipes.forEach(flavor => {
-                // Adicionar ao seletor de produção
                 const option = document.createElement('option');
                 option.value = flavor.name;
                 option.textContent = flavor.name;
                 flavorSelect.appendChild(option);
-                
-                // Adicionar aos sabores comuns
-                const button = document.createElement('button');
-                button.type = 'button';
-                button.className = `quick-flavor-btn ${flavor.type === 'Fruto' ? 'flavor-fruit' : 'flavor-milk'}`;
-                button.textContent = flavor.name;
-                button.onclick = () => {
-                    document.getElementById('flavor-select').value = flavor.name;
-                    document.getElementById('recipe-type').value = flavor.type;
-                    document.getElementById('recipe-content').value = flavor.recipe || '';
-                    showNotification(`${flavor.name} selecionado!`, 'success');
-                };
-                container.appendChild(button);
             });
             
-            document.getElementById('flavors-count').textContent = `${recipes.length} sabores`;
+            // Adicionar sabores clássicos ao sidebar
+            classicFlavors.forEach(flavor => {
+                const isSelected = selectedFlavors.includes(flavor.name);
+                const card = document.createElement('div');
+                card.className = `classic-flavor-card ${isSelected ? 'selected' : ''}`;
+                card.onclick = () => toggleFlavorSelection(flavor.name);
+                
+                card.innerHTML = `
+                    <div class="classic-flavor-name">${flavor.name}</div>
+                    <div class="classic-flavor-type ${flavor.type === 'Fruto' ? 'flavor-fruit-badge' : 'flavor-milk-badge'}">
+                        ${flavor.type}
+                    </div>
+                    ${flavor.recipe ? `<div style="margin-top: 8px; font-size: 0.8rem; color: #888;">${flavor.recipe.substring(0, 50)}...</div>` : ''}
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            document.getElementById('flavors-count').textContent = `${classicFlavors.length} sabores clássicos`;
         }
         
-        // Atualizar sidebar de sabores
-        function updateFlavorsSidebar() {
-            const container = document.getElementById('flavors-sidebar');
+        // Alternar seleção de sabor clássico
+        function toggleFlavorSelection(flavorName) {
+            const index = selectedFlavors.indexOf(flavorName);
             
-            if (recipes.length === 0) {
+            if (index >= 0) {
+                selectedFlavors.splice(index, 1);
+            } else {
+                selectedFlavors.push(flavorName);
+            }
+            
+            updateClassicFlavorsDisplay();
+            updateSelectedFlavorsList();
+        }
+        
+        // Atualizar display dos sabores clássicos
+        function updateClassicFlavorsDisplay() {
+            document.querySelectorAll('.classic-flavor-card').forEach(card => {
+                const flavorName = card.querySelector('.classic-flavor-name').textContent;
+                if (selectedFlavors.includes(flavorName)) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+        
+        // Atualizar lista de sabores selecionados
+        function updateSelectedFlavorsList() {
+            const container = document.getElementById('selected-flavors');
+            
+            if (selectedFlavors.length === 0) {
                 container.innerHTML = `
-                    <div class="empty-state">
-                        <i class="fas fa-cone"></i>
-                        <p>Adicione sabores na aba "Receitas"</p>
+                    <div class="empty-state" style="padding: 20px;">
+                        <p>Selecione sabores clássicos à esquerda para adicionar à produção</p>
                     </div>
                 `;
                 return;
             }
             
             let html = '';
-            recipes.forEach(flavor => {
+            selectedFlavors.forEach(flavorName => {
+                const flavor = classicFlavors.find(f => f.name === flavorName) || {};
                 html += `
-                    <div class="flavor-card">
-                        <div class="flavor-header">
-                            <div class="flavor-name">${flavor.name}</div>
-                            <div class="flavor-type">${flavor.type}</div>
+                    <div class="selected-flavor-item">
+                        <div class="selected-flavor-info">
+                            <div class="flavor-name">${flavorName}</div>
+                            <div class="flavor-type ${flavor.type === 'Fruto' ? 'flavor-fruit-badge' : 'flavor-milk-badge'}" style="display: inline-block; margin-top: 3px;">
+                                ${flavor.type || 'Tipo não definido'}
+                            </div>
                         </div>
-                        ${flavor.recipe ? `<div class="flavor-recipe">${flavor.recipe}</div>` : ''}
-                        <div style="margin-top: 10px; display: flex; gap: 10px;">
-                            <button class="btn btn-small" onclick="openRecipeModal('edit', '${flavor.name}')">
-                                <i class="fas fa-edit"></i> Editar
-                            </button>
-                            <button class="btn btn-small" style="background: var(--danger);" onclick="deleteRecipe('${flavor.name}')">
-                                <i class="fas fa-trash"></i> Remover
-                            </button>
+                        <div class="selected-flavor-quantity">
+                            ${selectedQuantity} Litros
                         </div>
                     </div>
                 `;
@@ -1169,10 +1580,75 @@
             container.innerHTML = html;
         }
         
+        // Quando um sabor é selecionado no dropdown
+        function onFlavorSelect() {
+            const flavorSelect = document.getElementById('flavor-select');
+            const selectedFlavor = flavorSelect.value;
+            
+            if (selectedFlavor) {
+                const recipe = recipes.find(r => r.name === selectedFlavor);
+                if (recipe && recipe.ingredients) {
+                    // Mostrar ingredientes se disponível
+                    console.log('Ingredientes disponíveis:', recipe.ingredients);
+                }
+            }
+        }
+        
         // Carregar receitas
         function loadRecipes() {
-            updateFlavorsSidebar();
-            loadCommonFlavors();
+            const container = document.getElementById('recipes-list');
+            
+            if (recipes.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-book-open"></i>
+                        <h3>Nenhuma receita adicionada</h3>
+                        <p>Adicione suas receitas usando o botão acima.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            recipes.forEach(flavor => {
+                const isClassic = classicFlavors.some(cf => cf.name === flavor.name);
+                html += `
+                    <div class="flavor-card">
+                        <div class="flavor-header">
+                            <div class="flavor-name">${flavor.name}</div>
+                            <div>
+                                <span class="flavor-type">${flavor.type}</span>
+                                ${isClassic ? '<span style="margin-left: 10px; background-color: #ffc107; color: #333; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;">Clássico</span>' : ''}
+                            </div>
+                        </div>
+                        ${flavor.recipe ? `<div class="flavor-recipe">${flavor.recipe}</div>` : ''}
+                        ${flavor.ingredients && flavor.ingredients.length > 0 ? `
+                            <div class="recipe-ingredients">
+                                <strong>Ingredientes:</strong>
+                                ${flavor.ingredients.map(ing => 
+                                    `<div class="ingredient-list-item">
+                                        <span>${ing.name}</span>
+                                        <span>${ing.quantity} ${ing.unit}</span>
+                                    </div>`
+                                ).join('')}
+                            </div>
+                        ` : ''}
+                        <div style="margin-top: 10px; display: flex; gap: 10px;">
+                            <button class="btn btn-small" onclick="openRecipeModal('edit', '${flavor.name}')">
+                                <i class="fas fa-edit"></i> Editar
+                            </button>
+                            ${!isClassic ? `
+                                <button class="btn btn-small" style="background: var(--danger);" onclick="deleteRecipe('${flavor.name}')">
+                                    <i class="fas fa-trash"></i> Remover
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+            loadClassicFlavors(); // Atualizar também o seletor
         }
         
         // Abrir modal de receita
@@ -1180,6 +1656,10 @@
             const modal = document.getElementById('recipe-modal');
             const title = document.getElementById('modal-title');
             const form = document.getElementById('recipe-form');
+            const ingredientsList = document.getElementById('ingredients-list');
+            
+            // Limpar lista de ingredientes
+            ingredientsList.innerHTML = '';
             
             if (mode === 'new') {
                 title.textContent = 'Nova Receita';
@@ -1193,6 +1673,13 @@
                     document.getElementById('recipe-name').value = recipe.name;
                     document.getElementById('recipe-type').value = recipe.type;
                     document.getElementById('recipe-content').value = recipe.recipe || '';
+                    
+                    // Adicionar ingredientes existentes
+                    if (recipe.ingredients) {
+                        recipe.ingredients.forEach(ingredient => {
+                            addIngredientToUI(ingredient.name, ingredient.quantity, ingredient.unit);
+                        });
+                    }
                 }
             }
             
@@ -1202,6 +1689,56 @@
         // Fechar modal de receita
         function closeRecipeModal() {
             document.getElementById('recipe-modal').style.display = 'none';
+        }
+        
+        // Adicionar ingrediente na UI
+        function addIngredientToUI(name, quantity, unit) {
+            const ingredientsList = document.getElementById('ingredients-list');
+            const ingredientId = Date.now(); // ID único
+            
+            const ingredientItem = document.createElement('div');
+            ingredientItem.className = 'ingredient-item';
+            ingredientItem.id = `ingredient-${ingredientId}`;
+            
+            ingredientItem.innerHTML = `
+                <input type="text" class="ingredient-name" value="${name}" placeholder="Nome do ingrediente">
+                <input type="text" class="ingredient-quantity" value="${quantity}" placeholder="Quantidade">
+                <input type="text" class="ingredient-unit" value="${unit}" placeholder="Unidade">
+                <div class="ingredient-actions">
+                    <button type="button" class="btn btn-small" style="background: var(--danger);" onclick="removeIngredient(${ingredientId})">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            
+            ingredientsList.appendChild(ingredientItem);
+        }
+        
+        // Adicionar ingrediente no modal
+        function addIngredient() {
+            const name = document.getElementById('ingredient-name').value;
+            const quantity = document.getElementById('ingredient-quantity').value;
+            const unit = document.getElementById('ingredient-unit').value;
+            
+            if (!name.trim() || !quantity.trim()) {
+                showNotification('Preencha o nome e a quantidade do ingrediente!', 'warning');
+                return;
+            }
+            
+            addIngredientToUI(name, quantity, unit);
+            
+            // Limpar campos
+            document.getElementById('ingredient-name').value = '';
+            document.getElementById('ingredient-quantity').value = '';
+            document.getElementById('ingredient-unit').value = '';
+        }
+        
+        // Remover ingrediente do modal
+        function removeIngredient(id) {
+            const ingredientElement = document.getElementById(`ingredient-${id}`);
+            if (ingredientElement) {
+                ingredientElement.remove();
+            }
         }
         
         // Salvar receita
@@ -1218,12 +1755,33 @@
                 return;
             }
             
+            // Coletar ingredientes
+            const ingredients = [];
+            document.querySelectorAll('.ingredient-item').forEach(item => {
+                const ingName = item.querySelector('.ingredient-name').value;
+                const ingQuantity = item.querySelector('.ingredient-quantity').value;
+                const ingUnit = item.querySelector('.ingredient-unit').value;
+                
+                if (ingName.trim() && ingQuantity.trim()) {
+                    ingredients.push({
+                        name: ingName.trim(),
+                        quantity: ingQuantity.trim(),
+                        unit: ingUnit.trim() || 'un'
+                    });
+                }
+            });
+            
             // Verificar se é uma edição ou criação
             const existingIndex = recipes.findIndex(r => r.name === id);
             
             if (existingIndex >= 0) {
                 // Atualizar receita existente
-                recipes[existingIndex] = { name, type, recipe: content };
+                recipes[existingIndex] = { 
+                    name, 
+                    type, 
+                    recipe: content,
+                    ingredients: ingredients.length > 0 ? ingredients : undefined
+                };
             } else {
                 // Verificar se já existe um sabor com este nome
                 const duplicateIndex = recipes.findIndex(r => r.name === name);
@@ -1231,10 +1789,20 @@
                     if (!confirm('Já existe um sabor com este nome. Deseja substituir?')) {
                         return;
                     }
-                    recipes[duplicateIndex] = { name, type, recipe: content };
+                    recipes[duplicateIndex] = { 
+                        name, 
+                        type, 
+                        recipe: content,
+                        ingredients: ingredients.length > 0 ? ingredients : undefined
+                    };
                 } else {
                     // Adicionar nova receita
-                    recipes.push({ name, type, recipe: content });
+                    recipes.push({ 
+                        name, 
+                        type, 
+                        recipe: content,
+                        ingredients: ingredients.length > 0 ? ingredients : undefined
+                    });
                 }
             }
             
@@ -1257,6 +1825,175 @@
             loadRecipes();
             
             showNotification(`Receita de ${flavorName} excluída!`, 'info');
+        }
+        
+        // GERAR LISTA DE COMPRAS
+        function generateShoppingList() {
+            const dateKey = getDateKey(currentDate);
+            const productionData = production[dateKey] || [];
+            
+            if (productionData.length === 0) {
+                showNotification('Não há produção para gerar lista de compras!', 'warning');
+                return;
+            }
+            
+            shoppingList = [];
+            
+            // Processar cada item da produção
+            productionData.forEach(item => {
+                const recipe = recipes.find(r => r.name === item.name);
+                
+                if (recipe && recipe.ingredients) {
+                    // Para cada ingrediente na receita, ajustar quantidade baseada na produção
+                    recipe.ingredients.forEach(ingredient => {
+                        // Calcular multiplicador baseado na quantidade produzida
+                        // (assumindo que a receita é para 1 litro)
+                        const multiplier = item.quantity;
+                        
+                        // Procurar se o ingrediente já está na lista
+                        const existingIngredient = shoppingList.find(i => 
+                            i.name.toLowerCase() === ingredient.name.toLowerCase() && 
+                            i.unit === ingredient.unit
+                        );
+                        
+                        if (existingIngredient) {
+                            // Se já existe, adicionar quantidade
+                            existingIngredient.quantity = addQuantities(
+                                existingIngredient.quantity, 
+                                multiplyQuantity(ingredient.quantity, multiplier)
+                            );
+                        } else {
+                            // Se não existe, adicionar novo
+                            shoppingList.push({
+                                name: ingredient.name,
+                                quantity: multiplyQuantity(ingredient.quantity, multiplier),
+                                unit: ingredient.unit,
+                                source: `Para: ${item.name} (${item.quantity}L)`
+                            });
+                        }
+                    });
+                }
+            });
+            
+            saveShoppingList();
+            loadShoppingList();
+            
+            // Mudar para aba de lista de compras
+            switchTab('shopping');
+            
+            showNotification('Lista de compras gerada com sucesso!', 'success');
+        }
+        
+        // Funções auxiliares para quantidades
+        function multiplyQuantity(quantityStr, multiplier) {
+            // Tenta converter para número
+            const quantity = parseFloat(quantityStr);
+            if (!isNaN(quantity)) {
+                return (quantity * multiplier).toString();
+            }
+            return quantityStr;
+        }
+        
+        function addQuantities(q1, q2) {
+            const num1 = parseFloat(q1);
+            const num2 = parseFloat(q2);
+            
+            if (!isNaN(num1) && !isNaN(num2)) {
+                return (num1 + num2).toString();
+            }
+            return q1;
+        }
+        
+        // Carregar lista de compras
+        function loadShoppingList() {
+            const container = document.getElementById('shopping-list');
+            
+            if (shoppingList.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Lista de compras vazia</h3>
+                        <p>Gere uma lista de compras a partir da produção atual ou adicione ingredientes manualmente.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            shoppingList.forEach((item, index) => {
+                html += `
+                    <div class="shopping-item">
+                        <div class="shopping-item-info">
+                            <div class="shopping-item-name">${item.name}</div>
+                            <div class="shopping-item-details">${item.source || 'Adicionado manualmente'}</div>
+                        </div>
+                        <div class="shopping-item-quantity">
+                            ${item.quantity} ${item.unit}
+                        </div>
+                        <div class="item-actions">
+                            <button class="action-icon delete" onclick="removeShoppingItem(${index})" title="Remover">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+        
+        // Adicionar ingrediente manualmente à lista de compras
+        function addManualIngredient() {
+            const name = document.getElementById('new-ingredient-name').value;
+            const quantity = document.getElementById('new-ingredient-quantity').value;
+            const unit = document.getElementById('new-ingredient-unit').value;
+            
+            if (!name.trim() || !quantity.trim()) {
+                showNotification('Preencha o nome e a quantidade do ingrediente!', 'warning');
+                return;
+            }
+            
+            shoppingList.push({
+                name: name.trim(),
+                quantity: quantity.trim(),
+                unit: unit.trim() || 'un',
+                source: 'Adicionado manualmente'
+            });
+            
+            saveShoppingList();
+            loadShoppingList();
+            
+            // Limpar campos
+            document.getElementById('new-ingredient-name').value = '';
+            document.getElementById('new-ingredient-quantity').value = '';
+            document.getElementById('new-ingredient-unit').value = '';
+            
+            showNotification('Ingrediente adicionado à lista de compras!', 'success');
+        }
+        
+        // Remover item da lista de compras
+        function removeShoppingItem(index) {
+            if (confirm('Remover este item da lista de compras?')) {
+                shoppingList.splice(index, 1);
+                saveShoppingList();
+                loadShoppingList();
+                showNotification('Item removido da lista de compras!', 'info');
+            }
+        }
+        
+        // Limpar lista de compras
+        function clearShoppingList() {
+            if (shoppingList.length === 0) {
+                showNotification('A lista de compras já está vazia!', 'warning');
+                return;
+            }
+            
+            if (confirm('Limpar toda a lista de compras?')) {
+                shoppingList = [];
+                saveShoppingList();
+                loadShoppingList();
+                showNotification('Lista de compras limpa!', 'info');
+            }
         }
         
         // Configurar meses para histórico
@@ -1511,8 +2248,70 @@
         
         // Mostrar notificação
         function showNotification(message, type) {
-            // Implementação da notificação
-            alert(`[${type.toUpperCase()}] ${message}`);
+            // Implementação básica de notificação
+            const colors = {
+                success: '#28a745',
+                warning: '#ffc107',
+                danger: '#dc3545',
+                info: '#17a2b8'
+            };
+            
+            // Criar elemento de notificação
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background-color: ${colors[type] || colors.info};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                animation: slideIn 0.3s ease-out;
+                max-width: 400px;
+            `;
+            
+            const icon = type === 'success' ? 'check-circle' : 
+                         type === 'warning' ? 'exclamation-triangle' : 
+                         type === 'danger' ? 'times-circle' : 'info-circle';
+            
+            notification.innerHTML = `
+                <i class="fas fa-${icon}"></i>
+                <span>${message}</span>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Remover após 3 segundos
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-in';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+            
+            // Adicionar estilos de animação se não existirem
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
         }
     </script>
 </body>
