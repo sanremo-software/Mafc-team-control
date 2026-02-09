@@ -1,1180 +1,1039 @@
-
-<!doctype html>
-<html lang="de">
+<!DOCTYPE html>
+<html lang="pt">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Sanremo – Tagesproduktion</title>
-  <meta name="theme-color" content="#ffffff" />
-  <style>
-    :root{
-      --bg:#f6f7f9;
-      --card:#ffffff;
-      --text:#1f2937;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --accent:#2563eb;
-      --accent2:#16a34a;
-      --danger:#dc2626;
-      --shadow:0 6px 18px rgba(0,0,0,.06);
-      --radius:18px;
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--text);
-      background:var(--bg);
-    }
-    header{
-      position:sticky; top:0; z-index:10;
-      background:rgba(246,247,249,.92);
-      backdrop-filter:saturate(1.2) blur(10px);
-      border-bottom:1px solid var(--line);
-    }
-    .wrap{max-width:1100px;margin:0 auto;padding:14px 14px 110px}
-    .topbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-    .title{
-      display:flex;flex-direction:column;gap:4px;
-    }
-    .title h1{font-size:18px;margin:0}
-    .title small{color:var(--muted)}
-    .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
-    .chip{
-      display:inline-flex;align-items:center;gap:6px;
-      padding:8px 10px;border:1px solid var(--line);
-      background:var(--card); border-radius:999px;
-      box-shadow:0 1px 0 rgba(0,0,0,.02);
-      font-size:13px;
-    }
-    .btn{
-      appearance:none;border:1px solid var(--line);
-      background:var(--card);
-      color:var(--text);
-      padding:10px 12px;
-      border-radius:12px;
-      box-shadow:0 1px 0 rgba(0,0,0,.02);
-      font-weight:600;
-      font-size:13px;
-      cursor:pointer;
-    }
-    .btn:hover{border-color:#cbd5e1}
-    .btn.primary{background:var(--accent);color:#fff;border-color:transparent}
-    .btn.success{background:var(--accent2);color:#fff;border-color:transparent}
-    .btn.danger{background:var(--danger);color:#fff;border-color:transparent}
-    .btn.ghost{background:transparent;border-color:transparent;box-shadow:none}
-    .seg{
-      display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)
-    }
-    .seg button{
-      border:0;background:transparent;padding:8px 12px;font-weight:700;cursor:pointer;color:var(--muted)
-    }
-    .seg button.active{background:#eef2ff;color:var(--accent)}
-    .grid{display:grid;gap:12px}
-    @media(min-width:900px){ .grid.cols2{grid-template-columns:1fr 1fr} }
-    .sectionHead{display:flex;align-items:center;justify-content:space-between;margin:18px 0 10px}
-    .sectionHead h2{margin:0;font-size:16px}
-    .sectionHead .right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:12px;
-    }
-    .flavorCard{display:flex;flex-direction:column;gap:10px}
-    .flavorTop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .flavorName{display:flex;flex-direction:column;gap:2px}
-    .flavorName b{font-size:16px}
-    .flavorName small{color:var(--muted);font-size:12px}
-    .pill{
-      font-size:12px;font-weight:800;
-      padding:6px 10px;border-radius:999px;border:1px solid var(--line);
-      background:#f9fafb;color:var(--muted);
-      white-space:nowrap;
-    }
-    .pill.milk{background:#eff6ff;color:#1d4ed8;border-color:#dbeafe}
-    .pill.water{background:#ecfeff;color:#0e7490;border-color:#cffafe}
-    .pill.fav{background:#fffbeb;color:#92400e;border-color:#fde68a}
-    .actionsRow{display:flex;gap:8px;flex-wrap:wrap}
-    .steps{display:flex;gap:8px;flex-wrap:wrap}
-    .stepBtn{
-      flex:1 1 60px;
-      min-width:70px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 10px;
-      background:#f8fafc;
-      font-weight:900;
-      cursor:pointer;
-      text-align:center;
-    }
-    .stepBtn.add{background:#eef2ff;border-color:#dbeafe;color:#1d4ed8}
-    .stepBtn.sub{background:#fff1f2;border-color:#fecdd3;color:#9f1239}
-    .meta{
-      display:flex;gap:12px;flex-wrap:wrap;
-      color:var(--muted);font-size:13px;
-      padding-top:2px;
-    }
-    .meta b{color:var(--text)}
-    .search{
-      width:100%;
-      padding:12px 12px;
-      border:1px solid var(--line);
-      border-radius:14px;
-      background:var(--card);
-      font-size:14px;
-    }
-
-    /* Bottom bar */
-    .bottomBar{
-      position:fixed;left:0;right:0;bottom:0;z-index:20;
-      background:rgba(255,255,255,.92);
-      backdrop-filter:saturate(1.2) blur(10px);
-      border-top:1px solid var(--line);
-    }
-    .bottomInner{
-      max-width:1100px;margin:0 auto;padding:10px 14px;
-      display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;
-    }
-    .totals{
-      display:flex;flex-direction:column;gap:3px;
-      font-size:13px;color:var(--muted)
-    }
-    .totals b{color:var(--text)}
-    .bottomBtns{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-
-    /* Modal */
-    .modalOverlay{
-      position:fixed;inset:0;background:rgba(15,23,42,.45);
-      display:none;align-items:flex-end;justify-content:center;z-index:50;
-      padding:14px;
-    }
-    .modalOverlay.show{display:flex}
-    .modal{
-      width:min(920px, 100%);
-      background:var(--card);
-      border-radius:22px;
-      border:1px solid var(--line);
-      box-shadow:0 20px 70px rgba(0,0,0,.25);
-      overflow:hidden;
-    }
-    .modalHeader{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:12px 14px;border-bottom:1px solid var(--line);
-      background:#fbfbfd;
-    }
-    .modalHeader h3{margin:0;font-size:15px}
-    .modalBody{padding:14px;max-height:70vh;overflow:auto}
-    .formGrid{display:grid;gap:10px}
-    @media(min-width:900px){ .formGrid.cols2{grid-template-columns:1fr 1fr} }
-    label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)}
-    input, select, textarea{
-      font:inherit;color:var(--text);
-      padding:12px 12px;border:1px solid var(--line);
-      border-radius:14px;background:var(--card);
-    }
-    textarea{min-height:90px;resize:vertical}
-    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-    .hr{height:1px;background:var(--line);margin:14px 0}
-    .list{
-      display:grid;gap:8px
-    }
-    .listItem{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      padding:10px 12px;border:1px solid var(--line);border-radius:14px;background:#fff;
-    }
-    .listItem .left{display:flex;flex-direction:column;gap:2px}
-    .listItem .left b{font-size:14px}
-    .listItem .left small{color:var(--muted);font-size:12px}
-    .hint{color:var(--muted);font-size:12px;margin-top:6px}
-    .toast{
-      position:fixed;left:50%;transform:translateX(-50%);
-      bottom:92px;z-index:80;
-      background:#111827;color:#fff;
-      padding:10px 12px;border-radius:999px;
-      font-size:13px;display:none;
-    }
-    .toast.show{display:block}
-    /* Print */
-    @media print{
-      header,.bottomBar,.modalOverlay,.btn,.chip,.seg{display:none !important}
-      body{background:#fff}
-      .wrap{padding:0 0 0}
-      .card{box-shadow:none}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gelateria Manager - Sistema Completo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9f7f5;
+            color: #333;
+            padding: 20px;
+            background-image: linear-gradient(to bottom right, #fff5e6, #ffe8f0);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            color: white;
+            padding: 25px 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .action-buttons {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 15px;
+        }
+        
+        .action-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: 600px;
+        }
+        
+        .left-panel {
+            flex: 1;
+            min-width: 350px;
+            padding: 30px;
+            background-color: #fffaf7;
+            border-right: 1px solid #f0e6e0;
+        }
+        
+        .right-panel {
+            flex: 2;
+            min-width: 500px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: #ff7b9c;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px dashed #ffccd5;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        select, input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #f0e6e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        select:focus, input:focus, textarea:focus {
+            border-color: #ff9a9e;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 154, 158, 0.2);
+        }
+        
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .radio-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 154, 158, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #6c757d, #868e96);
+        }
+        
+        .btn-whatsapp {
+            background: linear-gradient(to right, #25D366, #128C7E);
+        }
+        
+        .btn-print {
+            background: linear-gradient(to right, #007bff, #0056b3);
+        }
+        
+        .flavor-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            flex-grow: 1;
+        }
+        
+        .flavor-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0e6e0;
+            transition: transform 0.3s;
+            position: relative;
+        }
+        
+        .flavor-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .flavor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .flavor-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #ff7b9c;
+        }
+        
+        .flavor-type {
+            background-color: #ffe8f0;
+            color: #ff7b9c;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .flavor-details {
+            margin-bottom: 15px;
+            color: #666;
+        }
+        
+        .flavor-size {
+            font-weight: 600;
+            color: #ff9a9e;
+        }
+        
+        .flavor-recipe {
+            font-style: italic;
+            color: #888;
+            font-size: 0.9rem;
+            border-top: 1px dashed #f0e6e0;
+            padding-top: 10px;
+            margin-top: 10px;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #aaa;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .empty-state img {
+            width: 100px;
+            opacity: 0.5;
+            margin-bottom: 20px;
+        }
+        
+        .flavor-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fffaf7;
+            border-radius: 12px;
+            border: 1px solid #f0e6e0;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ff7b9c;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #888;
+        }
+        
+        .quick-add-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .quick-flavors {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .quick-flavor-btn {
+            background-color: white;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .quick-flavor-btn:hover {
+            background-color: #ffe8f0;
+            border-color: #ff9a9e;
+            transform: translateY(-2px);
+        }
+        
+        .quick-flavor-btn.fruit {
+            border-left: 4px solid #28a745;
+        }
+        
+        .quick-flavor-btn.milk {
+            border-left: 4px solid #17a2b8;
+        }
+        
+        .remove-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ffccd5;
+            color: #ff3366;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            color: #ff7b9c;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        @media (max-width: 1100px) {
+            .action-buttons {
+                position: static;
+                transform: none;
+                justify-content: center;
+                margin-top: 20px;
+            }
+            
+            .content {
+                flex-direction: column;
+            }
+            
+            .left-panel {
+                border-right: none;
+                border-bottom: 1px solid #f0e6e0;
+            }
+            
+            .flavor-list {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .flavor-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-flavors {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+        
+        @media print {
+            .action-buttons, .left-panel, .remove-btn, .btn {
+                display: none !important;
+            }
+            
+            .container {
+                box-shadow: none;
+            }
+            
+            .flavor-list {
+                display: block !important;
+            }
+            
+            .flavor-card {
+                break-inside: avoid;
+                margin-bottom: 20px;
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+            
+            .right-panel {
+                width: 100%;
+            }
+            
+            header {
+                background: #fff !important;
+                color: #000 !important;
+                text-shadow: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<header>
-  <div class="wrap" style="padding-bottom:14px;">
-    <div class="topbar">
-      <div class="title">
-        <h1>Sanremo – Tagesproduktion</h1>
-        <small id="dateLine">Datum: …</small>
-      </div>
-
-      <div class="controls">
-        <div class="chip">
-          <span style="font-weight:800;">Einheit</span>
-          <div class="seg" role="tablist" aria-label="Einheit">
-            <button id="unitKgBtn" class="active" type="button">KG</button>
-            <button id="unitLBtn" type="button">LITER</button>
-          </div>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Gelateria Manager Pro</h1>
+                <p class="subtitle">Sistema completo de gestão de produção de gelados</p>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" onclick="sendToWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+                </button>
+                <button class="action-btn" onclick="printProduction()">
+                    <i class="fas fa-print"></i> Imprimir Lista
+                </button>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="left-panel">
+                <h2 class="section-title">Adicionar Novo Gelado</h2>
+                
+                <form id="icecream-form">
+                    <div class="form-group">
+                        <label for="flavor-name">Nome do Sabor:</label>
+                        <input type="text" id="flavor-name" placeholder="Ex: Stracciatella, Vanille, Schokolade..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Tipo de Gelado:</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="type-fruit" name="type" value="Fruto" checked>
+                                <label for="type-fruit">Fruto</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="type-milk" name="type" value="Leite">
+                                <label for="type-milk">Leite</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quantity">Quantidade (Litros):</label>
+                        <select id="quantity" required>
+                            <option value="3">3 Litros</option>
+                            <option value="4" selected>4 Litros</option>
+                            <option value="5">5 Litros</option>
+                            <option value="6">6 Litros</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="recipe">Receita (Ingredientes e Preparação):</label>
+                        <textarea id="recipe" rows="6" placeholder="Descreva os ingredientes e o processo de preparação deste sabor..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">
+                        <i class="fas fa-plus-circle"></i> Adicionar à Lista de Produção
+                    </button>
+                </form>
+                
+                <div class="quick-add-section">
+                    <h3>Sabores Comuns da Gelateria</h3>
+                    <p>Clique para adicionar rapidamente:</p>
+                    <div class="quick-flavors" id="quick-flavors">
+                        <!-- Sabores serão adicionados via JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="flavor-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-flavors">0</div>
+                        <div class="stat-label">Sabores</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-liters">0</div>
+                        <div class="stat-label">Litros totais</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="fruit-count">0</div>
+                        <div class="stat-label">Fruto</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="milk-count">0</div>
+                        <div class="stat-label">Leite</div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-secondary" onclick="showRecipeModal()">
+                    <i class="fas fa-book"></i> Ver Todas as Receitas
+                </button>
+                
+                <button class="btn btn-secondary" onclick="clearAll()" style="margin-top: 10px;">
+                    <i class="fas fa-trash-alt"></i> Limpar Tudo
+                </button>
+            </div>
+            
+            <div class="right-panel">
+                <h2 class="section-title">
+                    Lista de Produção do Dia
+                    <span id="current-date"></span>
+                </h2>
+                
+                <div id="flavors-container">
+                    <!-- Aqui serão exibidos os gelados adicionados -->
+                    <div class="empty-state">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5IDZMMjAgNU0xNiAxNEwyMCAxME0xNCAxOEwxNiAxNk0xMiAyMEwxMyAxOU0xOCAxMkwyMiA4TTggOEw0IDRNNCA0TDggOE00IDRMMyA1TTggOEw0IDEyTTQgMTJMMCAxNk0xMiAyNEwxNiAyME0xNiAyMEwyMiAxNE0xNiAyMEwyMCAxNk0xNiAyMEwxMiAxNk0yMCAxNkwyMiAxNCIgc3Ryb2tlPSIjQ0NDIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Ícone de sorvete">
+                        <h3>Nenhum gelado adicionado ainda</h3>
+                        <p>Comece adicionando os sabores que precisa produzir hoje usando o formulário ao lado.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <button class="btn" id="copyYesterdayBtn" type="button">🔄 Gestern kopieren</button>
-        <button class="btn" id="overviewBtn" type="button">📋 Übersicht</button>
-        <button class="btn" id="manageBtn" type="button">⚙️ Sorten</button>
-        <button class="btn ghost" id="resetBtn" type="button">↩️ Zurücksetzen</button>
-      </div>
     </div>
-  </div>
-</header>
-
-<div class="wrap">
-
-  <div class="sectionHead">
-    <h2>Favoriten</h2>
-    <div class="right">
-      <button class="btn primary" id="quickAddBtn" type="button">➕ Sorte hinzufügen</button>
-      <button class="btn" id="archiveBtn" type="button">🗂️ Archiv</button>
-      <button class="btn" id="settingsBtn" type="button">⚙️ Einstellungen</button>
-    </div>
-  </div>
-
-  <div id="favoritesGrid" class="grid cols2"></div>
-
-  <div class="sectionHead">
-    <h2>Alle Sorten</h2>
-    <div class="right" style="min-width:min(520px,100%);">
-      <input id="searchInput" class="search" placeholder="Sorte suchen…" />
-    </div>
-  </div>
-
-  <div id="allGrid" class="grid cols2"></div>
-
-</div>
-
-<!-- Bottom totals -->
-<div class="bottomBar">
-  <div class="bottomInner">
-    <div class="totals" id="totalsText">…</div>
-    <div class="bottomBtns">
-      <button class="btn" id="printBtn" type="button">🖨️ Drucken / PDF</button>
-      <button class="btn success" id="finishBtn" type="button">✅ Produktion abschließen</button>
-    </div>
-  </div>
-</div>
-
-<!-- Modals -->
-<div class="modalOverlay" id="modalOverlay" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true">
-    <div class="modalHeader">
-      <h3 id="modalTitle">…</h3>
-      <div class="row">
-        <button class="btn ghost" id="modalCloseBtn" type="button">✖</button>
-      </div>
-    </div>
-    <div class="modalBody" id="modalBody"></div>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script>
-/* ---------------------------
-   Data model
-   --------------------------- */
-const LS_KEY = "sanremo_tagesproduktion_v1";
-
-const defaultState = () => ({
-  unit: "kg",            // "kg" | "l"
-  densityKgPerL: 1.00,   // kg/L
-  steps: [3,4,5,6],      // increment sizes (unit-based labels; internally stored as kg)
-  flavors: [
-    // id, name, category, basisType, favorite, basisShare (0..1), waterLPerKg (for waterbasis), note
-    {id: uid(), name:"Vanille", category:"Gelato", basisType:"milch", favorite:true,  basisShare:1.00, waterLPerKg:0, note:""},
-    {id: uid(), name:"Schokolade", category:"Gelato", basisType:"milch", favorite:true, basisShare:1.00, waterLPerKg:0, note:""},
-    {id: uid(), name:"Stracciatella", category:"Gelato", basisType:"milch", favorite:true, basisShare:0.95, waterLPerKg:0, note:""},
-    {id: uid(), name:"Amarena Kirsch", category:"Gelato", basisType:"milch", favorite:true, basisShare:0.90, waterLPerKg:0, note:""},
-    {id: uid(), name:"Cookies", category:"Gelato", basisType:"milch", favorite:true, basisShare:0.90, waterLPerKg:0, note:""},
-    {id: uid(), name:"Erdbeer", category:"Sorbet", basisType:"wasser", favorite:true, basisShare:0.00, waterLPerKg:0.20, note:""},
-    {id: uid(), name:"Mango", category:"Sorbet", basisType:"wasser", favorite:true, basisShare:0.00, waterLPerKg:0.25, note:""},
-    {id: uid(), name:"Zitrone", category:"Sorbet", basisType:"wasser", favorite:false, basisShare:0.00, waterLPerKg:0.35, note:""}
-  ],
-  // production entries: { flavorId: { "3":count, "4":count, ... } } where keys are step values as strings, counts are integers
-  production: {},
-  // archive: [{dateISO, snapshot}]
-  archive: []
-});
-
-let state = loadState();
-
-/* ---------------------------
-   Utilities
-   --------------------------- */
-function uid(){
-  return Math.random().toString(16).slice(2) + Date.now().toString(16);
-}
-
-function todayISO(){
-  const d = new Date();
-  const y = d.getFullYear();
-  const m = String(d.getMonth()+1).padStart(2,"0");
-  const day = String(d.getDate()).padStart(2,"0");
-  return `${y}-${m}-${day}`;
-}
-
-function fmtNumber(n, decimals=0){
-  const x = Number(n || 0);
-  return x.toLocaleString("de-DE", {minimumFractionDigits:decimals, maximumFractionDigits:decimals});
-}
-
-function showToast(msg){
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  clearTimeout(showToast._t);
-  showToast._t = setTimeout(()=>t.classList.remove("show"), 2200);
-}
-
-function loadState(){
-  try{
-    const raw = localStorage.getItem(LS_KEY);
-    if(!raw) return defaultState();
-    const parsed = JSON.parse(raw);
-    // minimal merge to keep new defaults
-    const d = defaultState();
-    return {
-      ...d,
-      ...parsed,
-      steps: Array.isArray(parsed.steps) && parsed.steps.length ? parsed.steps : d.steps,
-      flavors: Array.isArray(parsed.flavors) && parsed.flavors.length ? parsed.flavors : d.flavors,
-      production: parsed.production || {},
-      archive: parsed.archive || []
-    };
-  }catch(e){
-    return defaultState();
-  }
-}
-
-function saveState(){
-  localStorage.setItem(LS_KEY, JSON.stringify(state));
-}
-
-function getFlavorById(id){
-  return state.flavors.find(f=>f.id===id);
-}
-
-function ensureProd(flavorId){
-  if(!state.production[flavorId]) state.production[flavorId] = {};
-  for(const s of state.steps){
-    const k = String(s);
-    if(state.production[flavorId][k] == null) state.production[flavorId][k] = 0;
-  }
-}
-
-function internalKgForStep(stepValue){
-  // stepValue is the displayed unit increment. If unit is liters, convert L -> kg via density.
-  if(state.unit === "kg") return stepValue;
-  return stepValue * state.densityKgPerL;
-}
-
-function displayAmountFromKg(kg){
-  // returns numeric in current display unit
-  if(state.unit === "kg") return kg;
-  // L = kg / density
-  return kg / (state.densityKgPerL || 1);
-}
-
-function unitLabel(){
-  return state.unit === "kg" ? "kg" : "L";
-}
-
-function roundSmart(x){
-  // For display: show 0 decimals for kg, 1 decimal for liters (often useful)
-  if(state.unit === "kg") return fmtNumber(x, 0);
-  return fmtNumber(x, 1);
-}
-
-/* ---------------------------
-   Calculations
-   --------------------------- */
-function calcFlavorKg(flavorId){
-  ensureProd(flavorId);
-  let kg = 0;
-  for(const s of state.steps){
-    const count = Number(state.production[flavorId][String(s)] || 0);
-    kg += count * internalKgForStep(s);
-  }
-  return kg;
-}
-
-function calcFlavorDetail(flavorId){
-  ensureProd(flavorId);
-  const parts = [];
-  for(const s of state.steps){
-    const c = Number(state.production[flavorId][String(s)] || 0);
-    if(c>0) parts.push(`${c}×${s}`);
-  }
-  return parts.length ? parts.join(" + ") : "—";
-}
-
-function calcTotals(){
-  let totalKg = 0;
-  let milkTotalKg = 0;
-  let waterTotalKg = 0;
-
-  let milkBaseKg = 0;     // estimated base needed (milk)
-  let milkAdditivesKg = 0;// estimated additives (milk) = milkTotal - milkBase
-
-  let waterNeededL = 0;   // liters needed for waterbasis (sum kg * waterLPerKg)
-
-  for(const f of state.flavors){
-    const kg = calcFlavorKg(f.id);
-    if(kg <= 0) continue;
-    totalKg += kg;
-    if(f.basisType === "milch"){
-      milkTotalKg += kg;
-      const share = Math.max(0, Math.min(1, Number(f.basisShare ?? 1)));
-      milkBaseKg += kg * share;
-    } else if(f.basisType === "wasser"){
-      waterTotalKg += kg;
-      const w = Math.max(0, Number(f.waterLPerKg ?? 0));
-      waterNeededL += kg * w;
-    } else {
-      // special: count to total only
-    }
-  }
-  milkAdditivesKg = Math.max(0, milkTotalKg - milkBaseKg);
-
-  return { totalKg, milkTotalKg, waterTotalKg, milkBaseKg, milkAdditivesKg, waterNeededL };
-}
-
-/* ---------------------------
-   Rendering
-   --------------------------- */
-const favoritesGrid = document.getElementById("favoritesGrid");
-const allGrid = document.getElementById("allGrid");
-const searchInput = document.getElementById("searchInput");
-
-function render(){
-  document.getElementById("dateLine").textContent = `Datum: ${todayISO()}`;
-  // unit toggle
-  document.getElementById("unitKgBtn").classList.toggle("active", state.unit==="kg");
-  document.getElementById("unitLBtn").classList.toggle("active", state.unit==="l");
-
-  // favorites
-  favoritesGrid.innerHTML = "";
-  const favs = state.flavors.filter(f=>f.favorite);
-  if(favs.length===0){
-    favoritesGrid.innerHTML = `<div class="card">Keine Favoriten gesetzt. Öffne <b>⚙️ Sorten</b> und markiere Favoriten.</div>`;
-  } else {
-    for(const f of favs){
-      favoritesGrid.appendChild(renderFlavorCard(f));
-    }
-  }
-
-  // all (filtered)
-  const q = (searchInput.value||"").trim().toLowerCase();
-  const list = state.flavors
-    .filter(f => !q || f.name.toLowerCase().includes(q))
-    .sort((a,b)=> (b.favorite - a.favorite) || a.name.localeCompare(b.name, "de"));
-  allGrid.innerHTML = "";
-  for(const f of list){
-    allGrid.appendChild(renderFlavorCard(f, true));
-  }
-
-  // totals
-  renderTotals();
-
-  saveState();
-}
-
-function basisPill(flavor){
-  const pills = [];
-  if(flavor.favorite) pills.push(`<span class="pill fav">⭐ Favorit</span>`);
-  if(flavor.basisType === "milch") pills.push(`<span class="pill milk">🥛 Milchbasis</span>`);
-  else if(flavor.basisType === "wasser") pills.push(`<span class="pill water">💧 Wasserbasis</span>`);
-  else pills.push(`<span class="pill">⭐ Special</span>`);
-  return pills.join(" ");
-}
-
-function renderFlavorCard(flavor, compact=false){
-  ensureProd(flavor.id);
-
-  const kg = calcFlavorKg(flavor.id);
-  const disp = displayAmountFromKg(kg);
-  const detail = calcFlavorDetail(flavor.id);
-
-  const card = document.createElement("div");
-  card.className = "card flavorCard";
-
-  const cat = flavor.category ? `Kategorie: ${escapeHtml(flavor.category)}` : "";
-  const note = flavor.note ? `• ${escapeHtml(flavor.note)}` : "";
-
-  card.innerHTML = `
-    <div class="flavorTop">
-      <div class="flavorName">
-        <b>${escapeHtml(flavor.name)}</b>
-        <small>${cat} ${note}</small>
-      </div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;">
-        ${basisPill(flavor)}
-      </div>
-    </div>
-
-    <div class="steps">
-      ${state.steps.map(s=>`
-        <button class="stepBtn add" type="button" data-act="add" data-id="${flavor.id}" data-step="${s}">+${s} ${unitLabel()}</button>
-      `).join("")}
-    </div>
-
-    <div class="meta">
-      <span><b>Menge heute:</b> ${roundSmart(disp)} ${unitLabel()}</span>
-      <span><b>Behälter:</b> ${detail === "—" ? "—" : `${detail} (${unitLabel()})`}</span>
-      ${flavor.basisType==="milch" ? `<span><b>Basis-Anteil:</b> ${fmtNumber((Number(flavor.basisShare||0)*100),0)}%</span>` : ""}
-      ${flavor.basisType==="wasser" ? `<span><b>Wasser-Anteil:</b> ${fmtNumber(Number(flavor.waterLPerKg||0),2)} L/kg</span>` : ""}
-    </div>
-
-    <div class="steps">
-      ${state.steps.map(s=>`
-        <button class="stepBtn sub" type="button" data-act="sub" data-id="${flavor.id}" data-step="${s}">−${s} ${unitLabel()}</button>
-      `).join("")}
-    </div>
-
-    <div class="actionsRow">
-      <button class="btn" type="button" data-act="edit" data-id="${flavor.id}">✏️ Bearbeiten</button>
-      <button class="btn" type="button" data-act="toggleFav" data-id="${flavor.id}">${flavor.favorite ? "☆ Aus Favoriten" : "⭐ Als Favorit"}</button>
-    </div>
-  `;
-
-  // attach listeners via delegation (below)
-  return card;
-}
-
-function renderTotals(){
-  const t = calcTotals();
-
-  const totalDisp = displayAmountFromKg(t.totalKg);
-  const milkDisp  = displayAmountFromKg(t.milkTotalKg);
-  const waterDisp = displayAmountFromKg(t.waterTotalKg);
-  const baseDisp  = displayAmountFromKg(t.milkBaseKg);
-  const addDisp   = displayAmountFromKg(t.milkAdditivesKg);
-
-  // waterNeeded is always liters (real liters), but if unit=kg and you want, we keep liters since water is liters.
-  const waterNeedL = t.waterNeededL;
-
-  const el = document.getElementById("totalsText");
-  el.innerHTML = `
-    <div><b>Gesamtproduktion heute:</b> ${roundSmart(totalDisp)} ${unitLabel()}</div>
-    <div><b>Milchbasis benötigt (geschätzt):</b> ${roundSmart(baseDisp)} ${unitLabel()} <span style="color:var(--muted);">• Zusätze: ${roundSmart(addDisp)} ${unitLabel()}</span></div>
-    <div><b>Wasserbasis (Frucht):</b> ${roundSmart(waterDisp)} ${unitLabel()} <span style="color:var(--muted);">• Benötigtes Wasser: ${fmtNumber(waterNeedL,1)} L</span></div>
-  `;
-}
-
-/* ---------------------------
-   Event handling (delegation)
-   --------------------------- */
-document.addEventListener("click", (e)=>{
-  const btn = e.target.closest("button");
-  if(!btn) return;
-
-  const act = btn.dataset.act;
-  const id = btn.dataset.id;
-  const step = Number(btn.dataset.step);
-
-  if(act==="add" || act==="sub"){
-    const f = getFlavorById(id);
-    if(!f) return;
-    ensureProd(id);
-    const k = String(step);
-    const cur = Number(state.production[id][k] || 0);
-    if(act==="add") state.production[id][k] = cur + 1;
-    else state.production[id][k] = Math.max(0, cur - 1);
-    render();
-    return;
-  }
-
-  if(act==="edit"){
-    openEditFlavorModal(id);
-    return;
-  }
-
-  if(act==="toggleFav"){
-    const f = getFlavorById(id);
-    if(!f) return;
-    f.favorite = !f.favorite;
-    showToast(f.favorite ? "Als Favorit gespeichert." : "Aus Favoriten entfernt.");
-    render();
-    return;
-  }
-});
-
-searchInput.addEventListener("input", render);
-
-document.getElementById("unitKgBtn").addEventListener("click", ()=>{
-  state.unit = "kg";
-  render();
-});
-document.getElementById("unitLBtn").addEventListener("click", ()=>{
-  state.unit = "l";
-  render();
-});
-
-document.getElementById("resetBtn").addEventListener("click", ()=>{
-  openConfirmModal(
-    "Zurücksetzen",
-    "Möchtest du die heutige Produktion wirklich zurücksetzen? (Sorten bleiben erhalten.)",
-    "Ja, zurücksetzen",
-    ()=>{
-      state.production = {};
-      showToast("Produktion zurückgesetzt.");
-      render();
-    }
-  );
-});
-
-document.getElementById("copyYesterdayBtn").addEventListener("click", ()=>{
-  const y = getYesterdaySnapshot();
-  if(!y){
-    showToast("Kein gestriger Eintrag im Archiv gefunden.");
-    return;
-  }
-  openConfirmModal(
-    "Gestern kopieren",
-    "Möchtest du die Produktion von gestern übernehmen?",
-    "Ja, übernehmen",
-    ()=>{
-      state.production = JSON.parse(JSON.stringify(y.snapshot.production || {}));
-      showToast("Von gestern übernommen.");
-      render();
-    }
-  );
-});
-
-document.getElementById("quickAddBtn").addEventListener("click", ()=> openAddFlavorModal());
-document.getElementById("manageBtn").addEventListener("click", ()=> openManageModal());
-document.getElementById("overviewBtn").addEventListener("click", ()=> openOverviewModal());
-document.getElementById("settingsBtn").addEventListener("click", ()=> openSettingsModal());
-document.getElementById("archiveBtn").addEventListener("click", ()=> openArchiveModal());
-
-document.getElementById("printBtn").addEventListener("click", ()=>{
-  openOverviewModal(true);
-});
-
-document.getElementById("finishBtn").addEventListener("click", ()=>{
-  openConfirmModal(
-    "Produktion abschließen",
-    "Möchtest du die Tagesproduktion speichern und archivieren?",
-    "Ja, abschließen",
-    ()=>{
-      archiveToday();
-      showToast("Tagesproduktion wurde archiviert.");
-      // keep production? Many prefer reset after finish:
-      state.production = {};
-      render();
-    }
-  );
-});
-
-/* ---------------------------
-   Modal helpers
-   --------------------------- */
-const overlay = document.getElementById("modalOverlay");
-const modalTitle = document.getElementById("modalTitle");
-const modalBody = document.getElementById("modalBody");
-document.getElementById("modalCloseBtn").addEventListener("click", closeModal);
-overlay.addEventListener("click", (e)=>{ if(e.target===overlay) closeModal(); });
-
-function openModal(title, html){
-  modalTitle.textContent = title;
-  modalBody.innerHTML = html;
-  overlay.classList.add("show");
-  overlay.setAttribute("aria-hidden","false");
-}
-function closeModal(){
-  overlay.classList.remove("show");
-  overlay.setAttribute("aria-hidden","true");
-  modalBody.innerHTML = "";
-}
-
-/* ---------------------------
-   Manage flavors
-   --------------------------- */
-function openManageModal(){
-  const items = state.flavors
-    .slice()
-    .sort((a,b)=> (b.favorite - a.favorite) || a.name.localeCompare(b.name, "de"))
-    .map(f=>`
-      <div class="listItem">
-        <div class="left">
-          <b>${escapeHtml(f.name)} ${f.favorite ? "⭐" : ""}</b>
-          <small>${basisTypeText(f)} • Basis-Anteil: ${fmtNumber((Number(f.basisShare||0)*100),0)}% ${f.basisType==="wasser" ? `• Wasser: ${fmtNumber(Number(f.waterLPerKg||0),2)} L/kg` : ""}</small>
+    
+    <!-- Modal para ver todas as receitas -->
+    <div class="modal" id="recipe-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Receitas dos Gelados</h2>
+                <button class="close-modal" onclick="closeRecipeModal()">&times;</button>
+            </div>
+            <div id="all-recipes">
+                <!-- Receitas serão adicionadas aqui -->
+            </div>
         </div>
-        <div class="row">
-          <button class="btn" type="button" onclick="openEditFlavorModal('${f.id}')">Bearbeiten</button>
-          <button class="btn ${f.favorite ? "" : "primary"}" type="button" onclick="toggleFavorite('${f.id}')">${f.favorite ? "Aus Favoriten" : "Als Favorit"}</button>
-          <button class="btn danger" type="button" onclick="deleteFlavor('${f.id}')">Löschen</button>
-        </div>
-      </div>
-    `).join("");
-
-  openModal("Sorten verwalten", `
-    <div class="row" style="justify-content:space-between;">
-      <button class="btn primary" type="button" onclick="openAddFlavorModal()">➕ Neue Sorte hinzufügen</button>
-      <button class="btn" type="button" onclick="exportImportModal()">⬇️⬆️ Export / Import</button>
-    </div>
-    <div class="hint">Tipp: Markiere Favoriten, damit sie oben in großen Karten erscheinen.</div>
-    <div class="hr"></div>
-    <div class="list">${items || "<div class='card'>Keine Sorten vorhanden.</div>"}</div>
-  `);
-}
-
-function basisTypeText(f){
-  if(f.basisType==="milch") return "🥛 Milchbasis";
-  if(f.basisType==="wasser") return "💧 Wasserbasis";
-  return "⭐ Special";
-}
-
-window.toggleFavorite = (id)=>{
-  const f = getFlavorById(id);
-  if(!f) return;
-  f.favorite = !f.favorite;
-  render();
-  openManageModal();
-};
-
-window.deleteFlavor = (id)=>{
-  const f = getFlavorById(id);
-  if(!f) return;
-  openConfirmModal(
-    "Sorte löschen",
-    `Möchtest du "${f.name}" wirklich löschen?`,
-    "Ja, löschen",
-    ()=>{
-      state.flavors = state.flavors.filter(x=>x.id!==id);
-      delete state.production[id];
-      render();
-      openManageModal();
-    }
-  );
-};
-
-function openAddFlavorModal(){
-  openFlavorFormModal("Neue Sorte hinzufügen", null);
-}
-
-window.openEditFlavorModal = (id)=>{
-  const f = getFlavorById(id);
-  if(!f) return;
-  openFlavorFormModal("Sorte bearbeiten", f);
-};
-
-function openFlavorFormModal(title, flavor){
-  const isEdit = !!flavor;
-  const f = flavor ? {...flavor} : {
-    id: uid(),
-    name:"",
-    category:"Gelato",
-    basisType:"milch",
-    favorite:false,
-    basisShare:1.00,
-    waterLPerKg:0.25,
-    note:""
-  };
-
-  openModal(title, `
-    <div class="formGrid cols2">
-      <label>
-        Name der Sorte
-        <input id="f_name" value="${escapeAttr(f.name)}" placeholder="z.B. Pistazien" />
-      </label>
-
-      <label>
-        Kategorie
-        <select id="f_category">
-          ${["Gelato","Sorbet","Joghurt","Special"].map(x=>`<option ${f.category===x?"selected":""}>${x}</option>`).join("")}
-        </select>
-      </label>
-
-      <label>
-        Basis-Typ
-        <select id="f_basisType">
-          <option value="milch" ${f.basisType==="milch"?"selected":""}>🥛 Milchbasis</option>
-          <option value="wasser" ${f.basisType==="wasser"?"selected":""}>💧 Wasserbasis</option>
-          <option value="special" ${f.basisType==="special"?"selected":""}>⭐ Special</option>
-        </select>
-      </label>
-
-      <label>
-        Als Favorit anzeigen
-        <select id="f_fav">
-          <option value="false" ${!f.favorite?"selected":""}>Nein</option>
-          <option value="true" ${f.favorite?"selected":""}>Ja</option>
-        </select>
-      </label>
-
-      <label>
-        Basis-Anteil (%)
-        <input id="f_basisShare" type="number" min="0" max="100" step="1" value="${fmtNumber((Number(f.basisShare||0)*100),0)}" />
-        <div class="hint">Für Milchsorten: Anteil der weißen Basis in % (z.B. 95%).</div>
-      </label>
-
-      <label>
-        Wasser-Anteil (L/kg)
-        <input id="f_water" type="number" min="0" step="0.01" value="${fmtNumber(Number(f.waterLPerKg||0),2)}" />
-        <div class="hint">Nur für Sorbet/Wasserbasis: Liter Wasser pro 1 kg Mix.</div>
-      </label>
     </div>
 
-    <div class="hr"></div>
-
-    <label>
-      Notiz (optional)
-      <textarea id="f_note" placeholder="z.B. enthält Nüsse / ohne Milch / usw.">${escapeHtml(f.note||"")}</textarea>
-    </label>
-
-    <div class="row" style="justify-content:flex-end;margin-top:12px;">
-      <button class="btn" type="button" onclick="closeModal()">Abbrechen</button>
-      <button class="btn primary" type="button" onclick="saveFlavor('${f.id}', ${isEdit})">${isEdit ? "Speichern" : "Hinzufügen"}</button>
-    </div>
-  `);
-
-  // auto behavior: if category changed to Sorbet, set basisType water
-  setTimeout(()=>{
-    const catEl = document.getElementById("f_category");
-    const basisEl = document.getElementById("f_basisType");
-    if(catEl && basisEl){
-      catEl.addEventListener("change", ()=>{
-        if(catEl.value==="Sorbet") basisEl.value = "wasser";
-        if(catEl.value==="Special") basisEl.value = "special";
-        if(catEl.value==="Gelato" || catEl.value==="Joghurt") basisEl.value = "milch";
-      });
-    }
-  }, 0);
-}
-
-window.saveFlavor = (id, isEdit)=>{
-  const name = (document.getElementById("f_name").value||"").trim();
-  if(!name){
-    showToast("Bitte einen Namen eingeben.");
-    return;
-  }
-  const category = document.getElementById("f_category").value;
-  const basisType = document.getElementById("f_basisType").value;
-  const favorite = document.getElementById("f_fav").value === "true";
-  const basisSharePct = Number(document.getElementById("f_basisShare").value || 0);
-  const basisShare = Math.max(0, Math.min(1, basisSharePct/100));
-  const water = Number(document.getElementById("f_water").value || 0);
-  const note = (document.getElementById("f_note").value||"").trim();
-
-  const existing = getFlavorById(id);
-  if(existing){
-    existing.name = name;
-    existing.category = category;
-    existing.basisType = basisType;
-    existing.favorite = favorite;
-    existing.basisShare = basisShare;
-    existing.waterLPerKg = water;
-    existing.note = note;
-  } else {
-    state.flavors.push({id, name, category, basisType, favorite, basisShare, waterLPerKg: water, note});
-  }
-  render();
-  closeModal();
-  showToast(isEdit ? "Änderungen gespeichert." : "Sorte wurde hinzugefügt.");
-};
-
-/* ---------------------------
-   Overview / Print
-   --------------------------- */
-function openOverviewModal(autoPrint=false){
-  const lines = [];
-  const t = calcTotals();
-
-  const usedFlavors = state.flavors
-    .map(f=>({f, kg: calcFlavorKg(f.id), detail: calcFlavorDetail(f.id)}))
-    .filter(x=>x.kg>0)
-    .sort((a,b)=> (b.f.favorite-a.f.favorite) || a.f.name.localeCompare(b.f.name,"de"));
-
-  if(usedFlavors.length===0){
-    openModal("Tagesübersicht", `<div class="card">Noch keine Einträge für heute.</div>`);
-    return;
-  }
-
-  for(const x of usedFlavors){
-    const disp = displayAmountFromKg(x.kg);
-    const basis = x.f.basisType==="milch" ? (x.kg * (Number(x.f.basisShare||0))) : 0;
-    const zus = x.f.basisType==="milch" ? Math.max(0, x.kg - basis) : 0;
-    const water = x.f.basisType==="wasser" ? (x.kg * Number(x.f.waterLPerKg||0)) : 0;
-
-    lines.push(`
-      <div class="listItem">
-        <div class="left">
-          <b>${escapeHtml(x.f.name)}</b>
-          <small>${basisTypeText(x.f)} • Behälter: ${x.detail === "—" ? "—" : `${x.detail} (${unitLabel()})`}</small>
-        </div>
-        <div class="left" style="text-align:right;align-items:flex-end;">
-          <b>${roundSmart(disp)} ${unitLabel()}</b>
-          <small>
-            ${x.f.basisType==="milch" ? `Basis: ${roundSmart(displayAmountFromKg(basis))} ${unitLabel()} • Zusätze: ${roundSmart(displayAmountFromKg(zus))} ${unitLabel()}` : ""}
-            ${x.f.basisType==="wasser" ? `Wasser: ${fmtNumber(water,1)} L` : ""}
-          </small>
-        </div>
-      </div>
-    `);
-  }
-
-  const html = `
-    <div class="card" style="margin-bottom:12px;">
-      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
-        <div>
-          <div style="font-weight:900;font-size:16px;">Tagesübersicht</div>
-          <div class="hint">Datum: ${todayISO()} • Einheit: ${state.unit.toUpperCase()} • Dichte: ${fmtNumber(state.densityKgPerL,2)} kg/L</div>
-        </div>
-        <div class="row">
-          <button class="btn" type="button" onclick="window.print()">🖨️ Drucken</button>
-        </div>
-      </div>
-      <div class="hr"></div>
-      <div class="row" style="justify-content:space-between;gap:12px;flex-wrap:wrap;">
-        <div><b>Gesamtproduktion:</b> ${roundSmart(displayAmountFromKg(t.totalKg))} ${unitLabel()}</div>
-        <div><b>Milchbasis benötigt:</b> ${roundSmart(displayAmountFromKg(t.milkBaseKg))} ${unitLabel()} <span style="color:var(--muted);">• Zusätze: ${roundSmart(displayAmountFromKg(t.milkAdditivesKg))} ${unitLabel()}</span></div>
-        <div><b>Wasserbasis:</b> ${roundSmart(displayAmountFromKg(t.waterTotalKg))} ${unitLabel()} <span style="color:var(--muted);">• Benötigtes Wasser: ${fmtNumber(t.waterNeededL,1)} L</span></div>
-      </div>
-    </div>
-
-    <div class="list">${lines.join("")}</div>
-  `;
-
-  openModal("Tagesübersicht", html);
-
-  if(autoPrint){
-    // give modal a tick to render then print
-    setTimeout(()=>window.print(), 200);
-  }
-}
-
-/* ---------------------------
-   Settings
-   --------------------------- */
-function openSettingsModal(){
-  openModal("Einstellungen", `
-    <div class="formGrid cols2">
-      <label>
-        Standard-Einheit
-        <select id="s_unit">
-          <option value="kg" ${state.unit==="kg"?"selected":""}>KG</option>
-          <option value="l" ${state.unit==="l"?"selected":""}>LITER</option>
-        </select>
-      </label>
-
-      <label>
-        Dichte (kg/L)
-        <input id="s_density" type="number" min="0.7" max="1.3" step="0.01" value="${fmtNumber(state.densityKgPerL,2)}" />
-        <div class="hint">Wird verwendet, wenn du auf Liter umschaltest. (L = kg / Dichte)</div>
-      </label>
-    </div>
-
-    <div class="hr"></div>
-
-    <div class="hint"><b>Hinweis:</b> Intern wird in kg gespeichert. Bei Liter-Anzeige wird automatisch umgerechnet.</div>
-
-    <div class="row" style="justify-content:flex-end;margin-top:12px;">
-      <button class="btn" type="button" onclick="closeModal()">Abbrechen</button>
-      <button class="btn primary" type="button" onclick="saveSettings()">Speichern</button>
-    </div>
-  `);
-}
-
-window.saveSettings = ()=>{
-  const unit = document.getElementById("s_unit").value;
-  const dens = Number(document.getElementById("s_density").value || 1);
-  state.unit = unit;
-  state.densityKgPerL = Math.max(0.5, Math.min(2.0, dens));
-  render();
-  closeModal();
-  showToast("Einstellungen gespeichert.");
-};
-
-/* ---------------------------
-   Archive
-   --------------------------- */
-function archiveToday(){
-  const dateISO = todayISO();
-  // remove existing entry for today
-  state.archive = state.archive.filter(a=>a.dateISO!==dateISO);
-
-  const snapshot = {
-    unit: state.unit,
-    densityKgPerL: state.densityKgPerL,
-    steps: state.steps,
-    flavors: state.flavors,
-    production: state.production,
-    totals: calcTotals()
-  };
-  state.archive.unshift({dateISO, snapshot});
-  saveState();
-}
-
-function getYesterdaySnapshot(){
-  const d = new Date();
-  d.setDate(d.getDate()-1);
-  const y = d.toISOString().slice(0,10);
-  return state.archive.find(a=>a.dateISO===y) || null;
-}
-
-function openArchiveModal(){
-  const items = state.archive
-    .slice()
-    .sort((a,b)=> b.dateISO.localeCompare(a.dateISO))
-    .map(a=>{
-      const t = a.snapshot?.totals;
-      const total = t ? t.totalKg : 0;
-      const milkBase = t ? t.milkBaseKg : 0;
-      const waterNeed = t ? t.waterNeededL : 0;
-      return `
-        <div class="listItem">
-          <div class="left">
-            <b>${a.dateISO}</b>
-            <small>Gesamt: ${fmtNumber(total,0)} kg • Milchbasis: ${fmtNumber(milkBase,0)} kg • Wasser: ${fmtNumber(waterNeed,1)} L</small>
-          </div>
-          <div class="row">
-            <button class="btn" type="button" onclick="loadArchiveDay('${a.dateISO}')">Ansehen / Laden</button>
-            <button class="btn danger" type="button" onclick="deleteArchiveDay('${a.dateISO}')">Löschen</button>
-          </div>
-        </div>
-      `;
-    }).join("");
-
-  openModal("Archiv", `
-    <div class="hint">Hier findest du abgeschlossene Tage. Du kannst einen Tag ansehen oder in die aktuelle Produktion laden.</div>
-    <div class="hr"></div>
-    <div class="list">${items || "<div class='card'>Archiv ist leer.</div>"}</div>
-  `);
-}
-
-window.deleteArchiveDay = (dateISO)=>{
-  openConfirmModal("Archiv löschen", `Eintrag ${dateISO} löschen?`, "Ja, löschen", ()=>{
-    state.archive = state.archive.filter(a=>a.dateISO!==dateISO);
-    render();
-    openArchiveModal();
-  });
-};
-
-window.loadArchiveDay = (dateISO)=>{
-  const a = state.archive.find(x=>x.dateISO===dateISO);
-  if(!a) return;
-  openConfirmModal("Archiv laden", `Möchtest du den Tag ${dateISO} in die aktuelle Produktion laden?`, "Ja, laden", ()=>{
-    // load only production, keep current flavors/settings (safer). If you want, you can load flavors too.
-    state.production = JSON.parse(JSON.stringify(a.snapshot.production || {}));
-    showToast("Archiv geladen.");
-    render();
-    closeModal();
-  });
-};
-
-/* ---------------------------
-   Export / Import
-   --------------------------- */
-window.exportImportModal = ()=>{
-  const data = JSON.stringify(state, null, 2);
-  openModal("Export / Import", `
-    <div class="formGrid">
-      <label>
-        Export (kopieren & speichern)
-        <textarea readonly>${escapeHtml(data)}</textarea>
-      </label>
-      <div class="hr"></div>
-      <label>
-        Import (JSON einfügen)
-        <textarea id="importBox" placeholder="Hier JSON einfügen…"></textarea>
-      </label>
-      <div class="row" style="justify-content:flex-end;">
-        <button class="btn" type="button" onclick="closeModal()">Schließen</button>
-        <button class="btn primary" type="button" onclick="doImport()">Importieren</button>
-      </div>
-      <div class="hint">Tipp: Export nutzen als Backup, falls Tablet gewechselt wird.</div>
-    </div>
-  `);
-};
-
-window.doImport = ()=>{
-  const txt = (document.getElementById("importBox").value||"").trim();
-  if(!txt){
-    showToast("Bitte JSON einfügen.");
-    return;
-  }
-  try{
-    const obj = JSON.parse(txt);
-    // quick validation
-    if(!obj || typeof obj !== "object") throw new Error("invalid");
-    state = {
-      ...defaultState(),
-      ...obj,
-      unit: (obj.unit==="l" || obj.unit==="kg") ? obj.unit : "kg",
-      densityKgPerL: Number(obj.densityKgPerL || 1),
-      steps: Array.isArray(obj.steps) ? obj.steps : [3,4,5,6],
-      flavors: Array.isArray(obj.flavors) ? obj.flavors : defaultState().flavors,
-      production: obj.production || {},
-      archive: obj.archive || []
-    };
-    saveState();
-    render();
-    closeModal();
-    showToast("Import erfolgreich.");
-  }catch(e){
-    showToast("Import fehlgeschlagen. Bitte JSON prüfen.");
-  }
-};
-
-/* ---------------------------
-   Confirm modal
-   --------------------------- */
-function openConfirmModal(title, text, okText, onOk){
-  openModal(title, `
-    <div class="card">
-      <div style="font-weight:800;margin-bottom:6px;">${escapeHtml(text)}</div>
-      <div class="row" style="justify-content:flex-end;margin-top:10px;">
-        <button class="btn" type="button" onclick="closeModal()">Abbrechen</button>
-        <button class="btn danger" type="button" id="confirmOkBtn">${escapeHtml(okText)}</button>
-      </div>
-    </div>
-  `);
-  setTimeout(()=>{
-    const b = document.getElementById("confirmOkBtn");
-    if(b) b.addEventListener("click", ()=>{
-      closeModal();
-      onOk?.();
-    });
-  }, 0);
-}
-
-/* ---------------------------
-   Escape helpers
-   --------------------------- */
-function escapeHtml(s){
-  return String(s ?? "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-function escapeAttr(s){ return escapeHtml(s).replaceAll("\n"," "); }
-
-/* ---------------------------
-   Init
-   --------------------------- */
-(function init(){
-  // ensure production keys exist
-  for(const f of state.flavors) ensureProd(f.id);
-  render();
-})();
-</script>
-
+    <script>
+        // Armazenar gelados
+        let iceCreams = [];
+        
+        // Sabores pré-definidos da gelateria
+        const commonFlavors = [
+            { name: "Stracciatella", type: "Leite", recipe: "Base de leite com lascas de chocolate preto. Ingredientes: leite, natas, açúcar, chocolate preto em lascas." },
+            { name: "Vanille", type: "Leite", recipe: "Baunilha tradicional com vagem de baunilha. Ingredientes: leite, natas, açúcar, vagem de baunilha, gema de ovo." },
+            { name: "Schokolade", type: "Leite", recipe: "Chocolate intenso belga. Ingredientes: leite, natas, açúcar, cacau em pó de qualidade, chocolate preto derretido." },
+            { name: "Amarena Kirch", type: "Fruto", recipe: "Creme branco com cerejas Amarena. Ingredientes: leite, natas, açúcar, cerejas Amarena, calda de cereja." },
+            { name: "Haselnüsse", type: "Leite", recipe: "Avelãs torradas e moídas. Ingredientes: leite, natas, açúcar, pasta de avelã, avelãs trituradas." },
+            { name: "Walnuss", type: "Leite", recipe: "Nozes frescas caramelizadas. Ingredientes: leite, natas, açúcar, nozes, caramelo." },
+            { name: "Cookies", type: "Leite", recipe: "Base de baunilha com pedaços de bolacha. Ingredientes: leite, natas, açúcar, bolacha tipo cookie triturada." },
+            { name: "Snickers", type: "Leite", recipe: "Caramelo, amendoim e chocolate. Ingredientes: leite, natas, açúcar, caramelo, amendoim, chocolate." },
+            { name: "dunkel Schokolade", type: "Leite", recipe: "Chocolate preto 70% cacau. Ingredientes: leite, natas, açúcar, chocolate preto de alta qualidade." },
+            { name: "Weiß Schokolade", type: "Leite", recipe: "Chocolate branco cremoso. Ingredientes: leite, natas, açúcar, chocolate branco, baunilha." },
+            { name: "Erdbeer", type: "Fruto", recipe: "Morango fresco. Ingredientes: morangos frescos, açúcar, sumo de limão, um pouco de natas." },
+            { name: "Himbeere", type: "Fruto", recipe: "Framboesa silvestre. Ingredientes: framboesas frescas, açúcar, sumo de limão." },
+            { name: "Mango", type: "Fruto", recipe: "Manga madura tropical. Ingredientes: polpa de manga, açúcar, sumo de limão, um pouco de natas." },
+            { name: "Zitrone", type: "Fruto", recipe: "Limão siciliano. Ingredientes: sumo de limão fresco, casca de limão, açúcar, um pouco de natas." },
+            { name: "Banane", type: "Fruto", recipe: "Banana madura caramelizada. Ingredientes: bananas maduras, açúcar mascavado, canela, sumo de limão." }
+        ];
+        
+        // Inicializar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            // Exibir data atual
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = today.toLocaleDateString('pt-PT', options);
+            
+            // Recuperar dados salvos no localStorage
+            const savedIceCreams = localStorage.getItem('gelateriaIceCreams');
+            if (savedIceCreams) {
+                iceCreams = JSON.parse(savedIceCreams);
+                updateFlavorList();
+                updateStats();
+            }
+            
+            // Carregar sabores rápidos
+            loadQuickFlavors();
+        });
+        
+        // Carregar sabores rápidos
+        function loadQuickFlavors() {
+            const container = document.getElementById('quick-flavors');
+            container.innerHTML = '';
+            
+            commonFlavors.forEach(flavor => {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = `quick-flavor-btn ${flavor.type === 'Fruto' ? 'fruit' : 'milk'}`;
+                button.textContent = flavor.name;
+                button.onclick = () => addQuickFlavor(flavor);
+                container.appendChild(button);
+            });
+        }
+        
+        // Adicionar sabor rápido
+        function addQuickFlavor(flavor) {
+            document.getElementById('flavor-name').value = flavor.name;
+            
+            if (flavor.type === 'Fruto') {
+                document.getElementById('type-fruit').checked = true;
+            } else {
+                document.getElementById('type-milk').checked = true;
+            }
+            
+            if (flavor.recipe) {
+                document.getElementById('recipe').value = flavor.recipe;
+            }
+            
+            // Focar no campo de quantidade
+            document.getElementById('quantity').focus();
+        }
+        
+        // Adicionar novo gelado
+        document.getElementById('icecream-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Obter valores do formulário
+            const flavorName = document.getElementById('flavor-name').value;
+            const flavorType = document.querySelector('input[name="type"]:checked').value;
+            const quantity = document.getElementById('quantity').value;
+            const recipe = document.getElementById('recipe').value;
+            
+            // Criar novo gelado
+            const newIceCream = {
+                id: Date.now(),
+                name: flavorName,
+                type: flavorType,
+                quantity: parseInt(quantity),
+                recipe: recipe,
+                date: new Date().toLocaleDateString('pt-PT')
+            };
+            
+            // Adicionar à lista
+            iceCreams.push(newIceCream);
+            
+            // Atualizar interface
+            updateFlavorList();
+            updateStats();
+            
+            // Salvar no localStorage
+            localStorage.setItem('gelateriaIceCreams', JSON.stringify(iceCreams));
+            
+            // Resetar formulário
+            document.getElementById('icecream-form').reset();
+            document.getElementById('type-fruit').checked = true;
+            
+            // Focar no campo de nome
+            document.getElementById('flavor-name').focus();
+            
+            // Mostrar mensagem de sucesso
+            showNotification(`Gelado "${flavorName}" adicionado com sucesso!`, 'success');
+        });
+        
+        // Atualizar lista de gelados
+        function updateFlavorList() {
+            const container = document.getElementById('flavors-container');
+            
+            if (iceCreams.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE5IDZMMjAgNU0xNiAxNEwyMCAxME0xNCAxOEwxNiAxNk0xMiAyMEwxMyAxOU0xOCAxMkwyMiA4TTggOEw0IDRNNCA0TDggOE00IDRMMyA1TTggOEw0IDEyTTQgMTJMMCAxNk0xMiAyNEwxNiAyME0xNiAyMEwyMiAxNE0xNiAyMEwyMCAxNk0xNiAyMEwxMiAxNk0yMCAxNkwyMiAxNCIgc3Ryb2tlPSIjQ0NDIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4K" alt="Ícone de sorvete">
+                        <h3>Nenhum gelado adicionado ainda</h3>
+                        <p>Comece adicionando os sabores que precisa produzir hoje usando o formulário ao lado.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Ordenar por tipo (fruto primeiro, depois leite)
+            const sortedIceCreams = [...iceCreams].sort((a, b) => {
+                if (a.type === 'Fruto' && b.type === 'Leite') return -1;
+                if (a.type === 'Leite' && b.type === 'Fruto') return 1;
+                return a.name.localeCompare(b.name);
+            });
+            
+            // Gerar HTML para cada gelado
+            let flavorsHTML = '<div class="flavor-list">';
+            
+            sortedIceCreams.forEach(iceCream => {
+                flavorsHTML += `
+                    <div class="flavor-card" data-id="${iceCream.id}">
+                        <button class="remove-btn" onclick="removeFlavor(${iceCream.id})" title="Remover">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="flavor-header">
+                            <div class="flavor-name">${iceCream.name}</div>
+                            <div class="flavor-type">${iceCream.type}</div>
+                        </div>
+                        <div class="flavor-details">
+                            <div><strong>Quantidade:</strong> <span class="flavor-size">${iceCream.quantity} Litros</span></div>
+                            <div><strong>Data:</strong> ${iceCream.date}</div>
+                        </div>
+                        ${iceCream.recipe ? `<div class="flavor-recipe"><strong>Receita:</strong> ${iceCream.recipe}</div>` : ''}
+                    </div>
+                `;
+            });
+            
+            flavorsHTML += '</div>';
+            container.innerHTML = flavorsHTML;
+        }
+        
+        // Atualizar estatísticas
+        function updateStats() {
+            const totalFlavors = iceCreams.length;
+            const totalLiters = iceCreams.reduce((sum, iceCream) => sum + iceCream.quantity, 0);
+            const fruitCount = iceCreams.filter(iceCream => iceCream.type === 'Fruto').length;
+            const milkCount = iceCreams.filter(iceCream => iceCream.type === 'Leite').length;
+            
+            document.getElementById('total-flavors').textContent = totalFlavors;
+            document.getElementById('total-liters').textContent = totalLiters;
+            document.getElementById('fruit-count').textContent = fruitCount;
+            document.getElementById('milk-count').textContent = milkCount;
+        }
+        
+        // Remover um sabor
+        function removeFlavor(id) {
+            if (confirm('Tem certeza que deseja remover este gelado da lista?')) {
+                iceCreams = iceCreams.filter(iceCream => iceCream.id !== id);
+                updateFlavorList();
+                updateStats();
+                localStorage.setItem('gelateriaIceCreams', JSON.stringify(iceCreams));
+                showNotification('Gelado removido com sucesso!', 'info');
+            }
+        }
+        
+        // Limpar toda a lista
+        function clearAll() {
+            if (iceCreams.length === 0) {
+                showNotification('A lista já está vazia!', 'info');
+                return;
+            }
+            
+            if (confirm('Tem certeza que deseja remover todos os gelados da lista? Esta ação não pode ser desfeita.')) {
+                iceCreams = [];
+                updateFlavorList();
+                updateStats();
+                localStorage.removeItem('gelateriaIceCreams');
+                showNotification('Lista limpa com sucesso!', 'info');
+            }
+        }
+        
+        // Enviar por WhatsApp
+        function sendToWhatsApp() {
+            if (iceCreams.length === 0) {
+                showNotification('Adicione pelo menos um gelado antes de enviar!', 'warning');
+                return;
+            }
+            
+            // Formatar mensagem para WhatsApp
+            const today = new Date().toLocaleDateString('pt-PT');
+            let message = `*LISTA DE PRODUÇÃO DA GELATERIA - ${today}*\n\n`;
+            
+            // Agrupar por tipo
+            const fruitFlavors = iceCreams.filter(f => f.type === 'Fruto');
+            const milkFlavors = iceCreams.filter(f => f.type === 'Leite');
+            
+            if (fruitFlavors.length > 0) {
+                message += `*GELADOS DE FRUTO:*\n`;
+                fruitFlavors.forEach(flavor => {
+                    message += `• ${flavor.name}: ${flavor.quantity}L\n`;
+                });
+                message += '\n';
+            }
+            
+            if (milkFlavors.length > 0) {
+                message += `*GELADOS DE LEITE:*\n`;
+                milkFlavors.forEach(flavor => {
+                    message += `• ${flavor.name}: ${flavor.quantity}L\n`;
+                });
+                message += '\n';
+            }
+            
+            // Adicionar totais
+            const totalLiters = iceCreams.reduce((sum, f) => sum + f.quantity, 0);
+            message += `*TOTAL:* ${iceCreams.length} sabores, ${totalLiters} litros\n`;
+            message += `\nProdução gerada pelo Gelateria Manager Pro`;
+            
+            // Codificar para URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Abrir WhatsApp Web ou app
+            window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+            
+            showNotification('Preparando para enviar por WhatsApp...', 'success');
+        }
+        
+        // Imprimir lista de produção
+        function printProduction() {
+            if (iceCreams.length === 0) {
+                showNotification('Adicione pelo menos um gelado antes de imprimir!', 'warning');
+                return;
+            }
+            
+            // Criar uma versão impressão amigável
+            const printWindow = window.open('', '_blank');
+            const today = new Date().toLocaleDateString('pt-PT', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            let printContent = `
+                <!DOCTYPE html>
+                <html lang="pt">
+                <head>
+                    <meta charset="UTF-8">
+                    <title>Lista de Produção - Gelateria</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
+                        h1 { color: #ff7b9c; text-align: center; }
+                        h2 { color: #555; border-bottom: 2px solid #ffccd5; padding-bottom: 5px; }
+                        .date { text-align: center; margin-bottom: 30px; color: #777; }
+                        .section { margin-bottom: 30px; }
+                        .flavor-item { margin-bottom: 15px; padding: 10px; border: 1px solid #eee; border-radius: 5px; }
+                        .flavor-name { font-weight: bold; color: #ff7b9c; }
+                        .flavor-details { margin-left: 20px; color: #666; }
+                        .recipe { font-style: italic; color: #888; margin-top: 5px; font-size: 0.9em; }
+                        .totals { margin-top: 40px; padding: 20px; background-color: #f9f9f9; border-radius: 10px; text-align: center; }
+                        .total-value { font-size: 1.5em; font-weight: bold; color: #ff7b9c; }
+                        @media print {
+                            .no-print { display: none; }
+                            body { font-size: 12pt; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Lista de Produção - Gelateria</h1>
+                    <div class="date">${today}</div>
+            `;
+            
+            // Agrupar por tipo
+            const fruitFlavors = iceCreams.filter(f => f.type === 'Fruto');
+            const milkFlavors = iceCreams.filter(f => f.type === 'Leite');
+            
+            if (fruitFlavors.length > 0) {
+                printContent += `<div class="section"><h2>Gelados de Fruto (${fruitFlavors.length})</h2>`;
+                fruitFlavors.forEach(flavor => {
+                    printContent += `
+                        <div class="flavor-item">
+                            <div class="flavor-name">${flavor.name}</div>
+                            <div class="flavor-details">Quantidade: ${flavor.quantity} Litros</div>
+                            ${flavor.recipe ? `<div class="recipe">Receita: ${flavor.recipe}</div>` : ''}
+                        </div>
+                    `;
+                });
+                printContent += `</div>`;
+            }
+            
+            if (milkFlavors.length > 0) {
+                printContent += `<div class="section"><h2>Gelados de Leite (${milkFlavors.length})</h2>`;
+                milkFlavors.forEach(flavor => {
+                    printContent += `
+                        <div class="flavor-item">
+                            <div class="flavor-name">${flavor.name}</div>
+                            <div class="flavor-details">Quantidade: ${flavor.quantity} Litros</div>
+                            ${flavor.recipe ? `<div class="recipe">Receita: ${flavor.recipe}</div>` : ''}
+                        </div>
+                    `;
+                });
+                printContent += `</div>`;
+            }
+            
+            // Adicionar totais
+            const totalLiters = iceCreams.reduce((sum, f) => sum + f.quantity, 0);
+            printContent += `
+                <div class="totals">
+                    <div><strong>TOTAL DE SABORES:</strong> <span class="total-value">${iceCreams.length}</span></div>
+                    <div><strong>TOTAL DE LITROS:</strong> <span class="total-value">${totalLiters} L</span></div>
+                </div>
+                <div class="no-print" style="margin-top: 30px; text-align: center;">
+                    <button onclick="window.print()" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">Imprimir</button>
+                </div>
+            </body>
+            </html>
+            `;
+            
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            
+            showNotification('Preparando para impressão...', 'success');
+        }
+        
+        // Mostrar modal de receitas
+        function showRecipeModal() {
+            const modal = document.getElementById('recipe-modal');
+            const recipesContainer = document.getElementById('all-recipes');
+            
+            if (iceCreams.length === 0) {
+                recipesContainer.innerHTML = '<p>Nenhuma receita adicionada ainda.</p>';
+            } else {
+                let recipesHTML = '';
+                iceCreams.forEach(iceCream => {
+                    if (iceCream.recipe) {
+                        recipesHTML += `
+                            <div style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
+                                <h3 style="color: #ff7b9c; margin-bottom: 5px;">${iceCream.name} (${iceCream.type})</h3>
+                                <p><strong>Quantidade:</strong> ${iceCream.quantity} Litros</p>
+                                <p>${iceCream.recipe}</p>
+                            </div>
+                        `;
+                    }
+                });
+                
+                if (recipesHTML === '') {
+                    recipesHTML = '<p>Nenhuma receita detalhada foi adicionada aos gelados.</p>';
+                }
+                
+                recipesContainer.innerHTML = recipesHTML;
+            }
+            
+            modal.style.display = 'flex';
+        }
+        
+        // Fechar modal de receitas
+        function closeRecipeModal() {
+            document.getElementById('recipe-modal').style.display = 'none';
+        }
+        
+        // Mostrar notificação
+        function showNotification(message, type) {
+            // Criar elemento de notificação
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                border-radius: 8px;
+                color: white;
+                font-weight: 600;
+                z-index: 10000;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            // Cor baseada no tipo
+            if (type === 'success') {
+                notification.style.backgroundColor = '#28a745';
+            } else if (type === 'warning') {
+                notification.style.backgroundColor = '#ffc107';
+            } else if (type === 'info') {
+                notification.style.backgroundColor = '#17a2b8';
+            } else {
+                notification.style.backgroundColor = '#ff7b9c';
+            }
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Remover após 3 segundos
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+            
+            // Adicionar animações CSS
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+        }
+    </script>
 </body>
 </html>
