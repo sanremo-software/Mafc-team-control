@@ -2357,13 +2357,13 @@
             
             todayProduction.forEach(item => {
                 const baskets = Math.ceil(item.quantity / appState.settings.basketCapacity);
-                message += `• ${item.name}: ${item.quantity}L (${baskets} Cesto${baskets !== 1 ? 's' : ''})\n`;
+                message += `• ${item.name}: ${item.quantity}L (${baskets} Eimer ${baskets !== 1 ? 's' : ''})\n`;
             });
             
             const totalLiters = todayProduction.reduce((sum, item) => sum + item.quantity, 0);
             const totalBaskets = todayProduction.reduce((sum, item) => sum + Math.ceil(item.quantity / appState.settings.basketCapacity), 0);
             
-            message += `\n*Gesamt:* ${todayProduction.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalBaskets} Cestos`;
+            message += `\n*Gesamt:* ${todayProduction.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalBaskets} Eimer `;
             
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
@@ -2394,7 +2394,7 @@
             if (optimized) {
                 saveData();
                 updateProductionTab();
-                showNotification('Cestos optimiert', 'success');
+                showNotification('Eimer optimiert', 'success');
             } else {
                 showNotification('Produktion ist bereits optimiert', 'info');
             }
@@ -2525,7 +2525,7 @@
             printContent += `
                     </table>
                     <div class="total">
-                        Gesamt: ${productionData.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalBaskets} Cestos
+                        Gesamt: ${productionData.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalBaskets} Eimer
                     </div>
                 </body>
                 </html>
