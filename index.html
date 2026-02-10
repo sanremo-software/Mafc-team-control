@@ -241,11 +241,6 @@
             gap: 15px;
         }
 
-        .production-item.high-priority {
-            border-left-color: var(--danger);
-            background: rgba(244,67,54,0.05);
-        }
-
         .item-info {
             flex: 1;
         }
@@ -620,6 +615,9 @@
                 <div class="section-title">
                     <span>Heutige Produktion</span>
                     <div class="flex-row">
+                        <button class="btn-small btn-success" onclick="exportToExcel()">
+                            <i class="fas fa-file-excel"></i> Excel
+                        </button>
                         <button class="btn-small btn-info" onclick="sendToWhatsApp()">
                             <i class="fab fa-whatsapp"></i>
                         </button>
@@ -662,19 +660,14 @@
                 
                 <div class="form-group">
                     <label>Menge in Eimern</label>
-                    <div style="display: flex; gap: 10px;">
-                        <button class="btn-small" onclick="decreaseQuantity()">-</button>
-                        <input type="number" id="quantity" value="1" min="1" max="100" style="text-align: center;">
-                        <button class="btn-small" onclick="increaseQuantity()">+</button>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button class="btn-small" onclick="decreaseQuantity()" style="min-width: 50px;">-</button>
+                        <input type="number" id="quantity" value="1" min="1" max="100" style="text-align: center; flex: 1;">
+                        <button class="btn-small" onclick="increaseQuantity()" style="min-width: 50px;">+</button>
+                        <button class="btn-small btn-info" onclick="setQuantity(5)" style="min-width: 50px;">5</button>
+                        <button class="btn-small btn-info" onclick="setQuantity(10)" style="min-width: 50px;">10</button>
+                        <button class="btn-small btn-warning" onclick="setQuantity(20)" style="min-width: 50px;">20</button>
                     </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Priorität</label>
-                    <select id="priority">
-                        <option value="normal">Normal</option>
-                        <option value="high">Hohe Priorität</option>
-                    </select>
                 </div>
                 
                 <div class="form-group">
@@ -859,12 +852,12 @@
                 
                 <div class="form-group">
                     <label>Beschreibung</label>
-                    <textarea id="recipe-description" placeholder="Beschreibung der Sorte..."></textarea>
+                    <textarea id="recipe-description" placeholder="Beschreibung der Sorte..." rows="3"></textarea>
                 </div>
                 
                 <div class="form-group">
                     <label>Rezept *</label>
-                    <textarea id="recipe-content" placeholder="Detaillierte Rezeptanleitung..." required></textarea>
+                    <textarea id="recipe-content" placeholder="Detaillierte Rezeptanleitung..." required rows="6"></textarea>
                 </div>
                 
                 <div class="form-group">
@@ -879,6 +872,8 @@
                                 <option value="ml">ml</option>
                                 <option value="L">L</option>
                                 <option value="Stück">Stück</option>
+                                <option value="TL">TL</option>
+                                <option value="EL">EL</option>
                             </select>
                         </div>
                         <button type="button" class="btn-small" onclick="addIngredient()">
@@ -888,28 +883,6 @@
                     
                     <div id="ingredients-list">
                         <!-- Zutaten werden hier hinzugefügt -->
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Allergene</label>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <label style="display: flex; align-items: center; gap: 8px;">
-                            <input type="checkbox" class="allergen" value="Milch">
-                            <span>Milch</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 8px;">
-                            <input type="checkbox" class="allergen" value="Eier">
-                            <span>Eier</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 8px;">
-                            <input type="checkbox" class="allergen" value="Nüsse">
-                            <span>Nüsse</span>
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 8px;">
-                            <input type="checkbox" class="allergen" value="Gluten">
-                            <span>Gluten</span>
-                        </label>
                     </div>
                 </div>
                 
@@ -937,7 +910,7 @@
         let eimerCapacity = 5;
         let currentDate = new Date();
 
-        // KLASSISCHE SORTEN (bereits auf Deutsch)
+        // KLASSISCHE SORTEN
         const classicFlavors = [
             {
                 name: "Vanille",
@@ -953,7 +926,6 @@
                     { name: "Eigelb", quantity: 6, unit: "Stück" },
                     { name: "Vanilleschote", quantity: 1, unit: "Stück" }
                 ],
-                allergens: ["Milch", "Eier"],
                 tags: ["Klassisch", "Cremig", "Traditionell"],
                 popularity: 100
             },
@@ -968,7 +940,6 @@
                     { name: "Vanillebasis", quantity: 1, unit: "L" },
                     { name: "Dunkle Schokolade", quantity: 100, unit: "g" }
                 ],
-                allergens: ["Milch", "Eier"],
                 tags: ["Klassisch", "Schokolade", "Cremig"],
                 popularity: 95
             },
@@ -985,7 +956,6 @@
                     { name: "Dunkle Schokolade", quantity: 200, unit: "g" },
                     { name: "Zucker", quantity: 150, unit: "g" }
                 ],
-                allergens: ["Milch"],
                 tags: ["Klassisch", "Schokolade", "Intensiv"],
                 popularity: 90
             },
@@ -1001,7 +971,6 @@
                     { name: "Zitronen", quantity: 10, unit: "Stück" },
                     { name: "Zucker", quantity: 300, unit: "g" }
                 ],
-                allergens: [],
                 tags: ["Frucht", "Erfrischend", "Sommer"],
                 popularity: 85
             },
@@ -1017,7 +986,6 @@
                     { name: "Erdbeeren", quantity: 500, unit: "g" },
                     { name: "Zucker", quantity: 250, unit: "g" }
                 ],
-                allergens: [],
                 tags: ["Frucht", "Sommer", "Natürlich"],
                 popularity: 88
             },
@@ -1034,7 +1002,6 @@
                     { name: "Zucker", quantity: 300, unit: "g" },
                     { name: "Kirschsirup", quantity: 100, unit: "ml" }
                 ],
-                allergens: [],
                 tags: ["Frucht", "Spezial", "Italienisch"],
                 popularity: 80
             },
@@ -1051,7 +1018,6 @@
                     { name: "Pistazien", quantity: 200, unit: "g" },
                     { name: "Zucker", quantity: 150, unit: "g" }
                 ],
-                allergens: ["Milch", "Nüsse"],
                 tags: ["Nüsse", "Spezial", "Italienisch"],
                 popularity: 82
             },
@@ -1067,7 +1033,6 @@
                     { name: "Pfefferminzextrakt", quantity: 20, unit: "ml" },
                     { name: "Schokolade", quantity: 100, unit: "g" }
                 ],
-                allergens: ["Milch", "Eier"],
                 tags: ["Erfrischend", "Schokolade", "Spezial"],
                 popularity: 75
             },
@@ -1082,7 +1047,6 @@
                     { name: "Vanillebasis", quantity: 1, unit: "L" },
                     { name: "Cookies", quantity: 150, unit: "g" }
                 ],
-                allergens: ["Milch", "Eier", "Gluten"],
                 tags: ["Cookie", "Cremig", "Beliebt"],
                 popularity: 87
             },
@@ -1098,7 +1062,6 @@
                     { name: "Himbeeren", quantity: 400, unit: "g" },
                     { name: "Zucker", quantity: 250, unit: "g" }
                 ],
-                allergens: [],
                 tags: ["Frucht", "Erfrischend", "Sommer"],
                 popularity: 83
             }
@@ -1232,13 +1195,11 @@
         function addProductionItem() {
             const flavorSelect = document.getElementById('flavor-select');
             const quantityInput = document.getElementById('quantity');
-            const prioritySelect = document.getElementById('priority');
             const notesInput = document.getElementById('notes');
             const dateInput = document.getElementById('production-date');
             
             const flavorName = flavorSelect.value;
             const quantity = parseInt(quantityInput.value);
-            const priority = prioritySelect.value;
             const notes = notesInput.value;
             const dateKey = dateInput.value;
             
@@ -1279,7 +1240,6 @@
             production[dateKey].push({
                 name: flavorName,
                 eimer: quantity,
-                priority: priority,
                 notes: notes,
                 addedAt: new Date().toISOString()
             });
@@ -1317,14 +1277,11 @@
                 const typeText = recipe ? (recipe.type === 'Fruto' ? 'Frucht' : recipe.type === 'Leite' ? 'Milch' : 'Sorbet') : '';
                 
                 html += `
-                    <div class="production-item ${item.priority === 'high' ? 'high-priority' : ''}">
+                    <div class="production-item">
                         <div class="item-info">
                             <div class="item-name">${item.name}</div>
                             <div style="display: flex; align-items: center; gap: 10px; margin-top: 5px;">
                                 <span class="item-type ${typeClass}">${typeText}</span>
-                                ${item.priority === 'high' ? 
-                                    '<span style="color: var(--danger); font-size: 0.8rem;"><i class="fas fa-exclamation-circle"></i> Hoch</span>' : 
-                                    ''}
                             </div>
                             ${item.notes ? `<div style="margin-top: 5px; color: var(--gray); font-size: 0.9rem;">${item.notes}</div>` : ''}
                         </div>
@@ -1383,6 +1340,23 @@
             
             document.getElementById('total-flavors').textContent = totalFlavors;
             document.getElementById('total-eimers').textContent = totalEimers;
+        }
+
+        // QUANTITY FUNKTIONEN
+        function increaseQuantity() {
+            const input = document.getElementById('quantity');
+            input.value = parseInt(input.value) + 1;
+        }
+
+        function decreaseQuantity() {
+            const input = document.getElementById('quantity');
+            if (input.value > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        }
+
+        function setQuantity(value) {
+            document.getElementById('quantity').value = value;
         }
 
         // SORTEN-FUNKTIONEN
@@ -1628,9 +1602,6 @@
                 title.textContent = 'Neues Rezept';
                 document.getElementById('recipe-form').reset();
                 document.getElementById('recipe-id').value = '';
-                
-                // Allergene zurücksetzen
-                document.querySelectorAll('.allergen').forEach(cb => cb.checked = false);
             } else if (mode === 'edit' && recipeIndex !== null) {
                 title.textContent = 'Rezept bearbeiten';
                 const recipe = recipes[recipeIndex];
@@ -1641,11 +1612,6 @@
                     document.getElementById('recipe-description').value = recipe.description || '';
                     document.getElementById('recipe-content').value = recipe.recipe || '';
                     document.getElementById('recipe-tags').value = recipe.tags ? recipe.tags.join(', ') : '';
-                    
-                    // Allergene setzen
-                    document.querySelectorAll('.allergen').forEach(cb => {
-                        cb.checked = recipe.allergens?.includes(cb.value) || false;
-                    });
                     
                     // Zutaten hinzufügen
                     if (recipe.ingredients) {
@@ -1681,6 +1647,8 @@
                     <option value="ml" ${unit === 'ml' ? 'selected' : ''}>ml</option>
                     <option value="L" ${unit === 'L' ? 'selected' : ''}>L</option>
                     <option value="Stück" ${unit === 'Stück' ? 'selected' : ''}>Stück</option>
+                    <option value="TL" ${unit === 'TL' ? 'selected' : ''}>TL</option>
+                    <option value="EL" ${unit === 'EL' ? 'selected' : ''}>EL</option>
                 </select>
                 <button type="button" class="btn-small" style="background: var(--danger); min-width: 44px;" onclick="removeIngredient(${ingredientId})">
                     <i class="fas fa-trash"></i>
@@ -1741,12 +1709,6 @@
                 }
             });
             
-            // Allergene sammeln
-            const allergens = [];
-            document.querySelectorAll('.allergen:checked').forEach(cb => {
-                allergens.push(cb.value);
-            });
-            
             if (id) {
                 // Update
                 const index = parseInt(id);
@@ -1755,7 +1717,6 @@
                     name, type, description,
                     recipe: content,
                     ingredients: ingredients.length > 0 ? ingredients : undefined,
-                    allergens: allergens.length > 0 ? allergens : undefined,
                     tags: tags ? tags.split(',').map(t => t.trim()).filter(t => t) : undefined,
                     updatedAt: new Date().toISOString()
                 };
@@ -1768,7 +1729,6 @@
                     description,
                     recipe: content,
                     ingredients: ingredients.length > 0 ? ingredients : undefined,
-                    allergens: allergens.length > 0 ? allergens : undefined,
                     tags: tags ? tags.split(',').map(t => t.trim()).filter(t => t) : undefined,
                     createdAt: new Date().toISOString(),
                     popularity: 0
@@ -1791,23 +1751,54 @@
             showNotification('Eimer-Kapazität aktualisiert!', 'success');
         }
 
-        // HILFSFUNKTIONEN
-        function increaseQuantity() {
-            const input = document.getElementById('quantity');
-            input.value = parseInt(input.value) + 1;
-        }
-
-        function decreaseQuantity() {
-            const input = document.getElementById('quantity');
-            if (input.value > 1) {
-                input.value = parseInt(input.value) - 1;
-            }
-        }
-
+        // INFO FUNKTIONEN
         function updateInfo() {
             document.getElementById('info-flavors').textContent = recipes.length;
             document.getElementById('info-recipes').textContent = recipes.length;
             document.getElementById('info-production-days').textContent = Object.keys(production).length;
+        }
+
+        // EXCEL EXPORT
+        function exportToExcel() {
+            const dateKey = document.getElementById('production-date').value;
+            const productionData = production[dateKey] || [];
+            
+            if (productionData.length === 0) {
+                showNotification('Keine Produktion zum Exportieren!', 'warning');
+                return;
+            }
+            
+            const date = new Date(dateKey);
+            const formattedDate = date.toLocaleDateString('de-DE');
+            
+            // CSV-Header
+            let csv = 'Sortenname;Anzahl Eimer;Notizen;Typ\n';
+            
+            // Daten hinzufügen
+            productionData.forEach(item => {
+                const recipe = recipes.find(r => r.name === item.name);
+                const type = recipe ? (recipe.type === 'Fruto' ? 'Fruchteis' : recipe.type === 'Leite' ? 'Milcheis' : 'Sorbet') : 'Unbekannt';
+                const notes = item.notes ? item.notes.replace(/"/g, '""') : '';
+                
+                csv += `"${item.name}";${item.eimer};"${notes}";"${type}"\n`;
+            });
+            
+            // Gesamtsummen
+            const totalEimers = productionData.reduce((sum, item) => sum + item.eimer, 0);
+            csv += `\n"GESAMT";${totalEimers};;"${productionData.length} Sorten"`;
+            
+            // CSV-Datei erstellen und herunterladen
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `Gelateria_Produktion_${formattedDate.replace(/\./g, '-')}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('Excel-Datei erstellt!', 'success');
         }
 
         // DATENVERWALTUNG
@@ -1934,7 +1925,6 @@
                 message += `*FRUCHTEIS:*\n`;
                 fruitItems.forEach(item => {
                     message += `• ${item.name}: ${item.eimer} Eimer`;
-                    if (item.priority === 'high') message += ` ⚠️ HOCH`;
                     if (item.notes) message += ` - ${item.notes}`;
                     message += `\n`;
                 });
@@ -1945,7 +1935,6 @@
                 message += `*MILCHEIS:*\n`;
                 milkItems.forEach(item => {
                     message += `• ${item.name}: ${item.eimer} Eimer`;
-                    if (item.priority === 'high') message += ` ⚠️ HOCH`;
                     if (item.notes) message += ` - ${item.notes}`;
                     message += `\n`;
                 });
@@ -1953,12 +1942,8 @@
             }
             
             const totalEimers = productionData.reduce((sum, item) => sum + item.eimer, 0);
-            const highPriorityCount = productionData.filter(item => item.priority === 'high').length;
             
             message += `*GESAMT:* ${productionData.length} Sorten, ${totalEimers} Eimer\n`;
-            if (highPriorityCount > 0) {
-                message += `⚠️ ${highPriorityCount} hochpriorisierte Produktionen\n`;
-            }
             message += `\nErstellt mit Gelateria Produktionsmanager`;
             
             const encodedMessage = encodeURIComponent(message);
@@ -1985,63 +1970,153 @@
                 <html lang="de">
                 <head>
                     <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Gelateria Produktion - ${formattedDate}</title>
                     <style>
-                        body { font-family: Arial, sans-serif; margin: 20px; }
-                        h1 { color: #ff6b8b; text-align: center; }
-                        .date { text-align: center; margin-bottom: 30px; color: #666; }
-                        .summary { background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
-                        .section { margin-bottom: 20px; }
-                        .item { margin-bottom: 10px; padding: 10px; border: 1px solid #eee; border-radius: 5px; }
-                        .item-name { font-weight: bold; color: #ff6b8b; }
-                        .priority-high { color: #dc3545; font-weight: bold; }
-                        .eimer-count { font-size: 1.2em; font-weight: bold; color: #36b5b0; }
-                        .totals { margin-top: 30px; padding: 15px; background-color: #f9f9f9; border-radius: 8px; text-align: center; }
                         @media print {
-                            body { font-size: 12pt; }
-                            .no-print { display: none; }
+                            @page {
+                                size: A4 portrait;
+                                margin: 15mm;
+                            }
+                            body {
+                                font-family: Arial, sans-serif;
+                                font-size: 11pt;
+                                line-height: 1.4;
+                            }
+                            .header {
+                                text-align: center;
+                                margin-bottom: 20px;
+                                border-bottom: 2px solid #333;
+                                padding-bottom: 10px;
+                            }
+                            .date {
+                                font-size: 14pt;
+                                font-weight: bold;
+                                color: #666;
+                            }
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-top: 15px;
+                            }
+                            th {
+                                background-color: #f2f2f2;
+                                border: 1px solid #ddd;
+                                padding: 8px;
+                                text-align: left;
+                                font-weight: bold;
+                            }
+                            td {
+                                border: 1px solid #ddd;
+                                padding: 8px;
+                            }
+                            .total-row {
+                                font-weight: bold;
+                                background-color: #f9f9f9;
+                            }
+                            .page-break {
+                                page-break-before: always;
+                            }
+                            .no-print {
+                                display: none;
+                            }
+                        }
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 20px;
+                        }
+                        .no-print {
+                            margin-top: 30px;
+                            text-align: center;
+                        }
+                        button {
+                            padding: 10px 20px;
+                            background-color: #36b5b0;
+                            color: white;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                            margin: 0 10px;
                         }
                     </style>
                 </head>
                 <body>
-                    <h1>Gelateria Produktion</h1>
-                    <div class="date">${formattedDate}</div>
-                    
-                    <div class="summary">
-                        <strong>Produktionsübersicht:</strong><br>
-                        ${productionData.length} verschiedene Sorten<br>
-                        Gesamtmenge: ${productionData.reduce((sum, item) => sum + item.eimer, 0)} Eimer<br>
-                        Hochpriorisiert: ${productionData.filter(item => item.priority === 'high').length}
+                    <div class="header">
+                        <h1>Gelateria Produktionsliste</h1>
+                        <div class="date">${formattedDate}</div>
                     </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nr.</th>
+                                <th>Sorte</th>
+                                <th>Eimer</th>
+                                <th>Typ</th>
+                                <th>Notizen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
             `;
             
-            productionData.forEach(item => {
+            let totalEimers = 0;
+            productionData.forEach((item, index) => {
                 const recipe = recipes.find(r => r.name === item.name);
-                const type = recipe ? (recipe.type === 'Fruto' ? 'Fruchteis' : 'Milcheis') : 'Sonstige';
+                const type = recipe ? (recipe.type === 'Fruto' ? 'Frucht' : recipe.type === 'Leite' ? 'Milch' : 'Sorbet') : 'Unbekannt';
+                totalEimers += item.eimer;
+                
+                // Seitenumbruch nach 25 Zeilen
+                if (index > 0 && index % 25 === 0) {
+                    printContent += `
+                        </tbody>
+                    </table>
+                    <div class="page-break"></div>
+                    <div class="header">
+                        <h1>Gelateria Produktionsliste (Fortsetzung)</h1>
+                        <div class="date">${formattedDate}</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nr.</th>
+                                <th>Sorte</th>
+                                <th>Eimer</th>
+                                <th>Typ</th>
+                                <th>Notizen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    `;
+                }
                 
                 printContent += `
-                    <div class="item">
-                        <div class="item-name">${item.name} ${item.priority === 'high' ? '<span class="priority-high">[HOCH]</span>' : ''}</div>
-                        <div>Typ: ${type}</div>
-                        <div>Menge: <span class="eimer-count">${item.eimer} Eimer</span></div>
-                        ${item.notes ? `<div>Notizen: ${item.notes}</div>` : ''}
-                    </div>
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.name}</td>
+                        <td>${item.eimer}</td>
+                        <td>${type}</td>
+                        <td>${item.notes || ''}</td>
+                    </tr>
                 `;
             });
             
-            const totalEimers = productionData.reduce((sum, item) => sum + item.eimer, 0);
-            
             printContent += `
-                <div class="totals">
-                    <div><strong>GESAMTSORTEN:</strong> ${productionData.length}</div>
-                    <div><strong>GESAMTEIMER:</strong> ${totalEimers}</div>
-                </div>
-                <div class="no-print" style="margin-top: 30px; text-align: center;">
-                    <button onclick="window.print()" style="padding: 10px 20px; background-color: #36b5b0; color: white; border: none; border-radius: 5px; cursor: pointer;">Drucken</button>
-                    <button onclick="window.close()" style="padding: 10px 20px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">Schließen</button>
-                </div>
-            </body>
-            </html>
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td colspan="2"><strong>GESAMT</strong></td>
+                                <td><strong>${totalEimers}</strong></td>
+                                <td colspan="2"><strong>${productionData.length} Sorten</strong></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                    <div class="no-print">
+                        <button onclick="window.print()">Drucken</button>
+                        <button onclick="window.close()">Schließen</button>
+                    </div>
+                </body>
+                </html>
             `;
             
             printWindow.document.write(printContent);
