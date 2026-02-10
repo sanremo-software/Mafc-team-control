@@ -317,18 +317,6 @@
             flex-wrap: wrap;
         }
         
-        .basket-info {
-            background-color: rgba(255, 193, 7, 0.1);
-            border-radius: 8px;
-            padding: 8px 12px;
-            margin-top: 5px;
-            font-weight: 600;
-            color: #856404;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
         .item-actions {
             display: flex;
             gap: 10px;
@@ -438,35 +426,6 @@
         .stat-label {
             font-size: 0.9rem;
             color: var(--gray);
-        }
-        
-        .basket-config {
-            background-color: rgba(255, 193, 7, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 193, 7, 0.3);
-        }
-        
-        .basket-config-inner {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        
-        .basket-input {
-            width: 100px;
-            padding: 10px;
-            border: 2px solid var(--warning);
-            border-radius: 8px;
-            font-weight: 600;
-            text-align: center;
-        }
-        
-        .basket-info-icon {
-            color: var(--warning);
-            font-size: 1.2rem;
         }
         
         .empty-state {
@@ -995,11 +954,6 @@
             .filter-selector select {
                 width: 100%;
             }
-            
-            .basket-config-inner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
         }
         
         @media (max-width: 480px) {
@@ -1102,7 +1056,7 @@
         }
         
         @media print {
-            header, .tabs, .action-btn, .date-nav-btn, .action-icon, .add-flavor-section, .quick-flavors, .filter-controls, .basket-config {
+            header, .tabs, .action-btn, .date-nav-btn, .action-icon, .add-flavor-section, .quick-flavors, .filter-controls {
                 display: none !important;
             }
             
@@ -1184,24 +1138,13 @@
                     </button>
                 </div>
                 
-                <div class="basket-config">
-                    <div class="basket-config-inner">
-                        <div style="display: flex; align-items: center; gap: 10px;">
-                            <i class="fas fa-box basket-info-icon"></i>
-                            <span><strong>Cesto Kapazität:</strong> Wie viele Liter passen in einen Cesto?</span>
-                        </div>
-                        <input type="number" id="basket-capacity" class="basket-input" min="0.5" step="0.5" value="5">
-                        <span>Liter pro Cesto</span>
-                    </div>
-                </div>
-                
                 <div class="add-flavor-section">
                     <h3 style="color: var(--primary); margin-bottom: 15px;">Eissorte hinzufügen</h3>
                     
                     <div class="mobile-optimized">
                         <div class="form-group">
                             <label for="flavor-select">Vorhandene Eissorte auswählen:</label>
-                            <select id="flavor-select" onchange="onFlavorSelect()">
+                            <select id="flavor-select">
                                 <option value="">Eissorte auswählen...</option>
                             </select>
                         </div>
@@ -1217,15 +1160,21 @@
                             </button>
                         </div>
                         
-                        <div class="quantity-selector">
-                            <label>Menge (Liter):</label>
-                            <button class="quantity-btn" onclick="adjustQuantity(-0.5)">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <div class="quantity-display" id="quantity-display">3</div>
-                            <button class="quantity-btn" onclick="adjustQuantity(0.5)">
-                                <i class="fas fa-plus"></i>
-                            </button>
+                        <div class="form-group">
+                            <label for="production-quantity">Menge (Liter):</label>
+                            <div class="mobile-row">
+                                <div style="flex: 2;">
+                                    <input type="number" id="production-quantity" min="0.5" step="0.5" value="3" style="text-align: center;">
+                                </div>
+                                <div style="flex: 1; display: flex; gap: 5px;">
+                                    <button class="quantity-btn" onclick="adjustQuantity(-0.5)">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button class="quantity-btn" onclick="adjustQuantity(0.5)">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="form-group">
@@ -1281,10 +1230,6 @@
                     <div class="stat-card">
                         <div class="stat-value" id="total-liters">0</div>
                         <div class="stat-label">Gesamtliter</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value" id="total-baskets">0</div>
-                        <div class="stat-label">Gesamtcestos</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="fruit-production">0</div>
@@ -1404,7 +1349,6 @@
         let recipes = []; // Eisrezepte
         let currentDate = new Date(); // Aktuell ausgewähltes Datum
         let currentQuantity = 3; // Aktuelle Menge für Produktion
-        let basketCapacity = 5; // Standard-Cesto-Kapazität in Litern
         
         // Klassische Gelateria-Eissorten (nur für Schnellauswahl)
         const classicFlavors = [
@@ -1448,23 +1392,14 @@
             // Rezeptformular einrichten
             document.getElementById('recipe-form').addEventListener('submit', saveRecipe);
             
-            // Mengenanzeige aktualisieren
-            updateQuantityDisplay();
+            // Menge-Input Event-Listener
+            const quantityInput = document.getElementById('production-quantity');
+            quantityInput.addEventListener('change', updateCurrentQuantity);
+            quantityInput.addEventListener('input', updateCurrentQuantity);
             
             // Filter-Event-Listener
             document.getElementById('flavor-filter').addEventListener('change', filterQuickFlavors);
             document.getElementById('type-filter').addEventListener('change', filterQuickFlavors);
-            
-            // Cesto-Kapazität Event-Listener
-            document.getElementById('basket-capacity').addEventListener('change', updateBasketCapacity);
-            document.getElementById('basket-capacity').addEventListener('input', updateBasketCapacity);
-            
-            // Cesto-Kapazität aus localStorage laden
-            const savedBasketCapacity = localStorage.getItem('gelateriaBasketCapacity');
-            if (savedBasketCapacity) {
-                basketCapacity = parseFloat(savedBasketCapacity);
-                document.getElementById('basket-capacity').value = basketCapacity;
-            }
         });
         
         // Zwischen Tabs wechseln
@@ -1523,25 +1458,6 @@
             localStorage.setItem('gelateriaProduction', JSON.stringify(production));
         }
         
-        // Cesto-Kapazität aktualisieren
-        function updateBasketCapacity() {
-            const newCapacity = parseFloat(document.getElementById('basket-capacity').value);
-            if (!isNaN(newCapacity) && newCapacity > 0) {
-                basketCapacity = newCapacity;
-                localStorage.setItem('gelateriaBasketCapacity', basketCapacity);
-                
-                // Produktion neu laden, um Cesto-Berechnungen zu aktualisieren
-                loadProductionForDate(getDateKey(currentDate));
-                
-                showNotification(`Cesto-Kapazität auf ${basketCapacity} Liter aktualisiert`, 'info');
-            }
-        }
-        
-        // Cestos berechnen
-        function calculateBaskets(liters) {
-            return Math.ceil(liters / basketCapacity);
-        }
-        
         // Datumsfunktionen
         function getDateKey(date) {
             return date.toISOString().split('T')[0]; // Format YYYY-MM-DD
@@ -1574,11 +1490,16 @@
         function adjustQuantity(change) {
             currentQuantity = Math.max(0.5, currentQuantity + change);
             currentQuantity = Math.round(currentQuantity * 10) / 10; // Auf 1 Dezimalstelle runden
-            updateQuantityDisplay();
+            document.getElementById('production-quantity').value = currentQuantity;
         }
         
-        function updateQuantityDisplay() {
-            document.getElementById('quantity-display').textContent = currentQuantity;
+        // Menge aus Input-Feld aktualisieren
+        function updateCurrentQuantity() {
+            const input = document.getElementById('production-quantity');
+            const value = parseFloat(input.value);
+            if (!isNaN(value) && value >= 0.5) {
+                currentQuantity = Math.round(value * 10) / 10;
+            }
         }
         
         // Produktion für bestimmtes Datum laden
@@ -1598,9 +1519,6 @@
                 let html = '';
                 productionData.forEach((item, index) => {
                     const recipe = recipes.find(r => r.name === item.name) || {};
-                    const baskets = calculateBaskets(item.quantity);
-                    const fullBaskets = Math.floor(item.quantity / basketCapacity);
-                    const remainingLiters = item.quantity % basketCapacity;
                     
                     html += `
                         <div class="production-item">
@@ -1610,10 +1528,6 @@
                                     <span><strong>${item.quantity} Liter</strong></span>
                                     <span>${recipe.type === 'Fruto' ? 'Fruchteis' : recipe.type === 'Leite' ? 'Milcheis' : 'Typ nicht definiert'}</span>
                                     ${item.notes ? `<span>Notizen: ${item.notes}</span>` : ''}
-                                </div>
-                                <div class="basket-info">
-                                    <i class="fas fa-box"></i>
-                                    <span>Benötigte Cestos: ${baskets} (${fullBaskets} × ${basketCapacity}L ${remainingLiters > 0 ? `+ 1 × ${remainingLiters.toFixed(1)}L` : ''})</span>
                                 </div>
                             </div>
                             <div class="item-actions">
@@ -1683,6 +1597,9 @@
                 return;
             }
             
+            // Menge aus Input-Feld holen
+            updateCurrentQuantity();
+            
             const dateKey = getDateKey(currentDate);
             
             // Array für dieses Datum initialisieren, falls nicht vorhanden
@@ -1719,7 +1636,7 @@
             // Formular leeren
             document.getElementById('notes').value = '';
             currentQuantity = 3;
-            updateQuantityDisplay();
+            document.getElementById('production-quantity').value = currentQuantity;
             
             showNotification(`${selectedFlavor} (${currentQuantity}L) zur Produktion hinzugefügt!`, 'success');
         }
@@ -1761,7 +1678,6 @@
             const productionData = production[dateKey] || [];
             const totalItems = productionData.length;
             const totalLiters = productionData.reduce((sum, item) => sum + item.quantity, 0);
-            const totalBaskets = productionData.reduce((sum, item) => sum + calculateBaskets(item.quantity), 0);
             
             // Nach Typ zählen
             let fruitCount = 0;
@@ -1782,7 +1698,6 @@
             document.getElementById('production-count').textContent = `${totalItems} Artikel`;
             document.getElementById('total-production').textContent = totalItems;
             document.getElementById('total-liters').textContent = totalLiters.toFixed(1);
-            document.getElementById('total-baskets').textContent = totalBaskets;
             document.getElementById('fruit-production').textContent = fruitCount;
             document.getElementById('milk-production').textContent = milkCount;
         }
@@ -1877,20 +1792,6 @@
                 
                 container.appendChild(button);
             });
-        }
-        
-        // Wenn ein Eisgeschmack im Dropdown ausgewählt wird
-        function onFlavorSelect() {
-            const flavorSelect = document.getElementById('flavor-select');
-            const selectedFlavor = flavorSelect.value;
-            
-            if (selectedFlavor) {
-                const recipe = recipes.find(r => r.name === selectedFlavor);
-                if (recipe && recipe.ingredients) {
-                    // Zutaten anzeigen, falls verfügbar
-                    console.log('Verfügbare Zutaten:', recipe.ingredients);
-                }
-            }
         }
         
         // Rezepte laden
@@ -2238,7 +2139,6 @@
                 const formattedDate = date.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: 'short' });
                 const dayProduction = monthProduction[dateKey];
                 const totalLiters = dayProduction.reduce((sum, item) => sum + item.quantity, 0);
-                const totalBaskets = dayProduction.reduce((sum, item) => sum + calculateBaskets(item.quantity), 0);
                 
                 html += `
                     <div class="flavor-card">
@@ -2247,7 +2147,7 @@
                             <div class="flavor-type">${dayProduction.length} Artikel</div>
                         </div>
                         <div style="margin-top: 10px;">
-                            <strong>Gesamt:</strong> ${totalLiters.toFixed(1)} Liter (${totalBaskets} Cestos)<br>
+                            <strong>Gesamt:</strong> ${totalLiters.toFixed(1)} Liter<br>
                             <strong>Sorten:</strong> ${dayProduction.map(item => `${item.name} (${item.quantity}L)`).join(', ')}
                         </div>
                     </div>
@@ -2257,7 +2157,7 @@
             container.innerHTML = html;
         }
         
-        // Per WhatsApp senden (mit Cesto-Informationen)
+        // Per WhatsApp senden
         function sendToWhatsApp() {
             const dateKey = getDateKey(currentDate);
             const productionData = production[dateKey] || [];
@@ -2269,8 +2169,7 @@
             
             // Nachricht formatieren
             const formattedDate = formatDate(currentDate);
-            let message = `*GELATERIA PRODUKTION - ${formattedDate}*\n`;
-            message += `Cesto-Kapazität: ${basketCapacity} Liter\n\n`;
+            let message = `*GELATERIA PRODUKTION - ${formattedDate}*\n\n`;
             
             // Nach Typ gruppieren
             const fruitItems = [];
@@ -2289,8 +2188,7 @@
             if (fruitItems.length > 0) {
                 message += `*FRUCHTEIS:*\n`;
                 fruitItems.forEach(item => {
-                    const baskets = calculateBaskets(item.quantity);
-                    message += `• ${item.name}: ${item.quantity}L (${baskets} Cestos)${item.notes ? ` (${item.notes})` : ''}\n`;
+                    message += `• ${item.name}: ${item.quantity}L${item.notes ? ` (${item.notes})` : ''}\n`;
                 });
                 message += '\n';
             }
@@ -2299,16 +2197,14 @@
             if (milkItems.length > 0) {
                 message += `*MILCHEIS:*\n`;
                 milkItems.forEach(item => {
-                    const baskets = calculateBaskets(item.quantity);
-                    message += `• ${item.name}: ${item.quantity}L (${baskets} Cestos)${item.notes ? ` (${item.notes})` : ''}\n`;
+                    message += `• ${item.name}: ${item.quantity}L${item.notes ? ` (${item.notes})` : ''}\n`;
                 });
                 message += '\n';
             }
             
             // Gesamtsummen hinzufügen
             const totalLiters = productionData.reduce((sum, item) => sum + item.quantity, 0);
-            const totalBaskets = productionData.reduce((sum, item) => sum + calculateBaskets(item.quantity), 0);
-            message += `*GESAMT:* ${productionData.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalBaskets} Cestos\n`;
+            message += `*GESAMT:* ${productionData.length} Sorten, ${totalLiters.toFixed(1)} Liter\n`;
             message += `\nGeneriert vom Gelateria Produktionsmanager`;
             
             // Codieren und WhatsApp öffnen
@@ -2318,7 +2214,7 @@
             showNotification('WhatsApp wird geöffnet...', 'success');
         }
         
-        // Produktion drucken (mit Cesto-Informationen)
+        // Produktion drucken
         function printProduction() {
             const dateKey = getDateKey(currentDate);
             const productionData = production[dateKey] || [];
@@ -2342,13 +2238,11 @@
                         body { font-family: Arial, sans-serif; margin: 20px; color: #333; }
                         h1 { color: #ff7b9c; text-align: center; margin-bottom: 5px; }
                         .date { text-align: center; margin-bottom: 30px; color: #666; }
-                        .basket-info { text-align: center; margin-bottom: 20px; color: #856404; font-weight: bold; }
                         .section { margin-bottom: 25px; }
                         .section-title { font-weight: bold; color: #36b5b0; border-bottom: 2px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
                         .item { margin-bottom: 10px; padding: 8px; border: 1px solid #eee; border-radius: 5px; }
                         .item-name { font-weight: bold; color: #ff7b9c; }
                         .item-details { margin-left: 15px; color: #666; font-size: 0.9em; }
-                        .basket-details { margin-left: 15px; color: #856404; font-size: 0.9em; font-weight: bold; }
                         .totals { margin-top: 30px; padding: 15px; background-color: #f9f9f9; border-radius: 8px; text-align: center; }
                         .total-value { font-size: 1.3em; font-weight: bold; color: #ff7b9c; }
                         @media print {
@@ -2360,7 +2254,6 @@
                 <body>
                     <h1>Gelateria Produktion</h1>
                     <div class="date">${formattedDate}</div>
-                    <div class="basket-info">Cesto-Kapazität: ${basketCapacity} Liter</div>
             `;
             
             // Nach Typ gruppieren
@@ -2380,19 +2273,12 @@
             if (fruitItems.length > 0) {
                 printContent += `<div class="section"><div class="section-title">Fruchteis (${fruitItems.length})</div>`;
                 fruitItems.forEach(item => {
-                    const baskets = calculateBaskets(item.quantity);
-                    const fullBaskets = Math.floor(item.quantity / basketCapacity);
-                    const remainingLiters = item.quantity % basketCapacity;
-                    
                     printContent += `
                         <div class="item">
                             <div class="item-name">${item.name}</div>
                             <div class="item-details">
                                 Menge: ${item.quantity} Liter
                                 ${item.notes ? `<br>Notizen: ${item.notes}` : ''}
-                            </div>
-                            <div class="basket-details">
-                                Cestos: ${baskets} (${fullBaskets} × ${basketCapacity}L ${remainingLiters > 0 ? `+ 1 × ${remainingLiters.toFixed(1)}L` : ''})
                             </div>
                         </div>
                     `;
@@ -2404,19 +2290,12 @@
             if (milkItems.length > 0) {
                 printContent += `<div class="section"><div class="section-title">Milcheis (${milkItems.length})</div>`;
                 milkItems.forEach(item => {
-                    const baskets = calculateBaskets(item.quantity);
-                    const fullBaskets = Math.floor(item.quantity / basketCapacity);
-                    const remainingLiters = item.quantity % basketCapacity;
-                    
                     printContent += `
                         <div class="item">
                             <div class="item-name">${item.name}</div>
                             <div class="item-details">
                                 Menge: ${item.quantity} Liter
                                 ${item.notes ? `<br>Notizen: ${item.notes}` : ''}
-                            </div>
-                            <div class="basket-details">
-                                Cestos: ${baskets} (${fullBaskets} × ${basketCapacity}L ${remainingLiters > 0 ? `+ 1 × ${remainingLiters.toFixed(1)}L` : ''})
                             </div>
                         </div>
                     `;
@@ -2426,12 +2305,10 @@
             
             // Gesamtsummen hinzufügen
             const totalLiters = productionData.reduce((sum, item) => sum + item.quantity, 0);
-            const totalBaskets = productionData.reduce((sum, item) => sum + calculateBaskets(item.quantity), 0);
             printContent += `
                 <div class="totals">
                     <div><strong>GESAMTSORTEN:</strong> <span class="total-value">${productionData.length}</span></div>
                     <div><strong>GESAMTLITER:</strong> <span class="total-value">${totalLiters.toFixed(1)} L</span></div>
-                    <div><strong>GESAMTCESTOS:</strong> <span class="total-value">${totalBaskets}</span></div>
                 </div>
                 <div class="no-print" style="margin-top: 30px; text-align: center;">
                     <button onclick="window.print()" style="padding: 10px 20px; background-color: #36b5b0; color: white; border: none; border-radius: 5px; cursor: pointer;">Drucken</button>
