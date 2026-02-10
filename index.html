@@ -2,13 +2,12 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta name="theme-color" content="#ff7b9c">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Gelateria Manager</title>
+    <title>Gelateria Produktionsmanager</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="manifest" href="manifest.json">
     <style>
         :root {
             --primary: #ff7b9c;
@@ -37,22 +36,27 @@
             -webkit-tap-highlight-color: transparent;
         }
         
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+        
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
             background: linear-gradient(135deg, #fff5e6 0%, #e6f7ff 100%);
             color: var(--dark);
             line-height: 1.6;
             padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-            min-height: 100vh;
-            overflow-x: hidden;
         }
         
         /* APP CONTAINER */
         .app-container {
-            max-width: 100%;
-            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            height: 100vh;
+            height: -webkit-fill-available;
+            max-height: 100%;
         }
         
         /* HEADER */
@@ -64,6 +68,7 @@
             top: 0;
             z-index: 100;
             box-shadow: var(--shadow);
+            flex-shrink: 0;
         }
         
         .header-content {
@@ -124,6 +129,7 @@
             position: sticky;
             top: 124px;
             z-index: 99;
+            flex-shrink: 0;
         }
         
         .tabs-container::-webkit-scrollbar {
@@ -145,6 +151,8 @@
             align-items: center;
             gap: 5px;
             cursor: pointer;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .tab i {
@@ -176,9 +184,12 @@
         /* MAIN CONTENT */
         .main-content {
             flex: 1;
-            padding: 20px 15px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            padding: 20px 15px;
+            height: 0;
+            min-height: 0;
         }
         
         .tab-content {
@@ -298,6 +309,8 @@
             gap: 10px;
             width: 100%;
             margin-top: 10px;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .btn:active {
@@ -381,9 +394,24 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            max-height: 500px;
+            max-height: 400px;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            padding-right: 5px;
+        }
+        
+        .production-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .production-list::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        .production-list::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
         }
         
         .production-item {
@@ -394,9 +422,11 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
             transition: var(--transition);
             position: relative;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
-        .production-item:hover {
+        .production-item:active {
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
@@ -441,7 +471,7 @@
             flex-wrap: wrap;
         }
         
-        .basket-info {
+        .eimer-info {
             background: rgba(255, 193, 7, 0.1);
             border-radius: 8px;
             padding: 8px 12px;
@@ -473,6 +503,8 @@
             font-size: 0.9rem;
             cursor: pointer;
             transition: var(--transition);
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .action-btn:active {
@@ -497,6 +529,8 @@
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 12px;
             margin: 20px 0;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .flavor-btn {
@@ -510,6 +544,8 @@
             gap: 8px;
             cursor: pointer;
             transition: var(--transition);
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .flavor-btn:active {
@@ -574,7 +610,7 @@
             transition: var(--transition);
         }
         
-        .recipe-card:hover {
+        .recipe-card:active {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         }
@@ -841,6 +877,8 @@
             align-items: center;
             justify-content: center;
             transition: var(--transition);
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .quantity-btn:active {
@@ -871,6 +909,8 @@
             cursor: pointer;
             transition: var(--transition);
             font-weight: 500;
+            -webkit-user-select: none;
+            user-select: none;
         }
         
         .priority-option.active {
@@ -905,19 +945,6 @@
             }
         }
         
-        @media (min-width: 768px) {
-            .app-container {
-                max-width: 768px;
-                margin: 0 auto;
-                box-shadow: 0 0 40px rgba(0,0,0,0.1);
-            }
-            
-            .header-content {
-                flex-direction: row;
-                align-items: center;
-            }
-        }
-        
         /* DARK MODE SUPPORT */
         @media (prefers-color-scheme: dark) {
             body {
@@ -940,13 +967,49 @@
                 background: #3a3e5b;
             }
             
-            .basket-info {
+            .eimer-info {
                 background: rgba(255, 193, 7, 0.2);
             }
         }
+        
+        /* CORREÇÃO PARA SCROLL NO iOS */
+        .scroll-fix {
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+        }
+        
+        /* EIMER CONFIG */
+        .eimer-config {
+            background: rgba(255, 193, 7, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+        
+        .eimer-config-inner {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .eimer-input {
+            width: 100px;
+            padding: 10px;
+            border: 2px solid var(--warning);
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .eimer-info-icon {
+            color: var(--warning);
+            font-size: 1.2rem;
+        }
     </style>
 </head>
-<body>
+<body class="scroll-fix">
     <div class="app-container">
         <!-- HEADER -->
         <header class="app-header">
@@ -999,7 +1062,7 @@
         </nav>
         
         <!-- MAIN CONTENT -->
-        <main class="main-content">
+        <main class="main-content" id="main-scroll">
             <!-- DASHBOARD TAB -->
             <div class="tab-content active" id="dashboard-tab">
                 <div class="section">
@@ -1018,8 +1081,8 @@
                             <div class="stat-label">Liter</div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="stat-today-baskets">0</div>
-                            <div class="stat-label">Cestos</div>
+                            <div class="stat-value" id="stat-today-eimer">0</div>
+                            <div class="stat-label">Eimer</div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-value" id="stat-recipes">0</div>
@@ -1061,6 +1124,21 @@
                         <button class="date-btn" onclick="goToToday()" title="Heute">
                             <i class="fas fa-calendar-day"></i>
                         </button>
+                    </div>
+                    
+                    <!-- Eimer Configuration -->
+                    <div class="eimer-config">
+                        <div class="eimer-config-inner">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <i class="fas fa-box eimer-info-icon"></i>
+                                <span><strong>Eimer Kapazität:</strong></span>
+                            </div>
+                            <input type="number" id="eimer-capacity" class="eimer-input" min="0.5" step="0.5" value="5">
+                            <span>Liter pro Eimer</span>
+                            <button class="btn-small" onclick="saveEimerConfig()" style="margin-left: auto;">
+                                <i class="fas fa-save"></i> Speichern
+                            </button>
+                        </div>
                     </div>
                     
                     <!-- Add Production Form -->
@@ -1137,11 +1215,11 @@
                         <button class="btn btn-secondary" onclick="clearTodayProduction()">
                             <i class="fas fa-trash"></i> Löschen
                         </button>
-                        <button class="btn btn-info" onclick="optimizeBaskets()">
-                            <i class="fas fa-boxes"></i> Optimieren
+                        <button class="btn btn-info" onclick="optimizeEimer()">
+                            <i class="fas fa-boxes"></i> Eimer optimieren
                         </button>
                         <button class="btn btn-success" onclick="saveAsTemplate()">
-                            <i class="fas fa-save"></i> Speichern
+                            <i class="fas fa-save"></i> Als Vorlage speichern
                         </button>
                     </div>
                 </div>
@@ -1213,7 +1291,30 @@
                     </div>
                     
                     <div id="history-chart" style="margin-top: 30px; padding: 20px; background: white; border-radius: var(--radius);">
-                        <canvas id="productionChart" style="width: 100%; height: 200px;"></canvas>
+                        <div style="height: 200px; display: flex; align-items: center; justify-content: center; color: var(--gray);">
+                            <i class="fas fa-chart-bar" style="font-size: 3rem; opacity: 0.3;"></i>
+                            <p>Produktionsentwicklung</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Eimer Usage Stats -->
+                    <div class="section-title" style="margin-top: 30px;">
+                        <span>Eimer Verbrauch</span>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="history-total-eimer">0</div>
+                            <div class="stat-label">Gesamt Eimer</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="history-avg-eimer">0</div>
+                            <div class="stat-label">Ø Eimer/Tag</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="history-efficiency">0%</div>
+                            <div class="stat-label">Eimer Effizienz</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1224,8 +1325,8 @@
                     <h2 class="section-title">Einstellungen</h2>
                     
                     <div class="form-group">
-                        <label>Cesto-Kapazität (Liter):</label>
-                        <input type="number" id="basket-capacity" min="1" max="20" step="0.5" value="5">
+                        <label>Standard-Eimer-Größe (Liter):</label>
+                        <input type="number" id="default-eimer-size" min="1" max="20" step="0.5" value="5">
                     </div>
                     
                     <div class="form-group">
@@ -1265,9 +1366,10 @@
                     <div class="form-group" style="margin-top: 30px;">
                         <label>Systeminformationen:</label>
                         <div style="padding: 15px; background: var(--light); border-radius: 12px;">
-                            <p><strong>Version:</strong> 2.1.0</p>
+                            <p><strong>Version:</strong> 3.0.0</p>
                             <p><strong>Rezepte:</strong> <span id="total-recipes-count">0</span></p>
                             <p><strong>Produktionstage:</strong> <span id="production-days-count">0</span></p>
+                            <p><strong>Gesamt Eimer:</strong> <span id="total-eimer-count">0</span></p>
                             <p><strong>Letztes Update:</strong> <span id="last-update">-</span></p>
                         </div>
                     </div>
@@ -1366,6 +1468,24 @@
         </div>
     </div>
     
+    <!-- Eimer Optimization Modal -->
+    <div class="modal-overlay" id="optimize-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Eimer Optimierung</h2>
+                <button class="modal-close" onclick="closeOptimizeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="optimize-content">
+                    <!-- Optimization suggestions will be loaded here -->
+                </div>
+                <button class="btn btn-success" onclick="applyOptimization()" style="margin-top: 20px;">
+                    <i class="fas fa-check"></i> Optimierung anwenden
+                </button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Confirmation Modal -->
     <div class="modal-overlay" id="confirm-modal">
         <div class="modal-content">
@@ -1399,7 +1519,7 @@
             production: {},
             templates: [],
             settings: {
-                basketCapacity: 5,
+                eimerCapacity: 5,
                 defaultQuantity: 3,
                 language: 'de',
                 notifications: true
@@ -1483,6 +1603,49 @@
                     { name: "Zitronenschale", quantity: "1", unit: "TL" }
                 ],
                 instructions: "Zucker in Wasser auflösen, Zitronensaft und -schale hinzufügen. Gut vermischen und in die Eismaschine geben."
+            },
+            {
+                id: 6,
+                name: "Pistazie",
+                type: "Leite",
+                difficulty: "hard",
+                description: "Sizilianische Pistaziencreme",
+                ingredients: [
+                    { name: "Pistazien", quantity: "200", unit: "g" },
+                    { name: "Milch", quantity: "500", unit: "ml" },
+                    { name: "Sahne", quantity: "200", unit: "ml" },
+                    { name: "Zucker", quantity: "180", unit: "g" }
+                ],
+                instructions: "Pistazien rösten und fein mahlen. Mit Milch, Sahne und Zucker erhitzen. 1 Stunde ziehen lassen, dann in die Eismaschine geben."
+            },
+            {
+                id: 7,
+                name: "Mango",
+                type: "Fruto",
+                difficulty: "easy",
+                description: "Tropische Mango",
+                ingredients: [
+                    { name: "Mangos", quantity: "600", unit: "g" },
+                    { name: "Milch", quantity: "300", unit: "ml" },
+                    { name: "Sahne", quantity: "100", unit: "ml" },
+                    { name: "Zucker", quantity: "150", unit: "g" },
+                    { name: "Limettensaft", quantity: "1", unit: "EL" }
+                ],
+                instructions: "Mangos pürieren, mit Zucker und Limettensaft vermischen. Milch und Sahne unterrühren. In die Eismaschine geben."
+            },
+            {
+                id: 8,
+                name: "Amarena",
+                type: "Leite",
+                difficulty: "medium",
+                description: "Weiße Creme mit Amarena-Kirschen",
+                ingredients: [
+                    { name: "Milch", quantity: "500", unit: "ml" },
+                    { name: "Sahne", quantity: "250", unit: "ml" },
+                    { name: "Zucker", quantity: "160", unit: "g" },
+                    { name: "Amarena-Kirschen", quantity: "200", unit: "g" }
+                ],
+                instructions: "Milch und Sahne erhitzen, Zucker einrühren. Abkühlen lassen. Kirschen grob hacken und unter die Eismasse mischen. In die Eismaschine geben."
             }
         ];
         
@@ -1490,8 +1653,43 @@
         function initApp() {
             loadData();
             setupEventListeners();
+            setupTouchEvents();
             updateUI();
             setupPWA();
+        }
+        
+        // SETUP TOUCH EVENTS FOR BETTER SCROLL
+        function setupTouchEvents() {
+            // Prevent pull-to-refresh
+            document.addEventListener('touchmove', function(e) {
+                if (e.scale !== 1) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            // Prevent zoom on double-tap
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, false);
+            
+            // Better scroll handling for iOS
+            document.querySelectorAll('.production-list, .modal-content').forEach(el => {
+                el.addEventListener('touchstart', function() {
+                    this.style.overflowY = 'hidden';
+                });
+                
+                el.addEventListener('touchmove', function(e) {
+                    if (this.scrollHeight > this.clientHeight) {
+                        e.stopPropagation();
+                        this.style.overflowY = 'auto';
+                    }
+                });
+            });
         }
         
         // DATA MANAGEMENT
@@ -1509,6 +1707,11 @@
             
             appState.currentQuantity = appState.settings.defaultQuantity;
             appState.currentDate = new Date();
+            
+            // Update eimer capacity input
+            document.getElementById('eimer-capacity').value = appState.settings.eimerCapacity;
+            document.getElementById('default-eimer-size').value = appState.settings.eimerCapacity;
+            document.getElementById('default-quantity').value = appState.settings.defaultQuantity;
         }
         
         function saveData() {
@@ -1592,11 +1795,11 @@
             
             // Update stats
             const totalLiters = todayProduction.reduce((sum, item) => sum + item.quantity, 0);
-            const totalBaskets = todayProduction.reduce((sum, item) => sum + Math.ceil(item.quantity / appState.settings.basketCapacity), 0);
+            const totalEimer = todayProduction.reduce((sum, item) => sum + calculateEimer(item.quantity), 0);
             
             document.getElementById('stat-today-items').textContent = todayProduction.length;
             document.getElementById('stat-today-liters').textContent = totalLiters.toFixed(1);
-            document.getElementById('stat-today-baskets').textContent = totalBaskets;
+            document.getElementById('stat-today-eimer').textContent = totalEimer;
             document.getElementById('stat-recipes').textContent = appState.recipes.length;
             
             // Update production list
@@ -1621,12 +1824,28 @@
                                 ${item.priority === 'high' ? 'Hoch' : item.priority === 'low' ? 'Niedrig' : 'Mittel'}
                             </span>
                         </div>
-                        <div class="basket-info">
+                        <div class="eimer-info">
                             <i class="fas fa-box"></i>
-                            ${Math.ceil(item.quantity / appState.settings.basketCapacity)} Cestos
+                            ${calculateEimer(item.quantity)} Eimer benötigt
                         </div>
                     </div>
                 `).join('');
+            }
+        }
+        
+        // EIMER FUNCTIONS
+        function calculateEimer(liters) {
+            return Math.ceil(liters / appState.settings.eimerCapacity);
+        }
+        
+        function saveEimerConfig() {
+            const newCapacity = parseFloat(document.getElementById('eimer-capacity').value);
+            if (!isNaN(newCapacity) && newCapacity > 0) {
+                appState.settings.eimerCapacity = newCapacity;
+                document.getElementById('default-eimer-size').value = newCapacity;
+                saveData();
+                updateProductionTab();
+                showNotification(`Eimer-Kapazität auf ${newCapacity} Liter aktualisiert`, 'info');
             }
         }
         
@@ -1656,14 +1875,14 @@
             
             // Update summary
             const totalLiters = productionData.reduce((sum, item) => sum + item.quantity, 0);
-            const totalBaskets = productionData.reduce((sum, item) => sum + Math.ceil(item.quantity / appState.settings.basketCapacity), 0);
+            const totalEimer = productionData.reduce((sum, item) => sum + calculateEimer(item.quantity), 0);
             document.getElementById('production-summary').textContent = 
-                `${productionData.length} Artikel • ${totalLiters.toFixed(1)}L • ${totalBaskets} Cestos`;
+                `${productionData.length} Artikel • ${totalLiters.toFixed(1)}L • ${totalEimer} Eimer`;
         }
         
         function updateQuickFlavors() {
             const container = document.getElementById('quick-flavors');
-            const popularFlavors = appState.recipes.slice(0, 6); // Show first 6 recipes
+            const popularFlavors = appState.recipes.slice(0, 8); // Show first 8 recipes
             
             container.innerHTML = popularFlavors.map(flavor => `
                 <button class="flavor-btn ${flavor.type === 'Fruto' ? 'fruit' : flavor.type === 'Leite' ? 'milk' : 'special'}" 
@@ -1691,7 +1910,7 @@
             } else {
                 container.innerHTML = productionData.map((item, index) => {
                     const recipe = appState.recipes.find(r => r.id == item.recipeId);
-                    const baskets = Math.ceil(item.quantity / appState.settings.basketCapacity);
+                    const eimer = calculateEimer(item.quantity);
                     
                     return `
                         <div class="production-item priority-${item.priority}">
@@ -1705,9 +1924,9 @@
                                     ${item.priority === 'high' ? 'Hoch' : item.priority === 'low' ? 'Niedrig' : 'Mittel'}
                                 </span>
                             </div>
-                            <div class="basket-info">
+                            <div class="eimer-info">
                                 <i class="fas fa-box"></i>
-                                ${baskets} Cesto${baskets !== 1 ? 's' : ''} (${appState.settings.basketCapacity}L)
+                                ${eimer} Eimer (${appState.settings.eimerCapacity}L/Eimer)
                             </div>
                             ${item.notes ? `<p style="margin-top: 10px; color: var(--gray); font-size: 0.9rem;"><i>${item.notes}</i></p>` : ''}
                             <div class="item-actions">
@@ -1853,6 +2072,101 @@
                 updateBadges();
                 showNotification('Produktion gelöscht', 'info');
             });
+        }
+        
+        // EIMER OPTIMIZATION
+        function optimizeEimer() {
+            const dateKey = formatDate(appState.currentDate);
+            const productionData = appState.production[dateKey] || [];
+            
+            if (productionData.length === 0) {
+                showNotification('Keine Produktion zum Optimieren', 'warning');
+                return;
+            }
+            
+            let suggestions = [];
+            let totalEimerSaved = 0;
+            
+            productionData.forEach((item, index) => {
+                const currentEimer = calculateEimer(item.quantity);
+                const optimizedQuantity = Math.ceil(item.quantity / appState.settings.eimerCapacity) * appState.settings.eimerCapacity;
+                const optimizedEimer = calculateEimer(optimizedQuantity);
+                
+                if (optimizedQuantity > item.quantity) {
+                    const additionalLiters = optimizedQuantity - item.quantity;
+                    const eimerSaved = currentEimer - optimizedEimer;
+                    
+                    if (eimerSaved > 0) {
+                        totalEimerSaved += eimerSaved;
+                    }
+                    
+                    suggestions.push({
+                        name: item.name,
+                        current: item.quantity,
+                        optimized: optimizedQuantity,
+                        additional: additionalLiters,
+                        currentEimer: currentEimer,
+                        optimizedEimer: optimizedEimer,
+                        eimerSaved: eimerSaved
+                    });
+                }
+            });
+            
+            const modal = document.getElementById('optimize-modal');
+            const content = document.getElementById('optimize-content');
+            
+            if (suggestions.length === 0) {
+                content.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Keine Optimierung möglich</h3>
+                        <p>Die aktuelle Produktion ist bereits optimal auf die Eimer-Größe abgestimmt.</p>
+                    </div>
+                `;
+            } else {
+                let html = '<h3>Optimierungsvorschläge:</h3>';
+                html += `<p>Durch Optimierung können ${totalEimerSaved} Eimer eingespart werden:</p>`;
+                
+                suggestions.forEach(suggestion => {
+                    if (suggestion.eimerSaved > 0) {
+                        html += `
+                            <div class="production-item" style="margin-bottom: 15px;">
+                                <div class="item-name">${suggestion.name}</div>
+                                <div style="margin-top: 10px;">
+                                    <strong>Aktuell:</strong> ${suggestion.current.toFixed(1)}L (${suggestion.currentEimer} Eimer)<br>
+                                    <strong>Optimiert:</strong> ${suggestion.optimized.toFixed(1)}L (${suggestion.optimizedEimer} Eimer)<br>
+                                    <strong>Ersparnis:</strong> ${suggestion.eimerSaved} Eimer (${suggestion.additional.toFixed(1)}L zusätzlich)
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                
+                content.innerHTML = html;
+            }
+            
+            modal.classList.add('active');
+        }
+        
+        function closeOptimizeModal() {
+            document.getElementById('optimize-modal').classList.remove('active');
+        }
+        
+        function applyOptimization() {
+            const dateKey = formatDate(appState.currentDate);
+            const productionData = appState.production[dateKey] || [];
+            
+            productionData.forEach(item => {
+                const optimizedQuantity = Math.ceil(item.quantity / appState.settings.eimerCapacity) * appState.settings.eimerCapacity;
+                if (optimizedQuantity > item.quantity) {
+                    item.quantity = optimizedQuantity;
+                }
+            });
+            
+            saveData();
+            updateProductionTab();
+            closeOptimizeModal();
+            showNotification('Produktion optimiert!', 'success');
         }
         
         // RECIPES FUNCTIONS
@@ -2095,8 +2409,10 @@
             startDate.setDate(startDate.getDate() - days);
             
             let totalLiters = 0;
+            let totalEimer = 0;
             let productionDays = 0;
             let uniqueFlavors = new Set();
+            let daysWithProduction = [];
             
             // Calculate statistics
             for (let date in appState.production) {
@@ -2105,11 +2421,26 @@
                     const dayProduction = appState.production[date];
                     productionDays++;
                     
+                    let dayLiters = 0;
+                    let dayEimer = 0;
+                    
                     dayProduction.forEach(item => {
-                        totalLiters += item.quantity;
+                        dayLiters += item.quantity;
+                        dayEimer += calculateEimer(item.quantity);
                         uniqueFlavors.add(item.recipeId);
                     });
+                    
+                    totalLiters += dayLiters;
+                    totalEimer += dayEimer;
+                    daysWithProduction.push({ date, liters: dayLiters, eimer: dayEimer });
                 }
+            }
+            
+            // Calculate efficiency (how full the eimer are on average)
+            let efficiency = 0;
+            if (totalEimer > 0) {
+                const avgEimerFill = (totalLiters / totalEimer) / appState.settings.eimerCapacity;
+                efficiency = Math.round(avgEimerFill * 100);
             }
             
             // Update stats
@@ -2118,95 +2449,45 @@
             document.getElementById('history-days').textContent = productionDays;
             document.getElementById('history-flavors').textContent = uniqueFlavors.size;
             
-            // Update chart
-            updateHistoryChart(days);
-        }
-        
-        function updateHistoryChart(days) {
-            const ctx = document.getElementById('productionChart').getContext('2d');
+            document.getElementById('history-total-eimer').textContent = totalEimer;
+            document.getElementById('history-avg-eimer').textContent = productionDays > 0 ? (totalEimer / productionDays).toFixed(1) : '0';
+            document.getElementById('history-efficiency').textContent = efficiency + '%';
             
-            // Prepare data
-            const labels = [];
-            const data = [];
-            
-            for (let i = days - 1; i >= 0; i--) {
-                const date = new Date();
-                date.setDate(date.getDate() - i);
-                const dateKey = formatDate(date);
-                
-                labels.push(date.toLocaleDateString('de-DE', { day: '2-digit', month: 'short' }));
-                
-                if (appState.production[dateKey]) {
-                    const dayTotal = appState.production[dateKey].reduce((sum, item) => sum + item.quantity, 0);
-                    data.push(dayTotal);
-                } else {
-                    data.push(0);
-                }
-            }
-            
-            // Create or update chart
-            if (window.productionChart) {
-                window.productionChart.data.labels = labels;
-                window.productionChart.data.datasets[0].data = data;
-                window.productionChart.update();
-            } else {
-                window.productionChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Produktion (Liter)',
-                            data: data,
-                            borderColor: 'rgb(255, 123, 156)',
-                            backgroundColor: 'rgba(255, 123, 156, 0.1)',
-                            tension: 0.4,
-                            fill: true
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    color: 'rgba(0,0,0,0.05)'
-                                }
-                            },
-                            x: {
-                                grid: {
-                                    display: false
-                                }
-                            }
-                        },
-                        plugins: {
-                            legend: {
-                                display: false
-                            }
-                        }
-                    }
-                });
-            }
+            // Update total eimer count in settings
+            document.getElementById('total-eimer-count').textContent = totalEimer;
         }
         
         // SETTINGS FUNCTIONS
         function updateSettingsTab() {
-            document.getElementById('basket-capacity').value = appState.settings.basketCapacity;
+            document.getElementById('default-eimer-size').value = appState.settings.eimerCapacity;
             document.getElementById('default-quantity').value = appState.settings.defaultQuantity;
             document.getElementById('language-select').value = appState.settings.language;
             document.getElementById('total-recipes-count').textContent = appState.recipes.length;
             document.getElementById('production-days-count').textContent = Object.keys(appState.production).length;
             document.getElementById('last-update').textContent = new Date().toLocaleDateString('de-DE');
+            
+            // Calculate total eimer
+            let totalEimer = 0;
+            for (let date in appState.production) {
+                appState.production[date].forEach(item => {
+                    totalEimer += calculateEimer(item.quantity);
+                });
+            }
+            document.getElementById('total-eimer-count').textContent = totalEimer;
         }
         
         function saveSettings() {
-            appState.settings.basketCapacity = parseFloat(document.getElementById('basket-capacity').value);
+            appState.settings.eimerCapacity = parseFloat(document.getElementById('default-eimer-size').value);
             appState.settings.defaultQuantity = parseFloat(document.getElementById('default-quantity').value);
             appState.settings.language = document.getElementById('language-select').value;
             
             appState.currentQuantity = appState.settings.defaultQuantity;
             
+            // Update eimer capacity in production tab
+            document.getElementById('eimer-capacity').value = appState.settings.eimerCapacity;
+            
             saveData();
+            updateProductionTab();
             showNotification('Einstellungen gespeichert', 'success');
         }
         
@@ -2302,21 +2583,22 @@
             exportText += '='.repeat(40) + '\n\n';
             
             let totalLiters = 0;
-            let totalBaskets = 0;
+            let totalEimer = 0;
             
             todayProduction.forEach(item => {
-                const baskets = Math.ceil(item.quantity / appState.settings.basketCapacity);
+                const eimer = calculateEimer(item.quantity);
                 totalLiters += item.quantity;
-                totalBaskets += baskets;
+                totalEimer += eimer;
                 
-                exportText += `• ${item.name}: ${item.quantity}L (${baskets} Cesto${baskets !== 1 ? 's' : ''})\n`;
+                exportText += `• ${item.name}: ${item.quantity}L (${eimer} Eimer)\n`;
                 if (item.notes) {
                     exportText += `  Notiz: ${item.notes}\n`;
                 }
                 exportText += '\n';
             });
             
-            exportText += `\nGESAMT: ${todayProduction.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalBaskets} Cestos\n`;
+            exportText += `\nGESAMT: ${todayProduction.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalEimer} Eimer\n`;
+            exportText += `Eimer-Größe: ${appState.settings.eimerCapacity} Liter\n`;
             
             const blob = new Blob([exportText], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
@@ -2353,51 +2635,23 @@
                 return;
             }
             
-            let message = `*Gelateria Produktion - ${new Date().toLocaleDateString('de-DE')}*\n\n`;
+            let message = `*Gelateria Produktion - ${new Date().toLocaleDateString('de-DE')}*\n`;
+            message += `Eimer-Größe: ${appState.settings.eimerCapacity} Liter\n\n`;
             
             todayProduction.forEach(item => {
-                const baskets = Math.ceil(item.quantity / appState.settings.basketCapacity);
-                message += `• ${item.name}: ${item.quantity}L (${baskets} Eimer ${baskets !== 1 ? 's' : ''})\n`;
+                const eimer = calculateEimer(item.quantity);
+                message += `• ${item.name}: ${item.quantity}L (${eimer} Eimer)`;
+                if (item.priority === 'high') message += ` ⚠️ HOCH`;
+                message += `\n`;
             });
             
             const totalLiters = todayProduction.reduce((sum, item) => sum + item.quantity, 0);
-            const totalBaskets = todayProduction.reduce((sum, item) => sum + Math.ceil(item.quantity / appState.settings.basketCapacity), 0);
+            const totalEimer = todayProduction.reduce((sum, item) => sum + calculateEimer(item.quantity), 0);
             
-            message += `\n*Gesamt:* ${todayProduction.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalBaskets} Eimer `;
+            message += `\n*Gesamt:* ${todayProduction.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalEimer} Eimer`;
             
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
-        }
-        
-        // OPTIMIZATION FUNCTIONS
-        function optimizeBaskets() {
-            const dateKey = formatDate(appState.currentDate);
-            const productionData = appState.production[dateKey] || [];
-            
-            if (productionData.length === 0) {
-                showNotification('Keine Produktion zum Optimieren', 'warning');
-                return;
-            }
-            
-            let optimized = false;
-            
-            productionData.forEach(item => {
-                const currentBaskets = Math.ceil(item.quantity / appState.settings.basketCapacity);
-                const optimizedQuantity = currentBaskets * appState.settings.basketCapacity;
-                
-                if (optimizedQuantity > item.quantity) {
-                    item.quantity = optimizedQuantity;
-                    optimized = true;
-                }
-            });
-            
-            if (optimized) {
-                saveData();
-                updateProductionTab();
-                showNotification('Eimer optimiert', 'success');
-            } else {
-                showNotification('Produktion ist bereits optimiert', 'info');
-            }
         }
         
         function saveAsTemplate() {
@@ -2489,34 +2743,36 @@
                         th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
                         th { background: #f5f5f5; }
                         .total { font-weight: bold; margin-top: 20px; }
+                        .eimer-info { color: #856404; font-weight: bold; }
                     </style>
                 </head>
                 <body>
                     <h1>Gelateria Produktion</h1>
                     <p>Datum: ${new Date().toLocaleDateString('de-DE')}</p>
+                    <p class="eimer-info">Eimer-Größe: ${appState.settings.eimerCapacity} Liter</p>
                     
                     <table>
                         <tr>
                             <th>Sorte</th>
                             <th>Menge (L)</th>
-                            <th>Cestos</th>
+                            <th>Eimer</th>
                             <th>Priorität</th>
                         </tr>
             `;
             
             let totalLiters = 0;
-            let totalBaskets = 0;
+            let totalEimer = 0;
             
             productionData.forEach(item => {
-                const baskets = Math.ceil(item.quantity / appState.settings.basketCapacity);
+                const eimer = calculateEimer(item.quantity);
                 totalLiters += item.quantity;
-                totalBaskets += baskets;
+                totalEimer += eimer;
                 
                 printContent += `
                     <tr>
                         <td>${item.name}</td>
                         <td>${item.quantity}</td>
-                        <td>${baskets}</td>
+                        <td>${eimer}</td>
                         <td>${item.priority === 'high' ? 'Hoch' : item.priority === 'low' ? 'Niedrig' : 'Mittel'}</td>
                     </tr>
                 `;
@@ -2525,7 +2781,7 @@
             printContent += `
                     </table>
                     <div class="total">
-                        Gesamt: ${productionData.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalBaskets} Eimer
+                        Gesamt: ${productionData.length} Sorten, ${totalLiters.toFixed(1)} Liter, ${totalEimer} Eimer
                     </div>
                 </body>
                 </html>
@@ -2574,9 +2830,12 @@
             document.getElementById('recipe-form').addEventListener('submit', saveRecipe);
             
             // Settings changes
-            document.getElementById('basket-capacity').addEventListener('change', saveSettings);
+            document.getElementById('default-eimer-size').addEventListener('change', saveSettings);
             document.getElementById('default-quantity').addEventListener('change', saveSettings);
             document.getElementById('language-select').addEventListener('change', saveSettings);
+            
+            // Eimer capacity change
+            document.getElementById('eimer-capacity').addEventListener('change', saveEimerConfig);
             
             // Close modals on background click
             document.querySelectorAll('.modal-overlay').forEach(modal => {
@@ -2603,21 +2862,35 @@
                     filterRecipes();
                 }
             });
+            
+            // Fix for iOS scroll
+            document.addEventListener('touchstart', function(e) {
+                if (e.touches.length > 1) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+            
+            // Better scroll handling
+            const mainContent = document.querySelector('.main-content');
+            let startY = 0;
+            
+            mainContent.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].clientY;
+            }, { passive: true });
+            
+            mainContent.addEventListener('touchmove', function(e) {
+                const deltaY = e.touches[0].clientY - startY;
+                const atTop = this.scrollTop === 0;
+                const atBottom = this.scrollHeight <= this.clientHeight + this.scrollTop + 1;
+                
+                if ((atTop && deltaY > 0) || (atBottom && deltaY < 0)) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
         }
         
         // INITIALIZE APP
         document.addEventListener('DOMContentLoaded', initApp);
-        
-        // Prevent pull-to-refresh on mobile
-        document.addEventListener('touchmove', function(e) {
-            if (e.scale !== 1) e.preventDefault();
-        }, { passive: false });
-        
-        // Make app installable
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            window.deferredInstallPrompt = e;
-        });
     </script>
 </body>
 </html>
