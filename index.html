@@ -1,302 +1,107 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kassenbericht</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      padding: 18px;
-      background: #e9ecef;
-      font-family: Arial, Helvetica, sans-serif;
-      color: #000;
-    }
-    .topbar {
-      max-width: 1280px;
-      margin: 0 auto 12px auto;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-    .topbar button,
-    .topbar input {
-      height: 38px;
-      padding: 0 12px;
-      border: 1px solid #b8b8b8;
-      border-radius: 8px;
-      background: #fff;
-      font-size: 14px;
-    }
-    .topbar button { cursor: pointer; font-weight: 700; }
-    .sheet-wrap {
-      max-width: 1280px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 16px;
-      border-radius: 10px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-      overflow-x: auto;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      min-width: 1180px;
-      table-layout: fixed;
-      background: #fff;
-    }
-    td {
-      border: 1px solid #1d1d1d;
-      height: 30px;
-      padding: 4px 6px;
-      font-size: 13px;
-      vertical-align: middle;
-    }
-    .head { font-weight: 800; font-size: 18px; }
-    .bold { font-weight: 700; }
-    .center { text-align: center; }
-    .right { text-align: right; }
-    .red { color: #b22222; font-weight: 800; }
-    input.cell {
-      width: 100%;
-      height: 100%;
-      border: none;
-      outline: none;
-      background: transparent;
-      font: inherit;
-      padding: 0;
-      margin: 0;
-    }
-    input.right { text-align: right; }
-    .value {
-      display: block;
-      width: 100%;
-      text-align: right;
-      font-variant-numeric: tabular-nums;
-    }
-    .signature { height: 62px; }
-    @media print {
-      body { background: #fff; padding: 0; }
-      .topbar { display: none; }
-      .sheet-wrap { max-width: none; padding: 0; box-shadow: none; border-radius: 0; }
-      @page { size: landscape; margin: 10mm; }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>Kassenbericht</title>
+<style>
+body{font-family:Arial;background:#eee;padding:20px}
+.container{background:#fff;padding:20px;max-width:1100px;margin:auto;border:1px solid #000}
+table{width:100%;border-collapse:collapse}
+td{border:1px solid #000;height:28px;padding:4px}
+input{width:100%;border:none;outline:none}
+.right{text-align:right}
+.bold{font-weight:bold}
+.red{color:red;font-weight:bold}
+button{padding:10px;margin-bottom:10px;font-weight:bold}
+</style>
 </head>
 <body>
-  <div class="topbar">
-    <button onclick="saveData()">Speichern</button>
-    <button onclick="loadData()">Laden</button>
-    <button onclick="newDay()">Neuer Tag</button>
-    <button onclick="window.print()">Drucken</button>
-    <input type="date" id="saveDate" />
-  </div>
+<div class="container">
+<button onclick="window.print()">Drucken</button>
+<h2>Kassenbericht</h2>
+<table>
+<tr>
+<td class="bold">Datum</td>
+<td><input type="date" id="datum"></td>
+<td class="bold">Nr.</td>
+<td><input id="nr"></td>
+</tr>
+<tr>
+<td class="bold">Kassenbestand bei Geschäftsschluss</td>
+<td colspan="3" class="red right" id="kbestand">0.00 €</td>
+</tr>
+<tr>
+<td colspan="4" class="bold">Ausgaben im Laufe des Tages</td>
+</tr>
+<tr>
+<td>Wareneinkäufe</td>
+<td><input type="number" id="waren" oninput="calc()"></td>
+<td>Geschäftsausgaben</td>
+<td><input type="number" id="geschaft" oninput="calc()"></td>
+</tr>
+<tr>
+<td>Privatentnahmen</td>
+<td><input type="number" id="privat" oninput="calc()"></td>
+<td>Sonstige Ausgaben</td>
+<td><input type="number" id="sonstige" oninput="calc()"></td>
+</tr>
+<tr>
+<td colspan="3" class="bold right">Summe Ausgaben</td>
+<td class="right" id="summe">0.00 €</td>
+</tr>
+<tr>
+<td class="bold">Kassenbestand Vortag</td>
+<td><input type="number" id="vortag" oninput="calc()"></td>
+<td class="bold">Sonstige Einnahmen</td>
+<td><input type="number" id="extra" oninput="calc()"></td>
+</tr>
+<tr>
+<td colspan="3" class="bold right">Kasseneingang</td>
+<td class="red right" id="eingang">0.00 €</td>
+</tr>
+<tr>
+<td class="bold">TE 19%</td>
+<td><input type="number" id="t19" oninput="check()"></td>
+<td class="bold">TE 7%</td>
+<td><input type="number" id="t7" oninput="check()"></td>
+</tr>
+<tr>
+<td colspan="3" class="bold right">Kontrolle</td>
+<td id="check" class="right">0.00 €</td>
+</tr>
+<tr>
+<td class="bold">Kundenzahl</td>
+<td><input id="kunden" oninput="calc()"></td>
+<td class="bold">Betrag/Kunde</td>
+<td id="prokunde" class="right">0.00 €</td>
+</tr>
+</table>
+</div>
+<script>
+function v(id){return parseFloat(document.getElementById(id).value)||0}
+function calc(){
+let ausgaben=v("waren")+v("geschaft")+v("privat")+v("sonstige")
+document.getElementById("summe").innerText=ausgaben.toFixed(2)+" €"
 
-  <div class="sheet-wrap">
-    <table>
-      <colgroup>
-        <col style="width:34px">
-        <col style="width:330px">
-        <col style="width:70px">
-        <col style="width:100px">
-        <col style="width:110px">
-        <col style="width:135px">
-        <col style="width:120px">
-        <col style="width:150px">
-        <col style="width:120px">
-      </colgroup>
+let bestand=ausgaben
 
-      <tr>
-        <td class="center bold">1</td>
-        <td class="head">Kassenbericht</td>
-        <td class="center bold">Nr.</td>
-        <td colspan="3"><input class="cell" id="nr" /></td>
-        <td class="right bold">Datum:</td>
-        <td><input class="cell" id="datumText" placeholder="01-03-2023" /></td>
-        <td class="bold center">Buchungs-<br>vermerke</td>
-      </tr>
+// IMPORTANT: CORRECT FORMULA
+let eingang=bestand - v("vortag") - v("extra")
 
-      <tr>
-        <td class="center bold">2</td>
-        <td class="bold" colspan="5">kassenbestand bei Geschäftsschluß</td>
-        <td colspan="2"><span class="value red" id="kassenbestandEnde">0,00 €</span></td>
-        <td></td>
-      </tr>
+document.getElementById("kbestand").innerText=bestand.toFixed(2)+" €"
+document.getElementById("eingang").innerText=eingang.toFixed(2)+" €"
 
-      <tr>
-        <td class="center bold">3</td>
-        <td class="bold" colspan="5">Ausgaben Im Laufs des Tages</td>
-        <td class="bold center">Vorsteuer</td>
-        <td class="bold center">Netto-/Brutto-<br>Betrag</td>
-        <td></td>
-      </tr>
+let kunden=v("kunden")
+let pro= kunden>0 ? eingang/kunden : 0
 
-      <tr><td class="center bold">4</td><td class="bold" colspan="5">Wareneinkäufe und Warennebenkosten</td><td><input class="cell right tax-input" data-row="4" /></td><td><input class="cell right amount-input" data-row="4" /></td><td><input class="cell" data-note="4" /></td></tr>
-      <tr><td class="center">5</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="5" /></td><td><input class="cell right amount-input" data-row="5" /></td><td><input class="cell" data-note="5" /></td></tr>
-      <tr><td class="center">6</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="6" /></td><td><input class="cell right amount-input" data-row="6" /></td><td><input class="cell" data-note="6" /></td></tr>
-      <tr><td class="center">7</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="7" /></td><td><input class="cell right amount-input" data-row="7" /></td><td><input class="cell" data-note="7" /></td></tr>
-      <tr><td class="center">8</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="8" /></td><td><input class="cell right amount-input" data-row="8" /></td><td><input class="cell" data-note="8" /></td></tr>
-      <tr><td class="center">9</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="9" /></td><td><input class="cell right amount-input" data-row="9" /></td><td><input class="cell" data-note="9" /></td></tr>
-      <tr><td class="center">10</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="10" /></td><td><input class="cell right amount-input" data-row="10" /></td><td><input class="cell" data-note="10" /></td></tr>
-      <tr><td class="center">11</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="11" /></td><td><input class="cell right amount-input" data-row="11" /></td><td><input class="cell" data-note="11" /></td></tr>
-      <tr><td class="center">12</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="12" /></td><td><input class="cell right amount-input" data-row="12" /></td><td><input class="cell" data-note="12" /></td></tr>
+document.getElementById("prokunde").innerText=pro.toFixed(2)+" €"
+check()
+}
 
-      <tr><td class="center bold">13</td><td class="bold" colspan="5">Geschäftsausgaben</td><td><input class="cell right tax-input" data-row="13" /></td><td><input class="cell right amount-input" data-row="13" /></td><td><input class="cell" data-note="13" /></td></tr>
-      <tr><td class="center">14</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="14" /></td><td><input class="cell right amount-input" data-row="14" /></td><td><input class="cell" data-note="14" /></td></tr>
-      <tr><td class="center">15</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="15" /></td><td><input class="cell right amount-input" data-row="15" /></td><td><input class="cell" data-note="15" /></td></tr>
-      <tr><td class="center">16</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="16" /></td><td><input class="cell right amount-input" data-row="16" /></td><td><input class="cell" data-note="16" /></td></tr>
-      <tr><td class="center">17</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="17" /></td><td><input class="cell right amount-input" data-row="17" /></td><td><input class="cell" data-note="17" /></td></tr>
-
-      <tr><td class="center bold">18</td><td class="bold" colspan="5">Privatentnahmen</td><td class="center bold">********</td><td><input class="cell right" id="privatentnahmen" /></td><td><input class="cell" data-note="18" /></td></tr>
-
-      <tr><td class="center bold">19</td><td class="bold" colspan="5">Sonstige Ausgaben</td><td><input class="cell right tax-input" data-row="19" /></td><td><input class="cell right amount-input" data-row="19" /></td><td><input class="cell" data-note="19" /></td></tr>
-      <tr><td class="center">20</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="20" /></td><td><input class="cell right amount-input" data-row="20" /></td><td><input class="cell" data-note="20" /></td></tr>
-      <tr><td class="center">21</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="21" /></td><td><input class="cell right amount-input" data-row="21" /></td><td><input class="cell" data-note="21" /></td></tr>
-      <tr><td class="center">22</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="22" /></td><td><input class="cell right amount-input" data-row="22" /></td><td><input class="cell" data-note="22" /></td></tr>
-      <tr><td class="center">23</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="23" /></td><td><input class="cell right amount-input" data-row="23" /></td><td><input class="cell" data-note="23" /></td></tr>
-      <tr><td class="center">24</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="24" /></td><td><input class="cell right amount-input" data-row="24" /></td><td><input class="cell" data-note="24" /></td></tr>
-      <tr><td class="center">25</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="25" /></td><td><input class="cell right amount-input" data-row="25" /></td><td><input class="cell" data-note="25" /></td></tr>
-      <tr><td class="center">26</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="26" /></td><td><input class="cell right amount-input" data-row="26" /></td><td><input class="cell" data-note="26" /></td></tr>
-      <tr><td class="center">27</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="27" /></td><td><input class="cell right amount-input" data-row="27" /></td><td><input class="cell" data-note="27" /></td></tr>
-      <tr><td class="center">28</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="28" /></td><td><input class="cell right amount-input" data-row="28" /></td><td><input class="cell" data-note="28" /></td></tr>
-      <tr><td class="center">29</td><td colspan="5"></td><td><input class="cell right tax-input" data-row="29" /></td><td><input class="cell right amount-input" data-row="29" /></td><td><input class="cell" data-note="29" /></td></tr>
-
-      <tr>
-        <td class="center bold">30</td>
-        <td class="bold" colspan="5">abzüglich Kassenbestand des Vortages</td>
-        <td class="center bold">********</td>
-        <td><input class="cell right" id="vortag" /></td>
-        <td></td>
-      </tr>
-
-      <tr>
-        <td class="center bold">31</td>
-        <td class="bold" colspan="5">abzüglich sonstige Einnahmen</td>
-        <td class="center bold">********</td>
-        <td><input class="cell right" id="sonstigeEinnahmen" /></td>
-        <td><input class="cell" data-note="31" /></td>
-      </tr>
-
-      <tr>
-        <td class="center bold">32</td>
-        <td class="bold" colspan="5">Kasseneingang</td>
-        <td colspan="2"><span class="value red" id="kasseneingang">0,00 €</span></td>
-        <td></td>
-      </tr>
-
-      <tr>
-        <td class="center bold">33</td>
-        <td class="bold" colspan="5">Darin ist enthaltene Mehrwertsteuer</td>
-        <td class="bold center">TE 19%</td>
-        <td><input class="cell right" id="te19" /></td>
-        <td></td>
-      </tr>
-
-      <tr>
-        <td class="center bold">34</td>
-        <td class="bold" colspan="5"></td>
-        <td class="bold center">TE 7%</td>
-        <td><input class="cell right" id="te7" /></td>
-        <td></td>
-      </tr>
-
-      <tr>
-        <td class="center bold">35</td>
-        <td class="bold" colspan="5">Kundenzahl</td>
-        <td colspan="2"><input class="cell right" id="kundenzahl" /></td>
-        <td></td>
-      </tr>
-
-      <tr>
-        <td class="center bold">36</td>
-        <td class="bold" colspan="5">Betrag / Kunde</td>
-        <td colspan="2"><span class="value" id="betragProKunde">0,00 €</span></td>
-        <td></td>
-      </tr>
-
-      <tr>
-        <td class="center bold">37</td>
-        <td class="bold">Unterschrift</td>
-        <td colspan="7" class="signature"></td>
-      </tr>
-    </table>
-  </div>
-
-  <script>
-    function parseEuro(value) {
-      if (!value) return 0;
-      const cleaned = String(value).replace(/\./g, '').replace(',', '.').replace(/[^0-9.-]/g, '');
-      const num = parseFloat(cleaned);
-      return isNaN(num) ? 0 : num;
-    }
-
-    function formatEuro(value) {
-      return value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-    }
-
-    function getAmountSum() {
-      let sum = 0;
-      document.querySelectorAll('.amount-input').forEach(el => sum += parseEuro(el.value));
-      sum += parseEuro(document.getElementById('privatentnahmen').value);
-      return sum;
-    }
-
-    function recalc() {
-      const kassenbestand = getAmountSum();
-      const vortag = parseEuro(document.getElementById('vortag').value);
-      const sonstigeEinnahmen = parseEuro(document.getElementById('sonstigeEinnahmen').value);
-      const kasseneingang = kassenbestand - vortag - sonstigeEinnahmen;
-      const kundenzahl = parseEuro(document.getElementById('kundenzahl').value);
-      const betragProKunde = kundenzahl > 0 ? kasseneingang / kundenzahl : 0;
-
-      document.getElementById('kassenbestandEnde').textContent = formatEuro(kassenbestand);
-      document.getElementById('kasseneingang').textContent = formatEuro(kasseneingang);
-      document.getElementById('betragProKunde').textContent = formatEuro(betragProKunde);
-    }
-
-    function collectData() {
-      const data = {};
-      document.querySelectorAll('input').forEach((input, index) => {
-        const key = input.id || input.dataset.row || input.dataset.note || ('field_' + index);
-        if (!data[key]) data[key] = input.value;
-        else data[key + '_' + index] = input.value;
-      });
-      return data;
-    }
-
-    function applyData(data) {
-      document.querySelectorAll('input').forEach((input, index) => {
-        const key = input.id || input.dataset.row || input.dataset.note || ('field_' + index);
-        if (Object.prototype.hasOwnProperty.call(data, key)) input.value = data[key];
-        else if (Object.prototype.hasOwnProperty.call(data, key + '_' + index)) input.value = data[key + '_' + index];
-        else input.value = '';
-      });
-      recalc();
-    }
-
-    function saveData() {
-      const dateKey = document.getElementById('saveDate').value || new Date().toISOString().slice(0,10);
-      localStorage.setItem('kassenbericht_' + dateKey, JSON.stringify(collectData()));
-      alert('Gespeichert: ' + dateKey);
-    }
-
-    function loadData() {
-      const dateKey = document.getElementById('saveDate').value;
-      if (!dateKey) return alert('Bitte Datum wählen.');
-      const raw = localStorage.getItem('kassenbericht_' + dateKey);
-      if (!raw) return alert('Kein Eintrag gefunden.');
-      applyData(JSON.parse(raw));
-    }
-
-    function newDay() {
-      if (!confirm('Neuen leeren Kassenbericht öffnen?')) return;
-      document.querySelectorAll('input').forEach(input => input.value = '');
-      recalc();
-    }
-
-    document.querySelectorAll('input').forEach(input => input.addEventListener('input', recalc));
-    recalc();
-  </script>
+function check(){
+let total=v("t19")+v("t7")
+document.getElementById("check").innerText=total.toFixed(2)+" €"
+}
+</script>
 </body>
 </html>
