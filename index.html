@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kassenbericht 305 – mit Fortschreibung</title>
+<title>Kassenbericht 305 – com soma Vortag+Tageslösung no lado direito</title>
 <style>
   * {
     box-sizing: border-box;
@@ -104,9 +104,6 @@
   .small {
     font-size: 10px;
   }
-  .bg-light {
-    background: #fafaf5;
-  }
   @media print {
     body {
       background: white;
@@ -174,6 +171,12 @@
     </tr>
     <input type="hidden" id="kassenbestandHidden" value="0">
 
+    <!-- NOVA LINHA: Soma do Vortag + Tageslösung no lado direito (última coluna) -->
+    <tr style="background:#e3f2fd;">
+      <td colspan="9" class="bold blue">📊 Summe Vortag + Tageslösung (ontem + hoje)</td>
+      <td class="blue right"><span class="value" id="summeVortagTageslosungDireita">0,00 €</span></td>
+    </tr>
+
     <!-- Ausgaben-Bereich -->
     <tr>
       <td colspan="6" class="bold">📤 Ausgaben Im Laufe des Tages</td>
@@ -239,7 +242,7 @@
       <td class="right"><span class="value" id="vortagAnzeige">2.000,00 €</span></td>
     </tr>
 
-    <!-- Zwischensumme: Vortag + Tageslösung (das ist die Summe, die Sie rechts sehen wollten) -->
+    <!-- Zwischensumme: Vortag + Tageslösung (auch hier bleibt die Zeile, aber die rechte Zelle wird aktualisiert) -->
     <tr style="background:#e3f2fd;">
       <td colspan="6" class="bold blue">➕ Vortag + Tageslösung</td>
       <td colspan="2" class="bold center">Zwischensumme</td>
@@ -275,16 +278,15 @@
   </table>
 
   <div style="margin-top:20px; padding:10px; background:#f0f7ff; border-radius:8px; font-size:12px; border-left:4px solid #2196f3;">
-    <strong>📐 Rechenweg (wie im deutschen Kassenbericht):</strong><br>
+    <strong>📐 Rechenweg:</strong><br>
     ① <strong>Tageslösung</strong> = TE19 + TE7 + sonstige Einnahmen + Trinkgeld<br>
-    ② <strong>Zwischensumme</strong> = Vortag + Tageslösung<br>
-    ③ <strong>Kassenbestand heute</strong> = Zwischensumme – Summe aller Ausgaben<br>
-    🔄 <strong>Tag abschließen:</strong> Der heutige Kassenbestand wird automatisch als neuer Vortag für morgen übernommen.
+    ② <strong>Summe Vortag + Tageslösung</strong> = ontem + hoje → aparece na última coluna (lado direito)<br>
+    ③ <strong>Kassenbestand heute</strong> = (Vortag + Tageslösung) – Alle Ausgaben<br>
+    🔄 <strong>Tag abschließen:</strong> O saldo de hoje vira o Vortag de amanhã automaticamente.
   </div>
 </div>
 
 <script>
-  // Hilfsfunktionen für Euro‑Format
   function parseEuro(value) {
     if (!value || value === '') return 0;
     let str = String(value).trim().replace(/\./g, '').replace(',', '.');
@@ -297,7 +299,6 @@
     return value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
   }
 
-  // Summe aller Ausgaben (alle Felder mit Klasse expense-input + Privatentnahmen)
   function sumAllExpenses() {
     let sum = 0;
     document.querySelectorAll('.expense-input').forEach(el => sum += parseEuro(el.value));
@@ -305,14 +306,12 @@
     return sum;
   }
 
-  // Summe aller Einnahmen (alle income-input)
   function sumAllIncome() {
     let sum = 0;
     document.querySelectorAll('.income-input').forEach(el => sum += parseEuro(el.value));
     return sum;
   }
 
-  // Hauptberechnung
   function recalc() {
     let vortag = parseEuro(document.getElementById('vortag').value);
     let summeEinnahmen = sumAllIncome();          // Tageslösung
@@ -325,7 +324,7 @@
     let kundenzahl = parseEuro(document.getElementById('kundenzahl').value);
     let betragProKunde = (kundenzahl > 0) ? (summeEinnahmen / kundenzahl) : 0;
 
-    // UI aktualisieren
+    // Aktualisieren aller Felder
     document.getElementById('kassenbestandHeute').innerText = formatEuro(kassenbestand);
     document.getElementById('kassenbestandHidden').value = kassenbestand;
     document.getElementById('summeAusgaben').innerText = formatEuro(summeAusgaben);
@@ -334,17 +333,17 @@
     document.getElementById('summeVortagUmsatz').innerText = formatEuro(zwischensumme);
     document.getElementById('abzugAusgaben').innerText = formatEuro(summeAusgaben);
     document.getElementById('betragProKunde').innerText = formatEuro(betragProKunde);
+
+    // NOVA CÉLULA NO LADO DIREITO (última coluna) com a soma Vortag + Tageslösung
+    document.getElementById('summeVortagTageslosungDireita').innerText = formatEuro(zwischensumme);
   }
 
-  // Tag abschließen: heutigen Kassenbestand als neuen Vortag speichern
   function abschliessenUndWeiter() {
     let kassenbestand = parseEuro(document.getElementById('kassenbestandHidden').value);
     let aktuellesDatum = document.getElementById('datumText').value;
     if (confirm(`Tag abschließen?\n\n📅 Datum: ${aktuellesDatum}\n💰 Kassenbestand heute: ${formatEuro(kassenbestand)}\n\nDieser Betrag wird als Vortag für morgen übernommen.`)) {
-      // Vortag auf heutigen Bestand setzen
       document.getElementById('vortag').value = kassenbestand.toFixed(2).replace('.', ',');
       
-      // Datum auf morgen vorschlagen
       let heute = new Date();
       let morgen = new Date(heute);
       morgen.setDate(heute.getDate() + 1);
@@ -356,7 +355,6 @@
         document.getElementById('datumText').value = neuesDatum;
       }
       
-      // Optional: Ausgaben und Einnahmen zurücksetzen (nicht zwingend, aber praktisch)
       if (confirm('Möchten Sie die Ausgaben und Einnahmen für den neuen Tag zurücksetzen?')) {
         document.querySelectorAll('.expense-input, .income-input').forEach(el => el.value = '');
         document.getElementById('privatentnahmen').value = '';
@@ -368,7 +366,6 @@
     }
   }
 
-  // Speichern / Laden (LocalStorage)
   function collectData() {
     let data = {};
     document.querySelectorAll('input').forEach(el => {
@@ -415,16 +412,13 @@
     document.getElementById('datumText').value = `${dd}-${mm}-${yyyy}`;
   }
 
-  // Event‑Listener für alle Eingabefelder
   document.querySelectorAll('input').forEach(el => {
     el.addEventListener('input', recalc);
     el.addEventListener('change', recalc);
   });
 
-  // Initiale Berechnung
   recalc();
 
-  // Aktuelles Datum, falls noch Platzhalter
   let heute = new Date();
   let dd = String(heute.getDate()).padStart(2, '0');
   let mm = String(heute.getMonth() + 1).padStart(2, '0');
