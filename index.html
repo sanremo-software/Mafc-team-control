@@ -192,13 +192,15 @@
     const kundenzahl = parseEuro(document.getElementById('kundenzahl').value);
     const summe = heute + ausgaben;
     const kasseneingang = summe - vortag - sonstigeEinnahmen;
-    const proKunde = kundenzahl > 0 ? kasseneingang / kundenzahl : 0;
+    const freiBetrag = parseEuro(document.getElementById('freiBetrag').value);
+    const tageslosung = kasseneingang + freiBetrag;
+    const proKunde = kundenzahl > 0 ? tageslosung / kundenzahl : 0;
 
     document.getElementById('anzeigeKassenbestandHeute').textContent = formatEuro(heute);
     document.getElementById('summeAusgaben').textContent = formatEuro(ausgaben);
     document.getElementById('summeGesamt').textContent = formatEuro(summe);
     document.getElementById('kasseneingang').textContent = formatEuro(kasseneingang);
-    document.getElementById('tageslosung').textContent = formatEuro(kasseneingang);
+    document.getElementById('tageslosung').textContent = formatEuro(tageslosung);
     document.getElementById('betragProKunde').textContent = formatEuro(proKunde);
   }
 
