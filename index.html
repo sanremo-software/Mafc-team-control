@@ -1,127 +1,28 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Kassenbericht 305 – com soma Vortag+Tageslösung no lado direito</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kassenbericht 305 – einfach & korrekt</title>
 <style>
-  * {
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Arial, sans-serif;
-  }
-  body {
-    background: #e9e9e9;
-    margin: 0;
-    padding: 20px;
-  }
-  .toolbar {
-    max-width: 1300px;
-    margin: 0 auto 12px auto;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .toolbar button, .toolbar input {
-    height: 38px;
-    padding: 0 14px;
-    border: 1px solid #aaa;
-    border-radius: 8px;
-    background: white;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .toolbar button:hover {
-    background: #f0f0f0;
-  }
-  .sheet-wrap {
-    max-width: 1300px;
-    margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    overflow-x: auto;
-  }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 1100px;
-    background: white;
-    font-size: 12px;
-  }
-  td {
-    border: 1px solid #111;
-    padding: 6px 8px;
-    vertical-align: middle;
-  }
-  .bold {
-    font-weight: 700;
-  }
-  .title {
-    font-size: 18px;
-    font-weight: 800;
-  }
-  .center {
-    text-align: center;
-  }
-  .right {
-    text-align: right;
-  }
-  .red {
-    color: #c00;
-    font-weight: 800;
-  }
-  .green {
-    color: #1e7e1e;
-    font-weight: 800;
-  }
-  .blue {
-    color: #0066cc;
-  }
-  input.cell {
-    width: 100%;
-    border: none;
-    outline: none;
-    background: transparent;
-    font: inherit;
-    text-align: right;
-    padding: 2px 0;
-  }
-  input.cell.left {
-    text-align: left;
-  }
-  .value {
-    display: block;
-    width: 100%;
-    text-align: right;
-    font-weight: 600;
-  }
-  .signature {
-    height: 50px;
-  }
-  .small {
-    font-size: 10px;
-  }
-  @media print {
-    body {
-      background: white;
-      padding: 0;
-      margin: 0;
-    }
-    .toolbar {
-      display: none;
-    }
-    .sheet-wrap {
-      padding: 0;
-      box-shadow: none;
-    }
-    @page {
-      size: landscape;
-      margin: 8mm;
-    }
-  }
+  * { box-sizing: border-box; font-family: Arial, sans-serif; }
+  body { background: #e9e9e9; margin: 20px; }
+  .toolbar { max-width: 1200px; margin: 0 auto 12px auto; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .toolbar button, .toolbar input { height: 36px; padding: 0 12px; border: 1px solid #aaa; border-radius: 6px; background: white; font-size: 13px; cursor: pointer; }
+  .toolbar button:hover { background: #f0f0f0; }
+  .sheet-wrap { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 1000px; }
+  td { border: 1px solid #000; padding: 6px 8px; vertical-align: middle; font-size: 12px; }
+  .bold { font-weight: bold; }
+  .right { text-align: right; }
+  .center { text-align: center; }
+  .green { color: #1e7e1e; font-weight: bold; }
+  .blue { color: #0066cc; font-weight: bold; }
+  .red { color: #c00; font-weight: bold; }
+  input.cell { width: 100%; border: none; outline: none; background: transparent; text-align: right; font: inherit; }
+  input.left { text-align: left; }
+  .value { display: block; text-align: right; }
+  .signature { height: 50px; }
 </style>
 </head>
 <body>
@@ -130,302 +31,187 @@
   <button onclick="saveData()">💾 Speichern</button>
   <button onclick="loadData()">📂 Laden</button>
   <button onclick="newDay()">🆕 Neuer Tag</button>
-  <button onclick="abschliessenUndWeiter()" style="background:#4caf50; color:white;">✅ Tag abschließen → Vortag setzen</button>
+  <button onclick="abschliessen()" style="background:#4caf50; color:white;">✅ Tag abschließen → Vortag setzen</button>
   <button onclick="window.print()">🖨️ Drucken</button>
-  <span style="margin-left:auto;">Datum speichern/laden:</span>
+  <span style="margin-left:auto;">Datum:</span>
   <input type="date" id="saveDate" />
 </div>
 
 <div class="sheet-wrap">
-  <table id="kassenTable">
-    <colgroup>
-      <col style="width:210px">
-      <col style="width:70px">
-      <col style="width:70px">
-      <col style="width:70px">
-      <col style="width:70px">
-      <col style="width:70px">
-      <col style="width:100px">
-      <col style="width:130px">
-      <col style="width:140px">
-      <col style="width:130px">
-    </colgroup>
+  <table>
+    <colgroup><col style="width:240px"><col style="width:80px"><col style="width:80px"><col style="width:80px"><col style="width:80px"><col style="width:80px"><col style="width:100px"><col style="width:120px"><col style="width:140px"><col style="width:120px"></colgroup>
 
-    <!-- Kopfzeile -->
-    <tr style="background:#f5f5f5;">
-      <td class="title">Kassenbericht 305</td>
-      <td class="center">Nr.</td>
-      <td colspan="2"></td>
-      <td></td>
-      <td></td>
-      <td colspan="2" class="right bold">Datum:</td>
-      <td><input class="cell left" id="datumText" value="02-03-2023" style="text-align:center;"></td>
-      <td class="center small">Buchungs-<br>vermerke</td>
-    </tr>
+    <!-- Kopf -->
+    <tr><td class="bold" style="font-size:16px">Kassenbericht 305</td><td class="center">Nr.</td><td colspan="2"></td><td></td><td></td><td colspan="2" class="right bold">Datum:</td><td><input class="cell left" id="datum" value="20.03.2026"></td><td class="center small">Buchungs-<br>vermerke</td></tr>
 
-    <!-- Kassenbestand bei Geschäftsschluß (berechnet) -->
-    <tr style="background:#e8f5e9;">
-      <td colspan="6" class="bold">🏦 kassenbestand bei Geschäftsschluß</td>
-      <td colspan="3"></td>
-      <td class="green right"><span class="value" id="kassenbestandHeute">0,00 €</span></td>
-    </tr>
+    <!-- Kassenbestand heute (automatisch) -->
+    <tr style="background:#e8f5e9;"><td colspan="6" class="bold">🏦 Kassenbestand bei Geschäftsschluß</td><td colspan="3"></td><td class="green right"><span id="kassenbestandHeute">0,00 €</span></td></tr>
     <input type="hidden" id="kassenbestandHidden" value="0">
 
-    <!-- NOVA LINHA: Soma do Vortag + Tageslösung no lado direito (última coluna) -->
-    <tr style="background:#e3f2fd;">
-      <td colspan="9" class="bold blue">📊 Summe Vortag + Tageslösung (ontem + hoje)</td>
-      <td class="blue right"><span class="value" id="summeVortagTageslosungDireita">0,00 €</span></td>
-    </tr>
+    <!-- NEUE ZEILE: Vortag + Tageslösung auf der rechten Seite -->
+    <tr style="background:#e3f2fd;"><td colspan="9" class="bold blue">📊 Summe Vortag + Tageslösung (ontem + heute)</td><td class="blue right"><span id="summeVortagTageslosung">0,00 €</span></td></tr>
 
-    <!-- Ausgaben-Bereich -->
-    <tr>
-      <td colspan="6" class="bold">📤 Ausgaben Im Laufe des Tages</td>
-      <td class="bold center">Vorsteuer</td>
-      <td colspan="2" class="bold center">Netto-/Brutto-Betrag</td>
-      <td class="bold center">Notiz</td>
-    </tr>
+    <!-- Ausgaben -->
+    <tr><td colspan="6" class="bold">📤 Ausgaben im Laufe des Tages</td><td class="bold center">Vorsteuer</td><td colspan="2" class="bold center">Betrag (Brutto)</td><td class="bold center">Notiz</td></tr>
 
-    <!-- Wareneinkäufe (6 Zeilen) -->
-    <tr><td colspan="6" class="bold">Wareneinkäufe und Warennebenkosten</td><td><input class="cell" id="w1_tax"></td><td colspan="2"><input class="cell expense-input" id="w1_amount" value="190,93"></td><td><input class="cell left" id="w1_note"></td></tr>
-    <tr><td colspan="6"></td><td><input class="cell" id="w2_tax"></td><td colspan="2"><input class="cell expense-input" id="w2_amount" value="0,00"></td><td><input class="cell left" id="w2_note"></td></tr>
-    <tr><td colspan="6"></td><td><input class="cell" id="w3_tax"></td><td colspan="2"><input class="cell expense-input" id="w3_amount" value="0,00"></td><td><input class="cell left" id="w3_note"></td></tr>
-    <tr><td colspan="6"></td><td><input class="cell" id="w4_tax"></td><td colspan="2"><input class="cell expense-input" id="w4_amount" value="0,00"></td><td><input class="cell left" id="w4_note"></td></tr>
-    <tr><td colspan="6"></td><td><input class="cell" id="w5_tax"></td><td colspan="2"><input class="cell expense-input" id="w5_amount" value="0,00"></td><td><input class="cell left" id="w5_note"></td></tr>
-    <tr><td colspan="6"></td><td><input class="cell" id="w6_tax"></td><td colspan="2"><input class="cell expense-input" id="w6_amount" value="0,00"></td><td><input class="cell left" id="w6_note"></td></tr>
+    <!-- Wareneinkäufe (5 Zeilen) -->
+    <tr><td class="bold">Wareneinkäufe und Warennebenkosten</td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w1_tax"></td><td colspan="2"><input class="cell expense" id="w1_amt" value="190,93"></td><td><input class="cell left" id="w1_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w2_tax"></td><td colspan="2"><input class="cell expense" id="w2_amt" value="0,00"></td><td><input class="cell left" id="w2_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w3_tax"></td><td colspan="2"><input class="cell expense" id="w3_amt" value="0,00"></td><td><input class="cell left" id="w3_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w4_tax"></td><td colspan="2"><input class="cell expense" id="w4_amt" value="0,00"></td><td><input class="cell left" id="w4_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w5_tax"></td><td colspan="2"><input class="cell expense" id="w5_amt" value="0,00"></td><td><input class="cell left" id="w5_note"></td></tr>
 
     <!-- Geschäftsausgaben (3 Zeilen) -->
-    <tr><td colspan="6" class="bold">Geschäftsausgaben</td><td><input class="cell" id="g1_tax"></td><td colspan="2"><input class="cell expense-input" id="g1_amount" value="57,40"></td><td><input class="cell left" id="g1_note"></td></tr>
-    <tr><td colspan="6"></td><td><input class="cell" id="g2_tax"></td><td colspan="2"><input class="cell expense-input" id="g2_amount" value="0,00"></td><td><input class="cell left" id="g2_note"></td></tr>
-    <tr><td colspan="6"></td><td><input class="cell" id="g3_tax"></td><td colspan="2"><input class="cell expense-input" id="g3_amount" value="0,00"></td><td><input class="cell left" id="g3_note"></td></tr>
+    <tr><td class="bold">Geschäftsausgaben</td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="g1_tax"></td><td colspan="2"><input class="cell expense" id="g1_amt" value="57,40"></td><td><input class="cell left" id="g1_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="g2_tax"></td><td colspan="2"><input class="cell expense" id="g2_amt" value="0,00"></td><td><input class="cell left" id="g2_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="g3_tax"></td><td colspan="2"><input class="cell expense" id="g3_amt" value="0,00"></td><td><input class="cell left" id="g3_note"></td></tr>
 
     <!-- Privatentnahmen -->
-    <tr><td colspan="6" class="bold">Privatentnahmen</td><td class="center">********</td><td colspan="2"><input class="cell expense-input" id="privatentnahmen" value="0,00"></td><td><input class="cell left" id="privatNote"></td></tr>
+    <tr><td class="bold">Privatentnahmen</td><td></td><td></td><td></td><td></td><td></td><td class="center">*****</td><td colspan="2"><input class="cell expense" id="privat" value="0,00"></td><td><input class="cell left" id="privatNote"></td></tr>
 
     <!-- Sonstige Ausgaben (3 Zeilen) -->
-    <tr><td colspan="6" class="bold">Sonstige Ausgaben</td><td><input class="cell" id="s1_tax"></td><td colspan="2"><input class="cell expense-input" id="s1_amount" value="226,30"></td><td><input class="cell left" id="s1_note"></td></tr>
-    <tr><td colspan="6"></td><td><input class="cell" id="s2_tax"></td><td colspan="2"><input class="cell expense-input" id="s2_amount" value="0,00"></td><td><input class="cell left" id="s2_note"></td></tr>
-    <tr><td colspan="6"></td><td><input class="cell" id="s3_tax"></td><td colspan="2"><input class="cell expense-input" id="s3_amount" value="0,00"></td><td><input class="cell left" id="s3_note"></td></tr>
+    <tr><td class="bold">Sonstige Ausgaben</td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="s1_tax"></td><td colspan="2"><input class="cell expense" id="s1_amt" value="226,30"></td><td><input class="cell left" id="s1_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="s2_tax"></td><td colspan="2"><input class="cell expense" id="s2_amt" value="0,00"></td><td><input class="cell left" id="s2_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="s3_tax"></td><td colspan="2"><input class="cell expense" id="s3_amt" value="0,00"></td><td><input class="cell left" id="s3_note"></td></tr>
 
     <!-- Summe Ausgaben -->
-    <tr>
-      <td colspan="7"></td>
-      <td class="bold center">Summe Ausgaben</td>
-      <td class="red right"><span class="value" id="summeAusgaben">0,00 €</span></td>
-      <td></td>
-    </tr>
+    <tr><td colspan="7"></td><td class="bold center">Summe Ausgaben</td><td class="red right"><span id="summeAusgaben">0,00 €</span></td><td></td></tr>
 
-    <!-- Einnahmen-Bereich -->
-    <tr style="background:#fff9e6;">
-      <td colspan="6" class="bold green">💰 Einnahmen / Umsatz des Tages</td>
-      <td class="bold center">Steuer</td>
-      <td colspan="2" class="bold center">Betrag</td>
-      <td class="bold center">Notiz</td>
-    </tr>
+    <!-- Einnahmen -->
+    <tr style="background:#fff9e6;"><td colspan="6" class="bold green">💰 Einnahmen / Umsatz</td><td class="bold center">Steuer</td><td colspan="2" class="bold center">Betrag</td><td class="bold center">Notiz</td></tr>
+    <tr><td class="bold">TE 19%</td><td></td><td></td><td></td><td></td><td></td><td class="center">19%</td><td colspan="2"><input class="cell income" id="te19" value="1847,50"></td><td><input class="cell left" id="te19Note"></td></tr>
+    <tr><td class="bold">TE 7%</td><td></td><td></td><td></td><td></td><td></td><td class="center">7%</td><td colspan="2"><input class="cell income" id="te7" value="177,60"></td><td><input class="cell left" id="te7Note"></td></tr>
+    <tr><td class="bold">Sonstige Einnahmen</td><td></td><td></td><td></td><td></td><td></td><td></td><td colspan="2"><input class="cell income" id="sonstige" value="534,60"></td><td><input class="cell left" id="sonstigeNote"></td></tr>
+    <tr><td class="bold">Trinkgeld / freiBetrag</td><td></td><td></td><td></td><td></td><td></td><td></td><td colspan="2"><input class="cell income" id="trinkgeld" value="66,40"></td><td><input class="cell left" id="trinkgeldNote"></td></tr>
 
-    <tr><td colspan="6" class="bold">TE 19%</td><td class="center">19%</td><td colspan="2"><input class="cell income-input" id="te19" value="1847,50"></td><td><input class="cell left" id="te19Note"></td></tr>
-    <tr><td colspan="6" class="bold">TE 7%</td><td class="center">7%</td><td colspan="2"><input class="cell income-input" id="te7" value="177,60"></td><td><input class="cell left" id="te7Note"></td></tr>
-    <tr><td colspan="6" class="bold">Sonstige Einnahmen (z.B. Gutscheine)</td><td></td><td colspan="2"><input class="cell income-input" id="sonstigeEinnahmen" value="534,60"></td><td><input class="cell left" id="sonstigeNote"></td></tr>
-    <tr><td colspan="6" class="bold">💶 Trinkgeld / freiBetrag</td><td></td><td colspan="2"><input class="cell income-input" id="trinkgeld" value="66,40"></td><td><input class="cell left" id="trinkgeldNote"></td></tr>
+    <!-- Tageslösung -->
+    <tr><td colspan="7"></td><td class="bold center">Tageslösung (Summe)</td><td class="green right"><span id="tageslosung">0,00 €</span></td><td></td></tr>
 
-    <!-- Tageslösung = Summe aller Einnahmen -->
-    <tr style="background:#fff9e6;">
-      <td colspan="7"></td>
-      <td class="bold center">Tageslösung (Summe)</td>
-      <td class="green right"><span class="value" id="tageslosung">0,00 €</span></td>
-      <td></td>
-    </tr>
+    <!-- Vortag -->
+    <tr><td colspan="6" class="bold">📅 Kassenbestand des Vortages</td><td colspan="3"><input class="cell" id="vortag" value="2000,00" style="background:#fff3e0;"></td><td class="right"><span id="vortagAnzeige">2.000,00 €</span></td></tr>
 
-    <!-- Kassenbestand des Vortages (Startkasse) -->
-    <tr>
-      <td colspan="6" class="bold">📅 Kassenbestand des Vortages</td>
-      <td colspan="3"><input class="cell" id="vortag" value="2000,00" style="background:#fff3e0; font-weight:700;"></td>
-      <td class="right"><span class="value" id="vortagAnzeige">2.000,00 €</span></td>
-    </tr>
-
-    <!-- Zwischensumme: Vortag + Tageslösung (auch hier bleibt die Zeile, aber die rechte Zelle wird aktualisiert) -->
-    <tr style="background:#e3f2fd;">
-      <td colspan="6" class="bold blue">➕ Vortag + Tageslösung</td>
-      <td colspan="2" class="bold center">Zwischensumme</td>
-      <td class="blue right"><span class="value" id="summeVortagUmsatz">0,00 €</span></td>
-      <td></td>
-    </tr>
-
-    <!-- Abzug Ausgaben = Kassenbestand heute -->
-    <tr>
-      <td colspan="6" class="bold red">➖ Abzüglich aller Ausgaben</td>
-      <td colspan="2" class="bold center">- Ausgaben</td>
-      <td class="red right"><span class="value" id="abzugAusgaben">0,00 €</span></td>
-      <td></td>
-    </tr>
+    <!-- Abzug Ausgaben = Kassenbestand -->
+    <tr><td colspan="6" class="bold red">➖ Abzüglich aller Ausgaben</td><td colspan="2" class="bold center">- Ausgaben</td><td class="red right"><span id="abzugAusgaben">0,00 €</span></td><td></td></tr>
 
     <!-- Kundenzahl & Betrag/Kunde -->
-    <tr>
-      <td colspan="4" class="bold">👥 Kundenzahl heute</td>
-      <td colspan="2"><input class="cell" id="kundenzahl" value="30"></td>
-      <td colspan="2" class="bold center">Ø Betrag/Kunde</td>
-      <td class="right"><span class="value" id="betragProKunde">0,00 €</span></td>
-      <td></td>
-    </tr>
+    <tr><td colspan="4" class="bold">👥 Kundenzahl heute</td><td colspan="2"><input class="cell" id="kundenzahl" value="30"></td><td colspan="2" class="bold center">Ø Betrag/Kunde</td><td class="right"><span id="betragProKunde">0,00 €</span></td><td></td></tr>
 
     <!-- Unterschrift -->
-    <tr>
-      <td colspan="4"></td>
-      <td colspan="2"></td>
-      <td colspan="2" class="bold center">Unterschrift</td>
-      <td class="signature"></td>
-      <td></td>
-    </tr>
+    <tr><td colspan="4"></td><td colspan="2"></td><td colspan="2" class="bold center">Unterschrift</td><td class="signature"></td><td></td></tr>
   </table>
-
-  <div style="margin-top:20px; padding:10px; background:#f0f7ff; border-radius:8px; font-size:12px; border-left:4px solid #2196f3;">
-    <strong>📐 Rechenweg:</strong><br>
-    ① <strong>Tageslösung</strong> = TE19 + TE7 + sonstige Einnahmen + Trinkgeld<br>
-    ② <strong>Summe Vortag + Tageslösung</strong> = ontem + hoje → aparece na última coluna (lado direito)<br>
-    ③ <strong>Kassenbestand heute</strong> = (Vortag + Tageslösung) – Alle Ausgaben<br>
-    🔄 <strong>Tag abschließen:</strong> O saldo de hoje vira o Vortag de amanhã automaticamente.
+  <div style="margin-top:15px; padding:8px; background:#f5f5f5; font-size:11px;">
+    ✅ Formel: <strong>Tageslösung = TE19 + TE7 + sonstige Einnahmen + Trinkgeld</strong><br>
+    🧮 <strong>Kassenbestand heute = Vortag + Tageslösung – Ausgaben</strong><br>
+    🔄 Nach "Tag abschließen" wird der heutige Bestand zum neuen Vortag.
   </div>
 </div>
 
 <script>
-  function parseEuro(value) {
-    if (!value || value === '') return 0;
-    let str = String(value).trim().replace(/\./g, '').replace(',', '.');
-    str = str.replace(/[^0-9.-]/g, '');
-    let num = parseFloat(str);
-    return isNaN(num) ? 0 : num;
-  }
+  function parseEuro(val) { if (!val) return 0; let s = String(val).replace(/\./g,'').replace(',','.').replace(/[^0-9.-]/g,''); let n = parseFloat(s); return isNaN(n)?0:n; }
+  function formatEuro(v) { return v.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
 
-  function formatEuro(value) {
-    return value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
-  }
-
-  function sumAllExpenses() {
+  // Alle Ausgaben (alle .expense Felder + Privatentnahmen)
+  function sumExpenses() {
     let sum = 0;
-    document.querySelectorAll('.expense-input').forEach(el => sum += parseEuro(el.value));
-    sum += parseEuro(document.getElementById('privatentnahmen').value);
+    document.querySelectorAll('.expense').forEach(el => sum += parseEuro(el.value));
+    sum += parseEuro(document.getElementById('privat').value);
     return sum;
   }
 
-  function sumAllIncome() {
+  // Alle Einnahmen (alle .income Felder)
+  function sumIncome() {
     let sum = 0;
-    document.querySelectorAll('.income-input').forEach(el => sum += parseEuro(el.value));
+    document.querySelectorAll('.income').forEach(el => sum += parseEuro(el.value));
     return sum;
   }
 
   function recalc() {
     let vortag = parseEuro(document.getElementById('vortag').value);
-    let summeEinnahmen = sumAllIncome();          // Tageslösung
-    let summeAusgaben = sumAllExpenses();
+    let einnahmen = sumIncome();      // = Tageslösung
+    let ausgaben = sumExpenses();
 
-    let zwischensumme = vortag + summeEinnahmen;
-    let kassenbestand = zwischensumme - summeAusgaben;
-    if (isNaN(kassenbestand)) kassenbestand = 0;
+    let zwischensumme = vortag + einnahmen;      // Vortag + Tageslösung
+    let kassenbestand = zwischensumme - ausgaben;
 
-    let kundenzahl = parseEuro(document.getElementById('kundenzahl').value);
-    let betragProKunde = (kundenzahl > 0) ? (summeEinnahmen / kundenzahl) : 0;
-
-    // Aktualisieren aller Felder
+    document.getElementById('tageslosung').innerText = formatEuro(einnahmen);
+    document.getElementById('summeAusgaben').innerText = formatEuro(ausgaben);
+    document.getElementById('abzugAusgaben').innerText = formatEuro(ausgaben);
     document.getElementById('kassenbestandHeute').innerText = formatEuro(kassenbestand);
     document.getElementById('kassenbestandHidden').value = kassenbestand;
-    document.getElementById('summeAusgaben').innerText = formatEuro(summeAusgaben);
-    document.getElementById('tageslosung').innerText = formatEuro(summeEinnahmen);
     document.getElementById('vortagAnzeige').innerText = formatEuro(vortag);
-    document.getElementById('summeVortagUmsatz').innerText = formatEuro(zwischensumme);
-    document.getElementById('abzugAusgaben').innerText = formatEuro(summeAusgaben);
-    document.getElementById('betragProKunde').innerText = formatEuro(betragProKunde);
+    document.getElementById('summeVortagTageslosung').innerText = formatEuro(zwischensumme);  // rechte Seite!
 
-    // NOVA CÉLULA NO LADO DIREITO (última coluna) com a soma Vortag + Tageslösung
-    document.getElementById('summeVortagTageslosungDireita').innerText = formatEuro(zwischensumme);
+    let kundenzahl = parseEuro(document.getElementById('kundenzahl').value);
+    let betragProKunde = (kundenzahl>0) ? (einnahmen / kundenzahl) : 0;
+    document.getElementById('betragProKunde').innerText = formatEuro(betragProKunde);
   }
 
-  function abschliessenUndWeiter() {
-    let kassenbestand = parseEuro(document.getElementById('kassenbestandHidden').value);
-    let aktuellesDatum = document.getElementById('datumText').value;
-    if (confirm(`Tag abschließen?\n\n📅 Datum: ${aktuellesDatum}\n💰 Kassenbestand heute: ${formatEuro(kassenbestand)}\n\nDieser Betrag wird als Vortag für morgen übernommen.`)) {
-      document.getElementById('vortag').value = kassenbestand.toFixed(2).replace('.', ',');
-      
+  // Tag abschließen: heutigen Bestand als neuen Vortag speichern
+  function abschliessen() {
+    let neuerVortag = parseEuro(document.getElementById('kassenbestandHidden').value);
+    if (confirm(`Tag abschließen?\nKassenbestand heute: ${formatEuro(neuerVortag)}\nDieser wird als Vortag für morgen übernommen.`)) {
+      document.getElementById('vortag').value = neuerVortag.toFixed(2).replace('.', ',');
+      // Datum auf morgen setzen (optional)
       let heute = new Date();
-      let morgen = new Date(heute);
-      morgen.setDate(heute.getDate() + 1);
-      let dd = String(morgen.getDate()).padStart(2, '0');
-      let mm = String(morgen.getMonth() + 1).padStart(2, '0');
+      let morgen = new Date(heute); morgen.setDate(heute.getDate()+1);
+      let dd = String(morgen.getDate()).padStart(2,'0');
+      let mm = String(morgen.getMonth()+1).padStart(2,'0');
       let yyyy = morgen.getFullYear();
-      let neuesDatum = `${dd}-${mm}-${yyyy}`;
-      if (confirm(`Möchten Sie das Datum auf morgen (${neuesDatum}) setzen?`)) {
-        document.getElementById('datumText').value = neuesDatum;
+      if (confirm(`Datum auf morgen (${dd}.${mm}.${yyyy}) setzen?`)) {
+        document.getElementById('datum').value = `${dd}.${mm}.${yyyy}`;
       }
-      
-      if (confirm('Möchten Sie die Ausgaben und Einnahmen für den neuen Tag zurücksetzen?')) {
-        document.querySelectorAll('.expense-input, .income-input').forEach(el => el.value = '');
-        document.getElementById('privatentnahmen').value = '';
+      if (confirm('Ausgaben und Einnahmen für neuen Tag zurücksetzen?')) {
+        document.querySelectorAll('.expense, .income').forEach(el => el.value = '');
         document.getElementById('kundenzahl').value = '';
       }
-      
       recalc();
-      alert(`✅ Tag abgeschlossen!\nNeuer Vortag für morgen: ${formatEuro(kassenbestand)}`);
+      alert(`✅ Fertig! Neuer Vortag: ${formatEuro(neuerVortag)}`);
     }
   }
 
-  function collectData() {
-    let data = {};
-    document.querySelectorAll('input').forEach(el => {
-      let key = el.id;
-      if (key) data[key] = el.value;
-    });
-    return data;
-  }
-
-  function applyData(data) {
-    document.querySelectorAll('input').forEach(el => {
-      let key = el.id;
-      if (key && data[key] !== undefined) el.value = data[key];
-    });
-    recalc();
-  }
-
+  // Speichern / Laden
   function saveData() {
-    let dateKey = document.getElementById('saveDate').value;
-    if (!dateKey) { alert('Bitte ein Datum zum Speichern auswählen.'); return; }
-    localStorage.setItem('kassenbericht_305_' + dateKey, JSON.stringify(collectData()));
-    alert('Gespeichert für ' + dateKey);
+    let d = document.getElementById('saveDate').value;
+    if (!d) { alert('Bitte ein Datum zum Speichern wählen.'); return; }
+    let data = {};
+    document.querySelectorAll('input').forEach(el => { if(el.id) data[el.id] = el.value; });
+    localStorage.setItem('kassenbericht_305_' + d, JSON.stringify(data));
+    alert('Gespeichert für ' + d);
   }
-
   function loadData() {
-    let dateKey = document.getElementById('saveDate').value;
-    if (!dateKey) { alert('Bitte ein Datum zum Laden auswählen.'); return; }
-    let raw = localStorage.getItem('kassenbericht_305_' + dateKey);
-    if (!raw) { alert('Kein Eintrag für ' + dateKey + ' gefunden.'); return; }
-    applyData(JSON.parse(raw));
-    alert('Geladen: ' + dateKey);
+    let d = document.getElementById('saveDate').value;
+    if (!d) { alert('Bitte ein Datum zum Laden wählen.'); return; }
+    let raw = localStorage.getItem('kassenbericht_305_' + d);
+    if (!raw) { alert('Kein Eintrag für ' + d); return; }
+    let data = JSON.parse(raw);
+    for (let id in data) {
+      let el = document.getElementById(id);
+      if (el) el.value = data[id];
+    }
+    recalc();
+    alert('Geladen: ' + d);
   }
-
   function newDay() {
-    if (!confirm('Neuen leeren Kassenbericht öffnen? Alle aktuellen Daten gehen verloren.')) return;
-    document.querySelectorAll('input').forEach(el => {
-      if (el.id !== 'vortag') el.value = '';
-    });
+    if (!confirm('Neuen leeren Kassenbericht starten?')) return;
+    document.querySelectorAll('input').forEach(el => { if(el.id !== 'vortag') el.value = ''; });
     recalc();
     let heute = new Date();
-    let dd = String(heute.getDate()).padStart(2, '0');
-    let mm = String(heute.getMonth() + 1).padStart(2, '0');
+    let dd = String(heute.getDate()).padStart(2,'0');
+    let mm = String(heute.getMonth()+1).padStart(2,'0');
     let yyyy = heute.getFullYear();
-    document.getElementById('datumText').value = `${dd}-${mm}-${yyyy}`;
+    document.getElementById('datum').value = `${dd}.${mm}.${yyyy}`;
   }
 
-  document.querySelectorAll('input').forEach(el => {
-    el.addEventListener('input', recalc);
-    el.addEventListener('change', recalc);
-  });
-
+  // Events
+  document.querySelectorAll('input').forEach(el => el.addEventListener('input', recalc));
   recalc();
 
+  // Datum initial setzen
   let heute = new Date();
-  let dd = String(heute.getDate()).padStart(2, '0');
-  let mm = String(heute.getMonth() + 1).padStart(2, '0');
+  let dd = String(heute.getDate()).padStart(2,'0');
+  let mm = String(heute.getMonth()+1).padStart(2,'0');
   let yyyy = heute.getFullYear();
-  if (document.getElementById('datumText').value === '02-03-2023') {
-    document.getElementById('datumText').value = `${dd}-${mm}-${yyyy}`;
-  }
+  if (document.getElementById('datum').value === '20.03.2026') document.getElementById('datum').value = `${dd}.${mm}.${yyyy}`;
 </script>
 </body>
 </html>
