@@ -1,1050 +1,192 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Gelateria Manager · Mobile</title>
-    <!-- PWA / Add to home screen -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Gelateria">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='10' y='80' font-size='80'%3E🍦%3C/text%3E%3C/svg%3E">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='10' y='80' font-size='80'%3E🍦%3C/text%3E%3C/svg%3E">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* ===== VARIÁVEIS E RESET ===== */
-        :root {
-            --primary: #ff6b8b;
-            --primary-dark: #e05575;
-            --secondary: #36b5b0;
-            --success: #4CAF50;
-            --warning: #ff9800;
-            --danger: #f44336;
-            --info: #2196F3;
-            --dark: #333;
-            --light: #f8f9fa;
-            --gray: #6c757d;
-            --light-gray: #e9ecef;
-            --border-radius: 16px;
-            --box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            --overlay: rgba(0,0,0,0.6);
-        }
+<meta charset="UTF-8">
+<title>Kassenbericht</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
+<style>
+body {
+  font-family: Arial;
+  background:#eee;
+  padding:20px;
+}
 
-        body {
-            min-height: 100vh;
-            background: var(--overlay); /* fallback */
-            background-image: url('https://images.unsplash.com/photo-1501443762994-82bd5dace89a?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-blend-mode: overlay;
-            color: white;
-            line-height: 1.5;
-            padding: 0;
-            margin: 0;
-            overflow-x: hidden;
-        }
+.container {
+  background:#fff;
+  padding:20px;
+  max-width:1100px;
+  margin:auto;
+  border:1px solid #000;
+}
 
-        /* Overlay escuro para legibilidade */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            backdrop-filter: blur(3px);
-            z-index: -1;
-        }
+h1 {
+  margin:0;
+}
 
-        /* ===== HEADER ===== */
-        .app-header {
-            background: rgba(255, 107, 139, 0.9);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 15px 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 100;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.2);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
+table {
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
 
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+td {
+  border:1px solid #000;
+  padding:5px;
+  height:28px;
+}
 
-        .logo i {
-            font-size: 2rem;
-            text-shadow: 2px 2px 0 rgba(0,0,0,0.2);
-        }
+input {
+  width:100%;
+  border:none;
+  outline:none;
+}
 
-        .logo h1 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            line-height: 1.2;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
+.right {
+  text-align:right;
+}
 
-        .logo span {
-            font-size: 0.8rem;
-            opacity: 0.95;
-            display: block;
-        }
+.bold {
+  font-weight:bold;
+}
 
-        .current-date {
-            background: rgba(255,255,255,0.25);
-            padding: 8px 12px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            backdrop-filter: blur(4px);
-        }
+.red {
+  color:red;
+  font-weight:bold;
+}
 
-        /* ===== CONTAINER ===== */
-        .container {
-            padding-top: 70px;
-            padding-bottom: 80px;
-            max-width: 100%;
-            margin: 0;
-        }
+button {
+  padding:10px;
+  margin-bottom:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+</style>
 
-        /* ===== TABS (desktop) ===== */
-        .tabs {
-            display: flex;
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(15px);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            position: fixed;
-            top: 70px;
-            left: 0;
-            right: 0;
-            z-index: 90;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .tabs::-webkit-scrollbar { display: none; }
-
-        .tab {
-            flex: 0 0 auto;
-            padding: 15px 20px;
-            white-space: nowrap;
-            border-bottom: 3px solid transparent;
-            font-weight: 600;
-            color: rgba(255,255,255,0.8);
-            background: none;
-            border: none;
-            font-size: 0.95rem;
-            transition: all 0.2s;
-        }
-
-        .tab.active {
-            color: white;
-            border-bottom-color: var(--primary);
-            background: rgba(255,255,255,0.1);
-        }
-
-        /* ===== BOTTOM NAV (mobile) ===== */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(30,30,30,0.9);
-            backdrop-filter: blur(15px);
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0 12px;
-            border-top: 1px solid rgba(255,255,255,0.15);
-            z-index: 90;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.3);
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            font-size: 0.75rem;
-            padding: 8px;
-            min-width: 60px;
-            transition: color 0.2s;
-        }
-
-        .nav-item.active {
-            color: var(--primary);
-        }
-
-        .nav-item i {
-            font-size: 1.6rem;
-            margin-bottom: 2px;
-        }
-
-        /* ===== CARDS TRANSLÚCIDOS ===== */
-        .card {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(15px);
-            border-radius: var(--border-radius);
-            padding: 20px;
-            margin: 15px;
-            box-shadow: var(--box-shadow);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: white;
-        }
-
-        .section-title {
-            font-size: 1.3rem;
-            color: white;
-            margin-bottom: 15px;
-            font-weight: 700;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-
-        /* ===== BOTÕES ===== */
-        .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            transition: all 0.2s;
-            touch-action: manipulation;
-            min-height: 50px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .btn:active { transform: scale(0.98); background: var(--primary-dark); }
-
-        .btn-small {
-            padding: 10px 15px;
-            font-size: 0.9rem;
-            min-height: 44px;
-            width: auto;
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-        }
-        .btn-small:active { background: rgba(255,255,255,0.3); }
-
-        .btn-success { background: var(--success); }
-        .btn-warning { background: var(--warning); }
-        .btn-danger { background: var(--danger); }
-        .btn-info { background: var(--info); }
-
-        /* ===== FORMULÁRIOS ===== */
-        .form-group { margin-bottom: 20px; }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: white;
-            font-size: 0.95rem;
-            text-shadow: 0 1px 2px black;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 10px;
-            font-size: 1rem;
-            background: rgba(0,0,0,0.4);
-            color: white;
-            backdrop-filter: blur(5px);
-        }
-        option { background: #333; }
-
-        /* ===== ITENS DE PRODUÇÃO ===== */
-        .production-item {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
-            margin-bottom: 10px;
-            border-left: 4px solid var(--primary);
-            gap: 15px;
-            backdrop-filter: blur(5px);
-        }
-        .item-info { flex: 1; }
-        .item-name { font-weight: 700; font-size: 1.1rem; }
-        .item-type {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-        .type-fruit { background: rgba(76,175,80,0.3); color: #ccffcc; }
-        .type-milk { background: rgba(33,150,243,0.3); color: #b8e2ff; }
-        .type-sorbet { background: rgba(255,152,0,0.3); color: #ffe0b0; }
-
-        .eimer-count { font-size: 1.6rem; font-weight: 800; color: white; text-align: center; }
-        .eimer-label { font-size: 0.7rem; opacity: 0.8; }
-
-        /* ===== GRID SABORES RÁPIDOS ===== */
-        .quick-flavors-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .quick-flavor-btn {
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 12px;
-            padding: 12px 5px;
-            text-align: center;
-            color: white;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-        .quick-flavor-btn:active { background: rgba(255,255,255,0.2); }
-
-        /* ===== RECEITAS ===== */
-        .recipe-card {
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(8px);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .recipe-name { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
-
-        /* ===== NOTIFICAÇÕES ===== */
-        .notification {
-            position: fixed;
-            bottom: 90px;
-            left: 20px;
-            right: 20px;
-            padding: 15px;
-            border-radius: 30px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            box-shadow: 0 10px 30px black;
-            z-index: 1000;
-            animation: slideUp 0.3s ease;
-            backdrop-filter: blur(20px);
-        }
-        .notification.success { background: rgba(76,175,80,0.9); }
-        .notification.info { background: rgba(33,150,243,0.9); }
-        .notification.warning { background: rgba(255,152,0,0.9); }
-        .notification.error { background: rgba(244,67,54,0.9); }
-        @keyframes slideUp {
-            from { transform: translateY(100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        /* ===== MODAL ===== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            overflow-y: auto;
-        }
-        .modal-content {
-            background: rgba(30,30,30,0.95);
-            backdrop-filter: blur(20px);
-            width: 100%;
-            min-height: 100%;
-            padding: 20px;
-            color: white;
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-        .close-modal {
-            background: none; border: none; font-size: 2.5rem; color: white; width: 50px; height: 50px;
-        }
-
-        /* ===== UTILITÁRIOS ===== */
-        .flex-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-        .space-between { justify-content: space-between; }
-        .text-center { text-align: center; }
-        .empty-state { text-align: center; padding: 40px 20px; opacity: 0.8; }
-
-        /* ===== AJUSTES TOUCH ===== */
-        @media (max-width: 767px) {
-            .tabs { display: none; }
-            .container { padding-bottom: 80px; }
-        }
-        @media (min-width: 768px) {
-            .bottom-nav { display: none; }
-            .container { max-width: 700px; margin: 0 auto; }
-        }
-    </style>
 </head>
+
 <body>
-    <!-- Header -->
-    <header class="app-header">
-        <div class="logo">
-            <i class="fas fa-ice-cream"></i>
-            <div>
-                <h1>Gelateria Manager</h1>
-                <span>Mobile Produktion</span>
-            </div>
-        </div>
-        <div class="current-date" id="current-date"></div>
-    </header>
 
-    <!-- Tabs (desktop) -->
-    <nav class="tabs">
-        <button class="tab active" onclick="showTab('production')"><i class="fas fa-industry"></i> Produktion</button>
-        <button class="tab" onclick="showTab('recipes')"><i class="fas fa-book-open"></i> Rezepte</button>
-        <button class="tab" onclick="showTab('flavors')"><i class="fas fa-list"></i> Sorten</button>
-        <button class="tab" onclick="showTab('settings')"><i class="fas fa-cog"></i> Einstellungen</button>
-    </nav>
+<div class="container">
 
-    <!-- Conteúdo principal -->
-    <div class="container">
-        <!-- PRODUÇÃO -->
-        <div id="production-tab" class="tab-content active">
-            <div class="card">
-                <div class="section-title">
-                    <span>Heutige Produktion</span>
-                    <div class="flex-row">
-                        <button class="btn-small" onclick="exportToExcel()"><i class="fas fa-file-excel"></i></button>
-                        <button class="btn-small" onclick="sendToWhatsApp()"><i class="fab fa-whatsapp"></i></button>
-                        <button class="btn-small" onclick="printProduction()"><i class="fas fa-print"></i></button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Datum</label>
-                    <input type="date" id="production-date" value="">
-                </div>
-                <div class="summary-box" style="background: rgba(0,0,0,0.3); border-radius: 12px; padding: 15px;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; text-align: center;">
-                        <div><span class="stat-number" id="total-flavors">0</span><br><span class="stat-label">Sorten</span></div>
-                        <div><span class="stat-number" id="total-eimers">0</span><br><span class="stat-label">Eimer</span></div>
-                    </div>
-                </div>
-            </div>
+<button onclick="window.print()">🖨️ Drucken</button>
 
-            <div class="card">
-                <div class="section-title">Neue Produktion</div>
-                <div class="form-group">
-                    <label>Sorte</label>
-                    <select id="flavor-select"><option value="">Sorte wählen...</option></select>
-                </div>
-                <div class="form-group">
-                    <label>Menge (Eimer)</label>
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <button class="btn-small" onclick="decreaseQuantity()" style="min-width: 50px;">-</button>
-                        <input type="number" id="quantity" value="1" min="1" style="flex:1; text-align:center;">
-                        <button class="btn-small" onclick="increaseQuantity()" style="min-width: 50px;">+</button>
-                        <button class="btn-small" onclick="setQuantity(5)">5</button>
-                        <button class="btn-small" onclick="setQuantity(10)">10</button>
-                        <button class="btn-small" onclick="setQuantity(20)">20</button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Notiz</label>
-                    <input type="text" id="notes" placeholder="...">
-                </div>
-                <button class="btn btn-success" onclick="addProductionItem()"><i class="fas fa-plus"></i> Hinzufügen</button>
-            </div>
+<h1>Kassenbericht</h1>
 
-            <div class="card">
-                <div class="section-title">
-                    <span>Schnellauswahl</span>
-                    <select id="flavor-filter" onchange="filterQuickFlavors()" style="width:auto; background:rgba(0,0,0,0.5);">
-                        <option value="all">Alle</option>
-                        <option value="fruit">Frucht</option>
-                        <option value="milk">Milch</option>
-                    </select>
-                </div>
-                <div id="quick-flavors" class="quick-flavors-grid"></div>
-                <div style="margin-top:20px; border-top:1px solid rgba(255,255,255,0.2); padding-top:20px;">
-                    <h3 style="color:white;">Neue Sorte</h3>
-                    <div class="form-group"><input type="text" id="new-flavor-name" placeholder="Name"></div>
-                    <div class="form-group">
-                        <select id="new-flavor-type">
-                            <option value="Fruto">Fruchteis</option>
-                            <option value="Leite">Milcheis</option>
-                            <option value="Sorbet">Sorbet</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-success" onclick="createNewFlavor()"><i class="fas fa-plus"></i> Erstellen</button>
-                </div>
-            </div>
+<table>
 
-            <div class="card">
-                <div class="section-title">
-                    <span>Produktionsliste</span>
-                    <button class="btn-small btn-danger" onclick="clearProduction()"><i class="fas fa-trash"></i> Alle löschen</button>
-                </div>
-                <div id="production-list"></div>
-            </div>
-        </div>
+<tr>
+<td class="bold">Datum</td>
+<td><input type="date" id="datum"></td>
+<td class="bold right">Kassenbestand</td>
+<td class="red right" id="kassenbestand">0.00 €</td>
+</tr>
 
-        <!-- RECEITAS -->
-        <div id="recipes-tab" class="tab-content">
-            <div class="card">
-                <div class="section-title">
-                    <span>Rezepte</span>
-                    <button class="btn-small" onclick="openRecipeModal('new')"><i class="fas fa-plus"></i> Neu</button>
-                </div>
-                <div class="form-group"><input type="text" id="recipe-search" placeholder="Suchen..." onkeyup="searchRecipes()"></div>
-                <div id="recipes-list"></div>
-            </div>
-        </div>
+<tr>
+<td colspan="4" class="bold">Ausgaben im Laufe des Tages</td>
+</tr>
 
-        <!-- SORTENLISTE -->
-        <div id="flavors-tab" class="tab-content">
-            <div class="card">
-                <div class="section-title">
-                    <span>Alle Sorten</span>
-                    <div class="flex-row">
-                        <span id="total-sorten-count">0</span>
-                        <button class="btn-small" onclick="openRecipeModal('new')"><i class="fas fa-plus"></i> Neu</button>
-                    </div>
-                </div>
-                <div class="form-group"><input type="text" id="flavor-search" placeholder="Suchen..." onkeyup="searchFlavors()"></div>
-                <div id="flavors-list"></div>
-            </div>
-        </div>
+<tr>
+<td>Wareneinkäufe</td>
+<td><input type="number" id="waren" oninput="calc()"></td>
+<td>Geschäftsausgaben</td>
+<td><input type="number" id="geschaft" oninput="calc()"></td>
+</tr>
 
-        <!-- EINSTELLUNGEN -->
-        <div id="settings-tab" class="tab-content">
-            <div class="card">
-                <div class="section-title">Einstellungen</div>
-                <div class="form-group">
-                    <label>Eimer-Kapazität (L)</label>
-                    <input type="number" id="eimer-capacity" value="5" min="1" max="20">
-                </div>
-                <div class="form-group">
-                    <label>Daten</label>
-                    <div style="display:flex; flex-direction:column; gap:10px;">
-                        <button class="btn btn-info" onclick="backupData()"><i class="fas fa-save"></i> Backup</button>
-                        <button class="btn btn-warning" onclick="restoreBackup()"><i class="fas fa-upload"></i> Wiederherstellen</button>
-                        <button class="btn btn-danger" onclick="clearAllData()"><i class="fas fa-trash"></i> Alles löschen</button>
-                    </div>
-                </div>
-                <div style="background:rgba(0,0,0,0.3); padding:15px; border-radius:10px;">
-                    <h4>Systeminfo</h4>
-                    <div>Sorten: <span id="info-flavors">0</span></div>
-                    <div>Rezepte: <span id="info-recipes">0</span></div>
-                    <div>Produktionstage: <span id="info-production-days">0</span></div>
-                </div>
-            </div>
-        </div>
-    </div>
+<tr>
+<td>Privatentnahmen</td>
+<td><input type="number" id="privat" oninput="calc()"></td>
+<td>Sonstige Ausgaben</td>
+<td><input type="number" id="sonstige" oninput="calc()"></td>
+</tr>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <a href="#" class="nav-item active" onclick="showTab('production'); return false;"><i class="fas fa-industry"></i><span>Produktion</span></a>
-        <a href="#" class="nav-item" onclick="showTab('recipes'); return false;"><i class="fas fa-book-open"></i><span>Rezepte</span></a>
-        <a href="#" class="nav-item" onclick="showTab('flavors'); return false;"><i class="fas fa-list"></i><span>Sorten</span></a>
-        <a href="#" class="nav-item" onclick="showTab('settings'); return false;"><i class="fas fa-cog"></i><span>Einstellung</span></a>
-    </nav>
+<tr>
+<td colspan="3" class="bold right">Summe Ausgaben</td>
+<td class="right" id="summeAusgaben">0.00 €</td>
+</tr>
 
-    <!-- Modal de receita -->
-    <div class="modal" id="recipe-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="modal-title">Neues Rezept</h2>
-                <button class="close-modal" onclick="closeRecipeModal()">&times;</button>
-            </div>
-            <form id="recipe-form" onsubmit="saveRecipe(event)">
-                <input type="hidden" id="recipe-id">
-                <div class="form-group"><label>Name *</label><input type="text" id="recipe-name" required></div>
-                <div class="form-group">
-                    <label>Typ</label>
-                    <select id="recipe-type">
-                        <option value="Fruto">Fruchteis</option>
-                        <option value="Leite">Milcheis</option>
-                        <option value="Sorbet">Sorbet</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Beschreibung</label><textarea id="recipe-description" rows="2"></textarea></div>
-                <div class="form-group"><label>Rezepttext</label><textarea id="recipe-content" required rows="4"></textarea></div>
-                <div class="form-group">
-                    <label>Zutaten</label>
-                    <div style="display:grid; grid-template-columns:2fr 1fr 1fr; gap:5px; margin-bottom:10px;">
-                        <input type="text" id="ingredient-name" placeholder="Zutat">
-                        <input type="text" id="ingredient-quantity" placeholder="Menge">
-                        <select id="ingredient-unit">
-                            <option value="g">g</option><option value="kg">kg</option><option value="ml">ml</option>
-                            <option value="L">L</option><option value="Stück">Stück</option><option value="TL">TL</option><option value="EL">EL</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn-small" onclick="addIngredient()"><i class="fas fa-plus"></i> Zutat</button>
-                    <div id="ingredients-list" style="margin-top:15px;"></div>
-                </div>
-                <div class="form-group"><label>Tags (komma)</label><input type="text" id="recipe-tags" placeholder="Klassisch, Sommer..."></div>
-                <div style="display:flex; gap:10px;">
-                    <button type="submit" class="btn btn-success" style="flex:1;">Speichern</button>
-                    <button type="button" class="btn" style="flex:1;" onclick="closeRecipeModal()">Abbrechen</button>
-                </div>
-            </form>
-        </div>
-    </div>
+<tr>
+<td class="bold">Kassenbestand Vortag</td>
+<td><input type="number" id="vortag" oninput="calc()"></td>
+<td class="bold">Sonstige Einnahmen</td>
+<td><input type="number" id="einnahmenExtra" oninput="calc()"></td>
+</tr>
 
-    <script>
-        // ==================== DADOS ====================
-        let recipes = [];
-        let production = {};
-        let eimerCapacity = 5;
-        const classicFlavors = [
-            { name: "Vanille", type: "Leite", category: "klassisch", description: "Klassisches Vanilleeis", recipe: "500ml Milch, 250ml Sahne, 150g Zucker, 6 Eigelb, 1 Vanilleschote", tags: ["Klassisch"], popularity: 100 },
-            { name: "Stracciatella", type: "Leite", category: "klassisch", description: "Vanille mit Schokostückchen", recipe: "Vanillebasis + 100g dunkle Schokolade", tags: ["Schokolade"], popularity: 95 },
-            { name: "Schokolade", type: "Leite", category: "klassisch", description: "Intensiv cremig", recipe: "500ml Milch, 250ml Sahne, 200g Schokolade, 150g Zucker", popularity: 90 },
-            { name: "Zitrone", type: "Fruto", category: "klassisch", description: "Erfrischend", recipe: "1L Wasser, Saft 10 Zitronen, 300g Zucker", popularity: 85 },
-            { name: "Erdbeere", type: "Fruto", category: "klassisch", description: "Fruchtig", recipe: "1L Wasser, 500g Erdbeeren, 250g Zucker", popularity: 88 },
-            { name: "Pistazie", type: "Leite", category: "klassisch", description: "Mit echten Pistazien", recipe: "500ml Milch, 250ml Sahne, 200g Pistazien, 150g Zucker", popularity: 82 }
-        ];
+<tr>
+<td colspan="3" class="bold right">Kasseneingang</td>
+<td class="red right" id="kasseEingang">0.00 €</td>
+</tr>
 
-        // ==================== INICIALIZAÇÃO ====================
-        document.addEventListener('DOMContentLoaded', function() {
-            loadAllData();
-            setupCurrentDate();
-            loadQuickFlavors();
-            loadRecipes();
-            loadFlavorsList();
-            updateProductionSummary();
-            updateInfo();
-            document.getElementById('eimer-capacity').addEventListener('change', function() {
-                eimerCapacity = parseInt(this.value) || 5;
-                saveEimerCapacity();
-                showNotification('Kapazität aktualisiert', 'info');
-            });
-        });
+<tr>
+<td class="bold">TE 19%</td>
+<td><input type="number" id="t19" oninput="check()"></td>
+<td class="bold">TE 7%</td>
+<td><input type="number" id="t7" oninput="check()"></td>
+</tr>
 
-        function loadAllData() {
-            recipes = JSON.parse(localStorage.getItem('gelateria_recipes')) || [...classicFlavors];
-            production = JSON.parse(localStorage.getItem('gelateria_production')) || {};
-            eimerCapacity = parseInt(localStorage.getItem('eimerCapacity')) || 5;
-            document.getElementById('eimer-capacity').value = eimerCapacity;
-        }
+<tr>
+<td colspan="3" class="bold right">Total Kontrolle</td>
+<td class="right" id="checkTotal">0.00 €</td>
+</tr>
 
-        function saveRecipes() { localStorage.setItem('gelateria_recipes', JSON.stringify(recipes)); }
-        function saveProduction() { localStorage.setItem('gelateria_production', JSON.stringify(production)); }
-        function saveEimerCapacity() { localStorage.setItem('eimerCapacity', eimerCapacity); }
+<tr>
+<td class="bold">Kundenzahl</td>
+<td><input type="number"></td>
+<td class="bold">Betrag/Kunde</td>
+<td></td>
+</tr>
 
-        // ==================== UI ====================
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-            document.getElementById(tabName + '-tab').classList.add('active');
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.querySelectorAll('.tab').forEach(t => { if (t.textContent.includes(tabName==='production'?'Produktion':tabName==='recipes'?'Rezepte':tabName==='flavors'?'Sorten':'Einstellungen')) t.classList.add('active'); });
-            document.querySelectorAll('.nav-item').forEach(n => { if (n.textContent.includes(tabName==='production'?'Produktion':tabName==='recipes'?'Rezepte':tabName==='flavors'?'Sorten':'Einstellung')) n.classList.add('active'); });
-            if (tabName === 'production') { updateProductionList(); updateProductionSummary(); }
-            if (tabName === 'flavors') loadFlavorsList();
-        }
+<tr>
+<td colspan="4" style="height:60px;">Unterschrift</td>
+</tr>
 
-        function setupCurrentDate() {
-            const today = new Date();
-            document.getElementById('current-date').textContent = today.toLocaleDateString('de-DE', { weekday:'long', day:'2-digit', month:'long' });
-            document.getElementById('production-date').valueAsDate = today;
-        }
+</table>
 
-        // ==================== PRODUÇÃO ====================
-        function getDateKey(date) { return date.toISOString().split('T')[0]; }
+</div>
 
-        function addProductionItem() {
-            const flavor = document.getElementById('flavor-select').value;
-            const qty = parseInt(document.getElementById('quantity').value);
-            const notes = document.getElementById('notes').value;
-            const dateKey = document.getElementById('production-date').value;
-            if (!flavor || qty < 1) { showNotification('Sorte und Menge angeben', 'warning'); return; }
-            if (!production[dateKey]) production[dateKey] = [];
-            production[dateKey].push({ name: flavor, eimer: qty, notes, addedAt: new Date().toISOString() });
-            saveProduction();
-            document.getElementById('quantity').value = 1;
-            document.getElementById('notes').value = '';
-            showNotification(`${flavor} hinzugefügt`, 'success');
-            updateProductionList();
-            updateProductionSummary();
-        }
+<script>
 
-        function updateProductionList() {
-            const dateKey = document.getElementById('production-date').value;
-            const list = document.getElementById('production-list');
-            if (!production[dateKey] || production[dateKey].length === 0) {
-                list.innerHTML = '<div class="empty-state"><i class="fas fa-ice-cream"></i><p>Keine Produktion</p></div>';
-                return;
-            }
-            let html = '';
-            production[dateKey].forEach((item, i) => {
-                const recipe = recipes.find(r => r.name === item.name);
-                const typeClass = recipe ? (recipe.type === 'Fruto' ? 'type-fruit' : recipe.type === 'Leite' ? 'type-milk' : 'type-sorbet') : '';
-                const typeText = recipe ? (recipe.type === 'Fruto' ? 'Frucht' : recipe.type === 'Leite' ? 'Milch' : 'Sorbet') : '';
-                html += `<div class="production-item">
-                    <div class="item-info">
-                        <div class="item-name">${item.name}</div>
-                        <div><span class="item-type ${typeClass}">${typeText}</span></div>
-                        ${item.notes ? `<div style="font-size:0.8rem; opacity:0.7;">${item.notes}</div>` : ''}
-                    </div>
-                    <div><div class="eimer-count">${item.eimer}</div><div class="eimer-label">Eimer</div></div>
-                    <button class="btn-small btn-danger" onclick="removeProductionItem('${dateKey}',${i})"><i class="fas fa-trash"></i></button>
-                </div>`;
-            });
-            list.innerHTML = html;
-        }
+function val(id){
+  return parseFloat(document.getElementById(id).value) || 0;
+}
 
-        function removeProductionItem(dateKey, index) {
-            if (!confirm('Entfernen?')) return;
-            production[dateKey].splice(index, 1);
-            if (production[dateKey].length === 0) delete production[dateKey];
-            saveProduction();
-            updateProductionList();
-            updateProductionSummary();
-            showNotification('Entfernt', 'info');
-        }
+function calc(){
 
-        function clearProduction() {
-            const key = document.getElementById('production-date').value;
-            if (production[key] && production[key].length && confirm('Alles löschen?')) {
-                delete production[key];
-                saveProduction();
-                updateProductionList();
-                updateProductionSummary();
-                showNotification('Produktion gelöscht', 'info');
-            }
-        }
+  let ausgaben =
+    val("waren") +
+    val("geschaft") +
+    val("privat") +
+    val("sonstige");
 
-        function updateProductionSummary() {
-            const key = document.getElementById('production-date').value;
-            const items = production[key] || [];
-            document.getElementById('total-flavors').textContent = items.length;
-            document.getElementById('total-eimers').textContent = items.reduce((s,i)=>s+i.eimer,0);
-        }
+  document.getElementById("summeAusgaben").innerText =
+    ausgaben.toFixed(2) + " €";
 
-        function increaseQuantity() { document.getElementById('quantity').value = parseInt(document.getElementById('quantity').value)+1; }
-        function decreaseQuantity() { let v = parseInt(document.getElementById('quantity').value); if (v>1) document.getElementById('quantity').value = v-1; }
-        function setQuantity(v) { document.getElementById('quantity').value = v; }
+  let bestand =
+    val("vortag") +
+    val("einnahmenExtra") +
+    ausgaben;
 
-        // ==================== SABORES ====================
-        function loadQuickFlavors() {
-            const container = document.getElementById('quick-flavors');
-            const select = document.getElementById('flavor-select');
-            const sorted = [...recipes].sort((a,b)=>a.name.localeCompare(b.name));
-            select.innerHTML = '<option value="">Sorte wählen...</option>' + sorted.map(f=>`<option value="${f.name}">${f.name}</option>`).join('');
-            filterQuickFlavors();
-        }
+  document.getElementById("kassenbestand").innerText =
+    bestand.toFixed(2) + " €";
 
-        function filterQuickFlavors() {
-            const filter = document.getElementById('flavor-filter').value;
-            const container = document.getElementById('quick-flavors');
-            const filtered = recipes.filter(f => filter==='all' || (filter==='fruit' && f.type==='Fruto') || (filter==='milk' && f.type==='Leite'));
-            container.innerHTML = filtered.map(f => {
-                const typeClass = f.type === 'Fruto' ? 'type-fruit' : f.type === 'Leite' ? 'type-milk' : 'type-sorbet';
-                const typeText = f.type === 'Fruto' ? 'Frucht' : f.type === 'Leite' ? 'Milch' : 'Sorbet';
-                return `<button class="quick-flavor-btn" onclick="document.getElementById('flavor-select').value='${f.name}'; showNotification('${f.name} ausgewählt','info')">
-                    <span class="item-type ${typeClass}">${typeText}</span>
-                    <span style="font-weight:bold">${f.name}</span>
-                </button>`;
-            }).join('');
-        }
+  let eingang =
+    bestand - val("vortag");
 
-        function createNewFlavor() {
-            const name = document.getElementById('new-flavor-name').value.trim();
-            const type = document.getElementById('new-flavor-type').value;
-            if (!name) { showNotification('Name eingeben', 'warning'); return; }
-            if (recipes.some(r => r.name.toLowerCase() === name.toLowerCase())) { showNotification('Existiert bereits', 'warning'); return; }
-            recipes.push({ name, type, category: 'personalisiert', description: '', recipe: '', createdAt: new Date().toISOString(), popularity: 0 });
-            saveRecipes();
-            document.getElementById('new-flavor-name').value = '';
-            loadQuickFlavors();
-            loadFlavorsList();
-            loadRecipes();
-            showNotification(`Sorte ${name} erstellt`, 'success');
-        }
+  document.getElementById("kasseEingang").innerText =
+    eingang.toFixed(2) + " €";
 
-        function loadFlavorsList() {
-            const container = document.getElementById('flavors-list');
-            const search = (document.getElementById('flavor-search')?.value || '').toLowerCase();
-            let filtered = recipes.filter(f => f.name.toLowerCase().includes(search));
-            container.innerHTML = filtered.map(f => {
-                const typeClass = f.type === 'Fruto' ? 'type-fruit' : f.type === 'Leite' ? 'type-milk' : 'type-sorbet';
-                const typeText = f.type === 'Fruto' ? 'Frucht' : f.type === 'Leite' ? 'Milch' : 'Sorbet';
-                return `<div class="production-item">
-                    <div class="item-info">
-                        <div class="item-name">${f.name}</div>
-                        <span class="item-type ${typeClass}">${typeText}</span>
-                        ${f.description ? `<div style="opacity:0.8; font-size:0.85rem;">${f.description}</div>` : ''}
-                    </div>
-                    <button class="btn-small btn-success" onclick="addToProductionFromList('${f.name}')"><i class="fas fa-plus"></i></button>
-                    <button class="btn-small btn-danger" onclick="deleteFlavor('${f.name}')"><i class="fas fa-trash"></i></button>
-                </div>`;
-            }).join('');
-            document.getElementById('total-sorten-count').textContent = filtered.length;
-        }
+  check();
+}
 
-        function deleteFlavor(name) {
-            if (!confirm(`Sorte "${name}" wirklich löschen?`)) return;
-            const index = recipes.findIndex(r => r.name === name);
-            if (index === -1) { showNotification('Nicht gefunden','error'); return; }
-            let used = false;
-            for (let d in production) if (production[d].some(p => p.name === name)) used = true;
-            if (used && !confirm('Wird in Produktionen verwendet. Trotzdem löschen?')) return;
-            recipes.splice(index,1);
-            saveRecipes();
-            loadQuickFlavors();
-            loadFlavorsList();
-            loadRecipes();
-            updateProductionList();
-            updateInfo();
-            showNotification(`Sorte ${name} gelöscht`,'success');
-        }
+function check(){
 
-        function searchFlavors() { loadFlavorsList(); }
-        function addToProductionFromList(name) {
-            document.getElementById('flavor-select').value = name;
-            showNotification(`${name} ausgewählt`, 'info');
-            showTab('production');
-        }
+  let total = val("t19") + val("t7");
 
-        // ==================== RECEITAS ====================
-        function loadRecipes() {
-            const container = document.getElementById('recipes-list');
-            const search = (document.getElementById('recipe-search')?.value || '').toLowerCase();
-            let filtered = recipes.filter(r => r.name.toLowerCase().includes(search) || (r.description||'').toLowerCase().includes(search));
-            container.innerHTML = filtered.map(r => {
-                const typeClass = r.type === 'Fruto' ? 'type-fruit' : r.type === 'Leite' ? 'type-milk' : 'type-sorbet';
-                return `<div class="recipe-card">
-                    <div class="recipe-name">${r.name}</div>
-                    <span class="item-type ${typeClass}">${r.type}</span>
-                    <p style="margin:10px 0;">${r.description || ''}</p>
-                    <div style="display:flex; gap:8px;">
-                        <button class="btn-small" onclick="openRecipeModal('edit',${recipes.indexOf(r)})"><i class="fas fa-edit"></i> Bearbeiten</button>
-                        <button class="btn-small btn-success" onclick="addToProductionFromList('${r.name}')"><i class="fas fa-plus"></i> Produktion</button>
-                        <button class="btn-small btn-danger" onclick="deleteFlavor('${r.name}')"><i class="fas fa-trash"></i></button>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-        function searchRecipes() { loadRecipes(); }
+  document.getElementById("checkTotal").innerText =
+    total.toFixed(2) + " €";
 
-        // ==================== MODAL RECEITA ====================
-        function openRecipeModal(mode, index=null) {
-            document.getElementById('recipe-modal').style.display = 'block';
-            document.getElementById('recipe-form').reset();
-            document.getElementById('recipe-id').value = '';
-            document.getElementById('ingredients-list').innerHTML = '';
-            if (mode === 'edit' && index !== null) {
-                const r = recipes[index];
-                document.getElementById('modal-title').textContent = 'Rezept bearbeiten';
-                document.getElementById('recipe-id').value = index;
-                document.getElementById('recipe-name').value = r.name;
-                document.getElementById('recipe-type').value = r.type;
-                document.getElementById('recipe-description').value = r.description || '';
-                document.getElementById('recipe-content').value = r.recipe || '';
-                document.getElementById('recipe-tags').value = r.tags ? r.tags.join(', ') : '';
-                if (r.ingredients) r.ingredients.forEach(i => addIngredientToUI(i.name, i.quantity, i.unit));
-            } else {
-                document.getElementById('modal-title').textContent = 'Neues Rezept';
-            }
-        }
-        function closeRecipeModal() { document.getElementById('recipe-modal').style.display = 'none'; }
+}
 
-        function addIngredient() {
-            const name = document.getElementById('ingredient-name').value.trim();
-            const qty = document.getElementById('ingredient-quantity').value.trim();
-            const unit = document.getElementById('ingredient-unit').value;
-            if (!name || !qty) { showNotification('Zutat und Menge angeben','warning'); return; }
-            addIngredientToUI(name, qty, unit);
-            document.getElementById('ingredient-name').value = '';
-            document.getElementById('ingredient-quantity').value = '';
-        }
-        function addIngredientToUI(name, qty, unit) {
-            const id = Date.now() + Math.random();
-            const div = document.createElement('div');
-            div.id = `ing-${id}`;
-            div.className = 'ingredient-item';
-            div.style = 'display:flex; gap:5px; margin-bottom:8px; align-items:center;';
-            div.innerHTML = `<input type="text" value="${name}" style="flex:2;">` +
-                `<input type="text" value="${qty}" style="flex:1;">` +
-                `<select style="flex:1;">${['g','kg','ml','L','Stück','TL','EL'].map(u=>`<option value="${u}" ${u===unit?'selected':''}>${u}</option>`).join('')}</select>` +
-                `<button type="button" class="btn-small" style="background:var(--danger);" onclick="document.getElementById('ing-${id}').remove()"><i class="fas fa-trash"></i></button>`;
-            document.getElementById('ingredients-list').appendChild(div);
-        }
+</script>
 
-        function saveRecipe(e) {
-            e.preventDefault();
-            const id = document.getElementById('recipe-id').value;
-            const name = document.getElementById('recipe-name').value.trim();
-            const type = document.getElementById('recipe-type').value;
-            const desc = document.getElementById('recipe-description').value.trim();
-            const content = document.getElementById('recipe-content').value.trim();
-            const tags = document.getElementById('recipe-tags').value.split(',').map(t=>t.trim()).filter(t=>t);
-            const ingredients = [];
-            document.querySelectorAll('.ingredient-item').forEach(el => {
-                const inputs = el.querySelectorAll('input,select');
-                if (inputs[0].value.trim() && inputs[1].value.trim()) {
-                    ingredients.push({ name: inputs[0].value.trim(), quantity: inputs[1].value.trim(), unit: inputs[2].value });
-                }
-            });
-            if (!name) { showNotification('Name erforderlich','warning'); return; }
-            const newRecipe = { name, type, description: desc, recipe: content, tags, ingredients: ingredients.length ? ingredients : undefined, updatedAt: new Date().toISOString() };
-            if (id === '') {
-                recipes.push({ ...newRecipe, category: 'personalisiert', createdAt: new Date().toISOString(), popularity: 0 });
-            } else {
-                recipes[id] = { ...recipes[id], ...newRecipe };
-            }
-            saveRecipes();
-            closeRecipeModal();
-            loadRecipes();
-            loadQuickFlavors();
-            loadFlavorsList();
-            showNotification('Rezept gespeichert', 'success');
-        }
-
-        // ==================== EXPORT / BACKUP / WHATSAPP ====================
-        function exportToExcel() {
-            const key = document.getElementById('production-date').value;
-            const items = production[key] || [];
-            if (!items.length) { showNotification('Keine Daten','warning'); return; }
-            let csv = 'Sorte;Eimer;Notizen;Typ\n';
-            items.forEach(i => {
-                const r = recipes.find(rr=>rr.name===i.name);
-                const typ = r ? (r.type==='Fruto'?'Frucht':r.type==='Leite'?'Milch':'Sorbet') : '';
-                csv += `"${i.name}";${i.eimer};"${i.notes||''}";"${typ}"\n`;
-            });
-            const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8;'});
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `produktion_${key}.csv`;
-            link.click();
-            showNotification('Excel (CSV) exportiert','success');
-        }
-
-        function sendToWhatsApp() {
-            const key = document.getElementById('production-date').value;
-            const items = production[key] || [];
-            if (!items.length) { showNotification('Keine Produktion','warning'); return; }
-            const total = items.reduce((s,i)=>s+i.eimer,0);
-            let msg = `*Gelateria Produktion ${key}*\n`;
-            items.forEach(i => msg += `• ${i.name}: ${i.eimer} Eimer\n`);
-            msg += `\nGesamt: ${total} Eimer (${items.length} Sorten)`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
-        }
-
-        function printProduction() {
-            const key = document.getElementById('production-date').value;
-            const items = production[key] || [];
-            if (!items.length) { showNotification('Nichts zu drucken','warning'); return; }
-            const win = window.open('','_blank');
-            win.document.write(`
-                <html><head><title>Produktion ${key}</title><style>body{font-family:sans-serif;padding:20px;}</style></head>
-                <body><h1>Produktion ${key}</h1><table border=1><tr><th>Sorte</th><th>Eimer</th><th>Notiz</th></tr>
-                ${items.map(i=>`<tr><td>${i.name}</td><td>${i.eimer}</td><td>${i.notes||''}</td></tr>`).join('')}
-                </table><button onclick="window.print()">Drucken</button></body></html>
-            `);
-            win.document.close();
-        }
-
-        function backupData() {
-            const data = { recipes, production, eimerCapacity, date: new Date().toISOString() };
-            const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = `gelateria_backup_${new Date().toISOString().slice(0,10)}.json`;
-            link.click();
-            showNotification('Backup erstellt','success');
-        }
-
-        function restoreBackup() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            input.onchange = e => {
-                const file = e.target.files[0];
-                const reader = new FileReader();
-                reader.onload = ev => {
-                    try {
-                        const data = JSON.parse(ev.target.result);
-                        if (confirm('Daten überschreiben?')) {
-                            recipes = data.recipes || classicFlavors;
-                            production = data.production || {};
-                            eimerCapacity = data.eimerCapacity || 5;
-                            saveRecipes(); saveProduction(); saveEimerCapacity();
-                            document.getElementById('eimer-capacity').value = eimerCapacity;
-                            loadQuickFlavors(); loadRecipes(); loadFlavorsList(); updateProductionSummary(); updateInfo();
-                            showNotification('Wiederhergestellt','success');
-                        }
-                    } catch { showNotification('Fehlerhafte Datei','error'); }
-                };
-                reader.readAsText(file);
-            };
-            input.click();
-        }
-
-        function clearAllData() {
-            if (confirm('ALLE DATEN LÖSCHEN?') && confirm('WIRKLICH?')) {
-                recipes = [...classicFlavors];
-                production = {};
-                eimerCapacity = 5;
-                saveRecipes(); saveProduction(); saveEimerCapacity();
-                document.getElementById('eimer-capacity').value = 5;
-                loadQuickFlavors(); loadRecipes(); loadFlavorsList(); updateProductionList(); updateProductionSummary(); updateInfo();
-                showNotification('Alles zurückgesetzt','success');
-            }
-        }
-
-        function updateInfo() {
-            document.getElementById('info-flavors').textContent = recipes.length;
-            document.getElementById('info-recipes').textContent = recipes.length;
-            document.getElementById('info-production-days').textContent = Object.keys(production).length;
-        }
-
-        function showNotification(msg, type) {
-            const notif = document.createElement('div');
-            notif.className = `notification ${type}`;
-            notif.innerHTML = `<i class="fas fa-${type==='success'?'check-circle':type==='warning'?'exclamation-triangle':type==='error'?'times-circle':'info-circle'}"></i><span>${msg}</span>`;
-            document.body.appendChild(notif);
-            setTimeout(() => { notif.style.opacity = '0'; setTimeout(() => notif.remove(), 300); }, 2800);
-        }
-
-        // ==================== TOUCH / PREVENT ZOOM ====================
-        document.addEventListener('dblclick', e => e.preventDefault());
-    </script>
 </body>
 </html>
