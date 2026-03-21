@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kassenbericht 305 – Null Start</title>
+<title>Kassenbericht 305 – Tagesabrechnung</title>
 <style>
   * { box-sizing: border-box; font-family: Arial, sans-serif; }
   body { background: #e9e9e9; margin: 20px; }
-  .toolbar { max-width: 1200px; margin: 0 auto 12px auto; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-  .toolbar button, .toolbar input { height: 36px; padding: 0 12px; border: 1px solid #aaa; border-radius: 6px; background: white; font-size: 13px; cursor: pointer; }
+  .toolbar { max-width: 1200px; margin: 0 auto 12px auto; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; justify-content: flex-end; }
+  .toolbar button { height: 36px; padding: 0 16px; border: 1px solid #aaa; border-radius: 6px; background: white; font-size: 13px; cursor: pointer; }
   .toolbar button:hover { background: #f0f0f0; }
   .sheet-wrap { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); overflow-x: auto; }
   table { border-collapse: collapse; width: 100%; min-width: 1000px; }
@@ -28,13 +28,7 @@
 <body>
 
 <div class="toolbar">
-  <button onclick="saveData()">💾 Speichern</button>
-  <button onclick="loadData()">📂 Laden</button>
-  <button onclick="newDay()">🆕 Neuer Tag</button>
-  <button onclick="abschliessen()" style="background:#4caf50; color:white;">✅ Tag abschließen → Vortag setzen</button>
   <button onclick="window.print()">🖨️ Drucken</button>
-  <span style="margin-left:auto;">Datum:</span>
-  <input type="date" id="saveDate" />
 </div>
 
 <div class="sheet-wrap">
@@ -102,19 +96,28 @@
 
     <!-- Unterschrift -->
     <tr><td colspan="4"></td><td colspan="2"></td><td colspan="2" class="bold center">Unterschrift</td><td class="signature"></td><td></td></tr>
-  </table>
+   </table>
   <div style="margin-top:15px; padding:8px; background:#f5f5f5; font-size:11px;">
     ✅ Formel: <strong>Tageslösung = TE19 + TE7 + Gutschein + Trinkgeld</strong><br>
     🧮 <strong>Kassenbestand heute = Vortag + Tageslösung – Ausgaben</strong><br>
-    🔄 Nach "Tag abschließen" wird der heutige Bestand zum neuen Vortag.<br>
-    📌 Die Summe <strong>Vortag + Tageslösung</strong> wird in der letzten Notiz-Zelle angezeigt.
+    📌 Die Summe <strong>Vortag + Tageslösung</strong> wird in der letzten Notiz-Zelle angezeigt.<br>
+    ℹ️ Alle Beträge können direkt eingetragen werden – die Berechnungen erfolgen automatisch.
   </div>
 </div>
 
 <script>
-  function parseEuro(val) { if (!val) return 0; let s = String(val).replace(/\./g,'').replace(',','.').replace(/[^0-9.-]/g,''); let n = parseFloat(s); return isNaN(n)?0:n; }
-  function formatEuro(v) { return v.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
+  // Hilfsfunktionen für Währungsformatierung
+  function parseEuro(val) { 
+    if (!val) return 0; 
+    let s = String(val).replace(/\./g,'').replace(',','.').replace(/[^0-9.-]/g,''); 
+    let n = parseFloat(s); 
+    return isNaN(n)?0:n; 
+  }
+  function formatEuro(v) { 
+    return v.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; 
+  }
 
+  // Summe aller Ausgaben (alle Felder mit Klasse 'expense')
   function sumExpenses() {
     let sum = 0;
     document.querySelectorAll('.expense').forEach(el => sum += parseEuro(el.value));
@@ -122,12 +125,14 @@
     return sum;
   }
 
+  // Summe aller Einnahmen (alle Felder mit Klasse 'income')
   function sumIncome() {
     let sum = 0;
     document.querySelectorAll('.income').forEach(el => sum += parseEuro(el.value));
     return sum;
   }
 
+  // Zentrale Neuberechnung aller abhängigen Werte
   function recalc() {
     let vortag = parseEuro(document.getElementById('vortag').value);
     let einnahmen = sumIncome();
@@ -136,6 +141,7 @@
     let zwischensumme = vortag + einnahmen;
     let kassenbestand = zwischensumme - ausgaben;
 
+    // Anzeigen der Ergebnisse
     document.getElementById('tageslosung').innerText = formatEuro(einnahmen);
     document.getElementById('summeAusgaben').innerText = formatEuro(ausgaben);
     document.getElementById('abzugAusgaben').innerText = formatEuro(ausgaben);
@@ -144,72 +150,24 @@
     document.getElementById('vortagAnzeige').innerText = formatEuro(vortag);
     document.getElementById('summeVortagTageslosungNotiz').innerText = formatEuro(zwischensumme);
 
+    // Durchschnitt pro Kunde
     let kundenzahl = parseEuro(document.getElementById('kundenzahl').value);
-    let betragProKunde = (kundenzahl>0) ? (einnahmen / kundenzahl) : 0;
+    let betragProKunde = (kundenzahl > 0) ? (einnahmen / kundenzahl) : 0;
     document.getElementById('betragProKunde').innerText = formatEuro(betragProKunde);
   }
 
-  function abschliessen() {
-    let neuerVortag = parseEuro(document.getElementById('kassenbestandHidden').value);
-    if (confirm(`Tag abschließen?\nKassenbestand heute: ${formatEuro(neuerVortag)}\nDieser wird als Vortag für morgen übernommen.`)) {
-      document.getElementById('vortag').value = neuerVortag.toFixed(2).replace('.', ',');
-      let heute = new Date();
-      let morgen = new Date(heute); morgen.setDate(heute.getDate()+1);
-      let dd = String(morgen.getDate()).padStart(2,'0');
-      let mm = String(morgen.getMonth()+1).padStart(2,'0');
-      let yyyy = morgen.getFullYear();
-      if (confirm(`Datum auf morgen (${dd}.${mm}.${yyyy}) setzen?`)) {
-        document.getElementById('datum').value = `${dd}.${mm}.${yyyy}`;
-      }
-      if (confirm('Ausgaben und Einnahmen für neuen Tag zurücksetzen?')) {
-        document.querySelectorAll('.expense, .income').forEach(el => el.value = '');
-        document.getElementById('kundenzahl').value = '';
-      }
-      recalc();
-      alert(`✅ Fertig! Neuer Vortag: ${formatEuro(neuerVortag)}`);
-    }
-  }
-
-  function saveData() {
-    let d = document.getElementById('saveDate').value;
-    if (!d) { alert('Bitte ein Datum zum Speichern wählen.'); return; }
-    let data = {};
-    document.querySelectorAll('input').forEach(el => { if(el.id) data[el.id] = el.value; });
-    localStorage.setItem('kassenbericht_305_' + d, JSON.stringify(data));
-    alert('Gespeichert für ' + d);
-  }
-  function loadData() {
-    let d = document.getElementById('saveDate').value;
-    if (!d) { alert('Bitte ein Datum zum Laden wählen.'); return; }
-    let raw = localStorage.getItem('kassenbericht_305_' + d);
-    if (!raw) { alert('Kein Eintrag für ' + d); return; }
-    let data = JSON.parse(raw);
-    for (let id in data) {
-      let el = document.getElementById(id);
-      if (el) el.value = data[id];
-    }
-    recalc();
-    alert('Geladen: ' + d);
-  }
-  function newDay() {
-    if (!confirm('Neuen leeren Kassenbericht starten?')) return;
-    document.querySelectorAll('input').forEach(el => { if(el.id !== 'vortag') el.value = ''; });
-    recalc();
-    let heute = new Date();
-    let dd = String(heute.getDate()).padStart(2,'0');
-    let mm = String(heute.getMonth()+1).padStart(2,'0');
-    let yyyy = heute.getFullYear();
-    document.getElementById('datum').value = `${dd}.${mm}.${yyyy}`;
-  }
-
+  // Event-Listener für alle Eingabefelder – bei jeder Änderung wird neu berechnet
   document.querySelectorAll('input').forEach(el => el.addEventListener('input', recalc));
-  recalc();
 
+  // Initiales Setzen des aktuellen Datums
   let heute = new Date();
   let dd = String(heute.getDate()).padStart(2,'0');
   let mm = String(heute.getMonth()+1).padStart(2,'0');
   let yyyy = heute.getFullYear();
   document.getElementById('datum').value = `${dd}.${mm}.${yyyy}`;
+
+  // Erste Berechnung beim Laden
+  recalc();
 </script>
 </body>
 </html>
