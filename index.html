@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kassenbericht 305 – einfach & korrekt</title>
+<title>Kassenbericht 305 – Null Start</title>
 <style>
   * { box-sizing: border-box; font-family: Arial, sans-serif; }
   body { background: #e9e9e9; margin: 20px; }
@@ -38,71 +38,76 @@
 </div>
 
 <div class="sheet-wrap">
-  <table>
+  <table id="kassenTable">
     <colgroup><col style="width:240px"><col style="width:80px"><col style="width:80px"><col style="width:80px"><col style="width:80px"><col style="width:80px"><col style="width:100px"><col style="width:120px"><col style="width:140px"><col style="width:120px"></colgroup>
 
     <!-- Kopf -->
-    <tr><td class="bold" style="font-size:16px">Kassenbericht 305</td><td class="center">Nr.</td><td colspan="2"></td><td></td><td></td><td colspan="2" class="right bold">Datum:</td><td><input class="cell left" id="datum" value="20.03.2026"></td><td class="center small">Buchungs-<br>vermerke</td></tr>
+    <tr><td class="bold" style="font-size:16px">Kassenbericht 305</td><td class="center">Nr.</td><td colspan="2"></td><td></td><td></td><td colspan="2" class="right bold">Datum:</td><td><input class="cell left" id="datum" value=""></td><td class="center small">Buchungs-<br>vermerke</td></tr>
 
     <!-- Kassenbestand heute (automatisch) -->
     <tr style="background:#e8f5e9;"><td colspan="6" class="bold">🏦 Kassenbestand bei Geschäftsschluß</td><td colspan="3"></td><td class="green right"><span id="kassenbestandHeute">0,00 €</span></td></tr>
     <input type="hidden" id="kassenbestandHidden" value="0">
 
-    <!-- NEUE ZEILE: Vortag + Tageslösung auf der rechten Seite -->
-    <tr style="background:#e3f2fd;"><td colspan="9" class="bold blue">📊 Summe Vortag + Tageslösung (ontem + heute)</td><td class="blue right"><span id="summeVortagTageslosung">0,00 €</span></td></tr>
-
     <!-- Ausgaben -->
     <tr><td colspan="6" class="bold">📤 Ausgaben im Laufe des Tages</td><td class="bold center">Vorsteuer</td><td colspan="2" class="bold center">Betrag (Brutto)</td><td class="bold center">Notiz</td></tr>
 
-    <!-- Wareneinkäufe (5 Zeilen) -->
-    <tr><td class="bold">Wareneinkäufe und Warennebenkosten</td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w1_tax"></td><td colspan="2"><input class="cell expense" id="w1_amt" value="190,93"></td><td><input class="cell left" id="w1_note"></td></tr>
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w2_tax"></td><td colspan="2"><input class="cell expense" id="w2_amt" value="0,00"></td><td><input class="cell left" id="w2_note"></td></tr>
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w3_tax"></td><td colspan="2"><input class="cell expense" id="w3_amt" value="0,00"></td><td><input class="cell left" id="w3_note"></td></tr>
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w4_tax"></td><td colspan="2"><input class="cell expense" id="w4_amt" value="0,00"></td><td><input class="cell left" id="w4_note"></td></tr>
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w5_tax"></td><td colspan="2"><input class="cell expense" id="w5_amt" value="0,00"></td><td><input class="cell left" id="w5_note"></td></tr>
+    <!-- Wareneinkäufe 5 Zeilen -->
+    <tr><td class="bold">Wareneinkäufe und Warennebenkosten</td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w1_tax"></td><td colspan="2"><input class="cell expense" id="w1_amt"></td><td><input class="cell left" id="w1_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w2_tax"></td><td colspan="2"><input class="cell expense" id="w2_amt"></td><td><input class="cell left" id="w2_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w3_tax"></td><td colspan="2"><input class="cell expense" id="w3_amt"></td><td><input class="cell left" id="w3_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w4_tax"></td><td colspan="2"><input class="cell expense" id="w4_amt"></td><td><input class="cell left" id="w4_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="w5_tax"></td><td colspan="2"><input class="cell expense" id="w5_amt"></td><td><input class="cell left" id="w5_note"></td></tr>
 
-    <!-- Geschäftsausgaben (3 Zeilen) -->
-    <tr><td class="bold">Geschäftsausgaben</td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="g1_tax"></td><td colspan="2"><input class="cell expense" id="g1_amt" value="57,40"></td><td><input class="cell left" id="g1_note"></td></tr>
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="g2_tax"></td><td colspan="2"><input class="cell expense" id="g2_amt" value="0,00"></td><td><input class="cell left" id="g2_note"></td></tr>
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="g3_tax"></td><td colspan="2"><input class="cell expense" id="g3_amt" value="0,00"></td><td><input class="cell left" id="g3_note"></td></tr>
+    <!-- Geschäftsausgaben 3 Zeilen -->
+    <tr><td class="bold">Geschäftsausgaben</td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="g1_tax"></td><td colspan="2"><input class="cell expense" id="g1_amt"></td><td><input class="cell left" id="g1_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="g2_tax"></td><td colspan="2"><input class="cell expense" id="g2_amt"></td><td><input class="cell left" id="g2_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="g3_tax"></td><td colspan="2"><input class="cell expense" id="g3_amt"></td><td><input class="cell left" id="g3_note"></td></tr>
 
     <!-- Privatentnahmen -->
-    <tr><td class="bold">Privatentnahmen</td><td></td><td></td><td></td><td></td><td></td><td class="center">*****</td><td colspan="2"><input class="cell expense" id="privat" value="0,00"></td><td><input class="cell left" id="privatNote"></td></tr>
+    <tr><td class="bold">Privatentnahmen</td><td></td><td></td><td></td><td></td><td></td><td class="center">*****</td><td colspan="2"><input class="cell expense" id="privat"></td><td><input class="cell left" id="privatNote"></td></tr>
 
-    <!-- Sonstige Ausgaben (3 Zeilen) -->
-    <tr><td class="bold">Sonstige Ausgaben</td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="s1_tax"></td><td colspan="2"><input class="cell expense" id="s1_amt" value="226,30"></td><td><input class="cell left" id="s1_note"></td></tr>
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="s2_tax"></td><td colspan="2"><input class="cell expense" id="s2_amt" value="0,00"></td><td><input class="cell left" id="s2_note"></td></tr>
-    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="s3_tax"></td><td colspan="2"><input class="cell expense" id="s3_amt" value="0,00"></td><td><input class="cell left" id="s3_note"></td></tr>
+    <!-- Sonstige Ausgaben 3 Zeilen -->
+    <tr><td class="bold">Sonstige Ausgaben</td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="s1_tax"></td><td colspan="2"><input class="cell expense" id="s1_amt"></td><td><input class="cell left" id="s1_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="s2_tax"></td><td colspan="2"><input class="cell expense" id="s2_amt"></td><td><input class="cell left" id="s2_note"></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td><td></td><td><input class="cell" id="s3_tax"></td><td colspan="2"><input class="cell expense" id="s3_amt"></td><td><input class="cell left" id="s3_note"></td></tr>
 
     <!-- Summe Ausgaben -->
     <tr><td colspan="7"></td><td class="bold center">Summe Ausgaben</td><td class="red right"><span id="summeAusgaben">0,00 €</span></td><td></td></tr>
 
     <!-- Einnahmen -->
     <tr style="background:#fff9e6;"><td colspan="6" class="bold green">💰 Einnahmen / Umsatz</td><td class="bold center">Steuer</td><td colspan="2" class="bold center">Betrag</td><td class="bold center">Notiz</td></tr>
-    <tr><td class="bold">TE 19%</td><td></td><td></td><td></td><td></td><td></td><td class="center">19%</td><td colspan="2"><input class="cell income" id="te19" value="1847,50"></td><td><input class="cell left" id="te19Note"></td></tr>
-    <tr><td class="bold">TE 7%</td><td></td><td></td><td></td><td></td><td></td><td class="center">7%</td><td colspan="2"><input class="cell income" id="te7" value="177,60"></td><td><input class="cell left" id="te7Note"></td></tr>
-    <tr><td class="bold">Sonstige Einnahmen</td><td></td><td></td><td></td><td></td><td></td><td></td><td colspan="2"><input class="cell income" id="sonstige" value="534,60"></td><td><input class="cell left" id="sonstigeNote"></td></tr>
-    <tr><td class="bold">Trinkgeld / freiBetrag</td><td></td><td></td><td></td><td></td><td></td><td></td><td colspan="2"><input class="cell income" id="trinkgeld" value="66,40"></td><td><input class="cell left" id="trinkgeldNote"></td></tr>
+    <tr><td class="bold">TE 19%</td><td></td><td></td><td></td><td></td><td></td><td class="center">19%</td><td colspan="2"><input class="cell income" id="te19"></td><td><input class="cell left" id="te19Note"></td></tr>
+    <tr><td class="bold">TE 7%</td><td></td><td></td><td></td><td></td><td></td><td class="center">7%</td><td colspan="2"><input class="cell income" id="te7"></td><td><input class="cell left" id="te7Note"></td></tr>
+    <tr><td class="bold">Gutschein</td><td></td><td></td><td></td><td></td><td></td><td></td><td colspan="2"><input class="cell income" id="gutschein"></td><td><input class="cell left" id="gutscheinNote"></td></tr>
+    <tr><td class="bold">Trinkgeld / freiBetrag</td><td></td><td></td><td></td><td></td><td></td><td></td><td colspan="2"><input class="cell income" id="trinkgeld"></td><td><input class="cell left" id="trinkgeldNote"></td></tr>
 
     <!-- Tageslösung -->
     <tr><td colspan="7"></td><td class="bold center">Tageslösung (Summe)</td><td class="green right"><span id="tageslosung">0,00 €</span></td><td></td></tr>
 
     <!-- Vortag -->
-    <tr><td colspan="6" class="bold">📅 Kassenbestand des Vortages</td><td colspan="3"><input class="cell" id="vortag" value="2000,00" style="background:#fff3e0;"></td><td class="right"><span id="vortagAnzeige">2.000,00 €</span></td></tr>
+    <tr><td colspan="6" class="bold">📅 Kassenbestand des Vortages</td><td colspan="3"><input class="cell" id="vortag" style="background:#fff3e0;"></td><td class="right"><span id="vortagAnzeige">0,00 €</span></td></tr>
 
-    <!-- Abzug Ausgaben = Kassenbestand -->
+    <!-- Abzug Ausgaben -->
     <tr><td colspan="6" class="bold red">➖ Abzüglich aller Ausgaben</td><td colspan="2" class="bold center">- Ausgaben</td><td class="red right"><span id="abzugAusgaben">0,00 €</span></td><td></td></tr>
 
-    <!-- Kundenzahl & Betrag/Kunde -->
-    <tr><td colspan="4" class="bold">👥 Kundenzahl heute</td><td colspan="2"><input class="cell" id="kundenzahl" value="30"></td><td colspan="2" class="bold center">Ø Betrag/Kunde</td><td class="right"><span id="betragProKunde">0,00 €</span></td><td></td></tr>
+    <!-- Kundenzahl -->
+    <tr><td colspan="4" class="bold">👥 Kundenzahl heute</td><td colspan="2"><input class="cell" id="kundenzahl"></td><td colspan="2" class="bold center">Ø Betrag/Kunde</td><td class="right"><span id="betragProKunde">0,00 €</span></td><td></td></tr>
+
+    <!-- NEUE ZEILE: Vortag + Tageslösung in der Notiz-Spalte -->
+    <tr style="background:#e3f2fd;">
+      <td colspan="8" class="bold blue">📌 Notiz: Summe Einnahmen/Umsatz + Kassenbestand des Vortages</td>
+      <td class="blue right"><span id="summeVortagTageslosungNotiz">0,00 €</span></td>
+      <td></td>
+    </tr>
 
     <!-- Unterschrift -->
     <tr><td colspan="4"></td><td colspan="2"></td><td colspan="2" class="bold center">Unterschrift</td><td class="signature"></td><td></td></tr>
   </table>
   <div style="margin-top:15px; padding:8px; background:#f5f5f5; font-size:11px;">
-    ✅ Formel: <strong>Tageslösung = TE19 + TE7 + sonstige Einnahmen + Trinkgeld</strong><br>
+    ✅ Formel: <strong>Tageslösung = TE19 + TE7 + Gutschein + Trinkgeld</strong><br>
     🧮 <strong>Kassenbestand heute = Vortag + Tageslösung – Ausgaben</strong><br>
-    🔄 Nach "Tag abschließen" wird der heutige Bestand zum neuen Vortag.
+    🔄 Nach "Tag abschließen" wird der heutige Bestand zum neuen Vortag.<br>
+    📌 Die Summe <strong>Vortag + Tageslösung</strong> wird in der letzten Notiz-Zelle angezeigt.
   </div>
 </div>
 
@@ -110,7 +115,6 @@
   function parseEuro(val) { if (!val) return 0; let s = String(val).replace(/\./g,'').replace(',','.').replace(/[^0-9.-]/g,''); let n = parseFloat(s); return isNaN(n)?0:n; }
   function formatEuro(v) { return v.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'; }
 
-  // Alle Ausgaben (alle .expense Felder + Privatentnahmen)
   function sumExpenses() {
     let sum = 0;
     document.querySelectorAll('.expense').forEach(el => sum += parseEuro(el.value));
@@ -118,7 +122,6 @@
     return sum;
   }
 
-  // Alle Einnahmen (alle .income Felder)
   function sumIncome() {
     let sum = 0;
     document.querySelectorAll('.income').forEach(el => sum += parseEuro(el.value));
@@ -127,10 +130,10 @@
 
   function recalc() {
     let vortag = parseEuro(document.getElementById('vortag').value);
-    let einnahmen = sumIncome();      // = Tageslösung
+    let einnahmen = sumIncome();
     let ausgaben = sumExpenses();
 
-    let zwischensumme = vortag + einnahmen;      // Vortag + Tageslösung
+    let zwischensumme = vortag + einnahmen;
     let kassenbestand = zwischensumme - ausgaben;
 
     document.getElementById('tageslosung').innerText = formatEuro(einnahmen);
@@ -139,19 +142,17 @@
     document.getElementById('kassenbestandHeute').innerText = formatEuro(kassenbestand);
     document.getElementById('kassenbestandHidden').value = kassenbestand;
     document.getElementById('vortagAnzeige').innerText = formatEuro(vortag);
-    document.getElementById('summeVortagTageslosung').innerText = formatEuro(zwischensumme);  // rechte Seite!
+    document.getElementById('summeVortagTageslosungNotiz').innerText = formatEuro(zwischensumme);
 
     let kundenzahl = parseEuro(document.getElementById('kundenzahl').value);
     let betragProKunde = (kundenzahl>0) ? (einnahmen / kundenzahl) : 0;
     document.getElementById('betragProKunde').innerText = formatEuro(betragProKunde);
   }
 
-  // Tag abschließen: heutigen Bestand als neuen Vortag speichern
   function abschliessen() {
     let neuerVortag = parseEuro(document.getElementById('kassenbestandHidden').value);
     if (confirm(`Tag abschließen?\nKassenbestand heute: ${formatEuro(neuerVortag)}\nDieser wird als Vortag für morgen übernommen.`)) {
       document.getElementById('vortag').value = neuerVortag.toFixed(2).replace('.', ',');
-      // Datum auf morgen setzen (optional)
       let heute = new Date();
       let morgen = new Date(heute); morgen.setDate(heute.getDate()+1);
       let dd = String(morgen.getDate()).padStart(2,'0');
@@ -169,7 +170,6 @@
     }
   }
 
-  // Speichern / Laden
   function saveData() {
     let d = document.getElementById('saveDate').value;
     if (!d) { alert('Bitte ein Datum zum Speichern wählen.'); return; }
@@ -202,16 +202,14 @@
     document.getElementById('datum').value = `${dd}.${mm}.${yyyy}`;
   }
 
-  // Events
   document.querySelectorAll('input').forEach(el => el.addEventListener('input', recalc));
   recalc();
 
-  // Datum initial setzen
   let heute = new Date();
   let dd = String(heute.getDate()).padStart(2,'0');
   let mm = String(heute.getMonth()+1).padStart(2,'0');
   let yyyy = heute.getFullYear();
-  if (document.getElementById('datum').value === '20.03.2026') document.getElementById('datum').value = `${dd}.${mm}.${yyyy}`;
+  document.getElementById('datum').value = `${dd}.${mm}.${yyyy}`;
 </script>
 </body>
 </html>
