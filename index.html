@@ -140,13 +140,14 @@ function setWeek(){
  document.getElementById('dateTo').value=fmtDE(last);
  loadPreviousSaldo();
 }
-function getCurrentDate(){return parseDE(document.getElementById('dateFrom').value)||new Date()}
+function getCurrentDate(){return new Date()}
 function loadPreviousSaldo(){
  const d=getCurrentDate();
- const prev=new Date(d);prev.setDate(d.getDate()-1);
- const sameWeek=isoKey(mondayOf(prev))===isoKey(mondayOf(d));
  const saved=JSON.parse(localStorage.getItem('sanremo_week_saldo')||'{}');
- document.getElementById('prevTotal').value=sameWeek && saved[isoKey(prev)]!==undefined ? String(saved[isoKey(prev)]).replace('.',',') : '0,00';
+ const todayKey=isoKey(d);
+ const keys=Object.keys(saved).filter(k=>k<todayKey).sort();
+ const lastKey=keys.length ? keys[keys.length-1] : null;
+ document.getElementById('prevTotal').value=lastKey ? String(saved[lastKey]).replace('.',',') : '0,00';
  calc();
 }
 function saveDay(){
