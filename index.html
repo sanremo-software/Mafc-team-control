@@ -158,7 +158,17 @@ function saveDay(){
  localStorage.setItem('sanremo_week_saldo',JSON.stringify(saved));
  alert('Saldo do dia guardado: '+euro(val));
 }
-function clearAll(){document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');calc()}
+function clearAll(){
+ document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');
+ ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{
+   const el=document.getElementById(id);
+   if(el)el.value='';
+ });
+ document.querySelectorAll('.notes input').forEach(i=>i.value='');
+ setWeek();
+ loadPreviousSaldo();
+ calc();
+}
 render();
 </script>
 </body>
