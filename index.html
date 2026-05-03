@@ -68,6 +68,8 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
       <tr><td><input id="buyDesc1" placeholder="z. B. Milch bar bezahlt"></td><td><input id="buy1" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td><input id="buyDesc2" placeholder="z. B. Obst / Material"></td><td><input id="buy2" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td><input id="buyDesc3" placeholder="Sonstiges"></td><td><input id="buy3" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><input id="buyDesc4" placeholder="Sonstiges"></td><td><input id="buy4" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><input id="buyDesc5" placeholder="Sonstiges"></td><td><input id="buy5" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td></td><td class="label">Summe Ausgaben</td><td class="yellow" id="buyTotalCell">- €</td></tr>
       <tr><td></td><td class="label">Endbestand nach Abzug</td><td class="green" id="finalTotalCell">- €</td></tr>
     </table>
@@ -110,7 +112,7 @@ function calc(){
  coins.forEach((v,i)=>{const sum=v*getQty('c'+i);ct+=sum;document.getElementById('t_c'+i).textContent=euro(sum)});
  const grand=nt+ct;
  const prev=moneyInput('prevTotal');
- const buyTotal=moneyInput('buy1')+moneyInput('buy2')+moneyInput('buy3');
+ const buyTotal=moneyInput('buy1')+moneyInput('buy2')+moneyInput('buy3')+moneyInput('buy4')+moneyInput('buy5');
  const finalTotal=grand+prev-buyTotal;
  document.getElementById('notesTotal').textContent=euro(nt);
  document.getElementById('notesTotal_extra').textContent=euro(nt);
