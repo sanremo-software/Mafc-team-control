@@ -60,23 +60,19 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
     </table>
 
     <table class="summary">
-      <tr><td class="label">Saldo anterior automatisch</td><td><input id="prevTotal" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td><button type="button" onclick="loadPreviousSaldo()">laden</button></td></tr>
+      <tr><td class="label">Automatischer Vortagssaldo</td><td><input id="prevTotal" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td><button type="button" onclick="loadPreviousSaldo()">Saldo automatisch</button></td></tr>
       <tr><td style="width:50%"></td><td class="label" style="width:25%">Total Bargeld</td><td class="yellow" id="grandTotalCell">- €</td></tr>
       <tr><td colspan="3" style="height:8px;border:0"></td></tr>
       <tr><td class="label" colspan="3">Einkäufe / Ausgaben bar</td></tr>
       <tr><td>Beschreibung / Beleg</td><td>Betrag</td><td></td></tr>
-      <tr><td><select id="buyDesc1"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy1" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc2"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy2" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc3"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy3" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc4"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy4" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc5"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy5" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc1"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy1" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc2"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy2" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc3"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy3" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc4"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy4" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc5"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy5" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td></td><td class="label">Summe Ausgaben</td><td class="yellow" id="buyTotalCell">- €</td></tr>
       <tr><td></td><td class="label">Endbestand nach Abzug</td><td class="green" id="finalTotalCell">- €</td></tr>
     </table>
-
-    Unterschrift Mitarbeiter</div>
-      <div><div class="sign"></div>Kontrolle / Buchhaltung</div>
-    </div>
   </section>
 </div>
 
@@ -125,14 +121,15 @@ function parseDE(s){
  return new Date(Number(m[3]),Number(m[2])-1,Number(m[1]));
 }
 function fmtDE(d){return d.toLocaleDateString('de-DE')}
+function fmtISODate(d){return d.toISOString().slice(0,10)}
 function isoKey(d){return d.toISOString().slice(0,10)}
 function mondayOf(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
 function setWeek(){
  const d=new Date();
  const first=mondayOf(d);
  const last=new Date(first);last.setDate(first.getDate()+6);
- document.getElementById('dateFrom').value=fmtDE(first);
- document.getElementById('dateTo').value=fmtDE(last);
+ document.getElementById('dateFrom').value=fmtISODate(first);
+ document.getElementById('dateTo').value=fmtISODate(last);
  loadPreviousSaldo();
 }
 function getCurrentDate(){return new Date()}
