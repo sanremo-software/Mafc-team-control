@@ -10,7 +10,7 @@ body{margin:0;background:#e5e5e5;font-family:Arial,Helvetica,sans-serif;color:#0
 .app{max-width:900px;margin:0 auto;padding:16px}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;margin:0 auto 14px auto;padding:10px;background:#f3f4f6;border:1px solid #cfcfcf;border-radius:12px;max-width:210mm}
 button{border:0;border-radius:7px;background:#111;color:#fff;font-weight:700;padding:9px 12px;cursor:pointer}
-button.gray{background:#555}.greenBtn{background:#166534}.red{background:#991b1b}
+button.gray{background:#555}.greenBtn{background:#166534}.red{background:#991b1b}.blueBtn{background:#1d4ed8}
 .page{width:210mm;min-height:297mm;background:#fff;margin:0 auto 18px;padding:13mm 14mm;box-shadow:0 2px 12px rgba(0,0,0,.22)}
 h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
 .date-row{display:grid;grid-template-columns:1fr 90px 1fr;gap:0;margin-bottom:10px}
@@ -38,7 +38,7 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
     <button onclick="window.print()">Drucken / PDF</button>
     <button class="gray" onclick="setWeek()">Woche automatisch</button>
     <button class="greenBtn" onclick="saveDay()">Tag speichern</button>
-    <button class="gray" onclick="newDay()">Neuer Tag</button>
+    <button class="blueBtn" onclick="newDay()">Neuer Tag</button>
     <button class="red" onclick="clearAll()">Leeren</button>
   </div>
 
@@ -85,19 +85,15 @@ function euro(v){
   const num=Number(v)||0;
   return Math.abs(num)<0.005 ? '- €' : num.toFixed(2).replace('.',',')+' €';
 }
-
 function qtyInput(value,idx){
   return `<div class="qty-wrap"><button type="button" onclick="changeQty('${idx}',-1)">−</button><input id="q_${idx}" value="0" inputmode="numeric" oninput="calc()"><button type="button" onclick="changeQty('${idx}',1)">+</button></div>`;
 }
-
 function makeRow(value,idx){
   return `<tr><td class="value">${value.toFixed(2).replace('.',',')} €</td><td class="qty">${qtyInput(value,idx)}</td><td class="total" id="t_${idx}">- €</td><td class="extra"></td></tr>`;
 }
-
 function totalRow(id,label){
   return `<tr><td></td><td class="total-label">${label}</td><td class="total redcell" id="${id}">- €</td><td class="extra" id="${id}_extra">- €</td></tr>`;
 }
-
 function render(){
   let html='';
   notes.forEach((v,i)=>html+=makeRow(v,'n'+i));
@@ -108,44 +104,20 @@ function render(){
   document.getElementById('cashBody').innerHTML=html;
   calc();
 }
-
-function getQty(id){
-  return parseInt(document.getElementById('q_'+id)?.value||'0',10)||0;
-}
-
-function setQty(id,v){
-  document.getElementById('q_'+id).value=Math.max(0,v);
-  calc();
-}
-
-function changeQty(id,delta){
-  setQty(id,getQty(id)+delta);
-}
-
+function getQty(id){return parseInt(document.getElementById('q_'+id)?.value||'0',10)||0}
+function setQty(id,v){document.getElementById('q_'+id).value=Math.max(0,v);calc()}
+function changeQty(id,delta){setQty(id,getQty(id)+delta)}
 function moneyInput(id){
   const raw=String(document.getElementById(id)?.value||'0').replace(/\./g,'').replace(',','.');
   return parseFloat(raw)||0;
 }
-
-function setText(id,value){
-  const el=document.getElementById(id);
-  if(el) el.textContent=euro(value);
-}
+function setText(id,value){const el=document.getElementById(id);if(el)el.textContent=euro(value)}
+function setMoneyInput(id,value){document.getElementById(id).value=(Number(value)||0).toFixed(2).replace('.',',')}
 
 function calc(){
   let nt=0,ct=0;
-
-  notes.forEach((v,i)=>{
-    const sum=v*getQty('n'+i);
-    nt+=sum;
-    setText('t_n'+i,sum);
-  });
-
-  coins.forEach((v,i)=>{
-    const sum=v*getQty('c'+i);
-    ct+=sum;
-    setText('t_c'+i,sum);
-  });
+  notes.forEach((v,i)=>{const sum=v*getQty('n'+i);nt+=sum;setText('t_n'+i,sum)});
+  coins.forEach((v,i)=>{const sum=v*getQty('c'+i);ct+=sum;setText('t_c'+i,sum)});
 
   const grand=nt+ct;
   const prev=moneyInput('prevTotal');
@@ -156,17 +128,12 @@ function calc(){
     const val=moneyInput('buy'+i);
     const desc=(document.getElementById('buyDesc'+i)?.value||'').trim().toUpperCase();
     buyTotal+=val;
-
-    // EC CARD e GUTSCHEIN continuam na lista, mas não reduzem a caixa física.
-    if(desc==='EC CARD' || desc==='GUTSCHEIN'){
-      continue;
-    }
-
+    if(desc==='EC CARD' || desc==='GUTSCHEIN') continue;
     cashExpense+=val;
   }
 
-  const controlBeforeExpenses=grand+prev;
-  const finalTotal=grand+prev-cashExpense;
+  const controlBeforeExpenses=prev+grand;
+  const finalTotal=controlBeforeExpenses-cashExpense;
 
   setText('notesTotal',nt);
   setText('notesTotal_extra',nt);
@@ -178,7 +145,6 @@ function calc(){
   setText('controlBeforeExpensesCell',controlBeforeExpenses);
   setText('cashExpenseCell',cashExpense);
   setText('finalTotalCell',finalTotal);
-
   window.lastFinalTotal=finalTotal;
 }
 
@@ -188,84 +154,69 @@ function fmtISODate(d){
   const day=String(d.getDate()).padStart(2,'0');
   return `${y}-${m}-${day}`;
 }
-
-function isoKey(d){
-  return fmtISODate(d);
-}
-
-function mondayOf(d){
-  const x=new Date(d);
-  const day=(x.getDay()+6)%7;
-  x.setDate(x.getDate()-day);
-  return x;
-}
-
+function isoKey(d){return fmtISODate(d)}
+function mondayOf(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
 function setWeek(){
   const d=new Date();
   const first=mondayOf(d);
-  const last=new Date(first);
-  last.setDate(first.getDate()+6);
+  const last=new Date(first);last.setDate(first.getDate()+6);
   document.getElementById('dateFrom').value=fmtISODate(first);
   document.getElementById('dateTo').value=fmtISODate(last);
-  loadPreviousSaldo();
 }
-
-function getCurrentDate(){
-  return new Date();
-}
+function getCurrentDate(){return new Date()}
 
 function loadPreviousSaldo(){
-  const d=getCurrentDate();
+  const lastSaldo=localStorage.getItem('sanremo_last_saldo');
+  if(lastSaldo!==null){
+    setMoneyInput('prevTotal',parseFloat(lastSaldo)||0);
+    calc();
+    return;
+  }
   const saved=JSON.parse(localStorage.getItem('sanremo_week_saldo')||'{}');
-  const todayKey=isoKey(d);
+  const todayKey=isoKey(getCurrentDate());
   const keys=Object.keys(saved).filter(k=>k<todayKey).sort();
   const lastKey=keys.length ? keys[keys.length-1] : null;
   document.getElementById('prevTotal').value=lastKey ? String(saved[lastKey]).replace('.',',') : '0,00';
   calc();
 }
 
-function saveDay(){
+function saveDaySilent(){
   calc();
-  const d=getCurrentDate();
-  const saved=JSON.parse(localStorage.getItem('sanremo_week_saldo')||'{}');
   const val=Number(window.lastFinalTotal||0);
-  saved[isoKey(d)]=val.toFixed(2);
+  const saved=JSON.parse(localStorage.getItem('sanremo_week_saldo')||'{}');
+  saved[isoKey(getCurrentDate())]=val.toFixed(2);
   localStorage.setItem('sanremo_week_saldo',JSON.stringify(saved));
+  localStorage.setItem('sanremo_last_saldo',val.toFixed(2));
+  return val;
+}
+function saveDay(){
+  const val=saveDaySilent();
   alert('Saldo do dia guardado: '+euro(val));
 }
-
-function clearAll(){
- document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');
- ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{
-   const el=document.getElementById(id);
-   if(el) el.value='';
- });
- setWeek();
- calc();
-}
-
-function newDay(){
-  // guarda o dia atual primeiro
-  saveDay();
-
-  // limpa apenas valores do dia
+function clearDayFields(){
   document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');
   ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.value='';
   });
-
-  // carrega automaticamente saldo do dia anterior
-  loadPreviousSaldo();
-
+}
+function newDay(){
+  const val=saveDaySilent();
+  clearDayFields();
+  setMoneyInput('prevTotal',val);
   calc();
-});
+  alert('Neuer Tag aberto. Vortagssaldo carregado: '+euro(val));
+}
+function clearAll(){
+  clearDayFields();
+  document.getElementById('prevTotal').value='0,00';
   setWeek();
   calc();
 }
 
 render();
 setWeek();
+loadPreviousSaldo();
 </script>
 </body>
 </html>
