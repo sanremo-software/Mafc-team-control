@@ -13,295 +13,105 @@ button{border:0;border-radius:7px;background:#111;color:#fff;font-weight:700;pad
 button.gray{background:#555}.greenBtn{background:#166534}.red{background:#991b1b}.blueBtn{background:#1d4ed8}
 .page{width:210mm;min-height:297mm;background:#fff;margin:0 auto 18px;padding:10mm 11mm;box-shadow:0 2px 12px rgba(0,0,0,.22)}
 h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;letter-spacing:.5px}
-.top-final{display:grid;grid-template-columns:1fr 38mm;gap:6px;border:2px solid #000;margin:0 0 8px 0;background:#fff}
-.top-final .label{background:#b4c7e7;font-weight:900;text-align:center;padding:6px;font-size:15px;text-transform:uppercase;border-right:1px solid #000}
-.top-final .value{background:#00b050;font-weight:900;text-align:right;padding:6px 10px;font-size:18px;font-variant-numeric:tabular-nums}
+.top-final{display:grid;grid-template-columns:1fr 42mm;gap:0;border:2px solid #000;margin:0 0 8px 0;background:#fff}
+.top-final .label{background:#b4c7e7;font-weight:900;text-align:center;padding:7px;font-size:15px;text-transform:uppercase;border-right:1px solid #000}
+.top-final .value{background:#00b050;font-weight:900;text-align:right;padding:7px 10px;font-size:18px;font-variant-numeric:tabular-nums}
 .date-row{display:grid;grid-template-columns:1fr 90px 1fr;gap:0;margin-bottom:8px}
 .date-row input,.date-row div{border:1px solid #000;height:25px;text-align:center;font-weight:700;font-size:14px;padding:3px;background:#fff}
-.cash-table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}
-.cash-table th,.cash-table td{border:1px solid #000;padding:3px;height:24px}
-.cash-table th{text-align:center;color:#b91c1c;background:#fff;font-weight:900}
-.cash-table td.value{text-align:right;width:32%;font-weight:700;padding-right:10px}
-.cash-table td.qty{width:24%;padding:0;text-align:center}
-.cash-table td.total{text-align:right;width:34%;padding-right:10px;font-weight:700}
-.cash-table td.extra{width:10%;text-align:right;background:#d99500;font-weight:700;padding-right:10px}
-.qty-wrap{display:grid;grid-template-columns:32px 1fr 32px;height:100%}
-.qty-wrap button{border:0;border-radius:0;background:#eee;color:#000;font-size:15px;padding:0;font-weight:900}
-.qty-wrap button:hover{background:#ddd}
-.qty-wrap input{border:0;width:100%;text-align:center;font-size:15px;color:#00f;font-weight:700;background:#fff;height:100%;font-variant-numeric:tabular-nums}
-.total-label{text-align:center;font-weight:900}.redcell{background:#e00000;color:#000}.bluecell{background:#b4c7e7;font-weight:700;text-align:center}.greencell{background:#00b050;font-weight:900;text-align:right;padding-right:10px}.yellowcell{background:#d99500;text-align:right;font-weight:900;padding-right:10px}
-.summary{margin-top:8px;border-collapse:collapse;width:100%;font-size:14px;table-layout:fixed}.summary td{border:1px solid #000;padding:4px;height:25px}.summary .label{font-weight:900;background:#b4c7e7;text-align:center}.summary .green{background:#00b050;text-align:right;font-weight:900}.summary .yellow{background:#d99500;text-align:right;font-weight:900}.summary .white{text-align:right;font-weight:900}.summary select,.summary input{width:100%;height:22px;font-size:13px}.small{font-size:12px;font-weight:700}.signs{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:18px;font-size:13px;font-weight:700}.sign{border-bottom:1px solid #000;height:35px}
-.bottom-full{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:10px;align-items:stretch}
-.control-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px;border:2px solid #000;background:#fff}
-.control-table th{border:1px solid #000;background:#b4c7e7;font-size:14px;font-weight:900;text-align:center;padding:6px;height:30px}
-.control-table td{border:1px solid #000;padding:5px;height:30px;font-weight:900;vertical-align:middle}
-.control-table td:first-child{background:#eef3f8;text-align:center;width:62%}
-.control-table td:last-child{background:#d99500;text-align:right;width:38%;padding-right:8px;font-variant-numeric:tabular-nums}
-.control-table tr.result td:first-child{background:#d9eaf7}
-.control-table tr.result td:last-child{background:#00b050;color:#000}
+.cash-table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}.cash-table th,.cash-table td{border:1px solid #000;padding:3px;height:24px}.cash-table th{text-align:center;color:#b91c1c;background:#fff;font-weight:900}.cash-table td.value{text-align:right;width:32%;font-weight:700;padding-right:10px}.cash-table td.qty{width:24%;padding:0;text-align:center}.cash-table td.total{text-align:right;width:34%;padding-right:10px;font-weight:700}.cash-table td.extra{width:10%;text-align:right;background:#d99500;font-weight:700;padding-right:10px}
+.qty-wrap{display:grid;grid-template-columns:32px 1fr 32px;height:100%}.qty-wrap button{border:0;border-radius:0;background:#eee;color:#000;font-size:15px;padding:0;font-weight:900}.qty-wrap button:hover{background:#ddd}.qty-wrap input{border:0;width:100%;text-align:center;font-size:15px;color:#00f;font-weight:700;background:#fff;height:100%;font-variant-numeric:tabular-nums}
+.total-label{text-align:center;font-weight:900}.redcell{background:#e00000;color:#000}.yellowcell{background:#d99500;text-align:right;font-weight:900;padding-right:10px}
+.summary{margin-top:8px;border-collapse:collapse;width:100%;font-size:14px;table-layout:fixed}.summary td{border:1px solid #000;padding:4px;height:25px}.summary .label{font-weight:900;background:#b4c7e7;text-align:center}.summary .green{background:#00b050;text-align:right;font-weight:900}.summary .yellow{background:#d99500;text-align:right;font-weight:900}.summary select,.summary input{width:100%;height:22px;font-size:13px}.small{font-size:12px;font-weight:700}
+.bottom-full{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:10px;align-items:stretch}.control-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px;border:2px solid #000;background:#fff}.control-table th{border:1px solid #000;background:#b4c7e7;font-size:14px;font-weight:900;text-align:center;padding:6px;height:30px}.control-table td{border:1px solid #000;padding:5px;height:30px;font-weight:900;vertical-align:middle}.control-table td:first-child{background:#eef3f8;text-align:center;width:62%}.control-table td:last-child{background:#d99500;text-align:right;width:38%;padding-right:8px;font-variant-numeric:tabular-nums}.control-table tr.result td:first-child{background:#d9eaf7}.control-table tr.result td:last-child{background:#00b050;color:#000}
 @media(max-width:800px){.page{width:100%;padding:10px}.cash-table{font-size:12px}.qty-wrap{grid-template-columns:28px 1fr 28px}.toolbar{justify-content:flex-start}.bottom-full{grid-template-columns:1fr}}
-@media print{
-  body{background:#fff;margin:0}
-  .app{padding:0;margin:0;max-width:none}
-  .toolbar,.qty-wrap button{display:none!important}
-  .page{
-    box-shadow:none;
-    margin:0 auto;
-    width:210mm;
-    height:297mm;
-    min-height:0;
-    padding:8mm 9mm;
-    overflow:hidden;
-    transform:none;
-  }
-  h1{font-size:21px;margin:0 0 7px}
-  .date-row{margin-bottom:7px}
-  .date-row input,.date-row div{height:24px;font-size:13px;padding:2px}
-  .cash-table{font-size:13px}
-  .cash-table th,.cash-table td{height:23px;padding:3px}
-  .qty-wrap{display:block}
-  .qty-wrap input{height:19px;font-size:13px}
-  .summary{font-size:12.5px;margin-top:7px}
-  .summary td{height:23px;padding:3px}
-  .summary select,.summary input{height:19px;font-size:12px}
-  .bottom-full{grid-template-columns:1fr 1fr;gap:6px;margin-top:7px;width:100%}
-  .control-table{font-size:11.5px;border:1.5px solid #000}
-  .control-table th{height:22px;font-size:12px;padding:3px}
-  .control-table td{height:24px;padding:3px}
-  .control-table td:last-child{padding-right:5px}
-  button{display:none!important}
-  @page{size:A4;margin:0}
-}
+@media print{body{background:#fff;margin:0}.app{padding:0;margin:0;max-width:none}.toolbar,.qty-wrap button{display:none!important}.page{box-shadow:none;margin:0 auto;width:210mm;height:297mm;min-height:0;padding:8mm 9mm;overflow:hidden;transform:none}h1{font-size:21px;margin:0 0 7px}.date-row{margin-bottom:7px}.date-row input,.date-row div{height:24px;font-size:13px;padding:2px}.cash-table{font-size:13px}.cash-table th,.cash-table td{height:23px;padding:3px}.qty-wrap{display:block}.qty-wrap input{height:19px;font-size:13px}.summary{font-size:12.5px;margin-top:7px}.summary td{height:23px;padding:3px}.summary select,.summary input{height:19px;font-size:12px}.bottom-full{grid-template-columns:1fr 1fr;gap:6px;margin-top:7px;width:100%}.control-table{font-size:11.5px;border:1.5px solid #000}.control-table th{height:22px;font-size:12px;padding:3px}.control-table td{height:24px;padding:3px}.control-table td:last-child{padding-right:5px}button{display:none!important}@page{size:A4;margin:0}}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="toolbar">
-    <button onclick="window.print()">Drucken / PDF</button>
-    <button class="gray" onclick="setWeek()">Woche automatisch</button>
-    <button class="greenBtn" onclick="saveDay()">Tag speichern</button>
-    <button class="blueBtn" onclick="newDay()">Neuer Tag</button>
-    <button class="red" onclick="clearAll()">Leeren</button>
-  </div>
-
+  <div class="toolbar"><button onclick="window.print()">Drucken / PDF</button><button class="gray" onclick="setWeek()">Woche automatisch</button><button class="greenBtn" onclick="saveDay()">Tag speichern</button><button class="blueBtn" onclick="newDay()">Neuer Tag</button><button class="red" onclick="clearAll()">Leeren</button></div>
   <section class="page">
     <h1>Zählprotokoll Kasse</h1>
-
-    <div class="top-final">
-      <div class="label">Kassenbestand / Endbetrag wie Kassenbericht</div>
-      <div class="value" id="topEndbetragCell">- €</div>
-    </div>
-
-    <div class="date-row">
-      <input id="dateFrom" type="date">
-      <div>Bis</div>
-      <input id="dateTo" type="date">
-    </div>
-
-    <table class="cash-table">
-      <thead>
-        <tr><th>,</th><th>Quantidade</th><th>Total</th><th></th></tr>
-      </thead>
-      <tbody id="cashBody"></tbody>
-    </table>
-
+    <div class="top-final"><div class="label">Endbetrag / Kassenbestand</div><div class="value" id="topEndbetragCell">- €</div></div>
+    <div class="date-row"><input id="dateFrom" type="date"><div>Bis</div><input id="dateTo" type="date"></div>
+    <table class="cash-table"><thead><tr><th>,</th><th>Quantidade</th><th>Total</th><th></th></tr></thead><tbody id="cashBody"></tbody></table>
     <table class="summary">
-      <tr><td class="label">Automatischer Vortagssaldo</td><td><input id="prevTotal" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td><button type="button" onclick="loadPreviousSaldo()">Saldo automatisch</button></td></tr>
-      <tr><td style="width:50%"></td><td class="label" style="width:25%">Bargeld gezählt (IST)</td><td class="yellow" id="grandTotalCell">- €</td></tr>
-      <tr><td class="label">Kasseneingang / Tageslosung</td><td><input id="cashEntry" class="buy" inputmode="decimal" placeholder="0,00" readonly></td><td class="small">Automatisch aus gezähltem Bargeld</td></tr>
+      <tr><td class="label">Vortagssaldo / Geld von gestern</td><td><input id="prevTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td><button type="button" onclick="loadPreviousSaldo()">Saldo automatisch</button></td></tr>
+      <tr><td></td><td class="label">Bargeld heute gezählt</td><td class="yellow" id="grandTotalCell">- €</td></tr>
+      <tr><td class="label">Kasseneingang / Tageslosung</td><td><input id="cashEntry" inputmode="decimal" placeholder="0,00" readonly></td><td class="small">Automatisch aus gezähltem Bargeld</td></tr>
       <tr><td colspan="3" style="height:6px;border:0"></td></tr>
       <tr><td class="label" colspan="3">Einkäufe / Ausgaben / Zahlungsarten</td></tr>
       <tr><td>Beschreibung / Beleg</td><td>Betrag</td><td></td></tr>
-      <tr><td><select id="buyDesc1" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy1" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc2" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy2" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc3" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy3" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc4" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy4" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc5" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy5" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc1" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy1" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc2" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy2" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc3" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy3" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc4" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy4" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc5" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy5" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td></td><td class="label">Summe eingetragen</td><td class="yellow" id="buyTotalCell">- €</td></tr>
-      <tr><td></td><td class="label">Nicht kassenwirksam</td><td class="yellow" id="nonCashCell">- €</td></tr>
-      <tr><td></td><td class="label">davon EC CARD</td><td class="yellow" id="ecOnlyCell">- €</td></tr>
-      <tr><td></td><td class="label">Kontrolle: Vortag + Kasseneingang</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
-      <tr><td></td><td class="label">Summe Abzüge laut Kassenbericht</td><td class="yellow" id="cashExpenseCell">- €</td></tr>>- €</td></tr>
-      <tr><td></td><td class="label">Kassenbestand / Endbetrag</td><td class="yellow" id="finalTotalCell">- €</td></tr>
-      <tr><td></td><td class="label">Kontroll-Differenz</td><td class="green" id="diffCell">- €</td></tr>
+      <tr><td></td><td class="label">Nicht Kasse: EC + Gutschein</td><td class="yellow" id="nonCashCell">- €</td></tr>
+      <tr><td></td><td class="label">Vortag + Bargeld heute</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
+      <tr><td></td><td class="label">Abzug echte Kasse</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
+      <tr><td></td><td class="label">Endbetrag / Kassenbestand</td><td class="yellow" id="finalTotalCell">- €</td></tr>
+      <tr><td></td><td class="label">Kontroll-Differenz</td><td class="green" id="diffCell">0,00 €</td></tr>
     </table>
-
     <div class="bottom-full">
-      <table class="control-table">
-        <thead>
-          <tr><th colspan="2">Gesamt-Kontrolle intern</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Vortag + Bargeld + EC + Gutschein</td><td id="allIncomeCell">- €</td></tr>
-          <tr><td>− Barausgaben</td><td id="allExpenseCell">- €</td></tr>
-          <tr class="result"><td>Gesamtbestand intern</td><td id="totalControlCell">- €</td></tr>
-        </tbody>
-      </table>
-
-      <table class="control-table">
-        <thead>
-          <tr><th colspan="2">Kassenbericht-Kontrolle</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Vortag + Bargeld</td><td id="kbBeforeAllCell">- €</td></tr>
-          <tr><td>− Alle Einträge</td><td id="kbAllEntriesCell">- €</td></tr>
-          <tr class="result"><td>Kassenbestand wie Papier</td><td id="kbPaperCell">- €</td></tr>
-        </tbody>
-      </table>
+      <table class="control-table"><thead><tr><th colspan="2">Interne Kontrolle</th></tr></thead><tbody><tr><td>Vortag + Bargeld heute</td><td id="kbBeforeAllCell">- €</td></tr><tr><td>− Abzug echte Kasse</td><td id="kbAllEntriesCell">- €</td></tr><tr class="result"><td>Endbetrag</td><td id="kbPaperCell">- €</td></tr></tbody></table>
+      <table class="control-table"><thead><tr><th colspan="2">Info nicht Kasse</th></tr></thead><tbody><tr><td>EC + Gutschein</td><td id="ecOnlyCell">- €</td></tr><tr><td>Summe eingetragen</td><td id="allExpenseCell">- €</td></tr><tr class="result"><td>Endbetrag oben</td><td id="totalControlCell">- €</td></tr></tbody></table>
     </div>
   </section>
 </div>
-
 <script>
 const notes=[100,50,20,10,5];
 const coins=[2,1,0.5,0.2,0.1,0.05,0.02,0.01];
-
-function euro(v){
-  const num=Number(v)||0;
-  return Math.abs(num)<0.005 ? '- €' : num.toFixed(2).replace('.',',')+' €';
-}
-function euroZero(v){
-  const num=Number(v)||0;
-  return Math.abs(num)<0.005 ? '0,00 €' : num.toFixed(2).replace('.',',')+' €';
-}
-function qtyInput(value,idx){
-  return `<div class="qty-wrap"><button type="button" onclick="changeQty('${idx}',-1)">−</button><input id="q_${idx}" value="0" inputmode="numeric" oninput="calc()"><button type="button" onclick="changeQty('${idx}',1)">+</button></div>`;
-}
-function makeRow(value,idx){
-  return `<tr><td class="value">${value.toFixed(2).replace('.',',')} €</td><td class="qty">${qtyInput(value,idx)}</td><td class="total" id="t_${idx}">- €</td><td class="extra"></td></tr>`;
-}
-function totalRow(id,label){
-  return `<tr><td></td><td class="total-label">${label}</td><td class="total redcell" id="${id}">- €</td><td class="extra" id="${id}_extra">- €</td></tr>`;
-}
-function render(){
-  let html='';
-  notes.forEach((v,i)=>html+=makeRow(v,'n'+i));
-  html+=totalRow('notesTotal','Total');
-  coins.forEach((v,i)=>html+=makeRow(v,'c'+i));
-  html+=totalRow('coinsTotal','Total');
-  html+=`<tr><td colspan="3"></td><td class="yellowcell" id="yellowTotal">- €</td></tr>`;
-  document.getElementById('cashBody').innerHTML=html;
-  calc();
-}
+const NON_CASH_TYPES=['EC CARD','GUTSCHEIN'];
+function euro(v){const num=Number(v)||0;return Math.abs(num)<0.005?'- €':num.toFixed(2).replace('.',',')+' €'}
+function euroZero(v){const num=Number(v)||0;return Math.abs(num)<0.005?'0,00 €':num.toFixed(2).replace('.',',')+' €'}
+function qtyInput(value,idx){return `<div class="qty-wrap"><button type="button" onclick="changeQty('${idx}',-1)">−</button><input id="q_${idx}" value="0" inputmode="numeric" oninput="calc()"><button type="button" onclick="changeQty('${idx}',1)">+</button></div>`}
+function makeRow(value,idx){return `<tr><td class="value">${value.toFixed(2).replace('.',',')} €</td><td class="qty">${qtyInput(value,idx)}</td><td class="total" id="t_${idx}">- €</td><td class="extra"></td></tr>`}
+function totalRow(id,label){return `<tr><td></td><td class="total-label">${label}</td><td class="total redcell" id="${id}">- €</td><td class="extra" id="${id}_extra">- €</td></tr>`}
+function render(){let html='';notes.forEach((v,i)=>html+=makeRow(v,'n'+i));html+=totalRow('notesTotal','Total');coins.forEach((v,i)=>html+=makeRow(v,'c'+i));html+=totalRow('coinsTotal','Total');html+=`<tr><td colspan="3"></td><td class="yellowcell" id="yellowTotal">- €</td></tr>`;document.getElementById('cashBody').innerHTML=html;calc()}
 function getQty(id){return parseInt(document.getElementById('q_'+id)?.value||'0',10)||0}
 function setQty(id,v){document.getElementById('q_'+id).value=Math.max(0,v);calc()}
 function changeQty(id,delta){setQty(id,getQty(id)+delta)}
-function moneyInput(id){
-  const raw=String(document.getElementById(id)?.value||'0').replace(/\./g,'').replace(',','.');
-  return parseFloat(raw)||0;
-}
+function moneyInput(id){const raw=String(document.getElementById(id)?.value||'0').replace(/\./g,'').replace(',','.');return parseFloat(raw)||0}
 function setText(id,value){const el=document.getElementById(id);if(el)el.textContent=euro(value)}
 function setTextZero(id,value){const el=document.getElementById(id);if(el)el.textContent=euroZero(value)}
 function setMoneyInput(id,value){document.getElementById(id).value=(Number(value)||0).toFixed(2).replace('.',',')}
-
 function calc(){
   let nt=0,ct=0;
   notes.forEach((v,i)=>{const sum=v*getQty('n'+i);nt+=sum;setText('t_n'+i,sum)});
   coins.forEach((v,i)=>{const sum=v*getQty('c'+i);ct+=sum;setText('t_c'+i,sum)});
-
-  const grand=nt+ct;
-  setMoneyInput('cashEntry',grand);
+  const grand=nt+ct;setMoneyInput('cashEntry',grand);
   const prev=moneyInput('prevTotal');
-  const cashElet ecTotal=0;
-
+  let buyTotal=0,cashOut=0,nonCash=0;
   for(let i=1;i<=5;i++){
     const val=moneyInput('buy'+i);
     const desc=(document.getElementById('buyDesc'+i)?.value||'').trim().toUpperCase();
     buyTotal+=val;
-    if(desc==='EC CARD'){
-      ecTotal+=val;
-      nonCashTotal+lBeforeExpenses-buyTotal;
-  const diff=controlBeforeExpenses-buyTotal-finalTotal;
-  const allIncome=prev+cashEntry+nonCashTotal;
-  const totalControell',grand);
-  setText('buyTotalCell',buyTotal);
-  setText('nonCashCell',nonCashTotal);
-  setText('ecOnlyCell',ecTotal);
-  setText('controlBeforeExpensesCell',controlBeforeExpenses);
-  setText('cashExpenseCell',buyTotal);
-  setText('finalTotalCell',finalTotal);
-  setTextZero('diffCell',diff);
-  setText('allIncomeCell',allIncome);
-  setText('allExpenseCell',buyTotal);
-  setText('totalControlCell',totalControl);
-  setText('kbBeforeAllCell',kbBeforeAll);
-  setText('kbAllEntriesCell',buyTotal);
-  setText('kbPaperCell',kbPaper);
-  setText('topEndbetragCell',kbPaper);
-
-  const diffEl=document.getElementById('diffCell');
-  if(diff;
-    diffEl.style.color = Math.abs(diff)<0.005 ? '#000' : '#fff';
+    if(NON_CASH_TYPES.includes(desc)){nonCash+=val;continue}
+    cashOut+=val;
   }
-  window.lastFinalTotal=kbPaper;
+  const before=prev+grand;
+  const endbetrag=before-cashOut;
+  const diff=before-cashOut-endbetrag;
+  setText('notesTotal',nt);setText('notesTotal_extra',nt);setText('coinsTotal',ct);setText('coinsTotal_extra',ct);setText('yellowTotal',grand);setText('grandTotalCell',grand);
+  setText('buyTotalCell',buyTotal);setText('nonCashCell',nonCash);setText('controlBeforeExpensesCell',before);setText('cashExpenseCell',cashOut);setText('finalTotalCell',endbetrag);setTextZero('diffCell',diff);
+  setText('kbBeforeAllCell',before);setText('kbAllEntriesCell',cashOut);setText('kbPaperCell',endbetrag);setText('ecOnlyCell',nonCash);setText('allExpenseCell',buyTotal);setText('totalControlCell',endbetrag);setText('topEndbetragCell',endbetrag);
+  const diffEl=document.getElementById('diffCell');if(diffEl){diffEl.style.background=Math.abs(diff)<0.005?'#00b050':'#dc2626';diffEl.style.color=Math.abs(diff)<0.005?'#000':'#fff'}
+  window.lastFinalTotal=endbetrag;
 }
-
-function fmtISODate(d){
-  const y=d.getFul+1).padStart(2,'0');
-  const day=String(d.getDate()).padStart(2,'0');
-  return `${y}-${m}-${day}`;
-}
+function fmtISODate(d){const y=d.getFullYear();const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
 function isoKey(d){return fmtISODate(d)}
 function mondayOf(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
-function setWeek(){
-  const d=new Date();
-  const first=mondayOf(d);
-  const last=new Date(first);last.setDate(first.getDate()+6);
-  document.getElementById('dateFrom').value=fmtISODate(first);
-  document.getElementById('dateTo').value=fmtISODate(last);
-}
+function setWeek(){const d=new Date();const first=mondayOf(d);const last=new Date(first);last.setDate(first.getDate()+6);document.getElementById('dateFrom').value=fmtISODate(first);document.getElementById('dateTo').value=fmtISODate(last)}
 function getCurrentDate(){return new Date()}
-function loadPreviousSaldo(){
-  const lastSaldo=localStorage.getItem('sanremo_last_saldo');
-  if(lastSaldo!==null){
-    setMoneyInput('prevTotal',parseFloat(lastSaldo)||0);
-    calc();
-    return;
-  }
-  const saved=JSON.parse(localStorage.getItem('sanremo_week_saldo')||'{}');
-  const todayKey=isoKey(getCurrentDate());
-  const keys=Object.keys(saved).filter(k=>k<todayKey).sort();
-  const lastKey=keys.length ? keys[keys.length-1] : null;
-  document.getElementById('prevTotal').value=lastKey ? String(saved[lastKey]).replace('.',',') : '0,00';
-  calc();
-}
-function saveDaySilent(){
-  calc();
-  const val=Number(window.lastFinalTotal||0);
-  const saved=JSON.parse(localStorage.getItem('sanremo_week_saldo')||'{}');
-  saved[isoKey(getCurrentDate())]=val.toFixed(2);
-  localStorage.setItem('sanremo_week_saldo',JSON.stringify(saved));
-  localStorage.setItem('sanremo_last_saldo',val.toFixed(2));
-  return val;
-}
-function saveDay(){
-  const val=saveDaySilent();
-  alert('Saldo do dia guardado: '+euro(val));
-}
-function clearDayFields(){
-  document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');
-  ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.value='';
-  });
-}
-function newDay(){
-  const val=saveDaySilent();
-  clearDayFields();
-  setMoneyInput('prevTotal',val);
-  calc();
-  alert('Neuer Tag aberto. Vortagssaldo carregado: '+euro(val));
-}
-function clearAll(){
-  clearDayFields();
-  document.getElementById('prevTotal').value='0,00';
-  setWeek();
-  calc();
-}
-
-render();
-setWeek();
-loadPreviousSaldo();
+function loadPreviousSaldo(){const lastSaldo=localStorage.getItem('sanremo_last_saldo');if(lastSaldo!==null){setMoneyInput('prevTotal',parseFloat(lastSaldo)||0);calc();return}const saved=JSON.parse(localStorage.getItem('sanremo_week_saldo')||'{}');const todayKey=isoKey(getCurrentDate());const keys=Object.keys(saved).filter(k=>k<todayKey).sort();const lastKey=keys.length?keys[keys.length-1]:null;document.getElementById('prevTotal').value=lastKey?String(saved[lastKey]).replace('.',','):'0,00';calc()}
+function saveDaySilent(){calc();const val=Number(window.lastFinalTotal||0);const saved=JSON.parse(localStorage.getItem('sanremo_week_saldo')||'{}');saved[isoKey(getCurrentDate())]=val.toFixed(2);localStorage.setItem('sanremo_week_saldo',JSON.stringify(saved));localStorage.setItem('sanremo_last_saldo',val.toFixed(2));return val}
+function saveDay(){const val=saveDaySilent();alert('Saldo do dia guardado: '+euro(val))}
+function clearDayFields(){document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''})}
+function newDay(){const val=saveDaySilent();clearDayFields();setMoneyInput('prevTotal',val);calc();alert('Neuer Tag aberto. Vortagssaldo carregado: '+euro(val))}
+function clearAll(){clearDayFields();document.getElementById('prevTotal').value='0,00';setWeek();calc()}
+render();setWeek();loadPreviousSaldo();
 </script>
 </body>
 </html>
