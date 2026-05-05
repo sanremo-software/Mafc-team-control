@@ -72,10 +72,17 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
       <tr><td><select id="buyDesc5" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy5" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td></td><td class="label">Summe eingetragen</td><td class="yellow" id="buyTotalCell">- €</td></tr>
       <tr><td></td><td class="label">Nicht kassenwirksam</td><td class="yellow" id="nonCashCell">- €</td></tr>
+      <tr><td></td><td class="label">davon EC CARD</td><td class="yellow" id="ecOnlyCell">- €</td></tr>
+      <tr><td></td><td class="label">davon GUTSCHEIN</td><td class="yellow" id="voucherOnlyCell">- €</td></tr>
       <tr><td></td><td class="label">Kontrolle: Vortag + Kasseneingang</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
       <tr><td></td><td class="label">Summe Barausgaben</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
       <tr><td></td><td class="label">Kassenbestand nach Abzug</td><td class="yellow" id="finalTotalCell">- €</td></tr>
       <tr><td></td><td class="label">Kontroll-Differenz</td><td class="green" id="diffCell">- €</td></tr>
+      <tr><td colspan="3" style="height:8px;border:0"></td></tr>
+      <tr><td class="label" colspan="3">Gesamt-Kontrolle intern</td></tr>
+      <tr><td></td><td class="label">Vortag + Bargeld + EC + Gutschein</td><td class="yellow" id="allIncomeCell">- €</td></tr>
+      <tr><td></td><td class="label">- Barausgaben</td><td class="yellow" id="allExpenseCell">- €</td></tr>
+      <tr><td></td><td class="label">Gesamtbestand intern</td><td class="green" id="totalControlCell">- €</td></tr>
     </table>
   </section>
 </div>
@@ -134,12 +141,20 @@ function calc(){
   let buyTotal=0;
   let cashExpense=0;
   let nonCashTotal=0;
+  let ecTotal=0;
+  let voucherTotal=0;
 
   for(let i=1;i<=5;i++){
     const val=moneyInput('buy'+i);
     const desc=(document.getElementById('buyDesc'+i)?.value||'').trim().toUpperCase();
     buyTotal+=val;
-    if(desc==='EC CARD' || desc==='GUTSCHEIN'){
+    if(desc==='EC CARD'){
+      ecTotal+=val;
+      nonCashTotal+=val;
+      continue;
+    }
+    if(desc==='GUTSCHEIN'){
+      voucherTotal+=val;
       nonCashTotal+=val;
       continue;
     }
@@ -149,6 +164,8 @@ function calc(){
   const controlBeforeExpenses=prev+cashEntry;
   const finalTotal=controlBeforeExpenses-cashExpense;
   const diff=controlBeforeExpenses-cashExpense-finalTotal;
+  const allIncome=prev+cashEntry+nonCashTotal;
+  const totalControl=allIncome-cashExpense;
 
   setText('notesTotal',nt);
   setText('notesTotal_extra',nt);
@@ -158,10 +175,15 @@ function calc(){
   setText('grandTotalCell',grand);
   setText('buyTotalCell',buyTotal);
   setText('nonCashCell',nonCashTotal);
+  setText('ecOnlyCell',ecTotal);
+  setText('voucherOnlyCell',voucherTotal);
   setText('controlBeforeExpensesCell',controlBeforeExpenses);
   setText('cashExpenseCell',cashExpense);
   setText('finalTotalCell',finalTotal);
   setTextZero('diffCell',diff);
+  setText('allIncomeCell',allIncome);
+  setText('allExpenseCell',cashExpense);
+  setText('totalControlCell',totalControl);
   const diffEl=document.getElementById('diffCell');
   if(diffEl){
     diffEl.style.background = Math.abs(diff)<0.005 ? '#00b050' : '#dc2626';
