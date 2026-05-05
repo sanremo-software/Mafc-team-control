@@ -37,20 +37,30 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
   body{background:#fff;margin:0}
   .app{padding:0;margin:0;max-width:none}
   .toolbar,.qty-wrap button{display:none!important}
-  .page{box-shadow:none;margin:0 auto;width:210mm;height:297mm;min-height:0;padding:6mm 7mm;overflow:hidden;transform:scale(.92);transform-origin:top center}
-  h1{font-size:17px;margin:0 0 4px}
-  .date-row{margin-bottom:4px}
-  .date-row input,.date-row div{height:19px;font-size:11px;padding:1px}
-  .cash-table{font-size:10.5px}
-  .cash-table th,.cash-table td{height:17px;padding:1.5px}
+  .page{
+    box-shadow:none;
+    margin:0 auto;
+    width:210mm;
+    height:297mm;
+    min-height:0;
+    padding:8mm 9mm;
+    overflow:hidden;
+    transform:none;
+  }
+  h1{font-size:21px;margin:0 0 7px}
+  .date-row{margin-bottom:7px}
+  .date-row input,.date-row div{height:24px;font-size:13px;padding:2px}
+  .cash-table{font-size:13px}
+  .cash-table th,.cash-table td{height:23px;padding:3px}
   .qty-wrap{display:block}
-  .qty-wrap input{height:15px;font-size:10.5px}
-  .summary{font-size:10.5px;margin-top:4px}
-  .summary td{height:17px;padding:1.5px}
-  .summary select,.summary input{height:15px;font-size:10.5px}
-  .bottom-full{grid-template-columns:1fr 1fr;gap:5px;margin-top:5px}
-  .bottom-full .summary td{height:17px;padding:1.5px;font-size:10px}
-  .bottom-full .summary .section-title{font-size:10.5px}
+  .qty-wrap input{height:19px;font-size:13px}
+  .summary{font-size:12.5px;margin-top:7px}
+  .summary td{height:23px;padding:3px}
+  .summary select,.summary input{height:19px;font-size:12px}
+  .bottom-full{grid-template-columns:1fr 1fr;gap:7px;margin-top:7px;width:100%}
+  .bottom-full .summary{margin-top:0;width:100%}
+  .bottom-full .summary td{height:24px;padding:3px;font-size:12px}
+  .bottom-full .summary .section-title{font-size:12.5px}
   button{display:none!important}
   @page{size:A4;margin:0}
 }
@@ -116,7 +126,7 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
         <tr><td class="section-title" colspan="3">Kassenbericht-Kontrolle</td></tr>
         <tr><td></td><td class="label">Vortag + Bargeld</td><td class="yellow" id="kbBeforeAllCell">- €</td></tr>
         <tr><td></td><td class="label">- Alle Einträge</td><td class="yellow" id="kbAllEntriesCell">- €</td></tr>
-        <tr><td></td><td class="label">Kassenbestand</td><td class="green" id="kbPaperCell">- €</td></tr>
+        <tr><td></td><td class="label">Kassenbestand wie Papier</td><td class="green" id="kbPaperCell">- €</td></tr>
       </table>
     </div>
   </section>
