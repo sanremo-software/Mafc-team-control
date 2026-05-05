@@ -69,6 +69,7 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
       <tr><td><select id="buyDesc4" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy4" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td><select id="buyDesc5" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy5" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td></td><td class="label">Summe eingetragen</td><td class="yellow" id="buyTotalCell">- €</td></tr>
+      <tr><td></td><td class="label">Kontrolle: Vortag + Bargeld heute</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
       <tr><td></td><td class="label">Summe Barausgaben</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
       <tr><td></td><td class="label">Endbestand nach Abzug</td><td class="green" id="finalTotalCell">- €</td></tr>
     </table>
@@ -163,6 +164,7 @@ function calc(){
     cashExpense+=val;
   }
 
+  const controlBeforeExpenses=grand+prev;
   const finalTotal=grand+prev-cashExpense;
 
   setText('notesTotal',nt);
@@ -172,6 +174,7 @@ function calc(){
   setText('yellowTotal',grand);
   setText('grandTotalCell',grand);
   setText('buyTotalCell',buyTotal);
+  setText('controlBeforeExpensesCell',controlBeforeExpenses);
   setText('cashExpenseCell',cashExpense);
   setText('finalTotalCell',finalTotal);
 
