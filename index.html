@@ -74,7 +74,7 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
       <tr><td></td><td class="label">Kontrolle: Vortag + Kasseneingang</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
       <tr><td></td><td class="label">Summe Barausgaben</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
       <tr><td></td><td class="label">Soll-Kassenbestand</td><td class="yellow" id="finalTotalCell">- €</td></tr>
-      <tr><td></td><td class="label">Differenz IST - SOLL</td><td class="green" id="diffCell">- €</td></tr>
+      <tr><td></td><td class="label">Kontroll-Differenz</td><td class="green" id="diffCell">- €</td></tr>
     </table>
   </section>
 </div>
@@ -137,7 +137,7 @@ function calc(){
 
   const controlBeforeExpenses=prev+cashEntry;
   const finalTotal=controlBeforeExpenses-cashExpense;
-  const diff=grand-finalTotal;
+  const diff=controlBeforeExpenses-cashExpense-finalTotal;
 
   setText('notesTotal',nt);
   setText('notesTotal_extra',nt);
