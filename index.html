@@ -121,8 +121,8 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
       <tr><td></td><td class="label">Nicht kassenwirksam</td><td class="yellow" id="nonCashCell">- €</td></tr>
       <tr><td></td><td class="label">davon EC CARD</td><td class="yellow" id="ecOnlyCell">- €</td></tr>
       <tr><td></td><td class="label">Kontrolle: Vortag + Kasseneingang</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
-      <tr><td></td><td class="label">Summe Barausgaben</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
-      <tr><td></td><td class="label">Kassenbestand nach Abzug</td><td class="yellow" id="finalTotalCell">- €</td></tr>
+      <tr><td></td><td class="label">Summe Abzüge laut Kassenbericht</td><td class="yellow" id="cashExpenseCell">- €</td></tr>>- €</td></tr>
+      <tr><td></td><td class="label">Kassenbestand / Endbetrag</td><td class="yellow" id="finalTotalCell">- €</td></tr>
       <tr><td></td><td class="label">Kontroll-Differenz</td><td class="green" id="diffCell">- €</td></tr>
     </table>
 
@@ -202,11 +202,7 @@ function calc(){
   const grand=nt+ct;
   setMoneyInput('cashEntry',grand);
   const prev=moneyInput('prevTotal');
-  const cashEntry=grand;
-  let buyTotal=0;
-  let cashExpense=0;
-  let nonCashTotal=0;
-  let ecTotal=0;
+  const cashElet ecTotal=0;
 
   for(let i=1;i<=5;i++){
     const val=moneyInput('buy'+i);
@@ -214,35 +210,19 @@ function calc(){
     buyTotal+=val;
     if(desc==='EC CARD'){
       ecTotal+=val;
-      nonCashTotal+=val;
-      continue;
-    }
-    cashExpense+=val;
-  }
-
-  const controlBeforeExpenses=prev+cashEntry;
-  const finalTotal=controlBeforeExpenses-cashExpense;
-  const diff=controlBeforeExpenses-cashExpense-finalTotal;
+      nonCashTotal+lBeforeExpenses-buyTotal;
+  const diff=controlBeforeExpenses-buyTotal-finalTotal;
   const allIncome=prev+cashEntry+nonCashTotal;
-  const totalControl=allIncome-cashExpense;
-  const kbBeforeAll=prev+cashEntry;
-  const kbPaper=kbBeforeAll-buyTotal;
-
-  setText('notesTotal',nt);
-  setText('notesTotal_extra',nt);
-  setText('coinsTotal',ct);
-  setText('coinsTotal_extra',ct);
-  setText('yellowTotal',grand);
-  setText('grandTotalCell',grand);
+  const totalControell',grand);
   setText('buyTotalCell',buyTotal);
   setText('nonCashCell',nonCashTotal);
   setText('ecOnlyCell',ecTotal);
   setText('controlBeforeExpensesCell',controlBeforeExpenses);
-  setText('cashExpenseCell',cashExpense);
+  setText('cashExpenseCell',buyTotal);
   setText('finalTotalCell',finalTotal);
   setTextZero('diffCell',diff);
   setText('allIncomeCell',allIncome);
-  setText('allExpenseCell',cashExpense);
+  setText('allExpenseCell',buyTotal);
   setText('totalControlCell',totalControl);
   setText('kbBeforeAllCell',kbBeforeAll);
   setText('kbAllEntriesCell',buyTotal);
@@ -250,16 +230,14 @@ function calc(){
   setText('topEndbetragCell',kbPaper);
 
   const diffEl=document.getElementById('diffCell');
-  if(diffEl){
-    diffEl.style.background = Math.abs(diff)<0.005 ? '#00b050' : '#dc2626';
+  if(diff;
     diffEl.style.color = Math.abs(diff)<0.005 ? '#000' : '#fff';
   }
   window.lastFinalTotal=kbPaper;
 }
 
 function fmtISODate(d){
-  const y=d.getFullYear();
-  const m=String(d.getMonth()+1).padStart(2,'0');
+  const y=d.getFul+1).padStart(2,'0');
   const day=String(d.getDate()).padStart(2,'0');
   return `${y}-${m}-${day}`;
 }
