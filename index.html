@@ -28,10 +28,14 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
 .qty-wrap input{border:0;width:100%;text-align:center;font-size:15px;color:#00f;font-weight:700;background:#fff;height:100%;font-variant-numeric:tabular-nums}
 .total-label{text-align:center;font-weight:900}.redcell{background:#e00000;color:#000}.bluecell{background:#b4c7e7;font-weight:700;text-align:center}.greencell{background:#00b050;font-weight:900;text-align:right;padding-right:10px}.yellowcell{background:#d99500;text-align:right;font-weight:900;padding-right:10px}
 .summary{margin-top:8px;border-collapse:collapse;width:100%;font-size:14px;table-layout:fixed}.summary td{border:1px solid #000;padding:4px;height:25px}.summary .label{font-weight:900;background:#b4c7e7;text-align:center}.summary .green{background:#00b050;text-align:right;font-weight:900}.summary .yellow{background:#d99500;text-align:right;font-weight:900}.summary .white{text-align:right;font-weight:900}.summary select,.summary input{width:100%;height:22px;font-size:13px}.small{font-size:12px;font-weight:700}.signs{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:18px;font-size:13px;font-weight:700}.sign{border-bottom:1px solid #000;height:35px}
-.bottom-full{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-top:8px;align-items:start}
-.bottom-full .summary{margin-top:0;width:100%}
-.bottom-full .summary td{height:26px;padding:4px;font-size:13px}
-.bottom-full .summary .section-title{background:#b4c7e7;font-weight:900;text-align:center;font-size:14px}
+.bottom-full{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:10px;align-items:stretch}
+.control-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px;border:2px solid #000;background:#fff}
+.control-table th{border:1px solid #000;background:#b4c7e7;font-size:14px;font-weight:900;text-align:center;padding:6px;height:30px}
+.control-table td{border:1px solid #000;padding:5px;height:30px;font-weight:900;vertical-align:middle}
+.control-table td:first-child{background:#eef3f8;text-align:center;width:62%}
+.control-table td:last-child{background:#d99500;text-align:right;width:38%;padding-right:8px;font-variant-numeric:tabular-nums}
+.control-table tr.result td:first-child{background:#d9eaf7}
+.control-table tr.result td:last-child{background:#00b050;color:#000}
 @media(max-width:800px){.page{width:100%;padding:10px}.cash-table{font-size:12px}.qty-wrap{grid-template-columns:28px 1fr 28px}.toolbar{justify-content:flex-start}.bottom-full{grid-template-columns:1fr}}
 @media print{
   body{background:#fff;margin:0}
@@ -57,10 +61,11 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
   .summary{font-size:12.5px;margin-top:7px}
   .summary td{height:23px;padding:3px}
   .summary select,.summary input{height:19px;font-size:12px}
-  .bottom-full{grid-template-columns:1fr 1fr;gap:7px;margin-top:7px;width:100%}
-  .bottom-full .summary{margin-top:0;width:100%}
-  .bottom-full .summary td{height:24px;padding:3px;font-size:12px}
-  .bottom-full .summary .section-title{font-size:12.5px}
+  .bottom-full{grid-template-columns:1fr 1fr;gap:6px;margin-top:7px;width:100%}
+  .control-table{font-size:11.5px;border:1.5px solid #000}
+  .control-table th{height:22px;font-size:12px;padding:3px}
+  .control-table td{height:24px;padding:3px}
+  .control-table td:last-child{padding-right:5px}
   button{display:none!important}
   @page{size:A4;margin:0}
 }
@@ -115,18 +120,26 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
     </table>
 
     <div class="bottom-full">
-      <table class="summary">
-        <tr><td class="section-title" colspan="3">Gesamt-Kontrolle intern</td></tr>
-        <tr><td></td><td class="label">Vortag + Bargeld + EC + Gutschein</td><td class="yellow" id="allIncomeCell">- €</td></tr>
-        <tr><td></td><td class="label">- Barausgaben</td><td class="yellow" id="allExpenseCell">- €</td></tr>
-        <tr><td></td><td class="label">Gesamtbestand intern</td><td class="green" id="totalControlCell">- €</td></tr>
+      <table class="control-table">
+        <thead>
+          <tr><th colspan="2">Gesamt-Kontrolle intern</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Vortag + Bargeld + EC + Gutschein</td><td id="allIncomeCell">- €</td></tr>
+          <tr><td>− Barausgaben</td><td id="allExpenseCell">- €</td></tr>
+          <tr class="result"><td>Gesamtbestand intern</td><td id="totalControlCell">- €</td></tr>
+        </tbody>
       </table>
 
-      <table class="summary">
-        <tr><td class="section-title" colspan="3">Kassenbericht-Kontrolle</td></tr>
-        <tr><td></td><td class="label">Vortag + Bargeld</td><td class="yellow" id="kbBeforeAllCell">- €</td></tr>
-        <tr><td></td><td class="label">- Alle Einträge</td><td class="yellow" id="kbAllEntriesCell">- €</td></tr>
-        <tr><td></td><td class="label">Kassenbestand wie Papier</td><td class="green" id="kbPaperCell">- €</td></tr>
+      <table class="control-table">
+        <thead>
+          <tr><th colspan="2">Kassenbericht-Kontrolle</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Vortag + Bargeld</td><td id="kbBeforeAllCell">- €</td></tr>
+          <tr><td>− Alle Einträge</td><td id="kbAllEntriesCell">- €</td></tr>
+          <tr class="result"><td>Kassenbestand wie Papier</td><td id="kbPaperCell">- €</td></tr>
+        </tbody>
       </table>
     </div>
   </section>
