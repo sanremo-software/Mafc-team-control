@@ -10,8 +10,8 @@ body{margin:0;background:#e5e5e5;font-family:Arial,Helvetica,sans-serif;color:#0
 .app{max-width:900px;margin:0 auto;padding:16px}
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center;margin:0 auto 14px auto;padding:10px;background:#f3f4f6;border:1px solid #cfcfcf;border-radius:12px;max-width:210mm}
 button{border:0;border-radius:7px;background:#111;color:#fff;font-weight:700;padding:9px 12px;cursor:pointer}
-button.gray{background:#555}button.red{background:#991b1b}
-.info{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:9px;margin-bottom:10px;font-size:14px}
+button.gray{background:#555}.greenBtn{background:#166534}.red{background:#991b1b}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:9px;margin-bottom:10px;font-size:14px;max-width:210mm;margin-left:auto;margin-right:auto;font-weight:700}
 .page{width:210mm;min-height:297mm;background:#fff;margin:0 auto 18px;padding:13mm 14mm;box-shadow:0 2px 12px rgba(0,0,0,.22)}
 h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
 .date-row{display:grid;grid-template-columns:1fr 90px 1fr;gap:0;margin-bottom:10px}
@@ -28,9 +28,9 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
 .qty-wrap button:hover{background:#ddd}
 .qty-wrap input{border:0;width:100%;text-align:center;font-size:16px;color:#00f;font-weight:700;background:#fff;height:100%;font-variant-numeric:tabular-nums}
 .total-label{text-align:center;font-weight:700}.redcell{background:red;color:#000}.bluecell{background:#b4c7e7;font-weight:700;text-align:center}.greencell{background:#00b050;font-weight:900;text-align:right;padding-right:10px}.yellowcell{background:#ffc000;text-align:right;font-weight:900;padding-right:10px}
-.summary{margin-top:10px;border-collapse:collapse;width:100%;font-size:15px}.summary td{border:1px solid #000;padding:5px;height:28px}.summary .label{font-weight:700;background:#b4c7e7;text-align:center}.summary .green{background:#00b050;text-align:right;font-weight:900}.summary .yellow{background:#ffc000;text-align:right;font-weight:900}.notes{margin-top:12px;display:grid;grid-template-columns:130px 1fr;gap:8px;align-items:end;font-size:14px;font-weight:700}.notes input{border:0;border-bottom:1px solid #000;font-size:14px;padding:3px}.signs{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:18px;font-size:13px;font-weight:700}.sign{border-bottom:1px solid #000;height:35px}
+.summary{margin-top:10px;border-collapse:collapse;width:100%;font-size:15px}.summary td{border:1px solid #000;padding:5px;height:28px}.summary .label{font-weight:700;background:#b4c7e7;text-align:center}.summary .green{background:#00b050;text-align:right;font-weight:900}.summary .yellow{background:#ffc000;text-align:right;font-weight:900}.summary .white{text-align:right;font-weight:900}.summary select,.summary input{width:100%;height:24px;font-size:14px}.small{font-size:12px;font-weight:700}.signs{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:18px;font-size:13px;font-weight:700}.sign{border-bottom:1px solid #000;height:35px}
 @media(max-width:800px){.page{width:100%;padding:10px}.cash-table{font-size:13px}.qty-wrap{grid-template-columns:30px 1fr 30px}.toolbar{justify-content:flex-start}}
-@media print{body{background:#fff}.app{padding:0}.toolbar,.info,.qty-wrap button{display:none!important}.page{box-shadow:none;margin:0;width:210mm;height:297mm;min-height:0;padding:10mm 12mm;overflow:hidden}.qty-wrap{display:block}.qty-wrap input{height:22px}.cash-table th,.cash-table td{height:24px;padding:3px}h1{font-size:20px;margin-bottom:8px}@page{size:A4;margin:0}}
+@media print{body{background:#fff}.app{padding:0}.toolbar,.warn,.qty-wrap button{display:none!important}.page{box-shadow:none;margin:0;width:210mm;height:297mm;min-height:0;padding:10mm 12mm;overflow:hidden}.qty-wrap{display:block}.qty-wrap input{height:22px}.cash-table th,.cash-table td{height:24px;padding:3px}h1{font-size:20px;margin-bottom:8px}@page{size:A4;margin:0}}
 </style>
 </head>
 <body>
@@ -38,9 +38,12 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
   <div class="toolbar">
     <button onclick="window.print()">Drucken / PDF</button>
     <button class="gray" onclick="setWeek()">Woche automatisch</button>
-    <button class="green" onclick="saveDay()">Tag speichern</button>
+    <button class="greenBtn" onclick="saveDay()">Tag speichern</button>
     <button class="red" onclick="clearAll()">Leeren</button>
   </div>
+
+  <div class="warn">Wichtig: Nur echte Barausgaben werden vom Kassenbestand abgezogen. EC/Kartenzahlung und Gutschein werden separat ausgewiesen und ändern den physischen Bargeldbestand nicht.</div>
+
   <section class="page">
     <h1>Zählprotokoll Kasse</h1>
 
@@ -58,26 +61,46 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
     </table>
 
     <table class="summary">
-      <tr><td class="label">Automatischer Vortagssaldo</td><td><input id="prevTotal" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td><button type="button" onclick="loadPreviousSaldo()">Saldo automatisch</button></td></tr>
-      <tr><td style="width:50%"></td><td class="label" style="width:25%">Total Bargeld</td><td class="yellow" id="grandTotalCell">- €</td></tr>
+      <tr>
+        <td class="label">Automatischer Vortagssaldo</td>
+        <td><input id="prevTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td>
+        <td><button type="button" onclick="loadPreviousSaldo()">Saldo automatisch</button></td>
+      </tr>
+
+      <tr><td></td><td class="label">Total Bargeld gezählt</td><td class="yellow" id="grandTotalCell">- €</td></tr>
       <tr><td colspan="3" style="height:8px;border:0"></td></tr>
-      <tr><td class="label" colspan="3">Einkäufe / Ausgaben bar</td></tr>
-      <tr><td>Beschreibung / Beleg</td><td>Betrag</td><td></td></tr>
-      <tr><td><select id="buyDesc1"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy1" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc2"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy2" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc3"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy3" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc4"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy4" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc5"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy5" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td></td><td class="label">Summe Ausgaben</td><td class="yellow" id="buyTotalCell">- €</td></tr>
-      <tr><td></td><td class="label">Endbestand nach Abzug</td><td class="green" id="finalTotalCell">- €</td></tr>
+
+      <tr><td class="label" colspan="3">Echte Barausgaben / Barentnahmen</td></tr>
+      <tr><td>Beschreibung / Beleg</td><td>Betrag</td><td class="small">Wird von der Kasse abgezogen</td></tr>
+      <tr><td><select id="cashDesc1"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Privatentnahme</option><option>Sonstiges</option></select></td><td><input id="cashOut1" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="cashDesc2"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Privatentnahme</option><option>Sonstiges</option></select></td><td><input id="cashOut2" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="cashDesc3"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Privatentnahme</option><option>Sonstiges</option></select></td><td><input id="cashOut3" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="cashDesc4"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Privatentnahme</option><option>Sonstiges</option></select></td><td><input id="cashOut4" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="cashDesc5"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Privatentnahme</option><option>Sonstiges</option></select></td><td><input id="cashOut5" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td></td><td class="label">Summe Barausgaben</td><td class="yellow" id="cashOutTotalCell">- €</td></tr>
+
+      <tr><td colspan="3" style="height:8px;border:0"></td></tr>
+      <tr><td class="label" colspan="3">Nicht bar / separat für Tagesabschluss</td></tr>
+      <tr><td>EC / Kartenzahlung</td><td><input id="ecTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">Nicht vom Bargeld abziehen</td></tr>
+      <tr><td>Gutschein</td><td><input id="voucherTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">Separat ausweisen</td></tr>
+      <tr><td>Sonstige Einnahmen nicht bar</td><td><input id="otherNonCash" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">Optional</td></tr>
+
+      <tr><td colspan="3" style="height:8px;border:0"></td></tr>
+      <tr><td></td><td class="label">Endbestand Kasse Bargeld</td><td class="green" id="finalCashCell">- €</td></tr>
+      <tr><td></td><td class="label">Tageslosung gesamt</td><td class="yellow" id="daySalesCell">- €</td></tr>
     </table>
+
+    <div class="signs">
+      <div><div class="sign"></div>Erstellt / gezählt</div>
+      <div><div class="sign"></div>Kontrolliert</div>
+    </div>
   </section>
 </div>
 
 <script>
 const notes=[100,50,20,10,5];
 const coins=[2,1,0.5,0.2,0.1,0.05,0.02,0.01];
-function euro(v){return v===0?'- €':v.toFixed(2).replace('.',',')+' €'}
+function euro(v){return Math.abs(v)<0.005?'- €':v.toFixed(2).replace('.',',')+' €'}
 function qtyInput(value,idx){return `<div class="qty-wrap"><button type="button" onclick="changeQty('${idx}',-1)">−</button><input id="q_${idx}" value="0" inputmode="numeric" oninput="calc()"><button type="button" onclick="changeQty('${idx}',1)">+</button></div>`}
 function makeRow(value,idx){return `<tr><td class="value">${value.toFixed(2).replace('.',',')} €</td><td class="qty">${qtyInput(value,idx)}</td><td class="total" id="t_${idx}">- €</td><td class="extra"></td></tr>`}
 function totalRow(id,label){return `<tr><td></td><td class="total-label">${label}</td><td class="total redcell" id="${id}">- €</td><td class="extra" id="${id}_extra">- €</td></tr>`}
@@ -99,26 +122,28 @@ function calc(){
  let nt=0,ct=0;
  notes.forEach((v,i)=>{const sum=v*getQty('n'+i);nt+=sum;document.getElementById('t_n'+i).textContent=euro(sum)});
  coins.forEach((v,i)=>{const sum=v*getQty('c'+i);ct+=sum;document.getElementById('t_c'+i).textContent=euro(sum)});
- const grand=nt+ct;
+ const cashCounted=nt+ct;
  const prev=moneyInput('prevTotal');
- const buyTotal=moneyInput('buy1')+moneyInput('buy2')+moneyInput('buy3')+moneyInput('buy4')+moneyInput('buy5');
- const finalTotal=grand+prev-buyTotal;
+ const cashOutTotal=moneyInput('cashOut1')+moneyInput('cashOut2')+moneyInput('cashOut3')+moneyInput('cashOut4')+moneyInput('cashOut5');
+ const ec=moneyInput('ecTotal');
+ const voucher=moneyInput('voucherTotal');
+ const otherNonCash=moneyInput('otherNonCash');
+
+ // CORRETO: EC, Gutschein e outras entradas não-bar NÃO reduzem a caixa física.
+ const finalCash=prev+cashCounted-cashOutTotal;
+ const daySales=cashCounted+ec+voucher+otherNonCash;
+
  document.getElementById('notesTotal').textContent=euro(nt);
  document.getElementById('notesTotal_extra').textContent=euro(nt);
  document.getElementById('coinsTotal').textContent=euro(ct);
  document.getElementById('coinsTotal_extra').textContent=euro(ct);
- document.getElementById('yellowTotal').textContent=euro(grand);
- document.getElementById('grandTotalCell').textContent=euro(grand);
- document.getElementById('buyTotalCell').textContent=euro(buyTotal);
- document.getElementById('finalTotalCell').textContent=euro(finalTotal);
- window.lastFinalTotal=finalTotal;
+ document.getElementById('yellowTotal').textContent=euro(cashCounted);
+ document.getElementById('grandTotalCell').textContent=euro(cashCounted);
+ document.getElementById('cashOutTotalCell').textContent=euro(cashOutTotal);
+ document.getElementById('finalCashCell').textContent=euro(finalCash);
+ document.getElementById('daySalesCell').textContent=euro(daySales);
+ window.lastFinalTotal=finalCash;
 }
-function parseDE(s){
- const m=String(s||'').match(/^([0-9]{2})\.([0-9]{2})\.([0-9]{4})$/);
- if(!m)return null;
- return new Date(Number(m[3]),Number(m[2])-1,Number(m[1]));
-}
-function fmtDE(d){return d.toLocaleDateString('de-DE')}
 function fmtISODate(d){return d.toISOString().slice(0,10)}
 function isoKey(d){return d.toISOString().slice(0,10)}
 function mondayOf(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
@@ -151,15 +176,15 @@ function saveDay(){
 }
 function clearAll(){
  document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');
- ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{
+ ['cashOut1','cashOut2','cashOut3','cashOut4','cashOut5','ecTotal','voucherTotal','otherNonCash','cashDesc1','cashDesc2','cashDesc3','cashDesc4','cashDesc5'].forEach(id=>{
    const el=document.getElementById(id);
    if(el)el.value='';
  });
- document.querySelectorAll('.notes input').forEach(i=>i.value='');
  setWeek();
  loadPreviousSaldo();
  calc();
 }
+setWeek();
 render();
 </script>
 </body>
