@@ -83,6 +83,11 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
       <tr><td></td><td class="label">Vortag + Bargeld + EC + Gutschein</td><td class="yellow" id="allIncomeCell">- €</td></tr>
       <tr><td></td><td class="label">- Barausgaben</td><td class="yellow" id="allExpenseCell">- €</td></tr>
       <tr><td></td><td class="label">Gesamtbestand intern</td><td class="green" id="totalControlCell">- €</td></tr>
+      <tr><td colspan="3" style="height:8px;border:0"></td></tr>
+      <tr><td class="label" colspan="3">Kassenbericht-Kontrolle</td></tr>
+      <tr><td></td><td class="label">Vortag + Bargeld</td><td class="yellow" id="kbBeforeAllCell">- €</td></tr>
+      <tr><td></td><td class="label">- Alle Einträge</td><td class="yellow" id="kbAllEntriesCell">- €</td></tr>
+      <tr><td></td><td class="label">Kassenbestand wie Papier</td><td class="green" id="kbPaperCell">- €</td></tr>
     </table>
   </section>
 </div>
@@ -166,6 +171,8 @@ function calc(){
   const diff=controlBeforeExpenses-cashExpense-finalTotal;
   const allIncome=prev+cashEntry+nonCashTotal;
   const totalControl=allIncome-cashExpense;
+  const kbBeforeAll=prev+cashEntry;
+  const kbPaper=kbBeforeAll-buyTotal;
 
   setText('notesTotal',nt);
   setText('notesTotal_extra',nt);
@@ -184,6 +191,9 @@ function calc(){
   setText('allIncomeCell',allIncome);
   setText('allExpenseCell',cashExpense);
   setText('totalControlCell',totalControl);
+  setText('kbBeforeAllCell',kbBeforeAll);
+  setText('kbAllEntriesCell',buyTotal);
+  setText('kbPaperCell',kbPaper);
   const diffEl=document.getElementById('diffCell');
   if(diffEl){
     diffEl.style.background = Math.abs(diff)<0.005 ? '#00b050' : '#dc2626';
