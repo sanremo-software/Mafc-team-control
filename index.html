@@ -98,7 +98,7 @@ function calc(){
   setText('buyTotalCell',buyTotal);setText('nonCashCell',nonCash);setText('controlBeforeExpensesCell',before);setText('cashExpenseCell',cashOut);setText('finalTotalCell',endbetrag);setTextZero('diffCell',diff);
   setText('kbBeforeAllCell',before);setText('kbAllEntriesCell',cashOut);setText('kbPaperCell',endbetrag);setText('ecOnlyCell',nonCash);setText('allExpenseCell',endbetrag);setText('totalControlCell',endbetrag-nonCash);setText('topEndbetragCell',endbetrag-nonCash);
   const diffEl=document.getElementById('diffCell');if(diffEl){diffEl.style.background=Math.abs(diff)<0.005?'#00b050':'#dc2626';diffEl.style.color=Math.abs(diff)<0.005?'#000':'#fff'}
-  window.lastFinalTotal=endbetrag;
+  window.lastFinalTotal=endbetrag-nonCash;
 }
 function fmtISODate(d){const y=d.getFullYear();const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
 function isoKey(d){return fmtISODate(d)}
