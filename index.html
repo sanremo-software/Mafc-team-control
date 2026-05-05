@@ -38,6 +38,7 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
     <button onclick="window.print()">Drucken / PDF</button>
     <button class="gray" onclick="setWeek()">Woche automatisch</button>
     <button class="greenBtn" onclick="saveDay()">Tag speichern</button>
+    <button class="gray" onclick="newDay()">Neuer Tag</button>
     <button class="red" onclick="clearAll()">Leeren</button>
   </div>
 
@@ -234,11 +235,31 @@ function saveDay(){
 }
 
 function clearAll(){
+ document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');
+ ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{
+   const el=document.getElementById(id);
+   if(el) el.value='';
+ });
+ setWeek();
+ calc();
+}
+
+function newDay(){
+  // guarda o dia atual primeiro
+  saveDay();
+
+  // limpa apenas valores do dia
   document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');
   ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.value='';
   });
+
+  // carrega automaticamente saldo do dia anterior
+  loadPreviousSaldo();
+
+  calc();
+});
   setWeek();
   calc();
 }
