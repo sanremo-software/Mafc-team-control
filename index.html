@@ -60,7 +60,8 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
 
     <table class="summary">
       <tr><td class="label">Automatischer Vortagssaldo</td><td><input id="prevTotal" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td><button type="button" onclick="loadPreviousSaldo()">Saldo automatisch</button></td></tr>
-      <tr><td style="width:50%"></td><td class="label" style="width:25%">Total Bargeld</td><td class="yellow" id="grandTotalCell">- €</td></tr>
+      <tr><td style="width:50%"></td><td class="label" style="width:25%">Bargeld gezählt \(IST\)</td><td class="yellow" id="grandTotalCell">- €</td></tr>
+      <tr><td class="label">Kasseneingang / Tageslosung</td><td><input id="cashEntry" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">Umsatz Bar laut Kassenbericht</td></tr>
       <tr><td colspan="3" style="height:8px;border:0"></td></tr>
       <tr><td class="label" colspan="3">Einkäufe / Ausgaben / Zahlungsarten</td></tr>
       <tr><td>Beschreibung / Beleg</td><td>Betrag</td><td></td></tr>
@@ -70,9 +71,10 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
       <tr><td><select id="buyDesc4" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy4" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td><select id="buyDesc5" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy5" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td></td><td class="label">Summe eingetragen</td><td class="yellow" id="buyTotalCell">- €</td></tr>
-      <tr><td></td><td class="label">Kontrolle: Vortag + Bargeld heute</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
+      <tr><td></td><td class="label">Kontrolle: Vortag + Kasseneingang</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
       <tr><td></td><td class="label">Summe Barausgaben</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
-      <tr><td></td><td class="label">Endbestand nach Abzug</td><td class="green" id="finalTotalCell">- €</td></tr>
+      <tr><td></td><td class="label">Soll-Kassenbestand</td><td class="yellow" id="finalTotalCell">- €</td></tr>
+      <tr><td></td><td class="label">Differenz IST - SOLL</td><td class="green" id="diffCell">- €</td></tr>
     </table>
   </section>
 </div>
@@ -121,6 +123,7 @@ function calc(){
 
   const grand=nt+ct;
   const prev=moneyInput('prevTotal');
+  const cashEntry=moneyInput('cashEntry');
   let buyTotal=0;
   let cashExpense=0;
 
@@ -132,8 +135,9 @@ function calc(){
     cashExpense+=val;
   }
 
-  const controlBeforeExpenses=prev+grand;
+  const controlBeforeExpenses=prev+cashEntry;
   const finalTotal=controlBeforeExpenses-cashExpense;
+  const diff=grand-finalTotal;
 
   setText('notesTotal',nt);
   setText('notesTotal_extra',nt);
@@ -145,6 +149,7 @@ function calc(){
   setText('controlBeforeExpensesCell',controlBeforeExpenses);
   setText('cashExpenseCell',cashExpense);
   setText('finalTotalCell',finalTotal);
+  setText('diffCell',diff);
   window.lastFinalTotal=finalTotal;
 }
 
@@ -195,7 +200,7 @@ function saveDay(){
 }
 function clearDayFields(){
   document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');
-  ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{
+  ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5','cashEntry'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.value='';
   });
