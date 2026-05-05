@@ -71,9 +71,10 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
       <tr><td><select id="buyDesc4" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy4" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td><select id="buyDesc5" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy5" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td></td><td class="label">Summe eingetragen</td><td class="yellow" id="buyTotalCell">- €</td></tr>
+      <tr><td></td><td class="label">Nicht kassenwirksam</td><td class="yellow" id="nonCashCell">- €</td></tr>
       <tr><td></td><td class="label">Kontrolle: Vortag + Kasseneingang</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
       <tr><td></td><td class="label">Summe Barausgaben</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
-      <tr><td></td><td class="label">Soll-Kassenbestand</td><td class="yellow" id="finalTotalCell">- €</td></tr>
+      <tr><td></td><td class="label">Kassenbestand nach Abzug</td><td class="yellow" id="finalTotalCell">- €</td></tr>
       <tr><td></td><td class="label">Kontroll-Differenz</td><td class="green" id="diffCell">- €</td></tr>
     </table>
   </section>
@@ -132,12 +133,16 @@ function calc(){
   const cashEntry=grand;
   let buyTotal=0;
   let cashExpense=0;
+  let nonCashTotal=0;
 
   for(let i=1;i<=5;i++){
     const val=moneyInput('buy'+i);
     const desc=(document.getElementById('buyDesc'+i)?.value||'').trim().toUpperCase();
     buyTotal+=val;
-    if(desc==='EC CARD' || desc==='GUTSCHEIN') continue;
+    if(desc==='EC CARD' || desc==='GUTSCHEIN'){
+      nonCashTotal+=val;
+      continue;
+    }
     cashExpense+=val;
   }
 
@@ -152,6 +157,7 @@ function calc(){
   setText('yellowTotal',grand);
   setText('grandTotalCell',grand);
   setText('buyTotalCell',buyTotal);
+  setText('nonCashCell',nonCashTotal);
   setText('controlBeforeExpensesCell',controlBeforeExpenses);
   setText('cashExpenseCell',cashExpense);
   setText('finalTotalCell',finalTotal);
