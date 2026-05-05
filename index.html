@@ -32,7 +32,7 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
   <div class="toolbar"><button onclick="window.print()">Drucken / PDF</button><button class="gray" onclick="setWeek()">Woche automatisch</button><button class="greenBtn" onclick="saveDay()">Tag speichern</button><button class="blueBtn" onclick="newDay()">Neuer Tag</button><button class="red" onclick="clearAll()">Leeren</button></div>
   <section class="page">
     <h1>Zählprotokoll Kasse</h1>
-    <div class="top-final"><div class="label">Endbetrag / Kassenbestand</div><div class="value" id="topEndbetragCell">- €</div></div>
+    <div class="top-final"><div class="label">Endbetrag Kasse bestanden (minus EC/Gutschein)</div><div class="value" id="topEndbetragCell">- €</div></div>
     <div class="date-row"><input id="dateFrom" type="date"><div>Bis</div><input id="dateTo" type="date"></div>
     <table class="cash-table"><thead><tr><th>,</th><th>Quantidade</th><th>Total</th><th></th></tr></thead><tbody id="cashBody"></tbody></table>
     <table class="summary">
@@ -55,7 +55,7 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
       <tr><td></td><td class="label">Kontroll-Differenz</td><td class="green" id="diffCell">0,00 €</td></tr>
     </table>
     <div class="bottom-full">
-      <table class="control-table"><thead><tr><th colspan="2">Interne Kontrolle</th></tr></thead><tbody><tr><td>Vortag + Bargeld heute</td><td id="kbBeforeAllCell">- €</td></tr><tr><td>− Abzug echte Kasse</td><td id="kbAllEntriesCell">- €</td></tr><tr class="result"><td>Endbetrag</td><td id="kbPaperCell">- €</td></tr></tbody></table>
+      <table class="control-table"><thead><tr><th colspan="2">Interne Kontrolle</th></tr></thead><tbody><tr><td>Vortag + Bargeld heute</td><td id="kbBeforeAllCell">- €</td></tr><tr><td>− Abzug echte Kasse</td><td id="kbAllEntriesCell">- €</td></tr><tr class="result"><td>Endbetrag (Kasse real)</td><td id="kbPaperCell">- €</td></tr></tbody></table>
       <table class="control-table"><thead><tr><th colspan="2">Info nicht Kasse</th></tr></thead><tbody><tr><td>EC CARD + Gutschein</td><td id="ecOnlyCell">- €</td></tr><tr><td>Endbetrag echte Kasse</td><td id="allExpenseCell">- €</td></tr><tr class="result"><td>Endbetrag minus EC/Gutschein</td><td id="totalControlCell">- €</td></tr></tbody></table>
     </div>
   </section>
@@ -96,7 +96,7 @@ function calc(){
   const diff=before-cashOut-endbetrag;
   setText('notesTotal',nt);setText('notesTotal_extra',nt);setText('coinsTotal',ct);setText('coinsTotal_extra',ct);setText('yellowTotal',grand);setText('grandTotalCell',grand);
   setText('buyTotalCell',buyTotal);setText('nonCashCell',nonCash);setText('controlBeforeExpensesCell',before);setText('cashExpenseCell',cashOut);setText('finalTotalCell',endbetrag);setTextZero('diffCell',diff);
-  setText('kbBeforeAllCell',before);setText('kbAllEntriesCell',cashOut);setText('kbPaperCell',endbetrag);setText('ecOnlyCell',nonCash);setText('allExpenseCell',endbetrag);setText('totalControlCell',endbetrag-nonCash);setText('topEndbetragCell',endbetrag);
+  setText('kbBeforeAllCell',before);setText('kbAllEntriesCell',cashOut);setText('kbPaperCell',endbetrag);setText('ecOnlyCell',nonCash);setText('allExpenseCell',endbetrag);setText('totalControlCell',endbetrag-nonCash);setText('topEndbetragCell',endbetrag-nonCash);
   const diffEl=document.getElementById('diffCell');if(diffEl){diffEl.style.background=Math.abs(diff)<0.005?'#00b050':'#dc2626';diffEl.style.color=Math.abs(diff)<0.005?'#000':'#fff'}
   window.lastFinalTotal=endbetrag;
 }
