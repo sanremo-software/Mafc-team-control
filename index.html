@@ -13,6 +13,9 @@ button{border:0;border-radius:7px;background:#111;color:#fff;font-weight:700;pad
 button.gray{background:#555}.greenBtn{background:#166534}.red{background:#991b1b}.blueBtn{background:#1d4ed8}
 .page{width:210mm;min-height:297mm;background:#fff;margin:0 auto 18px;padding:10mm 11mm;box-shadow:0 2px 12px rgba(0,0,0,.22)}
 h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;letter-spacing:.5px}
+.top-final{display:grid;grid-template-columns:1fr 38mm;gap:6px;border:2px solid #000;margin:0 0 8px 0;background:#fff}
+.top-final .label{background:#b4c7e7;font-weight:900;text-align:center;padding:6px;font-size:15px;text-transform:uppercase;border-right:1px solid #000}
+.top-final .value{background:#00b050;font-weight:900;text-align:right;padding:6px 10px;font-size:18px;font-variant-numeric:tabular-nums}
 .date-row{display:grid;grid-template-columns:1fr 90px 1fr;gap:0;margin-bottom:8px}
 .date-row input,.date-row div{border:1px solid #000;height:25px;text-align:center;font-weight:700;font-size:14px;padding:3px;background:#fff}
 .cash-table{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}
@@ -84,6 +87,11 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
   <section class="page">
     <h1>Zählprotokoll Kasse</h1>
 
+    <div class="top-final">
+      <div class="label">Kassenbestand / Endbetrag wie Kassenbericht</div>
+      <div class="value" id="topEndbetragCell">- €</div>
+    </div>
+
     <div class="date-row">
       <input id="dateFrom" type="date">
       <div>Bis</div>
@@ -112,7 +120,6 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
       <tr><td></td><td class="label">Summe eingetragen</td><td class="yellow" id="buyTotalCell">- €</td></tr>
       <tr><td></td><td class="label">Nicht kassenwirksam</td><td class="yellow" id="nonCashCell">- €</td></tr>
       <tr><td></td><td class="label">davon EC CARD</td><td class="yellow" id="ecOnlyCell">- €</td></tr>
-      <tr><td></td><td class="label">davon GUTSCHEIN</td><td class="yellow" id="voucherOnlyCell">- €</td></tr>
       <tr><td></td><td class="label">Kontrolle: Vortag + Kasseneingang</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
       <tr><td></td><td class="label">Summe Barausgaben</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
       <tr><td></td><td class="label">Kassenbestand nach Abzug</td><td class="yellow" id="finalTotalCell">- €</td></tr>
@@ -200,7 +207,6 @@ function calc(){
   let cashExpense=0;
   let nonCashTotal=0;
   let ecTotal=0;
-  let voucherTotal=0;
 
   for(let i=1;i<=5;i++){
     const val=moneyInput('buy'+i);
@@ -208,11 +214,6 @@ function calc(){
     buyTotal+=val;
     if(desc==='EC CARD'){
       ecTotal+=val;
-      nonCashTotal+=val;
-      continue;
-    }
-    if(desc==='GUTSCHEIN'){
-      voucherTotal+=val;
       nonCashTotal+=val;
       continue;
     }
@@ -236,7 +237,6 @@ function calc(){
   setText('buyTotalCell',buyTotal);
   setText('nonCashCell',nonCashTotal);
   setText('ecOnlyCell',ecTotal);
-  setText('voucherOnlyCell',voucherTotal);
   setText('controlBeforeExpensesCell',controlBeforeExpenses);
   setText('cashExpenseCell',cashExpense);
   setText('finalTotalCell',finalTotal);
@@ -247,13 +247,14 @@ function calc(){
   setText('kbBeforeAllCell',kbBeforeAll);
   setText('kbAllEntriesCell',buyTotal);
   setText('kbPaperCell',kbPaper);
+  setText('topEndbetragCell',kbPaper);
 
   const diffEl=document.getElementById('diffCell');
   if(diffEl){
     diffEl.style.background = Math.abs(diff)<0.005 ? '#00b050' : '#dc2626';
     diffEl.style.color = Math.abs(diff)<0.005 ? '#000' : '#fff';
   }
-  window.lastFinalTotal=finalTotal;
+  window.lastFinalTotal=kbPaper;
 }
 
 function fmtISODate(d){
