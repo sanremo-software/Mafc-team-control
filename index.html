@@ -56,7 +56,7 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
     </table>
     <div class="bottom-full">
       <table class="control-table"><thead><tr><th colspan="2">Interne Kontrolle</th></tr></thead><tbody><tr><td>Vortag + Bargeld heute</td><td id="kbBeforeAllCell">- €</td></tr><tr><td>− Abzug echte Kasse</td><td id="kbAllEntriesCell">- €</td></tr><tr class="result"><td>Endbetrag</td><td id="kbPaperCell">- €</td></tr></tbody></table>
-      <table class="control-table"><thead><tr><th colspan="2">Info nicht Kasse</th></tr></thead><tbody><tr><td>EC + Gutschein</td><td id="ecOnlyCell">- €</td></tr><tr><td>Summe eingetragen</td><td id="allExpenseCell">- €</td></tr><tr class="result"><td>Endbetrag oben</td><td id="totalControlCell">- €</td></tr></tbody></table>
+      <table class="control-table"><thead><tr><th colspan="2">Info nicht Kasse</th></tr></thead><tbody><tr><td>EC CARD + Gutschein</td><td id="ecOnlyCell">- €</td></tr><tr><td>Endbetrag echte Kasse</td><td id="allExpenseCell">- €</td></tr><tr class="result"><td>Endbetrag minus EC/Gutschein</td><td id="totalControlCell">- €</td></tr></tbody></table>
     </div>
   </section>
 </div>
@@ -96,7 +96,7 @@ function calc(){
   const diff=before-cashOut-endbetrag;
   setText('notesTotal',nt);setText('notesTotal_extra',nt);setText('coinsTotal',ct);setText('coinsTotal_extra',ct);setText('yellowTotal',grand);setText('grandTotalCell',grand);
   setText('buyTotalCell',buyTotal);setText('nonCashCell',nonCash);setText('controlBeforeExpensesCell',before);setText('cashExpenseCell',cashOut);setText('finalTotalCell',endbetrag);setTextZero('diffCell',diff);
-  setText('kbBeforeAllCell',before);setText('kbAllEntriesCell',cashOut);setText('kbPaperCell',endbetrag);setText('ecOnlyCell',nonCash);setText('allExpenseCell',buyTotal);setText('totalControlCell',endbetrag);setText('topEndbetragCell',endbetrag);
+  setText('kbBeforeAllCell',before);setText('kbAllEntriesCell',cashOut);setText('kbPaperCell',endbetrag);setText('ecOnlyCell',nonCash);setText('allExpenseCell',endbetrag);setText('totalControlCell',endbetrag-nonCash);setText('topEndbetragCell',endbetrag);
   const diffEl=document.getElementById('diffCell');if(diffEl){diffEl.style.background=Math.abs(diff)<0.005?'#00b050':'#dc2626';diffEl.style.color=Math.abs(diff)<0.005?'#000':'#fff'}
   window.lastFinalTotal=endbetrag;
 }
