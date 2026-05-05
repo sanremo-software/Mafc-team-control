@@ -87,6 +87,10 @@ function euro(v){
   const num=Number(v)||0;
   return Math.abs(num)<0.005 ? '- €' : num.toFixed(2).replace('.',',')+' €';
 }
+function euroZero(v){
+  const num=Number(v)||0;
+  return Math.abs(num)<0.005 ? '0,00 €' : num.toFixed(2).replace('.',',')+' €';
+}
 function qtyInput(value,idx){
   return `<div class="qty-wrap"><button type="button" onclick="changeQty('${idx}',-1)">−</button><input id="q_${idx}" value="0" inputmode="numeric" oninput="calc()"><button type="button" onclick="changeQty('${idx}',1)">+</button></div>`;
 }
@@ -114,6 +118,7 @@ function moneyInput(id){
   return parseFloat(raw)||0;
 }
 function setText(id,value){const el=document.getElementById(id);if(el)el.textContent=euro(value)}
+function setTextZero(id,value){const el=document.getElementById(id);if(el)el.textContent=euroZero(value)}
 function setMoneyInput(id,value){document.getElementById(id).value=(Number(value)||0).toFixed(2).replace('.',',')}
 
 function calc(){
@@ -149,7 +154,12 @@ function calc(){
   setText('controlBeforeExpensesCell',controlBeforeExpenses);
   setText('cashExpenseCell',cashExpense);
   setText('finalTotalCell',finalTotal);
-  setText('diffCell',diff);
+  setTextZero('diffCell',diff);
+  const diffEl=document.getElementById('diffCell');
+  if(diffEl){
+    diffEl.style.background = Math.abs(diff)<0.005 ? '#00b050' : '#dc2626';
+    diffEl.style.color = Math.abs(diff)<0.005 ? '#000' : '#fff';
+  }
   window.lastFinalTotal=finalTotal;
 }
 
