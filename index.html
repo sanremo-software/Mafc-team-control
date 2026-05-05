@@ -61,7 +61,7 @@ h1{font-size:22px;margin:0 0 10px;text-align:center;text-transform:uppercase}
     <table class="summary">
       <tr><td class="label">Automatischer Vortagssaldo</td><td><input id="prevTotal" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td><button type="button" onclick="loadPreviousSaldo()">Saldo automatisch</button></td></tr>
       <tr><td style="width:50%"></td><td class="label" style="width:25%">Bargeld gezählt \(IST\)</td><td class="yellow" id="grandTotalCell">- €</td></tr>
-      <tr><td class="label">Kasseneingang / Tageslosung</td><td><input id="cashEntry" class="buy" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">Umsatz Bar laut Kassenbericht</td></tr>
+      <tr><td class="label">Kasseneingang / Tageslosung</td><td><input id="cashEntry" class="buy" inputmode="decimal" placeholder="0,00" readonly></td><td class="small">Automatisch aus gezähltem Bargeld</td></tr>
       <tr><td colspan="3" style="height:8px;border:0"></td></tr>
       <tr><td class="label" colspan="3">Einkäufe / Ausgaben / Zahlungsarten</td></tr>
       <tr><td>Beschreibung / Beleg</td><td>Betrag</td><td></td></tr>
@@ -127,8 +127,9 @@ function calc(){
   coins.forEach((v,i)=>{const sum=v*getQty('c'+i);ct+=sum;setText('t_c'+i,sum)});
 
   const grand=nt+ct;
+  setMoneyInput('cashEntry',grand);
   const prev=moneyInput('prevTotal');
-  const cashEntry=moneyInput('cashEntry');
+  const cashEntry=grand;
   let buyTotal=0;
   let cashExpense=0;
 
@@ -210,7 +211,7 @@ function saveDay(){
 }
 function clearDayFields(){
   document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');
-  ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5','cashEntry'].forEach(id=>{
+  ['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{
     const el=document.getElementById(id);
     if(el) el.value='';
   });
