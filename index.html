@@ -45,7 +45,7 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
     <table class="cash-table"><thead><tr><th>,</th><th>Quantidade</th><th>Total</th><th></th></tr></thead><tbody id="cashBody"></tbody></table>
 
     <table class="summary">
-      <tr><td class="label">Vortagssaldo / Geld von gestern</td><td><input id="prevTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td><button type="button" onclick="loadPreviousSaldo()">Saldo automatisch</button></td></tr>
+      <tr><td class="label">Vortagssaldo / dinheiro acumulado</td><td><input id="prevTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td><button type="button" onclick="loadPreviousSaldo()">Saldo automático</button></td></tr>
       <tr><td></td><td class="label">Bargeld heute gezählt</td><td class="yellow" id="grandTotalCell">- €</td></tr>
       <tr><td class="label">Kassenbericht laut Registrierkasse</td><td><input id="registerTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">Total vom Kassenabschluss</td></tr>
       <tr><td class="label">EC Karte / Kartenzahlung</td><td><input id="ecManual" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">laut Kassenabschluss</td></tr>
@@ -62,7 +62,7 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
       <tr><td><select id="buyDesc4" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Sonstiges</option></select></td><td><input id="buy4" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td><select id="buyDesc5" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Sonstiges</option></select></td><td><input id="buy5" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
       <tr><td></td><td class="label">Summe Ausgaben / Bank</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
-      <tr><td></td><td class="label">Vortag + Bargeld heute</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
+      <tr><td></td><td class="label">Vortag + Bargeld hoje</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
       <tr><td></td><td class="label">Endbetrag / Kassenbestand</td><td class="yellow" id="finalTotalCell">- €</td></tr>
     </table>
   </section>
@@ -111,10 +111,23 @@ function isoKey(d){return fmtISODate(d)}
 function mondayOf(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
 function setWeek(){const d=new Date();const first=mondayOf(d);const last=new Date(first);last.setDate(first.getDate()+6);document.getElementById('dateFrom').value=fmtISODate(first);document.getElementById('dateTo').value=fmtISODate(last)}
 function loadPreviousSaldo(){const lastSaldo=localStorage.getItem('sanremo_last_saldo');if(lastSaldo!==null){setMoneyInput('prevTotal',parseFloat(lastSaldo)||0);calc();return}document.getElementById('prevTotal').value='0,00';calc()}
-function saveDaySilent(){calc();const val=Number(window.lastFinalTotal||0);localStorage.setItem('sanremo_last_saldo',val.toFixed(2));return val}
+function saveDaySilent(){
+  calc();
+  // Guarda sempre a caixa física acumulada:
+  // Vortag + Bargeld heute - Ausgaben/Bankeinzahlung
+  const val=Number(window.lastFinalTotal||0);
+  localStorage.setItem('sanremo_last_saldo',val.toFixed(2));
+  return val;
+}
 function saveDay(){const val=saveDaySilent();alert('Saldo guardado: '+euro(val))}
 function clearDayFields(){document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');['registerTotal','ecManual','voucherManual','buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''})}
-function newDay(){const val=saveDaySilent();clearDayFields();setMoneyInput('prevTotal',val);calc();alert('Neuer Tag aberto. Vortagssaldo carregado: '+euro(val))}
+function newDay(){
+  const val=saveDaySilent();
+  clearDayFields();
+  setMoneyInput('prevTotal',val);
+  calc();
+  alert('Neuer Tag aberto. Vortagssaldo / dinheiro acumulado carregado: '+euro(val));
+}
 function clearAll(){clearDayFields();document.getElementById('prevTotal').value='0,00';localStorage.removeItem('sanremo_last_saldo');setWeek();calc()}
 render();setWeek();loadPreviousSaldo();
 </script>
