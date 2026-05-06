@@ -64,6 +64,12 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
       <tr><td></td><td class="label">Summe Ausgaben / Bank</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
       <tr><td></td><td class="label">Vortag + Bargeld hoje</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
       <tr><td></td><td class="label">Endbetrag / Kassenbestand</td><td class="yellow" id="finalTotalCell">- €</td></tr>
+      <tr><td colspan="3" style="height:6px;border:0"></td></tr>
+      <tr><td class="label" colspan="3">Bargeld real akkumuliert</td></tr>
+      <tr><td></td><td class="label">Bargeldbestand gestern</td><td class="yellow" id="accPrevCell">- €</td></tr>
+      <tr><td></td><td class="label">+ Bargeld heute gezählt</td><td class="yellow" id="accTodayCell">- €</td></tr>
+      <tr><td></td><td class="label">- Ausgaben / Bank</td><td class="yellow" id="accOutCell">- €</td></tr>
+      <tr><td></td><td class="label">Bargeldbestand real heute</td><td class="green" id="accFinalCell">- €</td></tr>
     </table>
   </section>
 </div>
@@ -103,6 +109,7 @@ function calc(){
   setText('notesTotal',nt);setText('notesTotal_extra',nt);setText('coinsTotal',ct);setText('coinsTotal_extra',ct);setText('yellowTotal',grand);
   setText('grandTotalCell',grand);setText('expectedCashCell',expectedCash);setTextZero('registerDiffCell',registerDiff);setText('cashEcVoucherCell',paymentTotal);
   setText('cashExpenseCell',cashOut);setText('controlBeforeExpensesCell',before);setText('finalTotalCell',endbetrag);setText('topEndbetragCell',endbetrag);
+  setText('accPrevCell',prev);setText('accTodayCell',grand);setText('accOutCell',cashOut);setText('accFinalCell',endbetrag);
   const regDiffEl=document.getElementById('registerDiffCell');if(regDiffEl){regDiffEl.style.background=Math.abs(registerDiff)<0.005?'#00b050':'#dc2626';regDiffEl.style.color=Math.abs(registerDiff)<0.005?'#000':'#fff'}
   window.lastFinalTotal=endbetrag;
 }
@@ -110,13 +117,23 @@ function fmtISODate(d){const y=d.getFullYear();const m=String(d.getMonth()+1).pa
 function isoKey(d){return fmtISODate(d)}
 function mondayOf(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
 function setWeek(){const d=new Date();const first=mondayOf(d);const last=new Date(first);last.setDate(first.getDate()+6);document.getElementById('dateFrom').value=fmtISODate(first);document.getElementById('dateTo').value=fmtISODate(last)}
-function loadPreviousSaldo(){const lastSaldo=localStorage.getItem('sanremo_last_saldo');if(lastSaldo!==null){setMoneyInput('prevTotal',parseFloat(lastSaldo)||0);calc();return}document.getElementById('prevTotal').value='0,00';calc()}
+function loadPreviousSaldo(){
+  const accSaldo=localStorage.getItem('sanremo_bargeld_real_akkumuliert');
+  const lastSaldo=accSaldo!==null ? accSaldo : localStorage.getItem('sanremo_last_saldo');
+  if(lastSaldo!==null){
+    setMoneyInput('prevTotal',parseFloat(lastSaldo)||0);
+    calc();
+    return;
+  }
+  document.getElementById('prevTotal').value='0,00';
+  calc();
+}
 function saveDaySilent(){
   calc();
-  // Guarda sempre a caixa física acumulada:
-  // Vortag + Bargeld heute - Ausgaben/Bankeinzahlung
+  // Guarda o Bargeld real acumulado: ontem + contado hoje - Ausgaben/Bank
   const val=Number(window.lastFinalTotal||0);
   localStorage.setItem('sanremo_last_saldo',val.toFixed(2));
+  localStorage.setItem('sanremo_bargeld_real_akkumuliert',val.toFixed(2));
   return val;
 }
 function saveDay(){const val=saveDaySilent();alert('Saldo guardado: '+euro(val))}
@@ -128,7 +145,14 @@ function newDay(){
   calc();
   alert('Neuer Tag aberto. Vortagssaldo / dinheiro acumulado carregado: '+euro(val));
 }
-function clearAll(){clearDayFields();document.getElementById('prevTotal').value='0,00';localStorage.removeItem('sanremo_last_saldo');setWeek();calc()}
+function clearAll(){
+  clearDayFields();
+  document.getElementById('prevTotal').value='0,00';
+  localStorage.removeItem('sanremo_last_saldo');
+  localStorage.removeItem('sanremo_bargeld_real_akkumuliert');
+  setWeek();
+  calc();
+}
 render();setWeek();loadPreviousSaldo();
 </script>
 </body>
