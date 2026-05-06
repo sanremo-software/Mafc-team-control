@@ -41,9 +41,10 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
       <tr><td class="label">Kasseneingang / Tageslosung</td><td><input id="cashEntry" inputmode="decimal" placeholder="0,00" readonly></td><td class="small">Automatisch aus gezähltem Bargeld</td></tr>
       <tr><td class="label">EC Karte / Kartenzahlung</td><td><input id="ecManual" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">separat eintragen</td></tr>
       <tr><td class="label">Gutschein</td><td><input id="voucherManual" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">separat eintragen</td></tr>
-      <tr><td class="label">Bargeld + EC + Gutschein</td><td class="yellow" id="cashEcVoucherCell">- €</td><td class="small">Gesamtsumme Zahlungsarten</td></tr>
-      <tr><td class="label">Kassenbericht laut Kasse</td><td><input id="registerTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">Total vom Kassenabschluss</td></tr>
-      <tr><td class="label">Differenz zum Kassenbericht</td><td class="green" id="registerDiffCell">0,00 €</td><td class="small">muss 0,00 € sein</td></tr>
+      <tr><td class="label">Kassenbericht laut Registrierkasse</td><td><input id="registerTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">Total vom Kassenabschluss</td></tr>
+      <tr><td class="label">Erwartetes Bargeld</td><td class="yellow" id="expectedCashCell">- €</td><td class="small">Kasse − EC − Gutschein</td></tr>
+      <tr><td class="label">Differenz Bargeld</td><td class="green" id="registerDiffCell">0,00 €</td><td class="small">gezählt − erwartet</td></tr>
+      <tr><td class="label">Bargeld + EC + Gutschein</td><td class="yellow" id="cashEcVoucherCell">- €</td><td class="small">Kontrollsumme Zahlungsarten</td></tr>
       <tr><td colspan="3" style="height:6px;border:0"></td></tr>
       <tr><td class="label" colspan="3">Einkäufe / Ausgaben / Zahlungsarten</td></tr>
       <tr><td>Beschreibung / Beleg</td><td>Betrag</td><td></td></tr>
@@ -100,12 +101,14 @@ function calc(){
     cashOut+=val;
   }
   const paymentTotal=grand+ecManual+voucherManual;
-  const registerDiff=paymentTotal-registerTotal;
+  const expectedCash=registerTotal-ecManual-voucherManual;
+  const registerDiff=grand-expectedCash;
   const before=prev+grand;
   const endbetrag=before-cashOut;
   const diff=before-cashOut-endbetrag;
   setText('notesTotal',nt);setText('notesTotal_extra',nt);setText('coinsTotal',ct);setText('coinsTotal_extra',ct);setText('yellowTotal',grand);setText('grandTotalCell',grand);
   setText('cashEcVoucherCell',paymentTotal);
+  setText('expectedCashCell',expectedCash);
   setTextZero('registerDiffCell',registerDiff);
   const regDiffEl=document.getElementById('registerDiffCell');
   if(regDiffEl){
