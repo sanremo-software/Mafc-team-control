@@ -22,8 +22,16 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
 .qty-wrap{display:grid;grid-template-columns:32px 1fr 32px;height:100%}.qty-wrap button{border:0;border-radius:0;background:#eee;color:#000;font-size:15px;padding:0;font-weight:900}.qty-wrap button:hover{background:#ddd}.qty-wrap input{border:0;width:100%;text-align:center;font-size:15px;color:#00f;font-weight:700;background:#fff;height:100%;font-variant-numeric:tabular-nums}
 .total-label{text-align:center;font-weight:900}.redcell{background:#e00000;color:#000}.yellowcell{background:#d99500;text-align:right;font-weight:900;padding-right:10px}
 .summary{margin-top:8px;border-collapse:collapse;width:100%;font-size:14px;table-layout:fixed}.summary td{border:1px solid #000;padding:4px;height:25px}.summary .label{font-weight:900;background:#b4c7e7;text-align:center}.summary .green{background:#00b050;text-align:right;font-weight:900}.summary .yellow{background:#d99500;text-align:right;font-weight:900}.summary select,.summary input{width:100%;height:22px;font-size:13px}.small{font-size:12px;font-weight:700}
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;width:100%}
+.mini-box{border-collapse:collapse;width:100%;table-layout:fixed;font-size:13px;border:2px solid #000}
+.mini-box th{border:1px solid #000;background:#b4c7e7;font-weight:900;text-align:center;padding:5px;height:27px}
+.mini-box td{border:1px solid #000;padding:4px;height:25px;font-weight:900}
+.mini-box td:first-child{background:#eef3f8;text-align:center;width:62%}
+.mini-box td:last-child{background:#d99500;text-align:right;width:38%;padding-right:8px;font-variant-numeric:tabular-nums}
+.mini-box tr.result td:first-child{background:#d9eaf7}
+.mini-box tr.result td:last-child{background:#00b050;color:#000}
 @media(max-width:800px){.page{width:100%;padding:10px}.cash-table{font-size:12px}.qty-wrap{grid-template-columns:28px 1fr 28px}.toolbar{justify-content:flex-start}}
-@media print{body{background:#fff;margin:0}.app{padding:0;margin:0;max-width:none}.toolbar,.qty-wrap button{display:none!important}.page{box-shadow:none;margin:0 auto;width:210mm;height:297mm;min-height:0;padding:8mm 9mm;overflow:hidden;transform:none}h1{font-size:21px;margin:0 0 7px}.date-row{margin-bottom:7px}.date-row input,.date-row div{height:24px;font-size:13px;padding:2px}.cash-table{font-size:13px}.cash-table th,.cash-table td{height:23px;padding:3px}.qty-wrap{display:block}.qty-wrap input{height:19px;font-size:13px}.summary{font-size:12.5px;margin-top:7px}.summary td{height:23px;padding:3px}.summary select,.summary input{height:19px;font-size:12px}button{display:none!important}@page{size:A4;margin:0}}
+@media print{body{background:#fff;margin:0}.app{padding:0;margin:0;max-width:none}.toolbar,.qty-wrap button{display:none!important}.page{box-shadow:none;margin:0 auto;width:210mm;height:297mm;min-height:0;padding:6mm 8mm;overflow:hidden;transform:none}h1{font-size:19px;margin:0 0 5px}.date-row{margin-bottom:5px}.date-row input,.date-row div{height:21px;font-size:12px;padding:1px}.cash-table{font-size:11.5px}.cash-table th,.cash-table td{height:20px;padding:2px}.qty-wrap{display:block}.qty-wrap input{height:17px;font-size:12px}.summary{font-size:11.5px;margin-top:5px}.summary td{height:20px;padding:2px}.summary select,.summary input{height:17px;font-size:11.5px}.bottom-grid{grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}.mini-box{font-size:11px;border:1.5px solid #000}.mini-box th{height:20px;font-size:11.5px;padding:2px}.mini-box td{height:20px;padding:2px}.mini-box td:last-child{padding-right:5px}button{display:none!important}@page{size:A4;margin:0}}
 </style>
 </head>
 <body>
@@ -64,13 +72,30 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
       <tr><td></td><td class="label">Summe Ausgaben / Bank</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
       <tr><td></td><td class="label">Vortag + Bargeld hoje</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
       <tr><td></td><td class="label">Endbetrag / Kassenbestand</td><td class="yellow" id="finalTotalCell">- €</td></tr>
-      <tr><td colspan="3" style="height:6px;border:0"></td></tr>
-      <tr><td class="label" colspan="3">Bargeld real akkumuliert</td></tr>
-      <tr><td></td><td class="label">Bargeldbestand gestern</td><td class="yellow" id="accPrevCell">- €</td></tr>
-      <tr><td></td><td class="label">+ Bargeld heute gezählt</td><td class="yellow" id="accTodayCell">- €</td></tr>
-      <tr><td></td><td class="label">- Ausgaben / Bank</td><td class="yellow" id="accOutCell">- €</td></tr>
-      <tr><td></td><td class="label">Bargeldbestand real heute</td><td class="green" id="accFinalCell">- €</td></tr>
+      
     </table>
+
+    <div class="bottom-grid">
+      <table class="mini-box">
+        <thead><tr><th colspan="2">Bargeld real akkumuliert</th></tr></thead>
+        <tbody>
+          <tr><td>Bargeldbestand gestern</td><td id="accPrevCell">- €</td></tr>
+          <tr><td>+ Bargeld heute gezählt</td><td id="accTodayCell">- €</td></tr>
+          <tr><td>- Ausgaben / Bank</td><td id="accOutCell">- €</td></tr>
+          <tr class="result"><td>Bargeldbestand real heute</td><td id="accFinalCell">- €</td></tr>
+        </tbody>
+      </table>
+
+      <table class="mini-box">
+        <thead><tr><th colspan="2">Kontrolle Kassenabschluss</th></tr></thead>
+        <tbody>
+          <tr><td>Kassenbericht</td><td id="boxRegisterCell">- €</td></tr>
+          <tr><td>- EC / Karte</td><td id="boxEcCell">- €</td></tr>
+          <tr><td>- Gutschein</td><td id="boxVoucherCell">- €</td></tr>
+          <tr class="result"><td>Erwartetes Bargeld</td><td id="boxExpectedCell">- €</td></tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 </div>
 
@@ -108,6 +133,7 @@ function calc(){
   const endbetrag=before-cashOut;
   setText('notesTotal',nt);setText('notesTotal_extra',nt);setText('coinsTotal',ct);setText('coinsTotal_extra',ct);setText('yellowTotal',grand);
   setText('grandTotalCell',grand);setText('expectedCashCell',expectedCash);setTextZero('registerDiffCell',registerDiff);setText('cashEcVoucherCell',paymentTotal);
+  setText('boxRegisterCell',registerTotal);setText('boxEcCell',ec);setText('boxVoucherCell',voucher);setText('boxExpectedCell',expectedCash);
   setText('cashExpenseCell',cashOut);setText('controlBeforeExpensesCell',before);setText('finalTotalCell',endbetrag);setText('topEndbetragCell',endbetrag);
   setText('accPrevCell',prev);setText('accTodayCell',grand);setText('accOutCell',cashOut);setText('accFinalCell',endbetrag);
   const regDiffEl=document.getElementById('registerDiffCell');if(regDiffEl){regDiffEl.style.background=Math.abs(registerDiff)<0.005?'#00b050':'#dc2626';regDiffEl.style.color=Math.abs(registerDiff)<0.005?'#000':'#fff'}
