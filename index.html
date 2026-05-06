@@ -22,54 +22,55 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
 .qty-wrap{display:grid;grid-template-columns:32px 1fr 32px;height:100%}.qty-wrap button{border:0;border-radius:0;background:#eee;color:#000;font-size:15px;padding:0;font-weight:900}.qty-wrap button:hover{background:#ddd}.qty-wrap input{border:0;width:100%;text-align:center;font-size:15px;color:#00f;font-weight:700;background:#fff;height:100%;font-variant-numeric:tabular-nums}
 .total-label{text-align:center;font-weight:900}.redcell{background:#e00000;color:#000}.yellowcell{background:#d99500;text-align:right;font-weight:900;padding-right:10px}
 .summary{margin-top:8px;border-collapse:collapse;width:100%;font-size:14px;table-layout:fixed}.summary td{border:1px solid #000;padding:4px;height:25px}.summary .label{font-weight:900;background:#b4c7e7;text-align:center}.summary .green{background:#00b050;text-align:right;font-weight:900}.summary .yellow{background:#d99500;text-align:right;font-weight:900}.summary select,.summary input{width:100%;height:22px;font-size:13px}.small{font-size:12px;font-weight:700}
-.bottom-full{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:10px;align-items:stretch}.control-table{width:100%;border-collapse:collapse;table-layout:fixed;font-size:13px;border:2px solid #000;background:#fff}.control-table th{border:1px solid #000;background:#b4c7e7;font-size:14px;font-weight:900;text-align:center;padding:6px;height:30px}.control-table td{border:1px solid #000;padding:5px;height:30px;font-weight:900;vertical-align:middle}.control-table td:first-child{background:#eef3f8;text-align:center;width:62%}.control-table td:last-child{background:#d99500;text-align:right;width:38%;padding-right:8px;font-variant-numeric:tabular-nums}.control-table tr.result td:first-child{background:#d9eaf7}.control-table tr.result td:last-child{background:#00b050;color:#000}
-@media(max-width:800px){.page{width:100%;padding:10px}.cash-table{font-size:12px}.qty-wrap{grid-template-columns:28px 1fr 28px}.toolbar{justify-content:flex-start}.bottom-full{grid-template-columns:1fr}}
-@media print{body{background:#fff;margin:0}.app{padding:0;margin:0;max-width:none}.toolbar,.qty-wrap button{display:none!important}.page{box-shadow:none;margin:0 auto;width:210mm;height:297mm;min-height:0;padding:8mm 9mm;overflow:hidden;transform:none}h1{font-size:21px;margin:0 0 7px}.date-row{margin-bottom:7px}.date-row input,.date-row div{height:24px;font-size:13px;padding:2px}.cash-table{font-size:13px}.cash-table th,.cash-table td{height:23px;padding:3px}.qty-wrap{display:block}.qty-wrap input{height:19px;font-size:13px}.summary{font-size:12.5px;margin-top:7px}.summary td{height:23px;padding:3px}.summary select,.summary input{height:19px;font-size:12px}.bottom-full{grid-template-columns:1fr 1fr;gap:6px;margin-top:7px;width:100%}.control-table{font-size:11.5px;border:1.5px solid #000}.control-table th{height:22px;font-size:12px;padding:3px}.control-table td{height:24px;padding:3px}.control-table td:last-child{padding-right:5px}button{display:none!important}@page{size:A4;margin:0}}
+@media(max-width:800px){.page{width:100%;padding:10px}.cash-table{font-size:12px}.qty-wrap{grid-template-columns:28px 1fr 28px}.toolbar{justify-content:flex-start}}
+@media print{body{background:#fff;margin:0}.app{padding:0;margin:0;max-width:none}.toolbar,.qty-wrap button{display:none!important}.page{box-shadow:none;margin:0 auto;width:210mm;height:297mm;min-height:0;padding:8mm 9mm;overflow:hidden;transform:none}h1{font-size:21px;margin:0 0 7px}.date-row{margin-bottom:7px}.date-row input,.date-row div{height:24px;font-size:13px;padding:2px}.cash-table{font-size:13px}.cash-table th,.cash-table td{height:23px;padding:3px}.qty-wrap{display:block}.qty-wrap input{height:19px;font-size:13px}.summary{font-size:12.5px;margin-top:7px}.summary td{height:23px;padding:3px}.summary select,.summary input{height:19px;font-size:12px}button{display:none!important}@page{size:A4;margin:0}}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="toolbar"><button onclick="window.print()">Drucken / PDF</button><button class="gray" onclick="setWeek()">Woche automatisch</button><button class="greenBtn" onclick="saveDay()">Tag speichern</button><button class="blueBtn" onclick="newDay()">Neuer Tag</button><button class="red" onclick="clearAll()">Leeren</button></div>
+  <div class="toolbar">
+    <button onclick="window.print()">Drucken / PDF</button>
+    <button class="gray" onclick="setWeek()">Woche automatisch</button>
+    <button class="greenBtn" onclick="saveDay()">Tag speichern</button>
+    <button class="blueBtn" onclick="newDay()">Neuer Tag</button>
+    <button class="red" onclick="clearAll()">Leeren</button>
+  </div>
+
   <section class="page">
     <h1>Zählprotokoll Kasse</h1>
-    <div class="top-final"><div class="label">Endbetrag Kasse bestanden (minus EC/Gutschein)</div><div class="value" id="topEndbetragCell">- €</div></div>
+    <div class="top-final"><div class="label">Endbetrag / Kassenbestand</div><div class="value" id="topEndbetragCell">- €</div></div>
+
     <div class="date-row"><input id="dateFrom" type="date"><div>Bis</div><input id="dateTo" type="date"></div>
+
     <table class="cash-table"><thead><tr><th>,</th><th>Quantidade</th><th>Total</th><th></th></tr></thead><tbody id="cashBody"></tbody></table>
+
     <table class="summary">
       <tr><td class="label">Vortagssaldo / Geld von gestern</td><td><input id="prevTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td><button type="button" onclick="loadPreviousSaldo()">Saldo automatisch</button></td></tr>
       <tr><td></td><td class="label">Bargeld heute gezählt</td><td class="yellow" id="grandTotalCell">- €</td></tr>
-      <tr><td class="label">Kasseneingang / Tageslosung</td><td><input id="cashEntry" inputmode="decimal" placeholder="0,00" readonly></td><td class="small">Automatisch aus gezähltem Bargeld</td></tr>
-      <tr><td class="label">EC Karte / Kartenzahlung</td><td><input id="ecManual" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">separat eintragen</td></tr>
-      <tr><td class="label">Gutschein</td><td><input id="voucherManual" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">separat eintragen</td></tr>
       <tr><td class="label">Kassenbericht laut Registrierkasse</td><td><input id="registerTotal" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">Total vom Kassenabschluss</td></tr>
+      <tr><td class="label">EC Karte / Kartenzahlung</td><td><input id="ecManual" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">laut Kassenabschluss</td></tr>
+      <tr><td class="label">Gutschein</td><td><input id="voucherManual" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">laut Kassenabschluss</td></tr>
       <tr><td class="label">Erwartetes Bargeld</td><td class="yellow" id="expectedCashCell">- €</td><td class="small">Kasse − EC − Gutschein</td></tr>
       <tr><td class="label">Differenz Bargeld</td><td class="green" id="registerDiffCell">0,00 €</td><td class="small">gezählt − erwartet</td></tr>
-      <tr><td class="label">Bargeld + EC + Gutschein</td><td class="yellow" id="cashEcVoucherCell">- €</td><td class="small">Kontrollsumme Zahlungsarten</td></tr>
+      <tr><td class="label">Bargeld + EC + Gutschein</td><td class="yellow" id="cashEcVoucherCell">- €</td><td class="small">muss Kassenbericht ergeben</td></tr>
       <tr><td colspan="3" style="height:6px;border:0"></td></tr>
-      <tr><td class="label" colspan="3">Einkäufe / Ausgaben / Zahlungsarten</td></tr>
+      <tr><td class="label" colspan="3">Einkäufe / Ausgaben / Bankeinzahlung</td></tr>
       <tr><td>Beschreibung / Beleg</td><td>Betrag</td><td></td></tr>
-      <tr><td><select id="buyDesc1" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy1" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc2" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy2" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc3" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy3" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc4" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy4" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td><select id="buyDesc5" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>EC CARD</option><option>GUTSCHEIN</option><option>Sonstiges</option></select></td><td><input id="buy5" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
-      <tr><td></td><td class="label">Summe eingetragen</td><td class="yellow" id="buyTotalCell">- €</td></tr>
-      <tr><td></td><td class="label">Nicht Kasse: EC + Gutschein</td><td class="yellow" id="nonCashCell">- €</td></tr>
+      <tr><td><select id="buyDesc1" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Sonstiges</option></select></td><td><input id="buy1" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc2" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Sonstiges</option></select></td><td><input id="buy2" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc3" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Sonstiges</option></select></td><td><input id="buy3" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc4" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Sonstiges</option></select></td><td><input id="buy4" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td><select id="buyDesc5" onchange="calc()"><option value="">Auswählen</option><option>REWE</option><option>LIDL</option><option>HIT</option><option>METRO</option><option>VOLKSBANK</option><option>SPARKASSE</option><option>Sonstiges</option></select></td><td><input id="buy5" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td></td></tr>
+      <tr><td></td><td class="label">Summe Ausgaben / Bank</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
       <tr><td></td><td class="label">Vortag + Bargeld heute</td><td class="yellow" id="controlBeforeExpensesCell">- €</td></tr>
-      <tr><td></td><td class="label">Abzug echte Kasse</td><td class="yellow" id="cashExpenseCell">- €</td></tr>
       <tr><td></td><td class="label">Endbetrag / Kassenbestand</td><td class="yellow" id="finalTotalCell">- €</td></tr>
-      <tr><td></td><td class="label">Kontroll-Differenz</td><td class="green" id="diffCell">0,00 €</td></tr>
     </table>
-    <div class="bottom-full">
-      <table class="control-table"><thead><tr><th colspan="2">Interne Kontrolle</th></tr></thead><tbody><tr><td>Vortag + Bargeld heute</td><td id="kbBeforeAllCell">- €</td></tr><tr><td>− Abzug echte Kasse</td><td id="kbAllEntriesCell">- €</td></tr><tr class="result"><td>Endbetrag (Kasse real)</td><td id="kbPaperCell">- €</td></tr></tbody></table>
-      <table class="control-table"><thead><tr><th colspan="2">Info nicht Kasse</th></tr></thead><tbody><tr><td>EC CARD + Gutschein</td><td id="ecOnlyCell">- €</td></tr><tr><td>Endbetrag echte Kasse</td><td id="allExpenseCell">- €</td></tr><tr class="result"><td>Endbetrag minus EC/Gutschein</td><td id="totalControlCell">- €</td></tr></tbody></table>
-    </div>
   </section>
 </div>
+
 <script>
 const notes=[100,50,20,10,5];
 const coins=[2,1,0.5,0.2,0.1,0.05,0.02,0.01];
-const NON_CASH_TYPES=['EC CARD','GUTSCHEIN'];
 function euro(v){const num=Number(v)||0;return Math.abs(num)<0.005?'- €':num.toFixed(2).replace('.',',')+' €'}
 function euroZero(v){const num=Number(v)||0;return Math.abs(num)<0.005?'0,00 €':num.toFixed(2).replace('.',',')+' €'}
 function qtyInput(value,idx){return `<div class="qty-wrap"><button type="button" onclick="changeQty('${idx}',-1)">−</button><input id="q_${idx}" value="0" inputmode="numeric" oninput="calc()"><button type="button" onclick="changeQty('${idx}',1)">+</button></div>`}
@@ -87,50 +88,34 @@ function calc(){
   let nt=0,ct=0;
   notes.forEach((v,i)=>{const sum=v*getQty('n'+i);nt+=sum;setText('t_n'+i,sum)});
   coins.forEach((v,i)=>{const sum=v*getQty('c'+i);ct+=sum;setText('t_c'+i,sum)});
-  const grand=nt+ct;setMoneyInput('cashEntry',grand);
+  const grand=nt+ct;
   const prev=moneyInput('prevTotal');
-  const ecManual=moneyInput('ecManual');
-  const voucherManual=moneyInput('voucherManual');
   const registerTotal=moneyInput('registerTotal');
-  let buyTotal=0,cashOut=0,nonCash=0;
-  for(let i=1;i<=5;i++){
-    const val=moneyInput('buy'+i);
-    const desc=(document.getElementById('buyDesc'+i)?.value||'').trim().toUpperCase();
-    buyTotal+=val;
-    if(NON_CASH_TYPES.includes(desc)){nonCash+=val;continue}
-    cashOut+=val;
-  }
-  const paymentTotal=grand+ecManual+voucherManual;
-  const expectedCash=registerTotal-ecManual-voucherManual;
+  const ec=moneyInput('ecManual');
+  const voucher=moneyInput('voucherManual');
+  const expectedCash=registerTotal-ec-voucher;
   const registerDiff=grand-expectedCash;
+  const paymentTotal=grand+ec+voucher;
+  let cashOut=0;
+  for(let i=1;i<=5;i++) cashOut+=moneyInput('buy'+i);
   const before=prev+grand;
   const endbetrag=before-cashOut;
-  const diff=before-cashOut-endbetrag;
-  setText('notesTotal',nt);setText('notesTotal_extra',nt);setText('coinsTotal',ct);setText('coinsTotal_extra',ct);setText('yellowTotal',grand);setText('grandTotalCell',grand);
-  setText('cashEcVoucherCell',paymentTotal);
-  setText('expectedCashCell',expectedCash);
-  setTextZero('registerDiffCell',registerDiff);
-  const regDiffEl=document.getElementById('registerDiffCell');
-  if(regDiffEl){
-    regDiffEl.style.background=Math.abs(registerDiff)<0.005?'#00b050':'#dc2626';
-    regDiffEl.style.color=Math.abs(registerDiff)<0.005?'#000':'#fff';
-  }
-  setText('buyTotalCell',buyTotal);setText('nonCashCell',nonCash);setText('controlBeforeExpensesCell',before);setText('cashExpenseCell',cashOut);setText('finalTotalCell',endbetrag);setTextZero('diffCell',diff);
-  setText('kbBeforeAllCell',before);setText('kbAllEntriesCell',cashOut);setText('kbPaperCell',endbetrag);setText('ecOnlyCell',nonCash);setText('allExpenseCell',endbetrag);setText('totalControlCell',endbetrag-nonCash);setText('topEndbetragCell',endbetrag-nonCash);
-  const diffEl=document.getElementById('diffCell');if(diffEl){diffEl.style.background=Math.abs(diff)<0.005?'#00b050':'#dc2626';diffEl.style.color=Math.abs(diff)<0.005?'#000':'#fff'}
-  window.lastFinalTotal=endbetrag-nonCash;
+  setText('notesTotal',nt);setText('notesTotal_extra',nt);setText('coinsTotal',ct);setText('coinsTotal_extra',ct);setText('yellowTotal',grand);
+  setText('grandTotalCell',grand);setText('expectedCashCell',expectedCash);setTextZero('registerDiffCell',registerDiff);setText('cashEcVoucherCell',paymentTotal);
+  setText('cashExpenseCell',cashOut);setText('controlBeforeExpensesCell',before);setText('finalTotalCell',endbetrag);setText('topEndbetragCell',endbetrag);
+  const regDiffEl=document.getElementById('registerDiffCell');if(regDiffEl){regDiffEl.style.background=Math.abs(registerDiff)<0.005?'#00b050':'#dc2626';regDiffEl.style.color=Math.abs(registerDiff)<0.005?'#000':'#fff'}
+  window.lastFinalTotal=endbetrag;
 }
 function fmtISODate(d){const y=d.getFullYear();const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
 function isoKey(d){return fmtISODate(d)}
 function mondayOf(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
 function setWeek(){const d=new Date();const first=mondayOf(d);const last=new Date(first);last.setDate(first.getDate()+6);document.getElementById('dateFrom').value=fmtISODate(first);document.getElementById('dateTo').value=fmtISODate(last)}
-function getCurrentDate(){return new Date()}
-function loadPreviousSaldo(){const lastSaldo=localStorage.getItem('sanremo_last_saldo');if(lastSaldo!==null){setMoneyInput('prevTotal',parseFloat(lastSaldo)||0);calc();return}const saved=JSON.parse(localStorage.getItem('sanremo_week_saldo')||'{}');const todayKey=isoKey(getCurrentDate());const keys=Object.keys(saved).filter(k=>k<todayKey).sort();const lastKey=keys.length?keys[keys.length-1]:null;document.getElementById('prevTotal').value=lastKey?String(saved[lastKey]).replace('.',','):'0,00';calc()}
-function saveDaySilent(){calc();const val=Number(window.lastFinalTotal||0);const saved=JSON.parse(localStorage.getItem('sanremo_week_saldo')||'{}');saved[isoKey(getCurrentDate())]=val.toFixed(2);localStorage.setItem('sanremo_week_saldo',JSON.stringify(saved));localStorage.setItem('sanremo_last_saldo',val.toFixed(2));return val}
-function saveDay(){const val=saveDaySilent();alert('Saldo do dia guardado: '+euro(val))}
-function clearDayFields(){document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');['buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5','ecManual','voucherManual','registerTotal'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''})}
+function loadPreviousSaldo(){const lastSaldo=localStorage.getItem('sanremo_last_saldo');if(lastSaldo!==null){setMoneyInput('prevTotal',parseFloat(lastSaldo)||0);calc();return}document.getElementById('prevTotal').value='0,00';calc()}
+function saveDaySilent(){calc();const val=Number(window.lastFinalTotal||0);localStorage.setItem('sanremo_last_saldo',val.toFixed(2));return val}
+function saveDay(){const val=saveDaySilent();alert('Saldo guardado: '+euro(val))}
+function clearDayFields(){document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');['registerTotal','ecManual','voucherManual','buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''})}
 function newDay(){const val=saveDaySilent();clearDayFields();setMoneyInput('prevTotal',val);calc();alert('Neuer Tag aberto. Vortagssaldo carregado: '+euro(val))}
-function clearAll(){clearDayFields();document.getElementById('prevTotal').value='0,00';setWeek();calc()}
+function clearAll(){clearDayFields();document.getElementById('prevTotal').value='0,00';localStorage.removeItem('sanremo_last_saldo');setWeek();calc()}
 render();setWeek();loadPreviousSaldo();
 </script>
 </body>
