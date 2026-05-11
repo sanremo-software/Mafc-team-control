@@ -59,7 +59,6 @@ h1{font-size:22px;margin:0 0 8px;text-align:center;text-transform:uppercase;lett
       <tr><td class="label">EC Karte / Kartenzahlung</td><td><input id="ecManual" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">laut Kassenabschluss</td></tr>
       <tr><td class="label">Gutschein</td><td><input id="voucherManual" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">laut Kassenabschluss</td></tr>
       <tr><td class="label">Gutschein Eingang (Bargeld)</td><td><input id="voucherCashIn" inputmode="decimal" placeholder="0,00" oninput="calc()"></td><td class="small">eingelöste Gutscheine in bar</td></tr>
-      <tr><td class="label">Gutschein Eingang (Bargeld
       <tr><td class="label">Erwartetes Bargeld</td><td class="yellow" id="expectedCashCell">- €</td><td class="small">Kasse − EC − Gutschein</td></tr>
       <tr><td class="label">Differenz Bargeld</td><td class="green" id="registerDiffCell">0,00 €</td><td class="small">gezählt − erwartet</td></tr>
       <tr><td class="label">Bargeld + EC + Gutschein</td><td class="yellow" id="cashEcVoucherCell">- €</td><td class="small">muss Kassenbericht ergeben</td></tr>
@@ -122,20 +121,28 @@ function calc(){
   coins.forEach((v,i)=>{const sum=v*getQty('c'+i);ct+=sum;setText('t_c'+i,sum)});
   const grand=nt+ct;
   const prev=moneyInput('prevTotal');
-  const registerTotal=moneyInput(const voucher=moneyInput('voucherManual');
-  const voucherCashIn=moneyInput('voucherCashIn');cManual');
+  const registerTotal=moneyInput('registerTotal');
+  const ec=moneyInput('ecManual');
   const voucher=moneyInput('voucherManual');
-  const expectedCash=registerTotal-const paymentTotal=grand+ec+voucher+voucherCashIn;nd-expectedCash;
-  const paymentTotal=gt i=1;i<=5;i++) cashOut+=moneyInputconst before=prev+grand+voucherCashIn;e=prev+grand;
+  const voucherCashIn=moneyInput('voucherCashIn');
+  const expectedCash=registerTotal-ec-voucher;
+  const registerDiff=grand-expectedCash;
+  const paymentTotal=grand+ec+voucher+voucherCashIn;
+  let cashOut=0;
+  for(let i=1;i<=5;i++) cashOut+=moneyInput('buy'+i);
+  const before=prev+grand+voucherCashIn;
   const endbetrag=before-cashOut;
-  setText('notesTotal',nt);setText('notesTotal_extra',nt);setText('coinsTotal;setText('yellowTotal',grand);
-  setText('grandTotalCell',grand);setText('expectedCashCell',expectedCash);setTextZero('regisf);setText('cashEcVoucherCell',paymentTotal);
+  setText('notesTotal',nt);setText('notesTotal_extra',nt);setText('coinsTotal',ct);setText('coinsTotal_extra',ct);setText('yellowTotal',grand);
+  setText('grandTotalCell',grand);setText('expectedCashCell',expectedCash);setTextZero('registerDiffCell',registerDiff);setText('cashEcVoucherCell',paymentTotal);
   setText('boxRegisterCell',registerTotal);setText('boxEcCell',ec);setText('boxVoucherCell',voucher);setText('boxExpectedCell',expectedCash);
   setText('cashExpenseCell',cashOut);setText('controlBeforeExpensesCell',before);setText('finalTotalCell',endbetrag);setText('topEndbetragCell',endbetrag);
-  setText('accPrevCell',prev);setText(iffCell');isetText('accPrevCell',prev);setText('accTodayCell',grand+voucherCashIn);setText('accOutCell',cashOut);setText('accFinalCell',endbetrag);gisterDiff)<0.005?'#000':'#fff'}
+  setText('accPrevCell',prev);setText('accTodayCell',grand+voucherCashIn);setText('accOutCell',cashOut);setText('accFinalCell',endbetrag);
+  const regDiffEl=document.getElementById('registerDiffCell');if(regDiffEl){regDiffEl.style.background=Math.abs(registerDiff)<0.005?'#00b050':'#dc2626';regDiffEl.style.color=Math.abs(registerDiff)<0.005?'#000':'#fff'}
   window.lastFinalTotal=endbetrag;
 }
-function fmtISODate(d){const y=d.getFullYear();const m=String(d.getMonth()+1).padStart(2,'0');cmondayOf(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
+function fmtISODate(d){const y=d.getFullYear();const m=String(d.getMonth()+1).padStart(2,'0');const day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
+function isoKey(d){return fmtISODate(d)}
+function mondayOf(d){const x=new Date(d);const day=(x.getDay()+6)%7;x.setDate(x.getDate()-day);return x}
 function setWeek(){const d=new Date();const first=mondayOf(d);const last=new Date(first);last.setDate(first.getDate()+6);document.getElementById('dateFrom').value=fmtISODate(first);document.getElementById('dateTo').value=fmtISODate(last)}
 function loadPreviousSaldo(){
   const accSaldo=localStorage.getItem('sanremo_bargeld_real_akkumuliert');
@@ -156,18 +163,23 @@ function saveDaySilent(){
   return val;
 }
 function saveDay(){const val=saveDaySilent();alert('Saldo guardado: '+euro(val))}
-function clearDayFields(){document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');['registerTotal','ecManual','voucherManual','buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''})}
+function clearDayFields(){document.querySelectorAll('.qty-wrap input').forEach(i=>i.value='0');['registerTotal','ecManual','voucherManual','voucherCashIn','buy1','buy2','buy3','buy4','buy5','buyDesc1','buyDesc2','buyDesc3','buyDesc4','buyDesc5'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''})}
 function newDay(){
   const val=saveDaySilent();
   clearDayFields();
   setMoneyInput('prevTotal',val);
-['registerTotal','ecManual','voucherManual','voucherCashIn','buy1'/ dinheiro acumulado carregado: '+euro(val));
+  calc();
+  alert('Neuer Tag aberto. Vortagssaldo / dinheiro acumulado carregado: '+euro(val));
 }
 function clearAll(){
   clearDayFields();
   document.getElementById('prevTotal').value='0,00';
   localStorage.removeItem('sanremo_last_saldo');
-  localStorage.removeItem('sanremo_bargeld_real_akkumuliert'dPreviousSaldo();
+  localStorage.removeItem('sanremo_bargeld_real_akkumuliert');
+  setWeek();
+  calc();
+}
+render();setWeek();loadPreviousSaldo();
 </script>
 </body>
 </html>
